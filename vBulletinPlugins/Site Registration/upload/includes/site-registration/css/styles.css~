@@ -5,15 +5,10 @@ li {
 }
 
 .vertical-rule {
-	background: #D6D6D6;
-	background: -moz-linear-gradient(top, #D6D6D6 0%, #D6D6D6 0%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#D6D6D6), color-stop(0%,#D6D6D6)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #1e5799 0%,#D6D6D6 0%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #D6D6D6 0%,#D6D6D6 0%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #D6D6D6 0%,#D6D6D6 0%); /* IE10+ */
-	background: linear-gradient(to bottom, #D6D6D6 0%,#D6D6D6 0%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#D6D6D6', endColorstr='#D6D6D6',GradientType=0 ); /* IE6-9 */
-
+	background: #fff;
+	background: linear-gradient(to bottom, #D6D6D6 100%, #D6D6D6 100%, #D6D6D6 100%,
+		#D6D6D6 100%, #D6D6D6 100%, #D6D6D6 100%, #D6D6D6 100%, #D6D6D6 100%,
+		#D6D6D6 100%);
 	background-position: 50%;
 	background-repeat: repeat-y;
 	background-size: 1px auto;
@@ -168,7 +163,7 @@ li {
 }
 
 .fix_input_width {
-	width: 60% !important;
+	width: 82% !important;
 }
 
 .fix_input_width_facebook{
@@ -266,22 +261,4 @@ li {
 }
 .email-sent{
 	color: #333;
-}
-
-.input-error{
-    border-color: #953B39 !important;
-    color: #953B39 !important;
-    background-color: #FFE9EA !important;
-    
-}
-.input-error-container{
-    background: url("../img/redx.png") no-repeat scroll 227px 8px
-	transparent !important;
-}
-
-.error-label{
-    color: #800000 !important;
-    margin-left: 30px;
-    position: relative;
-    top: -4px;
 }

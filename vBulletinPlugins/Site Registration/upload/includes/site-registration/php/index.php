@@ -28,6 +28,13 @@ require_once('functions_login.php');
 
 if (!session_id()) {
     session_start();
+    
+    if (!isset($_SESSION['initiated']))
+    {
+        session_regenerate_id();
+        $_SESSION['initiated'] = true;
+    }
+
 }
 
 /**
@@ -39,27 +46,23 @@ switch ($op) {
 
 case 'validate_site_account_details':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
-    $valid_entries = FALSE;
+    $valid_entries = TRUE;
     $messages = "";
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array(  'username' => TYPE_STR, 
-                            'password' => TYPE_STR,
+                    array('username' => TYPE_STR, 'password' => TYPE_STR,
                             'confirm_password' => TYPE_STR,
-                            'security_code' => TYPE_STR
-                            ));
+                            'security_code' => TYPE_STR));
 
     if (empty($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing'); 
-        $error_type = "username";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+    } else {
+
     }
 
     if (empty($vbulletin->GPC['password'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing'); 
+        $userdata->error('fieldmissing');
         $error_type = "password";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = $userdata->errors[0];
@@ -67,7 +70,7 @@ case 'validate_site_account_details':
 
     if (empty($vbulletin->GPC['confirm_password'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing'); 
+        $userdata->error('fieldmissing');
         $error_type = "confirm-password";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = $userdata->errors[0];
@@ -75,86 +78,102 @@ case 'validate_site_account_details':
 
     if (empty($vbulletin->GPC['security_code'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing'); 
         $error_type = "security-code";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = $userdata->errors[0];
     }
-    
-    
-    
-    if ( $vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password'] ) {
+
+    if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
         $valid_entries = FALSE;
-        
-        $error_type           = "confirm-password";
+
+        $error_type = "confirm-password";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Passwords don't match";
-        
-        $error_type           = "password";
+
+        $error_type = "password";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Passwords don't match";
     }
-    
+
     $regex_username = '/^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/';
-    
-    if(!preg_match($regex_username, $vbulletin->GPC['username'])){
-        $valid_entries        = FALSE;
-        
-        $error_type           = "username";
+
+    if (!preg_match($regex_username, $vbulletin->GPC['username'])) {
+        $valid_entries = FALSE;
+
+        $error_type = "username";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Invalid username.";
-        
+
     }
-    
-    if(strlen($vbulletin->GPC['username']) > 25){
-        $valid_entries        = FALSE;
-        
-        $error_type           = "username";
+
+    if (strlen($vbulletin->GPC['username']) > 25) {
+        $valid_entries = FALSE;
+
+        $error_type = "username";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Max 25 characters";
-        
+
     }
-    
+
     //check if username already exists on DB
-    $user_exists = $db->query_read_slave("
+    $user_exists = $db
+            ->query_read_slave(
+                    "
 		SELECT userid, username, email, languageid
 		FROM " . TABLE_PREFIX . "user
-		WHERE username = '" . $db->escape_string($vbulletin->GPC['username']) . "'
+		WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
+                            . "'
 	");
-	
-	if ($db->num_rows($user_exists)){
-	    $valid_entries        = FALSE;
-        
-        $error_type           = "username";
+
+    if ($db->num_rows($user_exists)) {
+        $valid_entries = FALSE;
+
+        $error_type = "username";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Sorry, this username is already taken.";
-	}
-	
-	//check if CAPTCHA value is correct
-	if($vbulletin->GPC['security_code'] != $_SESSION['validate']['captcha']['answer'] ){
-	    $valid_entries        = FALSE;
-        
-        $error_type           = "security-code";
+    }
+
+    //check if CAPTCHA value is correct
+    if ($vbulletin->GPC['security_code']
+            != $_SESSION['validate']['captcha']['answer']) {
+        $valid_entries = FALSE;
+
+        $error_type = "security-code";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Invalid security code.";
-	}
-    	
-	$arr = array(
-	        "valid_entries" => $valid_entries, 
-            "messages"      => $messages, 
-            "url"           => $url  
+    }
+
+    if ($valid_entries) {
+        $_SESSION['site_registration']['username'] = $vbulletin
+                ->GPC['username'];
+        $_SESSION['site_registration']['password'] = $vbulletin
+                ->GPC['password'];
+        $url = "register.php?step=activate";
+        
+        $token = md5(uniqid(microtime(), true));
+        $token_time = time();
+        
+        $form = "site-account-details";
+        $_SESSION['site_registration'][$form . '_token'] = array(
+                'token' => $token, 
+                'time' => $token_time
+        );
+    }
+
+    $arr = array(   "valid_entries" => $valid_entries,
+                    "messages" => $messages, 
+                    "url" => $url
             );
             
  
-
     json_headers($arr);
-		
+
     break;
 
 //create site account on register.php
 case 'create_site_account_first_step':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
-    $valid_entries = FALSE;
+    $valid_entries = TRUE;
     $message = "";
 
     //clean variables
@@ -211,48 +230,52 @@ case 'create_site_account_first_step':
             //fetch_error('under_thirteen_registration_denied');
         } else {
 
-            $temp_table_query = "
+        }
+    }
+
+    if ($valid_entries) {
+
+        $temp_table_query = "
             CREATE TEMPORARY TABLE IF NOT EXISTS " . TABLE_PREFIX
-                    . "siteregistration_temp (
+                . "siteregistration_temp (
                 email VARCHAR(128) NOT NULL DEFAULT '',
                 birthday VARCHAR(12) NOT NULL DEFAULT ''
             )";
 
-            $vbulletin->db->query_write($temp_table_query);
+        $vbulletin->db->query_write($temp_table_query);
 
-            /*insert query*/
-            $vbulletin->db
-                    ->query_write(
-                            "
-                INSERT IGNORE INTO " . TABLE_PREFIX
-                                    . "siteregistration_temp
-                (email,birthday)
-                VALUES
-                ('" . $vbulletin->db->escape_string($vbulletin->GPC['email'])
-                                    . "',
-                 '"
-                                    . $vbulletin->db
-                                            ->escape_string(
-                                                    $vbulletin
-                                                            ->GPC['birthdate'])
-                                    . "')
-            ");
+        /*insert query*/
+        $vbulletin->db
+                ->query_write(
+                        "
+            INSERT IGNORE INTO " . TABLE_PREFIX
+                                . "siteregistration_temp
+            (email,birthday)
+            VALUES
+            ('" . $vbulletin->db->escape_string($vbulletin->GPC['email'])
+                                . "',
+             '"
+                                . $vbulletin->db
+                                        ->escape_string(
+                                                $vbulletin->GPC['birthdate'])
+                                . "')
+        ");
 
-            $rows = $vbulletin->db->affected_rows();
+        $rows = $vbulletin->db->affected_rows();
+        $valid_entries = TRUE;
+        $message = "OK";
+        $url = "/register.php?step=site-account-details";
 
-            $valid_entries = TRUE;
-            $message = "OK";
-            $url = "/register.php?step=site-account-details";
+        $token = md5(uniqid(microtime(), true));
+        $token_time = time();
+        $form = "create_site_account_first_step";
+        $_SESSION['site_registration'][$form . '_token'] = array(
+                'token' => $token, 'time' => $token_time);
 
-            $token = md5(uniqid(microtime(), true));
-            $token_time = time();
-            $form = "create_site_account_first_step";
-            $_SESSION['validate'][$form . '_token'] = array('token' => $token,
-                    'time' => $token_time);
+        $_SESSION['site_registration']['email'] = $vbulletin->GPC['email'];
+        $_SESSION['site_registration']['birthday'] = $vbulletin
+                ->GPC['birthdate'];
 
-            $_SESSION['validate']['email'] = $vbulletin->GPC['email'];
-            $_SESSION['validate']['birthday'] = $vbulletin->GPC['birthdate'];
-        }
     }
 
     $arr = array("valid_entries" => $valid_entries,
@@ -288,7 +311,6 @@ default:
             $message = $userdata->errors;
         } else {
             $message = "Sorry please check your username and password";
-            //$userdata->errors[0];
         }
 
     } else {
@@ -367,4 +389,3 @@ default:
     break;
 
 }
-

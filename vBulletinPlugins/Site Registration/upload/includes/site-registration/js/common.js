@@ -109,39 +109,17 @@ jQuery(document).ready(function(jQuery) {
               success: function( response ) {
                 if(response.valid_entries == false){
                 
-                    jQuery('.error-label').remove();
-                    jQuery('input.input-error').removeClass('input-error');
-
-                    jQuery.each(response.messages.fields, function(index, value) {
-                        if(jQuery('#error_'+index).length > 0){ 
-                            jQuery('#'+value+'').unwrap();
-                        }
-                    });
+                    jQuery('.error-label').empty();
+                    jQuery('.input-error-container').removeClass("input-error-container");
+                    jQuery('.input-error').removeClass("input-error");
                     
-                    if(jQuery('#username').parent().hasClass('.input-error-container')){
-                        jQuery('#username').unwrap();
-                    }
-                    
-                    if(jQuery('#password').parent().hasClass('.input-error-container')){
-                        jQuery('#password').unwrap();
-                    }
-                    
-                    if(jQuery('#confirm-password').parent().hasClass('.input-error-container')){
-                        jQuery('#confirm-password').unwrap();
-                    }
-                    
-                    if(jQuery('#security-code').parent().hasClass('.input-error-container')){
-                        jQuery('#security-code').unwrap();
-                    }
-  ;
- 
-                     
-                    //jQuery('input:not(.input-error)').parent().removeClass('input-error-container');
-                
                     jQuery.each(response.messages.fields, function(index, value) {        
-                        jQuery('#'+value+'').addClass("input-error").wrap('<div id="error_'+index+'" class="input-error-container grid_7 no-margin" />');
-                        jQuery('#error_'+index).append("<span class='error-label'>" + response.messages.errors[index] + "</span>");
+                        jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                        jQuery('#'+value).addClass("input-error");
+                        jQuery('#'+value+'-error-label').empty();
+                        jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
                     });
+ 
                 }else{
                 
                 }
