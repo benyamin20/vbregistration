@@ -1,0 +1,62 @@
+/*
+    Global font
+*/
+* {
+	font: Helvetica, Arial, 'sans-serif';
+	font-size: 12px;
+}
+
+/*
+    Fonts
+*/
+h1,h2 {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+
+
+h3 {
+	font-size: 18px;
+	font-weight: normal;
+}
+
+sup,sub {
+	height: 0;
+	line-height: 1;
+	vertical-align: baseline;
+	_vertical-align: bottom;
+	position: relative;
+	font-size: 12px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+sup {
+	bottom: 1ex;
+}
+
+sub {
+	top: .5ex;
+	background-color: white;
+}
+
+.label {
+	font-size: 13px;
+}
+
+.tiny {
+	font-size: 11px;
+}
+
+.small {
+	font-size: 12px;
+}
+
+.normal {
+	font-size: 14px;
+}
+
+.bold {
+	font-weight: bold;
+}

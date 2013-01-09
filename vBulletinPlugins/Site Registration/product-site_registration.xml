@@ -1,0 +1,1282 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<product productid="site_registration" active="1">
+	<title>Site Registration</title>
+	<description>Site Registration</description>
+	<version>1.0</version>
+	<url />
+	<versioncheckurl />
+	<dependencies>
+		<dependency dependencytype="php" minversion="4" maxversion="" />
+		<dependency dependencytype="vbulletin" minversion="3" maxversion="" />
+	</dependencies>
+	<codes>
+	</codes>
+	<templates>
+		<template name="site_reg_account-activated" templatetype="template" 
+		    date="1352855133" username="fromero" version="1.0"><![CDATA[
+$stylevar[htmldoctype]
+<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+<!-- <base href="$vboptions[bburl]/" /> -->
+<title>Account Activated- $vboptions[bbtitle]</title>
+
+	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css" />
+    <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
+    <link rel="stylesheet" href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css" />
+    <link media="screen" rel="stylesheet" type="text/css" href="includes/site-registration/facebox/facebox.css" />
+    <link rel="stylesheet" href="includes/site-registration/css/styles.css" />
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+    if (window.jQuery == undefined)
+        document
+                .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
+</script>
+<script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script>
+<script src="includes/site-registration/js/common.js" type="text/javascript"></script>
+
+
+</head>
+
+<body>
+	<!-- main container -->
+	<div id="container" class="container_12">
+		<div class="clear clear_15"></div>
+		<!-- Site logo -->
+		<div id="logo" class="grid_4">
+			<a href="$vboptions[bburl]">
+		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		        </a>
+		</div>
+		<div class="clear clear_30"></div>
+
+		<!-- Ad units -->
+		<div id="ad-units" class="grid_12">
+			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
+				<img src="includes/site-registration/img/first-ad-unit.png" />
+			</div>
+			<div id="second-ad-unit" class="grid_2  centered pull-right omega">
+				<img src="includes/site-registration/img/second-ad-unit.png" />
+			</div>
+			<div class="clear clear_20"></div>
+			<div class="clear clear_20"></div>
+		</div>
+
+		<!-- Site heading -->
+		<div id="site-heading" class="grid_12">
+			<span class="title_red">Join $vboptions[bbtitle]</span>
+		</div>
+		<div class="clear clear_10"></div>
+
+		<!-- Login options -->
+		<div id="login-options">
+			<div class="clear clear_30"></div>
+			<!-- Create site Account -->
+			<div class="grid_8" id="create-site-account">
+				<h1>Go Back To Where I Was</h1>
+				<div class="clear clear_15"></div>
+				<p class="small light_grey">Start New Thread - General
+					Discussion Forums</p>
+				<div class="clear"></div>
+				<button class="btn grid_4 no-margin">Send Me There &#187;</button>
+
+				<div class="clear clear_20"></div>
+				<div class="clear clear_20"></div>
+
+				<span class="normal  bold">Check These Out</span>
+
+				<div class="clear clear_20"></div>
+
+				<div class="grid_8 no-margin">
+					<!-- Thumb and description -->
+					<div class="grid_1 no-margin pull-left">
+						<img src="includes/site-registration/img/thumbnail.png" />
+					</div>
+					<div class="grid_7 no-margin pull-right">
+						<span class="link_blue bold">Picture Battles</span>
+						<div class="clear"></div>
+						See the community's hottest pictures and vote for your favorites.
+					</div>
+					<div class="clear clear_15"></div>
+
+					<!-- Thumb and description -->
+					<div class="grid_1 no-margin pull-left">
+						<img src="includes/site-registration/img/thumbnail.png" />
+					</div>
+					<div class="grid_7 no-margin pull-right">
+						<span class="link_blue bold">Today's Discussions</span>
+						<div class="clear"></div>
+						See what the community is talking about, and voice your opinion.
+					</div>
+					<div class="clear clear_15"></div>
+
+					<!-- Thumb and description -->
+					<div class="grid_1 no-margin pull-left">
+						<img src="includes/site-registration/img/thumbnail.png" />
+					</div>
+					<div class="grid_7 no-margin pull-right">
+						<span class="link_blue bold">Market Place</span>
+						<div class="clear"></div>
+						Whether you're buying selling or browsing, you can't miss our
+						marketplace.
+					</div>
+					<div class="clear clear_15"></div>
+
+				</div>
+
+			</div>
+
+
+
+
+			<!-- Complete your profile -->
+			<div id="">
+				<div class="grid_4  move-to-top">
+					<div class="complete-your-profile">
+						<div class="margin_left_20">
+							<div class="clear clear_10"></div>
+							<h1>Complete your profile.</h1>
+							<div class="clear"></div>
+							<!--  Progress -->
+							<span class="small bold">50% profile completeness</span>
+							<div class="progress grid_3 no-margin">
+								<div class="bar bar-success" style="width: 50%;"></div>
+							</div>
+							<div class="clear clear_15"></div>
+
+                            <!--  Avatar -->
+							<span class="bold">Your Avatar</span>
+							<div class="clear clear_15"></div>
+
+							<div id="avatar-container grid_3">
+								<div class="grid_1 no-margin pull-left">
+									<img src="includes/site-registration/img/thumbnail.png" />
+								</div>
+								<div class="pull_right grid_2">
+									<button class="btn">Upload</button>
+									<div class="clear clear_15"></div>
+									<a class="small link_blue">Use default.</a>
+								</div>
+							</div>
+
+							<div class="clear clear_15"></div>
+
+							<div class="clear"></div>
+							
+							<!--  Timezone -->
+							<div class="btn-group ">
+
+								<button class="btn dropdown-toggle grid_3"
+									data-toggle="dropdown">
+									Your Timezone <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu grid_3">
+									<li class="no-margin"><a href="#">1</a></li>
+									<li class="no-margin"><a href="#">2</a></li>
+									<li class="no-margin"><a href="#">3</a></li>
+									<li class="no-margin"><a href="#">4</a></li>
+								</ul>
+							</div>
+							
+							<!-- Secret inputs  -->
+
+							<div class="clear clear_15"></div>
+							<span class="bold">Let's keep things safe</span>
+							<div class="clear"></div>
+							<input type="text" id="secret_question" name="secret_question"
+								placeholder="Secret Question" value="" />
+
+							<div class="clear"></div>
+							<input type="text" name="secret_answer" id="secret_answer"
+								placeholder="Secret Aswer" value="" />
+
+                            <!--  Contact check boxes -->
+
+							<div class="clear clear_15"></div>
+							<span class="bold">Who can contact you?</span>
+							<div class="clear"></div>
+							<label class="checkbox"> <input type="checkbox"
+								id="receive-emails-from-administrators"
+								name="receive-emails-from-administrators" value="" /> Receive
+								emails from Administrators.
+							</label>
+
+							<div class="clear"></div>
+							<label class="checkbox"> <input type="checkbox" value=""
+								id="receive-emails-from-other-members"
+								name="receive-emails-from-other-members" /> Receive emails from
+								other members.
+							</label>
+
+							<div class="clear clear_20"></div>
+							<button class="btn btn-primary grid_2 no-margin" type="button">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="clear"></div>
+
+	</div>
+
+</body>
+</html>
+		
+		]]></template>
+		<template name="site_reg_exception-incomplete-profile" 
+		    templatetype="template" date="1352855133" 
+		    username="fromero" version="1.0"><![CDATA[
+		    site_reg_exception-incomplete-profile
+		
+		]]></template>
+		<template name="site_reg_exception-not-activated" 
+		    templatetype="template" date="1352855133" 
+		    username="fromero" version="1.0"><![CDATA[
+$stylevar[htmldoctype]
+<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+<!-- <base href="$vboptions[bburl]/" /> -->
+<title>Please Activate Your Account - $vboptions[bbtitle]</title>
+ 
+	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css" />
+    <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
+    <link rel="stylesheet" href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css" />
+    <link media="screen" rel="stylesheet" type="text/css" href="includes/site-registration/facebox/facebox.css" />
+    <link rel="stylesheet" href="includes/site-registration/css/styles.css" />
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+    if (window.jQuery == undefined)
+        document
+                .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
+</script>
+<script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
+<script src="includes/site-registration/js/common.js" type="text/javascript"></script>
+ 
+
+</head>
+
+<body>
+
+<div id="container" class="container_12 background_yellow">
+    <div id="warning-container" >
+        <div class="pull_left no-margin grid_2 alpha">
+            <img src="includes/site-registration/img/email-icon.png" id="email-icon" />
+        </div>
+        <div class="prefix_1 pull_right no-margin grid_9 omega">
+            <h1 class="title_red no-margin">Your account Is Not Fully Active</h1>
+            <div class="clear"></div>
+            Please confirm your account by clicking on the email activation link
+            <div class="clear clear_15"></div>
+            Did not receive it? <a href="#" class="link_blue">Resend activation email</a
+        </div>
+    </div>
+</div>
+</body>
+</html>
+		
+		]]></template>
+		<template name="site_reg_not_activated" templatetype="template" 
+		    date="1352855133" username="IB Chandak" 
+		    version="1.0"><![CDATA[<div> THIS ACCOUNT IS NOT ACTIVATED 
+ - $activatelink -$username - $activateid
+<br /><br />
+$vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS IS ACTIVATION LINK which should be emails, not displayed.
+
+</div>]]></template>
+		<template name="site_reg_sign-in-step-1" templatetype="template" 
+		    date="1352855133" username="fromero" version="1.0"><![CDATA[
+    $stylevar[htmldoctype]
+    <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+    <head>
+    <!-- <base href="$vboptions[bburl]/" />  -->
+    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css" />
+    <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
+    <link rel="stylesheet" href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css" />
+    <link media="screen" rel="stylesheet" type="text/css" href="includes/site-registration/facebox/facebox.css" />
+    <link rel="stylesheet" href="includes/site-registration/css/styles.css" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    <script type="text/javascript">
+        if (window.jQuery == undefined)
+            document
+                    .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
+    </script>
+    <script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
+    <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
+
+    <title>Sign In - $vboptions[bbtitle]</title>
+    <meta name="description" content="?" /> 
+    </head>
+
+    <body>
+	    <!-- main container -->
+	    <div id="container" class="container_12">
+		    <div class="clear clear_15"></div>
+		    <!-- Site logo -->
+		    <div id="logo" class="grid_4">
+		        <a href="$vboptions[bburl]">
+		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		        </a>
+		    </div>
+		    <div class="clear clear_30"></div>
+		    <!-- Site heading -->
+		    <div id="site-heading" class="grid_12">
+			    <span class="title_red">Join $vboptions[bbtitle]</span>
+		    </div>
+		    <div class="clear clear_10"></div>
+
+		    <!-- Login options -->
+		    <div id="login-options">
+			    <div class="clear clear_30"></div>
+                <div class="clear"></div>
+			    <!-- Create site Account -->
+			    <div class="grid_3" id="create-site-account"> 
+                    <div class="clear clear_15"></div>
+				    <h1>Create Site Account</h1>
+				    <div class="clear clear_15"></div>
+				    <div class="error_red small" id="create-site-account-error"></div>
+			        <div class="clear" id="create-site-account-spacer"></div>
+				    
+
+				    <input class="" id="email" placeholder="Email" value=""
+				        pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+					    autocomplete="off" type="email" name ="email"
+					    required />
+
+
+				    <div class="input-prepend ">
+					    <span class="add-on"> <i class="icon-calendar"></i>
+					    </span> 
+                        <input class="fix_input_width" id="datepicker" type="text"
+						    placeholder="Birth Date" value="" autocomplete="off" required
+						    title="You must be over 13 to register."
+						    name="birthdate" />
+				    </div>
+
+				    <div class="clear clear_15"></div>
+				    <a class="btn btn-primary btn-block" id="create-new-account-button">
+				        Create Account
+				    </a>
+			    </div>
+                       
+			
+                <if condition="$show['vbnexus_button_fb']">
+                    <!-- OR -->
+	                <div class="grid_1 vertical-rule">
+		                <div class="centered">
+			                <div class="horizontal-wrapper">
+				                <sub>OR</sub>
+			                </div>
+		                </div>    
+	                </div>                        
+                <else />
+	                <div class="grid_1">
+                        &nbsp;    
+	                </div>
+                </if>
+
+			
+			    <div class="grid_3">
+                    <if condition="$show['vbnexus_button_fb']">
+				        <!-- FB login -->
+				        <h1>Fast Sign In</h1>
+				        <div class="clear"></div>
+				        <a class="fb login_button" title="$vbphrase[vbnexus_facebook_login_title]"
+                                           id="gn_fb_button" href="javascript:void(0);">
+					        <div class="logo_wrapper">
+						        <span class="logo"></span>
+					        </div> 
+					        <span>Login with Facebook</span>
+				        </a>
+				        <div class="clear clear_15"></div>
+				        <span class="small light_grey">It's secure and easy!</span>
+                            <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+                            <script type="text/javascript">
+                                document.getElementById('gn_fb_button').onclick = function(){
+                                    FB.init({
+                                        appId : "$vboptions[vbnexusconfig_facebook_appid]",
+                                        status: true, // check login status
+                                        cookie: true, // enable cookies to allow the server to access the session
+                                        oauth : true  // enables OAuth 2.0
+                                    });
+                                    FB.login(function(res){
+                                        if (res.status == 'connected')
+                                        {
+                                            window.location = "$vboptions[bburl]/login.php?do=login&vbnexus_service=fb&loc=$vboptions[vbnexus_loc]";
+                                        }
+                                    }, {scope: '$vboptions[vbnexus_fb_scope]'});
+                                };
+                            </script>
+                    <else />
+                        &nbsp;
+                    </if>
+			    </div>
+
+			    <!-- Already have an account -->
+			    <div id="">
+				    <div class="grid_4 prefix_1 move-to-top">
+					    <div class="already-have-an-account">
+						    <div class="margin_left_20">
+							    <div class="clear clear_30"></div>
+							    <h3>Already have an account?</h3>
+							    <div class="clear"></div>
+							    <div class="error_red small" id="have-account-error"></div>
+							    <div class="clear" id="have-account-spacer"></div>
+							    <form name="already-have-an-account-form"
+							        id="already-have-an-account-form"
+							        method="POST"
+							        action="">
+							        <input class="" id="username" 
+							            placeholder="Username" value=""
+								        autocomplete="off" type="text" required /> 
+                                    <input class=""
+								        id="password" placeholder="Password" value="" 
+								        autocomplete="off"
+								        type="password" required />
+							        <div class="clear clear_15"></div>
+							        <a class="btn btn-medium" id="login-button">Login</a>
+							    </form>
+							    <div class="clear clear_15"></div>
+							    <a class="link_blue small" id="forgot-password"
+								    href="$vboptions[bburl]/login.php?do=lostpw">Forgot your password?</a>
+						    </div>
+					    </div>
+				    </div>
+			    </div>
+
+
+		    </div>
+
+		    <div class="clear"></div>
+
+		    <div id="what-you-get" class="grid_12">
+
+			    <h3 id="benefits-title">
+			        $vboptions[site_registration_title]
+			    </h3>
+			    <div class="clear"></div>
+
+			    <span class="grid_6 small" id="after-days">
+                    $vboptions[site_registration_line_description]
+                </span>
+			    <div class="clear clear_30"></div>
+
+			    <div class="small grid_3 alpha">
+			        $vboptions[site_registration_bullets_part_1]
+				    <div class="clear clear_30"></div>
+				    <a href="$vboptions[bburl]$php_self#info"  
+                                       id="benefit-comparison" class="link_blue"
+					    rel="facebox">$vboptions[site_registration_link_text]</a>
+
+			    </div>
+
+			    <div class="small grid_8 prefix_1 omega">
+				    $vboptions[site_registration_bullets_part_2]
+			    </div>
+
+		    </div>
+
+	    </div>
+
+	    <!--  Info table for benefit comparison -->
+	    <div id="info">
+	        $vboptions[site_registration_benefits]
+	    </div>
+    </body>
+    </html>
+		]]></template>
+		<template name="site_reg_sign-in-step-2-facebook" 
+		    templatetype="template" date="1352855133" 
+		    username="fromero" version="1.0"><![CDATA[
+$stylevar[htmldoctype]
+<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+<!-- <base href="$vboptions[bburl]/" /> -->
+<title>Confirm You Details - $vboptions[bbtitle]</title>
+<link rel="stylesheet" type="text/css" media="all"
+    href="includes/site-registration/960/css/min/reset.css" />
+<link rel="stylesheet" type="text/css" media="all"
+    href="includes/site-registration/960/css/min/text.css" />
+<link rel="stylesheet" type="text/css" media="all"
+    href="includes/site-registration/960/css/min/960.css" />
+<link rel="stylesheet" media="screen"
+    href="includes/site-registration/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
+<link rel="stylesheet"
+    href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css" />
+<link media="screen" rel="stylesheet" type="text/css"
+    href="includes/site-registration/facebox/facebox.css" />
+<link rel="stylesheet" href="includes/site-registration/css/styles.css" />
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+    if (window.jQuery == undefined)
+        document
+                .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
+</script>
+<script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
+<script src="includes/site-registration/js/common.js" type="text/javascript"></script>
+ 
+
+</head>
+
+<body>
+	<!-- main container -->
+	<div id="container" class="container_12">
+		<div class="clear clear_15"></div>
+		<!-- Site logo -->
+		<div id="logo" class="grid_4">
+			<a href="$vboptions[bburl]">
+		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		        </a>
+		</div>
+		<div class="clear clear_30"></div>
+
+		<!-- Site heading -->
+		<div id="site-heading" class="grid_12">
+			<span class="title_red"> Confirm your details </span>
+		</div>
+		<div class="clear clear_10"></div>
+
+		<!-- Login options -->
+		<div id="login-options" class="grid_12">
+			<div class="clear clear_30"></div>
+
+			<!-- Thumb -->
+			<div class="grid_1 alpha">
+				<div class="centered">
+					<img src="includes/site-registration/img/thumbnail.png" alt="" />
+				</div>
+			</div>
+
+			<!-- Create site Account -->
+			<div class="grid_4" id="create-site-account">
+
+				<h1 class="dark_grey">Welcome Ralph!</h1>
+
+				<div class="clear clear_10"></div>
+
+				<span class="small bold">Please choose your public Username
+					to get started.</span>
+				<p class="small">Your Facebook avatar will not be displayed
+					publicly.</p>
+
+				<div class="clear clear_20"></div>
+
+				<input class="" id="email" name="email" placeholder="Email"
+					value="ralphch@gmail.com" autocomplete="off" type="email" 
+					required />
+
+				<span class="help-block small light_grey">Keeping it real!.</span> 
+				
+				<div class="clear clear_15"></div>
+				
+				<input
+					class="" id="username" name="username" placeholder="Username"
+					value="RalphAndrewChochlac" autocomplete="off" type="text" 
+					maxlength="25" required />
+
+				<span class="help-block small light_grey">Max 25 characters,
+					no spaces please.</span>
+
+
+				<div class="clear clear_15"></div>
+
+				<div class="input-prepend ">
+                    <span class="add-on"> <i class="icon-calendar"></i>
+                    </span> 
+                    <input 
+                        class="fix_input_width_facebook" id="datepicker" 
+                        type="text"
+                        placeholder="Birth Date" value="" autocomplete="off" 
+                        required
+                        title="You must be over 13 to register." />
+                </div>
+                
+                <div class="clear clear_15"></div>
+
+				<label class="checkbox"> 
+				    <input type="checkbox" value=""
+					   id="terms-and-conditions" name="terms-and-conditions" 
+					   required checked="checked" />
+				    <span class="small light_grey"> Yes sir, I have read and
+						agreed with the 
+						<a href="$vboptions[bburl]$php_self#info" class="link_blue" rel="facebox">Terms
+							&amp; Conditions.</a>
+				</span>
+				</label>
+
+				<div class="clear clear_15"></div>
+				<div class="pull-left">
+				    <button class="btn btn-primary grid_3"
+                        type="button" id="log-in">Log In</button>
+			     </div>
+			</div>
+			
+			<!--  Vertical Separator -->
+            <div class="grid_1 prefix_2 vertical-rule"></div>
+
+			<!--  Already a member -->
+			<div class="grid_4 omega" id="already-member">
+				<h3 class="dark_grey">Already a member?</h3>
+				
+				<div class="clear clear_15"></div>
+				
+				<p class="small">
+				Link your Facebook account to your forum account.
+				</p>
+                
+                <div class="clear clear_15"></div>
+                
+                <input class="" id="username-member" name="username-member"
+                       placeholder="Username" value=""
+                       autocomplete="off" type="text"
+                       maxlength="25" required /> 
+                 
+                    
+                <input class=""
+                       id="password-member" name="password-member" 
+                       placeholder="Password" 
+                       value="" autocomplete="off"
+                       type="password" required /> 
+                 
+                 <div class="clear clear_15"></div>
+                 
+                 <button class="btn grid_3 no-margin"
+                        type="button" id="link-account">Link Account</button>
+                        
+				<div class="clear clear_15"></div>
+				<a href="/login.php?do=lostpw" class="small link_blue"
+					id="forgot-password">Forgot your password?</a>
+			</div>
+
+		</div>
+
+		<div class="clear"></div>
+
+	</div>
+
+	<!--  Term & Conditions Table -->
+	<div id="info">
+		<table class="table remove-margin-bottom">
+			<thead>
+				<tr>
+					<th>
+						<h1 class="terms-and-conditions">Terms &amp; Conditions</h1>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<p class="bold small">Forum Rules</p>
+						<p class="small">
+							Registration to this forum is free! We do insist that you abide
+							by the rules and policies detailed below. If you agree to the
+							terms, please check the 'I agree' checkbox and press the
+							'Register' button below. If you would like to cancel the
+							registration, click <a onclick="closeTnC();" href="/" 
+							class="link_blue">here</a> to
+							return to the forums index
+						</p>
+						<p class="small">Although the administrators and moderators of
+							$vboptions[bbtitle] will attempt to keep all objectionable messages off
+							this forum, it is impossible for us to review all messages. All
+							messages express the views of the author, and neither the owners
+							of $vboptions[bbtitle], nor Jelsoft Enterprises Ltd. (developers of
+							vBulletin) will be held responsible for the content of any
+							message</p>
+						<p class="small">By agreeing to these rule, you warrant that
+							you will not post any messages that are obscene, vulgar,
+							sexually-oriented, hateful, threatening, or otherwise violative
+							of any laws</p>
+						<p class="small">The owners of $vboptions[bbtitle] reserve the right to
+							remove, edit, move or close any thread for any reason.</p>
+					</td>
+				</tr>
+				<tr>
+					<td id="action-icons">
+						<div id="action-icons-container">
+							<div class="pull-left">
+								<a class="btn close-facebox" href="$vboptions[bburl]$php_self#cancel"
+									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
+							</div>
+							<div class="pull-right">
+								<a class="btn btn-primary span2 close-facebox"
+									onclick="closeTnC();" href="$vboptions[bburl]$php_self#accept"
+									id="accept_terms_and_conditions">Accept</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>
+		
+		]]></template>
+		<template name="site_reg_sign-in-step-2-site-account" 
+		    templatetype="template" date="1352855133" 
+		    username="fromero" version="1.0"><![CDATA[
+$stylevar[htmldoctype]
+<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+<!-- <base href="$vboptions[bburl]/" /> -->
+<title>Step 2 - Site Account - $vboptions[bbtitle]</title>
+ 
+<link rel="stylesheet" type="text/css" media="all"
+	href="includes/site-registration/960/css/min/reset.css" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="includes/site-registration/960/css/min/text.css" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="includes/site-registration/960/css/min/960.css" />
+<link rel="stylesheet" media="screen"
+	href="includes/site-registration/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
+<link media="screen" rel="stylesheet" type="text/css"
+	href="includes/site-registration/facebox/facebox.css" />
+<link rel="stylesheet" href="includes/site-registration/css/styles.css" />
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+	if (window.jQuery == undefined)
+		document
+				.write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
+</script>
+<script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
+<script src="includes/site-registration/js/common.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+	<!-- main container -->
+	<div id="container" class="container_12">
+		<div class="clear clear_15"></div>
+		<!-- Site logo -->
+		<div id="logo" class="grid_4">
+			<a href="$vboptions[bburl]">
+		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		        </a>
+		</div>
+		<div class="clear clear_30"></div>
+		<!-- Site heading -->
+		<div id="site-heading" class="grid_12">
+			<span class="title_red">
+			     Great! Pick your username and password:
+			</span>
+		</div>
+		<div class="clear clear_10"></div>
+
+		<!-- Login options -->
+		<div id="login-options">
+			<div class="clear clear_30"></div>
+			<!-- Create site Account -->
+			<div class="grid_3" id="create-site-account">
+				<div class="clear"></div>
+
+				<input class="" id="username" name="username"
+				       placeholder="Username" value=""
+					   autocomplete="off" type="text" maxlength="25" required /> 
+				
+				<span class="help-block small light_grey">
+				    Max 25 characters, no spaces please.
+				</span>
+					
+				<input class=""
+					   id="password" name="password" placeholder="Password" 
+					   value="" autocomplete="off"
+					   type="password" required /> 
+				
+				<span class="help-block small light_grey">
+				    You know the drill, make it safe.
+				</span>
+				
+				<input class="" id="confirm-password" name="confirm-password"
+					   placeholder="Confirm Password" value="" 
+					   autocomplete="off"
+					   type="password" required /> 
+					
+				<span class="help-block small"></span>
+				
+				<div class="centered" id="security-image">
+				    <img width="220" border="0" height="61" alt="" 
+				        src="$vboptions[bburl]/image.php?type=hv&hash=$hv_token" 
+				        id="imagereg" class="grid_3 no-margin"
+				        title="CAPTCHA"  />
+				    <!--
+				    <span style="cursor: pointer;" id="refresh_imagereg">
+				        <a href="$vboptions[bburl]$php_self#">Refresh Image</a>
+				    </span>
+				    <script src="clientscript/vbulletin_ajax_imagereg.js?v=387" type="text/javascript"></script>
+				    <script type="text/javascript">vB_AJAX_ImageReg_Init();</script>
+				    -->
+				</div>
+				
+				<div class="clear clear_15"></div>
+				
+				<input class="" id="security-code" name="security-code"
+					   placeholder="Enter Security Code" value="" 
+					   autocomplete="off"
+					   type="text" required />
+				
+				<span class="help-block small light_grey"></span>
+				
+				<div class="clear"></div>
+				
+				<label class="checkbox">
+					<input type="checkbox" value="" id="terms-and-conditions"
+					   name="terms-and-conditions" required
+					   checked="checked" />
+					<span class="small light_grey">
+					   Yes sir, I have read and agreed with the 
+					   <a href="$vboptions[bburl]$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
+					</span>
+				</label>
+ 
+				<div class="clear clear_15"></div> 
+				<button class="btn btn-primary grid_3 no-margin"
+                        type="button" id="site-account-deails-create-account">
+                        Create Account
+                </button>
+			</div>
+ 
+
+		</div>
+
+		<div class="clear"></div>
+ 
+	</div>
+
+	<!--  Term & Conditions Table -->
+	<div id="info">
+		<table class="table remove-margin-bottom">
+			<thead>
+				<tr>
+					<th>
+						<h1 class="terms-and-conditions">
+							Terms &amp; Conditions
+							</h1>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<p class="bold small">Forum Rules</p>
+						<p class="small">
+							Registration to this forum is free! We do insist that you abide
+							by the rules and policies detailed below. If you agree to the
+							terms, please check the 'I agree' checkbox and press the
+							'Register' button below. If you would like to cancel the
+							registration, click <a href="/" onclick="closeTnC();" 
+							class="link_blue">here</a> to return to the forums index
+						</p>
+						<p class="small">Although the administrators and moderators of
+							$vboptions[bbtitle] will attempt to keep all objectionable messages off
+							this forum, it is impossible for us to review all messages. All
+							messages express the views of the author, and neither the owners
+							of $vboptions[bbtitle], nor Jelsoft Enterprises Ltd. (developers of
+							vBulletin) will be held responsible for the content of any
+							message</p>
+						<p class="small">By agreeing to these rule, you warrant that
+							you will not post any messages that are obscene, vulgar,
+							sexually-oriented, hateful, threatening, or otherwise violative
+							of any laws</p>
+						<p class="small">The owners of $vboptions[bbtitle] reserve the right to
+							remove, edit, move or close any thread for any reason.</p>
+					</td>
+				</tr>
+				<tr>
+					<td id="action-icons">
+						<div id="action-icons-container">
+							<div class="pull-left">
+								<a class="btn close-facebox" href="$vboptions[bburl]$php_self#cancel"
+									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
+							</div>
+							<div class="pull-right">
+								<a class="btn btn-primary span2 close-facebox"
+									onclick="closeTnC();" href="$vboptions[bburl]$php_self#accept"
+									id="accept_terms_and_conditions">Accept</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>
+		
+		]]></template>
+	</templates>
+	<plugins>
+		<plugin active="0" executionorder="5">
+			<title>Display Registration page when we get no permissions error.</title>
+			<hookname>error_nopermission</hookname>
+			<phpcode><![CDATA[if(!(int)$vbulletin->userinfo['userid'])
+{
+	$reg_ref = '';
+	switch(THIS_SCRIPT)
+	{
+		case 'newthread':
+			echo 'This is newthread page';
+			$reg_ref = 'reg-new-thread';
+			break;
+		case 'newreply':
+			//if url contains "noquote=1", that means its not quote, else its quote
+			var_dump($vbulletin->GPC);
+			if($vbulletin->GPC['noquote'] == 1)
+			{
+				echo 'This is newreply page with noquote';
+				$reg_ref = 'reg-post-reply';
+			}
+			else if($vbulletin->GPC['quoteall'] == 1)
+			{
+				echo 'This is newreply page with quote all';
+				$reg_ref = 'reg-reply-quote-all';
+			}
+			else if(isset($vbulletin->GPC['vbulletin_multiquote'])&& !empty($vbulletin->GPC['vbulletin_multiquote']))
+			{
+				echo 'This is newreply page with multi quote';
+				$reg_ref = 'reg-reply-multi-quote';
+			}
+			else
+			{
+				// if quote/:
+				echo 'This is newreply page with quote';
+				$reg_ref = 'reg-reply-quote';
+			}
+			break;
+		case 'memberlist':
+			echo 'This is memberlist page';
+			$reg_ref = 'reg-member-list';
+			break;
+		case 'garage':
+			echo 'This is garage page';
+			$reg_ref = 'reg-garage';
+			break;
+		case 'album':
+			echo 'This is album page';
+			$reg_ref = 'reg-add-album';
+			break;
+		case 'picturecomment':
+			echo 'This is picturecomment page';
+			$reg_ref = 'reg-picture-comment';
+			break;
+	}
+die;
+}]]></phpcode>
+		</plugin>
+		<plugin active="0" executionorder="5">
+			<title>Display message if account is not active</title>
+			<hookname>parse_templates</hookname>
+			<phpcode><![CDATA[if($vbulletin->userinfo['usergroupid'] == 3)
+{
+	$userid = $vbulletin->userinfo['userid'];
+	$users = $vbulletin->db->query_read("
+		SELECT activationid
+		FROM " . TABLE_PREFIX . "useractivation
+		WHERE userid = " . $userid . "
+	");
+	
+	$user['activationid'] = $vbulletin->db->fetch_field($users);
+	
+	// make random number
+	if (empty($user['activationid']))
+	{ //none exists so create one
+		$user['activationid'] = fetch_random_string(40);
+		/*insert query*/
+		$vbulletin->db->query_write("
+			REPLACE INTO " . TABLE_PREFIX . "useractivation
+				(userid, dateline, activationid, type, usergroupid)
+			VALUES
+				($userid, " . TIMENOW . ", '$user[activationid]', 0, 2)
+		");
+	}
+	else
+	{
+		$user['activationid'] = fetch_random_string(40);
+		$vbulletin->db->query_write("
+			UPDATE " . TABLE_PREFIX . "useractivation SET
+			dateline = " . TIMENOW . ",
+			activationid = '$user[activationid]'
+			WHERE userid = $userid AND type = 0
+		");
+	}
+
+	$username = $vbulletin->userinfo['username'];
+	$activateid = $user['activationid'];
+
+	eval('$site_reg_not_activated .= "' . fetch_template('site_reg_not_activated') . '";');
+	$vbulletin->templatecache['navbar'] = str_replace('<!-- / nav buttons bar -->', '<!-- / nav buttons bar -->'. $site_reg_not_activated, $vbulletin->templatecache['navbar']);
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Site Registration | Sign In: Step 1</title>
+			<hookname>register_start</hookname>
+			<phpcode>
+			    <![CDATA[
+			        $php_self = $_SERVER['PHP_SELF'] .= '?' . $_SERVER['QUERY_STRING'];
+			        
+			        if (!session_id()) {
+                        session_start();
+                    }
+
+			        //invoke site account details template
+			        if(isset($_REQUEST['step']) && $_REQUEST['step'] == 'site-account-details'){
+			        
+			            //check if we have a valid previous token for entering here
+			            $form = "create_site_account_first_step"; 
+			            $invalid_request = FALSE;
+			            
+			            if(!isset($_SESSION['validate'][$form.'_token'])) {
+                            $invalid_request = TRUE;
+                        }
+                        
+                        require_once(DIR . '/includes/class_humanverify.php');
+	                    $verification =& vB_HumanVerify::fetch_library($vbulletin);
+	                    $human_verify = $verification->generate_token();
+	                    
+	                    $_SESSION['validate']['captcha']['hash'] = $human_verify['hash'];
+	                    $_SESSION['validate']['captcha']['answer'] = $human_verify['answer'];
+	                    
+	                    $hv_token  = $human_verify['hash'];
+                        
+                        if($invalid_request){ 
+			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');    
+                        }else{
+                            eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
+                        }
+                     
+			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
+			        	eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+			        }
+			        else{
+			            //default template for registration
+			            if(!(int)$vbulletin->userinfo['userid']){
+			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			            }
+			        } 
+			    ]]>
+			</phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Site Registration | Sign In: Step 1 - Log In (open while logged out)</title>
+			<hookname>newthread_start</hookname>
+			<phpcode>
+			    <![CDATA[
+			        if(!(int)$vbulletin->userinfo['userid']){
+			            header("Location: /register.php");
+			        }
+			         
+			    ]]>
+			</phpcode>
+		</plugin>
+	</plugins>
+	<phrases>
+		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
+			<phrase name="setting_site_registration_title_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Title			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_title_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Title			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_line_description_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Line Description			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_line_description_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Line Description			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_bullets_part_1_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Bullets part 1			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_bullets_part_1_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Bullets part 1			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_bullets_part_2_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Bullets part 2			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_bullets_part_2_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Bullets part 2			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_link_text_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Link Text			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_link_text_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Link Text			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_benefits_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Site Registration Benefits			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_benefits_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Site Registration Benefits			
+			    ]]>
+			</phrase>
+			<phrase name="settinggroup_site_registration_settings_group" 
+			    date="1340664607" username="fromero" version="1.0">
+			<![CDATA[Site Registration]]>
+			</phrase>
+		</phrasetype>
+	</phrases>
+	<options>
+		<settinggroup name="site_registration_settings_group" displayorder="65535">
+			<setting varname="site_registration_title" displayorder="10">
+				<datatype>free</datatype>
+				<defaultvalue>What You Get</defaultvalue>
+			</setting>
+			<setting varname="site_registration_line_description" displayorder="20">
+				<datatype>free</datatype>
+				<defaultvalue>
+				    After 15 days and 5 posts, you're automatically upgraded for free, and receive:
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_bullets_part_1" displayorder="30">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue>
+					<![CDATA[
+					<ul id="benefits-1">
+						<li>Unlimited file atachments</li>
+						<li>includes 100 pics</li>
+						<li>Store up to 500 private messages</li>
+						<li>Send up to 20 private messages at once</li>
+					</ul>
+					]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_bullets_part_2" displayorder="40">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue>
+					<![CDATA[
+					<ul id="benefits-2">
+						<li>Join, edit and create Social Groups</li>
+						<li>Exclusive access to Marketplace</li>
+						<li>600x400 animated profile picture</li>
+						<li>100x100 avatar</li>
+					</ul>
+					]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_link_text" displayorder="50">
+				<datatype>free</datatype>
+				<defaultvalue>See benefits comparison &#187;</defaultvalue>
+			</setting>
+			<setting varname="site_registration_benefits" displayorder="60">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue>
+				    <![CDATA[
+					    <table class="table">
+			                <thead>
+				                <tr>
+					                <th>#</th>
+					                <th>First Name</th>
+					                <th>Last Name</th>
+					                <th>Username</th>
+				                </tr>
+			                </thead>
+			                <tbody>
+				                <tr>
+					                <td>1</td>
+					                <td>First Name</td>
+					                <td>Last Name</td>
+					                <td>Username</td>
+				                </tr>
+				                <tr>
+					                <td>2</td>
+					                <td>First Name</td>
+					                <td>Last Name</td>
+					                <td>Username</td>
+				                </tr>
+				                <tr>
+					                <td>3</td>
+					                <td>First Name</td>
+					                <td>Last Name</td>
+					                <td>Username</td>
+				                </tr>
+			                </tbody>
+		                </table>
+					]]>
+				</defaultvalue>
+			</setting>
+		</settinggroup>
+	</options>
+	<helptopics>
+	</helptopics>
+	<cronentries>
+	</cronentries>
+	<faqentries>
+	</faqentries>
+</product>
