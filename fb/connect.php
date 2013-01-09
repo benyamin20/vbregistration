@@ -4,6 +4,7 @@
 	$appID 	   = "304416966345499";
 	$appSecret = "773cbd12a3706e491bc4ad3247b66386";
 	$URL 	   = "http://muucms.com/vbregistration/fb/connect.php";
+	$scope	   = "scope=user_email,user_birthday,read_stream";
 
 	$code = $_REQUEST["code"];
 
