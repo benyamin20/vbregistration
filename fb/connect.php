@@ -53,7 +53,7 @@
 	     	$graphURL = "https://graph.facebook.com/me?fields=". $fields ."&access_token=". $params["access_token"];
 	 
 	     	$user = json_decode(file_get_contents($graphURL));
-	     	
+	     	die(var_dump($user));
 	     	echo("Hello ". utf8_decode($user->name));
 		} else {
 			echo "Login fails";
