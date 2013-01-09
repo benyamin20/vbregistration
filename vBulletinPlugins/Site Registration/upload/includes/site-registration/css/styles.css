@@ -285,3 +285,7 @@ li {
     position: relative;
     top: -4px;
 }
+
+.fix-tnc-width{
+    width: 37% !important
+}

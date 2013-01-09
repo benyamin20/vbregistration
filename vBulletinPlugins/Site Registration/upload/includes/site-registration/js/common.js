@@ -23,6 +23,19 @@ jQuery.fn.enterKey = function (fnc) {
     })
 }
 
+$.fn.realVal = function(){
+    var $obj = $(this);
+    var val = $obj.val();
+    var type = $obj.attr('type');
+    if (type && type==='checkbox') {
+        var un_val = $obj.attr('data-unchecked');
+        if (typeof un_val==='undefined') un_val = '';
+        return $obj.prop('checked') ? val : un_val;
+    } else {
+        return val;
+    }
+};
+
 //alternative function to close a facebox thru a trigger
 closeTnC = function() {
 	jQuery(document).trigger('close.facebox');
@@ -97,7 +110,7 @@ jQuery(document).ready(function(jQuery) {
 	        var password = escape(jQuery("#password").val());
 	        var confirm_password = escape(jQuery("#confirm-password").val());
 	        var security_code = escape(jQuery("#security-code").val());
-	        var terms_and_conditions = escape(jQuery("#terms-and-conditions").val());
+	        var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
 	        
 	        jQuery.ajax({
               url: "includes/site-registration/php/index.php?op=validate_site_account_details",
@@ -105,7 +118,7 @@ jQuery(document).ready(function(jQuery) {
               dataType: 'json',
               type: 'POST',
               cache: false,
-              data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions' + terms_and_conditions ,
+              data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions ,
               success: function( response ) {
                 if(response.valid_entries == false){
                 
@@ -121,7 +134,13 @@ jQuery(document).ready(function(jQuery) {
                     });
  
                 }else{
-                
+                    jQuery('.error-label').empty();
+                    jQuery('.input-error-container').removeClass("input-error-container");
+                    jQuery('.input-error').removeClass("input-error");
+                    
+                    //redirect user to proper url
+                    var url = response.url;    
+                    jQuery(location).attr('href',url);
                 }
               }
 	        }).done(function() { 
