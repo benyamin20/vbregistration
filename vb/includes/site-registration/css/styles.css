@@ -278,3 +278,10 @@ li {
     background: url("../img/redx.png") no-repeat scroll 227px 8px
 	transparent !important;
 }
+
+.error-label{
+    color: #800000 !important;
+    margin-left: 30px;
+    position: relative;
+    top: -4px;
+}

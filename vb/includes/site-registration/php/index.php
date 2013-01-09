@@ -40,40 +40,115 @@ switch ($op) {
 case 'validate_site_account_details':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
     $valid_entries = FALSE;
-    $message = "";
+    $messages = "";
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array('username' => TYPE_STR, 'password' => TYPE_STR,
+                    array(  'username' => TYPE_STR, 
+                            'password' => TYPE_STR,
                             'confirm_password' => TYPE_STR,
-                            'security_code' => TYPE_STR));
+                            'security_code' => TYPE_STR
+                            ));
 
     if (empty($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
+        $userdata->error('fieldmissing'); 
         $error_type = "username";
-        $message[$error_type] = $userdata->errors[0];
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
     }
 
     if (empty($vbulletin->GPC['password'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
+        $userdata->error('fieldmissing'); 
         $error_type = "password";
-        $message[$error_type] = $userdata->errors[0];
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
     }
 
     if (empty($vbulletin->GPC['confirm_password'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
-        $error_type = "confirm_password";
-        $message[$error_type] = $userdata->errors[0];
+        $userdata->error('fieldmissing'); 
+        $error_type = "confirm-password";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
     }
 
     if (empty($vbulletin->GPC['security_code'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
-        $error_type = "security_code";
-        $message[$error_type] = $userdata->errors[0];
+        $userdata->error('fieldmissing'); 
+        $error_type = "security-code";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
     }
+    
+    
+    
+    if ( $vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password'] ) {
+        $valid_entries = FALSE;
+        
+        $error_type           = "confirm-password";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "Passwords don't match";
+        
+        $error_type           = "password";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "Passwords don't match";
+    }
+    
+    $regex_username = '/^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/';
+    
+    if(!preg_match($regex_username, $vbulletin->GPC['username'])){
+        $valid_entries        = FALSE;
+        
+        $error_type           = "username";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "Invalid username.";
+        
+    }
+    
+    if(strlen($vbulletin->GPC['username']) > 25){
+        $valid_entries        = FALSE;
+        
+        $error_type           = "username";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "Max 25 characters";
+        
+    }
+    
+    //check if username already exists on DB
+    $user_exists = $db->query_read_slave("
+		SELECT userid, username, email, languageid
+		FROM " . TABLE_PREFIX . "user
+		WHERE username = '" . $db->escape_string($vbulletin->GPC['username']) . "'
+	");
+	
+	if ($db->num_rows($user_exists)){
+	    $valid_entries        = FALSE;
+        
+        $error_type           = "username";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "Sorry, this username is already taken.";
+	}
+	
+	//check if CAPTCHA value is correct
+	if($vbulletin->GPC['security_code'] != $_SESSION['validate']['captcha']['answer'] ){
+	    $valid_entries        = FALSE;
+        
+        $error_type           = "security-code";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "Invalid security code.";
+	}
+    	
+	$arr = array(
+	        "valid_entries" => $valid_entries, 
+            "messages"      => $messages, 
+            "url"           => $url  
+            );
+            
+ 
+
+    json_headers($arr);
+		
     break;
 
 //create site account on register.php

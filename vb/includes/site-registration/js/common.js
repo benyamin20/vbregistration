@@ -1,9 +1,13 @@
+
+AJAX_Compatible = true;
+
 /**
  * check if something exists
  */
 jQuery.fn.exists = function() {
 	return this.length > 0;
 }
+
 
 /**
  * bind function to check if enter is pressed
@@ -103,8 +107,41 @@ jQuery(document).ready(function(jQuery) {
               cache: false,
               data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions' + terms_and_conditions ,
               success: function( response ) {
-                if(response.valid_details == false){
+                if(response.valid_entries == false){
                 
+                    jQuery('.error-label').remove();
+                    jQuery('input.input-error').removeClass('input-error');
+
+                    jQuery.each(response.messages.fields, function(index, value) {
+                        if(jQuery('#error_'+index).length > 0){ 
+                            jQuery('#'+value+'').unwrap();
+                        }
+                    });
+                    
+                    if(jQuery('#username').parent().hasClass('.input-error-container')){
+                        jQuery('#username').unwrap();
+                    }
+                    
+                    if(jQuery('#password').parent().hasClass('.input-error-container')){
+                        jQuery('#password').unwrap();
+                    }
+                    
+                    if(jQuery('#confirm-password').parent().hasClass('.input-error-container')){
+                        jQuery('#confirm-password').unwrap();
+                    }
+                    
+                    if(jQuery('#security-code').parent().hasClass('.input-error-container')){
+                        jQuery('#security-code').unwrap();
+                    }
+  ;
+ 
+                     
+                    //jQuery('input:not(.input-error)').parent().removeClass('input-error-container');
+                
+                    jQuery.each(response.messages.fields, function(index, value) {        
+                        jQuery('#'+value+'').addClass("input-error").wrap('<div id="error_'+index+'" class="input-error-container grid_7 no-margin" />');
+                        jQuery('#error_'+index).append("<span class='error-label'>" + response.messages.errors[index] + "</span>");
+                    });
                 }else{
                 
                 }
