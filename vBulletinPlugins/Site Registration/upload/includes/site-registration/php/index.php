@@ -51,7 +51,8 @@ case 'validate_site_account_details':
             ->clean_array_gpc('p',
                     array('username' => TYPE_STR, 'password' => TYPE_STR,
                             'confirm_password' => TYPE_STR,
-                            'security_code' => TYPE_STR));
+                            'security_code' => TYPE_STR,
+                            'terms_and_conditions' => TYPE_INT));
 
     if (empty($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
@@ -82,7 +83,7 @@ case 'validate_site_account_details':
         $messages['errors'][] = $userdata->errors[0];
     }
 
-    if (empty($vbulletin->GPC['terms_and_conditions'])) {
+    if ($vbulletin->GPC['terms_and_conditions'] != 1) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $error_type = "terms-and-conditions";
@@ -220,6 +221,8 @@ case 'validate_site_account_details':
             //errors?
             $valid_entries = FALSE;
             $messages = "An error ocurred please try again later.";
+            // . var_export( $userdata->errors, true)
+            ;
         } else {
             // save the data
             $vbulletin->userinfo['userid'] = $userid = $userdata->save();
@@ -259,7 +262,7 @@ case 'validate_site_account_details':
     }
 
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-            "url" => $url);
+            "url" => $url, "tnc" => $vbulletin->GPC['terms_and_conditions']);
 
     json_headers($arr);
 
@@ -293,7 +296,23 @@ case 'create_site_account_first_step':
 
     //validate email
     if (preg_match($regexp, $vbulletin->GPC['email'])) {
+    
+        //check if email already exists on DB
+        $user_exists = $db
+                ->query_read_slave(
+                        "
+		    SELECT userid, username, email, languageid
+		    FROM " . TABLE_PREFIX . "user
+		    WHERE UPPER(email) = '" . strtoupper($db->escape_string($vbulletin->GPC['email']))
+                                . "'
+	    ");
 
+        if ( $db->num_rows($user_exists) ) {
+            $valid_entries = FALSE;
+            $message = "The email address you entered is already in use.";
+            $error_type = "email";
+        }
+    
     } else {
         $valid_entries = FALSE;
         $message = "Invalid email";

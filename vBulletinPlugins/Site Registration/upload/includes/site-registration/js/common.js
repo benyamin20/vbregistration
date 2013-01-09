@@ -134,9 +134,12 @@ jQuery(document).ready(function(jQuery) {
                     });
  
                 }else{
-                    jQuery('.error-label').empty();
-                    jQuery('.input-error-container').removeClass("input-error-container");
-                    jQuery('.input-error').removeClass("input-error");
+                    try{
+                        jQuery('.error-label').empty();
+                        jQuery('.input-error-container').removeClass("input-error-container");
+                        jQuery('.input-error').removeClass("input-error");
+                    }catch(e){
+                    }
                     
                     //redirect user to proper url
                     var url = response.url;    
