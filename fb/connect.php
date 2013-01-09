@@ -1,10 +1,11 @@
 <?php
 	session_start();
 
-	$appID 	   = "304416966345499";
-	$appSecret = "773cbd12a3706e491bc4ad3247b66386";
-	$URL 	   = "http://muucms.com/vbregistration/fb/connect.php";
-	$scope	   = "scope=user_email,user_birthday,read_stream";
+	$appID 	    = "304416966345499";
+	$appSecret  = "773cbd12a3706e491bc4ad3247b66386";
+	$URL 	    = "http://muucms.com/vbregistration/fb/connect.php";
+	$scope	   	= "user_email,user_birthday,read_stream";
+	$fields 	= "id,name,first_name,email,birthday";
 
 	$code = $_REQUEST["code"];
 
@@ -12,7 +13,7 @@
 		if($_GET["login"]) {
 			$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
 
-			$loginURL = "https://www.facebook.com/dialog/oauth?client_id=". $appID ."&redirect_uri=". urlencode($URL) ."&state=". $_SESSION["state"] ."&scope=user_birthday,read_stream";
+			$loginURL = "https://www.facebook.com/dialog/oauth?client_id=". $appID ."&redirect_uri=". urlencode($URL) ."&state=". $_SESSION["state"] ."&scope=". $scope;
 
 			?>
 			<script type="text/javascript">			
@@ -49,7 +50,7 @@
 
 	     	$_SESSION["access_token"] = $params["access_token"];
 
-	     	$graphURL = "https://graph.facebook.com/me?access_token=". $params["access_token"];
+	     	$graphURL = "https://graph.facebook.com/me?fields=". $fields ."&access_token=". $params["access_token"];
 	 
 	     	$user = json_decode(file_get_contents($graphURL));
 	     	
