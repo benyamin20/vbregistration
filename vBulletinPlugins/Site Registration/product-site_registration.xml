@@ -361,21 +361,24 @@ $vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS 
 				    <div class="clear clear_15"></div>
 				    <div class="error_red small" id="create-site-account-error"></div>
 			        <div class="clear" id="create-site-account-spacer"></div>
-				    
+ 
+ 
+                    <div class="grid_4 no-margin" id="email-wrapper">
+				        <input class="" id="email" placeholder="Email" value=""
+				            pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+					        autocomplete="off" type="email" name ="email"
+					        required />
+                    </div>
 
-				    <input class="" id="email" placeholder="Email" value=""
-				        pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
-					    autocomplete="off" type="email" name ="email"
-					    required />
-
-
-				    <div class="input-prepend ">
-					    <span class="add-on"> <i class="icon-calendar"></i>
-					    </span> 
-                        <input class="fix_input_width" id="datepicker" type="text"
-						    placeholder="Birth Date" value="" autocomplete="off" required
-						    title="You must be over 13 to register."
-						    name="birthdate" />
+                    <div class="grid_4 no-margin" id="birthdate-wrapper">
+				        <div class="input-prepend ">
+					        <span class="add-on"> <i class="icon-calendar"></i>
+					        </span> 
+                            <input class="fix_input_width" id="datepicker" type="text"
+						        placeholder="Birth Date" value="" autocomplete="off" required
+						        title="You must be over 13 to register."
+						        name="birthdate" />
+				        </div>
 				    </div>
 
 				    <div class="clear clear_15"></div>
@@ -385,13 +388,13 @@ $vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS 
 			    </div>
                        
 			
-                <if condition="$show['vbnexus_button_fb']">
+                <if condition="$vboptions['site_registration_settingsfb_showfb']">
                     <!-- OR -->
 	                <div class="grid_1 vertical-rule">
 		                <div class="centered">
 			                <div class="horizontal-wrapper">
 				                <sub>OR</sub>
-			                </div>
+			                </div> 
 		                </div>    
 	                </div>                        
                 <else />
@@ -402,24 +405,24 @@ $vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS 
 
 			
 			    <div class="grid_3">
-                    <if condition="$show['vbnexus_button_fb']">
+                    <if condition="$vboptions['site_registration_settingsfb_showfb']">
 				        <!-- FB login -->
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
-				        <a class="fb login_button" title="$vbphrase[vbnexus_facebook_login_title]"
+				        <a class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]"
                                            id="gn_fb_button" href="javascript:void(0);">
 					        <div class="logo_wrapper">
 						        <span class="logo"></span>
 					        </div> 
-					        <span>Login with Facebook</span>
+					        <span>$vboptions[site_registration_settingsfb_loginfacebook]</span>
 				        </a>
-				        <div class="clear clear_15"></div>
+				        <div class="clear clear_15"></div> 
 				        <span class="small light_grey">It's secure and easy!</span>
                             <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
                             <script type="text/javascript">
                                 document.getElementById('gn_fb_button').onclick = function(){
                                     FB.init({
-                                        appId : "$vboptions[vbnexusconfig_facebook_appid]",
+                                        appId : "$vboptions[site_registration_settingsfb_fbapi]",
                                         status: true, // check login status
                                         cookie: true, // enable cookies to allow the server to access the session
                                         oauth : true  // enables OAuth 2.0
@@ -427,9 +430,9 @@ $vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS 
                                     FB.login(function(res){
                                         if (res.status == 'connected')
                                         {
-                                            window.location = "$vboptions[bburl]/login.php?do=login&vbnexus_service=fb&loc=$vboptions[vbnexus_loc]";
+                                            window.location = "$vboptions[bburl]/login.php?do=login&vbnexus_service=fb&loc=$vboptions[site_registration_settingsfb_locfacebook]";
                                         }
-                                    }, {scope: '$vboptions[vbnexus_fb_scope]'});
+                                    }, {scope: '$vboptions[site_registration_settingsfb_scopefacebook]'});
                                 };
                             </script>
                     <else />
@@ -632,7 +635,7 @@ $stylevar[htmldoctype]
 						agreed with the 
 						<a href="$vboptions[bburl]$php_self#info" class="link_blue" rel="facebox">Terms
 							&amp; Conditions.</a>
-				</span>
+				    </span>
 				</label>
 
 				<div class="clear clear_15"></div>
@@ -808,28 +811,35 @@ $stylevar[htmldoctype]
 			<!-- Create site Account -->
 			<div class="grid_3" id="create-site-account">
 				<div class="clear"></div>
-
-				<input class="" id="username" name="username"
-				       placeholder="Username" value=""
-					   autocomplete="off" type="text" maxlength="25" required /> 
+                <div class="grid_7 no-margin" id="username-wrapper">
+				    <input class="" id="username" name="username"
+				           placeholder="Username" value=""
+					       autocomplete="off" type="text" maxlength="25" required />
+					<span class="error-label" id="username-error-label"></span> 
+				</div>
 				
 				<span class="help-block small light_grey">
 				    Max 25 characters, no spaces please.
 				</span>
-					
-				<input class=""
-					   id="password" name="password" placeholder="Password" 
-					   value="" autocomplete="off"
-					   type="password" required /> 
 				
+				<div class="grid_7 no-margin" id="password-wrapper">	
+				    <input class=""
+					       id="password" name="password" placeholder="Password" 
+					       value="" autocomplete="off"
+					       type="password" required /> 
+					<span class="error-label" id="password-error-label"></span>
+				</div>
 				<span class="help-block small light_grey">
 				    You know the drill, make it safe.
 				</span>
 				
-				<input class="" id="confirm-password" name="confirm-password"
-					   placeholder="Confirm Password" value="" 
-					   autocomplete="off"
-					   type="password" required /> 
+				<div class="grid_7 no-margin" id="confirm-password-wrapper">
+				    <input class="" id="confirm-password" name="confirm-password"
+					       placeholder="Confirm Password" value="" 
+					       autocomplete="off"
+					       type="password" required /> 
+				    <span class="error-label" id="confirm-password-error-label"></span>    
+				</div>
 					
 				<span class="help-block small"></span>
 				
@@ -849,24 +859,29 @@ $stylevar[htmldoctype]
 				
 				<div class="clear clear_15"></div>
 				
-				<input class="" id="security-code" name="security-code"
-					   placeholder="Enter Security Code" value="" 
-					   autocomplete="off"
-					   type="text" required />
+				<div class="grid_7 no-margin" id="security-code-wrapper">
+				    <input class="" id="security-code" name="security-code"
+					       placeholder="Enter Security Code" value="" 
+					       autocomplete="off"
+					       type="text" required />
+			        <span class="error-label" id="security-code-error-label"></span>
+			    </div>
 				
 				<span class="help-block small light_grey"></span>
 				
 				<div class="clear"></div>
 				
-				<label class="checkbox">
-					<input type="checkbox" value="" id="terms-and-conditions"
-					   name="terms-and-conditions" required
-					   checked="checked" />
-					<span class="small light_grey">
-					   Yes sir, I have read and agreed with the 
-					   <a href="$vboptions[bburl]$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
-					</span>
-				</label>
+				<div class="grid_7 no-margin" id="terms-and-conditions-wrapper">
+				    <label class="checkbox grid_3 no-margin fix-tnc-width">
+					    <input type="checkbox" value="" id="terms-and-conditions"
+					       name="terms-and-conditions" required
+					       checked="checked" />
+					    <span class="small light_grey">
+					       Yes sir, I have read and agreed with the 
+					       <a href="$vboptions[bburl]$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
+					    </span>
+				    </label>
+				</div>
  
 				<div class="clear clear_15"></div> 
 				<button class="btn btn-primary grid_3 no-margin"
@@ -1052,11 +1067,25 @@ die;
 			<hookname>register_start</hookname>
 			<phpcode>
 			    <![CDATA[
-			        $php_self = $_SERVER['PHP_SELF'] .= '?' . $_SERVER['QUERY_STRING'];
+			        if(isset($_SERVER['QUERY_STRING'])){
+			            $php_self = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+			        }else{
+			            $php_self = $_SERVER['PHP_SELF'];
+			        }
+			        
 			        
 			        if (!session_id()) {
                         session_start();
+                        
+                        if (!isset($_SESSION['initiated']))
+                        {
+                            session_regenerate_id();
+                            $_SESSION['initiated'] = true;
+                        }
+
                     }
+                    
+                    $_SESSION['site_registration']['initial_page'] = $php_self; 
 
 			        //invoke site account details template
 			        if(isset($_REQUEST['step']) && $_REQUEST['step'] == 'site-account-details'){
@@ -1065,19 +1094,22 @@ die;
 			            $form = "create_site_account_first_step"; 
 			            $invalid_request = FALSE;
 			            
-			            if(!isset($_SESSION['validate'][$form.'_token'])) {
+			            if(!isset($_SESSION['site_registration'][$form.'_token'])) {
                             $invalid_request = TRUE;
                         }
                         
+                        //generate captcha value
                         require_once(DIR . '/includes/class_humanverify.php');
 	                    $verification =& vB_HumanVerify::fetch_library($vbulletin);
 	                    $human_verify = $verification->generate_token();
 	                    
-	                    $_SESSION['validate']['captcha']['hash'] = $human_verify['hash'];
-	                    $_SESSION['validate']['captcha']['answer'] = $human_verify['answer'];
+	                    $_SESSION['site_registration']['captcha']['hash'] = $human_verify['hash'];
+	                    $_SESSION['site_registration']['captcha']['answer'] = $human_verify['answer'];
 	                    
+	                    //register captcha value
 	                    $hv_token  = $human_verify['hash'];
                         
+                        //check for direct access to action
                         if($invalid_request){ 
 			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');    
                         }else{
@@ -1085,7 +1117,29 @@ die;
                         }
                      
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
+			        	
 			        	eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+			        	
+			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'activate'){
+			        	
+			        	$invalid_request = FALSE;
+			        	
+			        	//check for direct access to action
+			        	if($invalid_request){ 
+			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');    
+                        }else{
+                            eval('print_output("' . fetch_template('site_reg_exception-not-activated') . '");');
+                        }
+			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'account-activated'){
+			        	
+			        	$invalid_request = FALSE;
+			        	
+			        	//check for direct access to action
+			        	if($invalid_request){ 
+			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');    
+                        }else{
+                            eval('print_output("' . fetch_template('site_reg_account-activated') . '");');
+                        }
 			        }
 			        else{
 			            //default template for registration
@@ -1101,6 +1155,14 @@ die;
 			<hookname>newthread_start</hookname>
 			<phpcode>
 			    <![CDATA[
+			        $php_self = $_SERVER['PHP_SELF'] .= '?' . $_SERVER['QUERY_STRING'];
+			        
+			        if (!session_id()) {
+                        session_start();
+                    }
+                    
+                    $_SESSION['site_registration']['initial_page'] = $php_self; 
+                    
 			        if(!(int)$vbulletin->userinfo['userid']){
 			            header("Location: /register.php");
 			        }
@@ -1182,14 +1244,92 @@ die;
 			    <![CDATA[
 			    Site Registration Benefits			
 			    ]]>
+			</phrase> 
+			<phrase name="setting_site_registration_settingsfb_showfb_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Show facebook login			
+			    ]]>
+			</phrase>
+			
+			<phrase name="setting_site_registration_settingsfb_showfb_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Show facebook login			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_fbapi_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    FB API Key				
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_fbapi_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    FB API Key				
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_secretfacebook_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    FB App secret code			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_secretfacebook_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    FB App secret code			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_scopefacebook_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    FB App Scope			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_scopefacebook_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    FB App Scope			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_loginfacebook_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Facebook login title			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_loginfacebook_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Facebook login title			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_locfacebook_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Facebook URL			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_settingsfb_locfacebook_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Facebook URL			
+			    ]]>
 			</phrase>
 			<phrase name="settinggroup_site_registration_settings_group" 
 			    date="1340664607" username="fromero" version="1.0">
-			<![CDATA[Site Registration]]>
+			    <![CDATA[Site Registration]]>
+			</phrase>
+			<phrase name="settinggroup_site_registration_settingsfb_group" 
+			    date="1340664607" username="fromero" version="1.0">
+			    <![CDATA[Site Registration - FB Login options]]>
 			</phrase>
 		</phrasetype>
 	</phrases>
 	<options>
+	    
 		<settinggroup name="site_registration_settings_group" displayorder="65535">
 			<setting varname="site_registration_title" displayorder="10">
 				<datatype>free</datatype>
@@ -1272,6 +1412,39 @@ die;
 				</defaultvalue>
 			</setting>
 		</settinggroup>
+		<settinggroup name="settinggroup_site_registration_settingsfb_group" displayorder="65536">
+	        <setting varname="site_registration_settingsfb_showfb" 
+			    displayorder="10">
+				<datatype>boolean</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>1</defaultvalue>
+			</setting>
+			<setting varname="site_registration_settingsfb_fbapi" 
+			    displayorder="20">
+				<datatype>free</datatype>
+				<defaultvalue>FB_API_KEY</defaultvalue>
+			</setting>
+			<setting varname="site_registration_settingsfb_secretfacebook" 
+			    displayorder="30">
+				<datatype>free</datatype>
+				<defaultvalue>FP_APP_SECRET</defaultvalue>
+			</setting>
+			<setting varname="site_registration_settingsfb_scopefacebook" 
+			    displayorder="40">
+				<datatype>free</datatype>
+				<defaultvalue>FB_APP_SCOPE</defaultvalue>
+			</setting>
+			<setting varname="site_registration_settingsfb_loginfacebook" 
+			    displayorder="50">
+				<datatype>free</datatype>
+				<defaultvalue>Login with Facebook</defaultvalue>
+			</setting>
+			<setting varname="site_registration_settingsfb_locfacebook" 
+			    displayorder="60">
+				<datatype>free</datatype>
+				<defaultvalue>FB_APP_RETURN_URL</defaultvalue>
+			</setting>
+	    </settinggroup>
 	</options>
 	<helptopics>
 	</helptopics>
