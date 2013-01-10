@@ -607,14 +607,14 @@ $stylevar[htmldoctype]
 			<!-- Thumb -->
 			<div class="grid_1 alpha">
 				<div class="centered">
-					<img src="includes/site-registration/img/thumbnail.png" alt="" />
+					<img src="$fbPicture" alt="" />
 				</div>
 			</div>
 
 			<!-- Create site Account -->
 			<div class="grid_4" id="create-site-account">
 
-				<h1 class="dark_grey">Welcome $algo!</h1>
+				<h1 class="dark_grey">Welcome $fbName!</h1>
 
 				<div class="clear clear_10"></div>
 
@@ -626,7 +626,7 @@ $stylevar[htmldoctype]
 				<div class="clear clear_20"></div>
 
 				<input class="" id="email" name="email" placeholder="Email"
-					value="ralphch@gmail.com" autocomplete="off" type="email" 
+					value="$fbEmail" autocomplete="off" type="email" 
 					required />
 
 				<span class="help-block small light_grey">Keeping it real!.</span> 
@@ -635,7 +635,7 @@ $stylevar[htmldoctype]
 				
 				<input
 					class="" id="username" name="username" placeholder="Username"
-					value="RalphAndrewChochlac" autocomplete="off" type="text" 
+					value="$fbUsername" autocomplete="off" type="text" 
 					maxlength="25" required />
 
 				<span class="help-block small light_grey">Max 25 characters,
@@ -649,7 +649,7 @@ $stylevar[htmldoctype]
                     </span> 
                     <input 
                         class="fix_input_width_facebook" id="datepicker" 
-                        type="text"
+                        type="text" value="$fbBirthday"
                         placeholder="Birth Date" value="" autocomplete="off" 
                         required
                         title="You must be over 13 to register." />
@@ -1172,16 +1172,16 @@ die;
 
 						     	$_SESSION["access_token"] = $params["access_token"];
 
-						     	$graphURL = "https://graph.facebook.com/me?fields=&access_token=". $params["access_token"];
+						     	$graphURL = "https://graph.facebook.com/me?fields=id,name,email,birthday,picture,timezone,username&access_token=". $params["access_token"];
 						 
 						     	$user = json_decode(file_get_contents($graphURL));
 
 						     	$fbID = $_SESSION["fbID"] = $user->id;
+						     	$fbUsername = $_SESSION["fbUsername"] = $user->username;
 						     	$fbName = $_SESSION["fbName"] = $user->name;
 						     	$fbEmail = $_SESSION["fbEmail"] = $user->email;
-						     	$fbPicture = $_SESSION["fbPicture"] = $user->picture->data->url;
-
-						     	$algo = serialize($_SESSION);
+						     	$fbBirthday = $_SESSION["fbBirthday"] = $user->birthday;
+						     	$fbPicture = $_SESSION["fbPicture"] = $user->picture->data->url;						     	
 							} else {
 								echo "Login fails";
 							}
