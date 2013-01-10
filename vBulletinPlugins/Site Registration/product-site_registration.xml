@@ -1152,7 +1152,7 @@ die;
 			        	if(!$code) {
 			        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
 
-							$loginURL = "https://www.facebook.com/dialog/oauth?client_id=". $appID ."&redirect_uri=". urlencode($URL) ."&state=". $_SESSION["state"] ."&scope=". $scope;
+							$loginURL = "https://www.facebook.com/dialog/oauth?client_id=". $vboptions["site_registration_settingsfb_fbapi"] ."&redirect_uri=". urlencode($vboptions["site_registration_settingsfb_locfacebook"]) ."&state=". $_SESSION["state"] ."&scope=". $vboptions["site_registration_settingsfb_scopefacebook"];
 
 							echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';							
 			        	} else {		
