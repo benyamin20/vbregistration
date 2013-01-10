@@ -454,35 +454,12 @@ $vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS 
 			
 			    <div class="grid_3">
                     <if condition="$vboptions['site_registration_settingsfb_showfb']">
-				        <!-- FB login -->
-				        <h1>Fast Sign In</h1>
-				        <div class="clear"></div>
-				        <a class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]"
-                                           id="gn_fb_button" href="javascript:void(0);">
-					        <div class="logo_wrapper">
-						        <span class="logo"></span>
-					        </div> 
-					        <span>$vboptions[site_registration_settingsfb_loginfacebook]</span>
-				        </a>
-				        <div class="clear clear_15"></div> 
-				        <span class="small light_grey">It's secure and easy!</span>
-                            <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-                            <script type="text/javascript">
-                                document.getElementById('gn_fb_button').onclick = function(){
-                                    FB.init({
-                                        appId : "$vboptions[site_registration_settingsfb_fbapi]",
-                                        status: true, // check login status
-                                        cookie: true, // enable cookies to allow the server to access the session
-                                        oauth : true  // enables OAuth 2.0
-                                    });
-                                    FB.login(function(res){
-                                        if (res.status == 'connected')
-                                        {
-                                            window.location = "$vboptions[bburl]/login.php?do=login&vbnexus_service=fb&loc=$vboptions[site_registration_settingsfb_locfacebook]";
-                                        }
-                                    }, {scope: '$vboptions[site_registration_settingsfb_scopefacebook]'});
-                                };
-                            </script>
+				        <div class="inset">
+			            	<a class="fb login_button" href="connect.php?login=1">
+			                	<div class="logo_wrapper"><span class="logo"></span></div>
+			                	<span>Inicia sesión con Facebook</span>
+			            	</a>
+		        		</div>
                     <else />
                         &nbsp;
                     </if>
