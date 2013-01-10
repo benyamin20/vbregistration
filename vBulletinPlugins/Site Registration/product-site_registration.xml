@@ -245,17 +245,22 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
-<!-- <base href="$vboptions[bburl]/" /> -->
 <title>Please Activate Your Account - $vboptions[bbtitle]</title>
  
-	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css" />
-    <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
-    <link rel="stylesheet" href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css" />
-    <link media="screen" rel="stylesheet" type="text/css" href="includes/site-registration/facebox/facebox.css" />
-    <link rel="stylesheet" href="includes/site-registration/css/styles.css" />
+<link rel="stylesheet" type="text/css" media="all"
+    href="includes/site-registration/960/css/min/reset.css" />
+<link rel="stylesheet" type="text/css" media="all"
+    href="includes/site-registration/960/css/min/text.css" />
+<link rel="stylesheet" type="text/css" media="all"
+    href="includes/site-registration/960/css/min/960.css" />
+<link rel="stylesheet" media="screen"
+    href="includes/site-registration/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
+<link rel="stylesheet"
+    href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css" />
+<link media="screen" rel="stylesheet" type="text/css"
+    href="includes/site-registration/facebox/facebox.css" />
+<link rel="stylesheet" href="includes/site-registration/css/styles.css" />
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -274,21 +279,64 @@ $stylevar[htmldoctype]
 </head>
 
 <body>
+	<!-- main container -->
+	<div id="container" class="container_12">
+		<div class="clear clear_15"></div>
+		<!-- Site logo -->
+		<div id="logo" class="grid_4">
+			<a href="$vboptions[bburl]">
+		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		        </a>
+		</div>
+		<div class="clear clear_30"></div>
 
-<div id="container" class="container_12 background_yellow">
-    <div id="warning-container" >
-        <div class="pull_left no-margin grid_2 alpha">
-            <img src="includes/site-registration/img/email-icon.png" id="email-icon" />
-        </div>
-        <div class="prefix_1 pull_right no-margin grid_9 omega">
-            <h1 class="title_red no-margin">Your account Is Not Fully Active</h1>
-            <div class="clear"></div>
-            Please confirm your account by clicking on the email activation link
-            <div class="clear clear_15"></div>
-            Did not receive it? <a href="#" class="link_blue">Resend activation email</a
-        </div>
-    </div>
-</div>
+		<!-- Ad units -->
+		<div id="ad-units" class="grid_12">
+			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
+				<img src="includes/site-registration/img/first-ad-unit.png" />
+			</div>
+			<div id="second-ad-unit"
+				class="grid_2  centered pull-right omega">
+				<img src="includes/site-registration/img/second-ad-unit.png" />
+			</div>
+			<div class="clear clear_20"></div>
+			<div class="clear clear_20"></div>
+		</div>
+
+		<!-- Site heading -->
+		<div id="site-heading" class="grid_12">
+			<span class="title_red">Please Activate Your Account</span>
+		</div>
+
+		<div class="clear"></div>
+		<div class="clear clear_10"></div>
+
+		<!-- Email Icon -->
+		<div id="login-options" class="grid_12">
+			<div class="clear clear_20"></div>
+			<div class="clear clear_20"></div>
+			<div class="grid_2 alpha">
+				<img src="includes/site-registration/img/email-icon.png" id="email-icon" />
+			</div>
+			<div class="grid_8 omega">
+				<h1 class="email-sent">We have dispatched a very special email to
+					$session_email</h1>
+				<div class="clear"></div>
+				<p class="normal">
+				Please click on the link to activate your account.</p>
+				<div class="clear clear_20"></div>
+				<div class="clear clear_10"></div>
+				<p class="bold">Did not receive it?</p>
+				<a href="$php_self#resend" id="resend-email" class="small link_blue">
+				Resend Email</a>
+				&nbsp;&nbsp;&nbsp;
+				<span id="email-sent" class="small email-sent">
+				</span>
+			</div>
+		</div>
+
+	</div>
+	
 </body>
 </html>
 		
@@ -1123,11 +1171,17 @@ die;
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'activate'){
 			        	
 			        	$invalid_request = FALSE;
+			        	$form = "site-account-details";
+			        	
+			        	if(!isset($_SESSION['site_registration'][$form . '_token'])){
+			        	    $invalid_request = TRUE;
+			        	}
 			        	
 			        	//check for direct access to action
 			        	if($invalid_request){ 
 			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');    
                         }else{
+                            $session_email = $_SESSION['site_registration']['email'];
                             eval('print_output("' . fetch_template('site_reg_exception-not-activated') . '");');
                         }
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'account-activated'){
