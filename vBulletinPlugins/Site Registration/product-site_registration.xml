@@ -1152,7 +1152,7 @@ die;
 			        	if(!$code) {
 			        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
 
-							$loginURL = "https://www.facebook.com/dialog/oauth?client_id=". $vboptions["site_registration_settingsfb_fbapi"] ."&redirect_uri=". urlencode($vboptions["site_registration_settingsfb_locfacebook"]) ."&state=". $_SESSION["state"] ."&scope=". $vboptions["site_registration_settingsfb_scopefacebook"];
+							$loginURL = "https://www.facebook.com/dialog/oauth?client_id=304416966345499&redirect_uri=". urlencode("http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details") ."&state=". $_SESSION["state"] ."&scope=email,user_birthday,read_stream;
 
 							var_dump($loginURL);
 							exit;
