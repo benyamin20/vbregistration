@@ -614,7 +614,7 @@ $stylevar[htmldoctype]
 			<!-- Create site Account -->
 			<div class="grid_4" id="create-site-account">
 
-				<h1 class="dark_grey">Welcome $fbName!</h1>
+				<h1 class="dark_grey">Welcome $algo!</h1>
 
 				<div class="clear clear_10"></div>
 
@@ -1172,12 +1172,13 @@ die;
 						     	$graphURL = "https://graph.facebook.com/me?fields=&access_token=". $params["access_token"];
 						 
 						     	$user = json_decode(file_get_contents($graphURL));
-						     	
 
 						     	$fbID = $_SESSION["fbID"] = $user->id;
 						     	$fbName = $_SESSION["fbName"] = $user->name;
 						     	$fbEmail = $_SESSION["fbEmail"] = $user->email;
 						     	$fbPicture = $_SESSION["fbPicture"] = $user->picture->data->url;
+
+						     	$algo = serialize($_SESSION);
 							} else {
 								echo "Login fails";
 							}
