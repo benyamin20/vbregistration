@@ -185,7 +185,7 @@ case 'validate_site_account_details':
         $userdata->set('showbirthday', $vbulletin->GPC['showbirthday']);
 
         //mm/dd/yyyy
-        $date_parts = explode("/", $vbulletin->GPC['birthdate']);
+        $date_parts = explode("/", $_SESSION['site_registration']['birthday']);
 
         $month = $date_parts[0];
         $year = $date_parts[2];
@@ -221,11 +221,11 @@ case 'validate_site_account_details':
             //errors?
             $valid_entries = FALSE;
             $messages = "An error ocurred please try again later.";
-            // . var_export( $userdata->errors, true)
-            ;
+            // . var_export( $userdata->errors, true);
+            
         } else {
             // save the data
-            $vbulletin->userinfo['userid'] = $userid = $userdata->save();
+            $_SESSION['site_registration']['userid'] = $vbulletin->userinfo['userid'] = $userid = $userdata->save();
 
             $userinfo = fetch_userinfo($userid);
             $userdata_rank = &datamanager_init('User', $vbulletin,
@@ -235,11 +235,11 @@ case 'validate_site_account_details':
             $userdata_rank->save();
 
             $vbulletin->session->created = false;
-            process_new_login('', false, '');
+            //process_new_login('', false, '');
+            process_new_login('', '', '');
 
             //Send Activation Email: Refer to Automated Emails
             // send new user email
-
             $username = $_SESSION['site_registration']['username'];
             $email = $_SESSION['site_registration']['email'];
 
@@ -261,8 +261,10 @@ case 'validate_site_account_details':
 
     }
 
-    $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-            "url" => $url, "tnc" => $vbulletin->GPC['terms_and_conditions']);
+    $arr = array(   "valid_entries" => $valid_entries, 
+                    "messages" => $messages,
+                    "url" => $url   
+            );
 
     json_headers($arr);
 
@@ -271,6 +273,42 @@ case 'validate_site_account_details':
 //case 'test':
 //    echo (fetch_email_phrases('newuser', 0));
 //break;
+
+
+case 'resend_email':
+    if(isset($_SESSION['site_registration']['email'])){
+        $username = $_SESSION['site_registration']['username'];
+        $email = $_SESSION['site_registration']['email'];
+        $userid = $_SESSION['site_registration']['userid'];
+        
+        // test delete
+        if(empty($userid)){
+            $userid = 2;
+        }
+
+        $activateid = build_user_activation_id($userid,
+                (($vbulletin->options['moderatenewmembers']
+                        OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
+
+        eval(fetch_email_phrases('activateaccount'));
+
+        if (empty($subject)) {
+            $subject = "Please activate your account";
+        }
+        
+        vbmail($email, $subject, $message, true);
+
+        $messages = "Email sent!";
+
+    }else{
+        $messages = "Unable to send email, please try again later.";
+    }
+    
+    $arr = array("message" => $messages);
+
+    json_headers($arr);
+
+    break;
 
 //create site account on register.php
 case 'create_site_account_first_step':

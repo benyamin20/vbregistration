@@ -210,6 +210,25 @@ jQuery(document).ready(function(jQuery) {
 	
 	
 	
+	//resens email functionality 
+	if (jQuery("#resend-email").exists()) {
+	
+	    jQuery("#resend-email").bind('click', function(){
+	        jQuery.ajax({
+	            url: "includes/site-registration/php/index.php?op=resend_email",
+	            context: document.body,
+	            dataType: 'json',
+	            type: 'POST',
+	            cache: false,
+	            success: function (response) {
+	                jQuery('#email-sent').empty();
+	                jQuery('#email-sent').append(response.message);
+	            }
+	        });  
+	    });
+	  
+	}
+	
 	
 	
 	//create site account functionality
