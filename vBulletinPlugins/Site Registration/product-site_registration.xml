@@ -454,12 +454,17 @@ $vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS 
 			
 			    <div class="grid_3">
                     <if condition="$vboptions['site_registration_settingsfb_showfb']">
-				        <div class="inset">
-			            	<a class="fb login_button" href="connect.php?login=1">
-			                	<div class="logo_wrapper"><span class="logo"></span></div>
-			                	<span>Inicia sesión con Facebook</span>
-			            	</a>
-		        		</div>
+				        <!-- FB login -->
+				        <h1>Fast Sign In</h1>
+				        <div class="clear"></div>
+				        <a class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]" id="gn_fb_button" href="register.php?step=confirm-facebook-details">
+					        <div class="logo_wrapper">
+						        <span class="logo"></span>
+					        </div> 
+					        <span>$vboptions[site_registration_settingsfb_loginfacebook]</span>
+				        </a>
+				        <div class="clear clear_15"></div> 
+				        <span class="small light_grey">It's secure and easy!</span>                          
                     <else />
                         &nbsp;
                     </if>
@@ -609,7 +614,7 @@ $stylevar[htmldoctype]
 			<!-- Create site Account -->
 			<div class="grid_4" id="create-site-account">
 
-				<h1 class="dark_grey">Welcome Ralph!</h1>
+				<h1 class="dark_grey">Welcome $fbName!</h1>
 
 				<div class="clear clear_10"></div>
 
@@ -1142,6 +1147,37 @@ die;
                         }
                      
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
+			        	$code = $_REQUEST["code"];
+
+			        	if(!$code) {
+			        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
+
+							$loginURL = "https://www.facebook.com/dialog/oauth?client_id=". $appID ."&redirect_uri=". urlencode($URL) ."&state=". $_SESSION["state"] ."&scope=". $scope;
+
+							echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';							
+			        	} else {		
+							if($_SESSION["state"] and $_SESSION["state"] === $_REQUEST["state"]) {
+								$tokenURL = "https://graph.facebook.com/oauth/access_token?client_id=". $vboptions["site_registration_settingsfb_fbapi"] ."&redirect_uri=". urlencode($vboptions["site_registration_settingsfb_locfacebook"]) ."&client_secret=". $vboptions["site_registration_settingsfb_secretfacebook"] ."&code=". $code;
+						     	$response = file_get_contents($tokenURL);
+						     	$params   = NULL;
+						     	
+						     	parse_str($response, $params);
+
+						     	$_SESSION["access_token"] = $params["access_token"];
+
+						     	$graphURL = "https://graph.facebook.com/me?fields=&access_token=". $params["access_token"];
+						 
+						     	$user = json_decode(file_get_contents($graphURL));
+						     	
+
+						     	$fbID = $_SESSION["fbID"] = $user->id;
+						     	$fbName = $_SESSION["fbName"] = $user->name;
+						     	$fbEmail = $_SESSION["fbEmail"] = $user->email;
+						     	$fbPicture = $_SESSION["fbPicture"] = $user->picture->data->url;
+							} else {
+								echo "Login fails";
+							}
+						}
 			        	
 			        	eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
 			        	
@@ -1453,17 +1489,17 @@ die;
 			<setting varname="site_registration_settingsfb_fbapi" 
 			    displayorder="20">
 				<datatype>free</datatype>
-				<defaultvalue>FB_API_KEY</defaultvalue>
+				<defaultvalue>304416966345499</defaultvalue>
 			</setting>
 			<setting varname="site_registration_settingsfb_secretfacebook" 
 			    displayorder="30">
 				<datatype>free</datatype>
-				<defaultvalue>FP_APP_SECRET</defaultvalue>
+				<defaultvalue>773cbd12a3706e491bc4ad3247b66386</defaultvalue>
 			</setting>
 			<setting varname="site_registration_settingsfb_scopefacebook" 
 			    displayorder="40">
 				<datatype>free</datatype>
-				<defaultvalue>FB_APP_SCOPE</defaultvalue>
+				<defaultvalue>email,user_birthday,read_stream</defaultvalue>
 			</setting>
 			<setting varname="site_registration_settingsfb_loginfacebook" 
 			    displayorder="50">
@@ -1473,7 +1509,7 @@ die;
 			<setting varname="site_registration_settingsfb_locfacebook" 
 			    displayorder="60">
 				<datatype>free</datatype>
-				<defaultvalue>FB_APP_RETURN_URL</defaultvalue>
+				<defaultvalue>http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details</defaultvalue>
 			</setting>
 	    </settinggroup>
 	</options>
