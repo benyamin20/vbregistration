@@ -185,7 +185,7 @@ case 'validate_site_account_details':
         $userdata->set('showbirthday', $vbulletin->GPC['showbirthday']);
 
         //mm/dd/yyyy
-        $date_parts = explode("/", $vbulletin->GPC['birthdate']);
+        $date_parts = explode("/", $_SESSION['site_registration']['birthday']);
 
         $month = $date_parts[0];
         $year = $date_parts[2];
@@ -220,9 +220,8 @@ case 'validate_site_account_details':
         if (!empty($userdata->errors)) {
             //errors?
             $valid_entries = FALSE;
-            $messages = "An error ocurred please try again later.";
-            // . var_export( $userdata->errors, true)
-            ;
+            $messages = "An error ocurred please try again later." . var_export( $userdata->errors, true);
+            
         } else {
             // save the data
             $vbulletin->userinfo['userid'] = $userid = $userdata->save();
