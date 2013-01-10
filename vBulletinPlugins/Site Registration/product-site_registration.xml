@@ -1154,6 +1154,9 @@ die;
 
 							$loginURL = "https://www.facebook.com/dialog/oauth?client_id=". $vboptions["site_registration_settingsfb_fbapi"] ."&redirect_uri=". urlencode($vboptions["site_registration_settingsfb_locfacebook"]) ."&state=". $_SESSION["state"] ."&scope=". $vboptions["site_registration_settingsfb_scopefacebook"];
 
+							var_dump($loginURL);
+							exit;
+
 							echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';							
 			        	} else {		
 							if($_SESSION["state"] and $_SESSION["state"] === $_REQUEST["state"]) {
