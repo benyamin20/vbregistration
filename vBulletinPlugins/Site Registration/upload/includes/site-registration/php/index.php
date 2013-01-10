@@ -390,12 +390,13 @@ case 'create_site_account_first_step':
     }
 
     if ($valid_entries) {
-
+    
         $temp_table_query = "
             CREATE TEMPORARY TABLE IF NOT EXISTS " . TABLE_PREFIX
                 . "siteregistration_temp (
                 email VARCHAR(128) NOT NULL DEFAULT '',
-                birthday VARCHAR(12) NOT NULL DEFAULT ''
+                birthday VARCHAR(12) NOT NULL DEFAULT '',
+                initialpage VARCHAR(255) NOT NULL DEFAULT ''
             )";
 
         $vbulletin->db->query_write($temp_table_query);
@@ -406,15 +407,12 @@ case 'create_site_account_first_step':
                         "
             INSERT IGNORE INTO " . TABLE_PREFIX
                                 . "siteregistration_temp
-            (email,birthday)
+            (email,birthday,initialpage)
             VALUES
-            ('" . $vbulletin->db->escape_string($vbulletin->GPC['email'])
-                                . "',
-             '"
-                                . $vbulletin->db
-                                        ->escape_string(
-                                                $vbulletin->GPC['birthdate'])
-                                . "')
+            ('" . $vbulletin->db->escape_string($vbulletin->GPC['email'] ) . "',
+             '" . $vbulletin->db ->escape_string( $vbulletin->GPC['birthdate'] ) . "',
+             '" . $vbulletin->db ->escape_string($_SESSION['site_registration']['initial_page'] ) . "',
+             )
         ");
 
         $rows = $vbulletin->db->affected_rows();
