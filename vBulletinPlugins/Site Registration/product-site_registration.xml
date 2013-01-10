@@ -1161,7 +1161,10 @@ die;
 							echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';							
 			        	} else {		
 							if($_SESSION["state"] and $_SESSION["state"] === $_REQUEST["state"]) {
-								$tokenURL = "https://graph.facebook.com/oauth/access_token?client_id=". $vboptions["site_registration_settingsfb_fbapi"] ."&redirect_uri=". urlencode($vboptions["site_registration_settingsfb_locfacebook"]) ."&client_secret=". $vboptions["site_registration_settingsfb_secretfacebook"] ."&code=". $code;
+								$tokenURL  = "https://graph.facebook.com/oauth/access_token?";
+								$tokenURL  = "client_id=304416966345499&";
+								$tokenURL .= "redirect_uri=". urlencode("http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details") ."&";
+								$tokenURL .= "client_secret=773cbd12a3706e491bc4ad3247b66386&code=". $code;
 						     	$response = file_get_contents($tokenURL);
 						     	$params   = NULL;
 						     	
