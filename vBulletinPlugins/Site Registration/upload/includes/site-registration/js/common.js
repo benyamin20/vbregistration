@@ -213,6 +213,8 @@ jQuery(document).ready(function(jQuery) {
 	//resens email functionality 
 	if (jQuery("#resend-email").exists()) {
 	
+	    var token = escape(jQuery('#token').val());
+	
 	    jQuery("#resend-email").bind('click', function(){
 	        jQuery.ajax({
 	            url: "includes/site-registration/php/index.php?op=resend_email",
@@ -220,6 +222,7 @@ jQuery(document).ready(function(jQuery) {
 	            dataType: 'json',
 	            type: 'POST',
 	            cache: false,
+	            data: 'securitytoken=' + token, 
 	            success: function (response) {
 	                jQuery('#email-sent').empty();
 	                jQuery('#email-sent').append(response.message);

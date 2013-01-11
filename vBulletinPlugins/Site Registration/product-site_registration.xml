@@ -78,6 +78,7 @@ $stylevar[htmldoctype]
 
 		<!-- Login options -->
 		<div id="login-options">
+		    <h1>Account activated, $username! What next?</h1>
 			<div class="clear clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_8" id="create-site-account">
@@ -346,6 +347,7 @@ $stylevar[htmldoctype]
 				&nbsp;&nbsp;&nbsp;
 				<span id="email-sent" class="small email-sent">
 				</span>
+				
 			</div>
 		</div>
 
@@ -358,12 +360,14 @@ $stylevar[htmldoctype]
 		<template name="site_reg_not_activated" templatetype="template" 
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
-		    <![CDATA[
-                <link rel='stylesheet' href='includes/site-registration/960/css/min/text.css' />
+		    <![CDATA[ 
                 <link rel='stylesheet' href='includes/site-registration/960/css/min/960.css' />
                 <link rel='stylesheet' href='includes/site-registration/bootstrap/css/bootstrap.min.css' />
                 <link rel='stylesheet' href='includes/site-registration/css/fonts.css' />
                 <link rel='stylesheet' href='includes/site-registration/css/styles.css' />
+                
+                <script src='includes/site-registration/jquery-ui/js/jquery-1.8.3.js'></script>
+                <script src='includes/site-registration/js/common.js'></script>
 
                 <div id='container' class='container_12 background_yellow not-active'>
                     <div id='warning-container' >
@@ -383,7 +387,8 @@ $stylevar[htmldoctype]
 				            Resend activation email</a>
 				            &nbsp;&nbsp;&nbsp;
 				            <span id="email-sent" class="small email-sent">
-				            </span>
+				            </span> 
+				            <input id="token" name="token" value="$token" type="hidden" />
                         </div>
                     </div>
                 </div>
@@ -1092,14 +1097,45 @@ die;
 			<title>Display message if account is not active</title>
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[
-               
-                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
-			        
-	                $vbulletin->templatecache['navbar'] = str_replace(
-	                    '<!-- / nav buttons bar -->', 
-	                    '<!-- / nav buttons bar -->'. $site_reg_not_activated_template, 
-	                    $vbulletin->templatecache['navbar']
-	                ); 
+			    if((int)$vbulletin->userinfo['userid']){
+			        if (!session_id()) {
+                        session_start();
+
+                        //if (!isset($_SESSION['initiated'])) {
+                        //    session_regenerate_id();
+                        //    $_SESSION['initiated'] = true;
+                        //}
+
+                    }
+                    
+                    $userid = $vbulletin->userinfo['userid'];
+	                
+	                $users = $vbulletin->db->query_read("
+		                SELECT activationid
+		                FROM " . TABLE_PREFIX . "useractivation
+		                WHERE userid = " . $vbulletin->db->escape_string($userid). "
+	                ");
+	                
+	                $user['activationid'] = $vbulletin->db->fetch_field($users);
+	                
+	                if ($user['activationid']){
+	                    //pending activation id
+	                    
+	                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
+                        
+                        $username   = $_SESSION['site_registration']['username']    = $vbulletin->userinfo['username'];
+                        $email      = $_SESSION['site_registration']['email']       = $vbulletin->userinfo['email'];
+                        $userid     = $_SESSION['site_registration']['userid']      = $vbulletin->userinfo['userid'];
+                        $token      = $vbulletin->userinfo[securitytoken];
+			            
+	                    $vbulletin->templatecache['navbar'] = str_replace(
+	                        '<!-- / nav buttons bar -->', 
+	                        '<!-- / nav buttons bar -->' . $site_reg_not_activated_template, 
+	                        $vbulletin->templatecache['navbar']
+	                    );
+	                }
+  
+			    }    
             ]]>
             </phpcode>
 		</plugin>
@@ -1122,10 +1158,10 @@ die;
                 if (!session_id()) {
                     session_start();
 
-                    if (!isset($_SESSION['initiated'])) {
-                        session_regenerate_id();
-                        $_SESSION['initiated'] = true;
-                    }
+                    //if (!isset($_SESSION['initiated'])) {
+                    //    session_regenerate_id();
+                    //    $_SESSION['initiated'] = true;
+                    //}
 
                 }
 
@@ -1219,11 +1255,11 @@ die;
 			        if (!session_id()) {
                         session_start();
                         
-                        if (!isset($_SESSION['initiated']))
-                        {
-                            session_regenerate_id();
-                            $_SESSION['initiated'] = true;
-                        }
+                        //if (!isset($_SESSION['initiated']))
+                        //{
+                        //    session_regenerate_id();
+                        //    $_SESSION['initiated'] = true;
+                        //}
 
                     }
                     

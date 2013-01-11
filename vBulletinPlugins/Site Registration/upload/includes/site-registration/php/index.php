@@ -29,10 +29,10 @@ require_once('functions_login.php');
 if (!session_id()) {
     session_start();
 
-    if (!isset($_SESSION['initiated'])) {
-        session_regenerate_id();
-        $_SESSION['initiated'] = true;
-    }
+    //if (!isset($_SESSION['initiated'])) {
+    //    session_regenerate_id();
+    //    $_SESSION['initiated'] = true;
+    //}
 
 }
 
@@ -281,10 +281,6 @@ case 'resend_email':
         $email = $_SESSION['site_registration']['email'];
         $userid = $_SESSION['site_registration']['userid'];
         
-        // test delete
-        if(empty($userid)){
-            $userid = 2;
-        }
 
         $activateid = build_user_activation_id($userid,
                 (($vbulletin->options['moderatenewmembers']
