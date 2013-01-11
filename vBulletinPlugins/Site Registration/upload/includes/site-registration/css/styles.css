@@ -289,3 +289,65 @@ li {
 .fix-tnc-width{
     width: 37% !important
 }
+
+.fb {
+    background: #3b5998;background:-moz-linear-gradient(top, #3b5998 0%, #3b5998 50%, #325190 50%, #325190 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #3b5998), color-stop(50% , #3b5998), color-stop(50%, #325190), color-stop(100% , #325190));
+    background:-webkit-linear-gradient(top, #3b5998 0% , #3b5998 50%, #325190 50% , #325190 100%);
+    background:-o-linear-gradient(top, #3b5998 0% , #3b5998 50%, #325190 50% , #325190 100%);
+    background:-ms-linear-gradient(top, #3b5998 0% , #3b5998 50%, #325190 50% , #325190 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr= '#3b5998', endColorstr = '#325190', GradientType = 0);
+    background: linear-gradient(top, #3b5998 0%,#3b5998 50% , #325190 50%,#325190 100%);
+    box-shadow: 0px 3px 0px #213b6d;
+    -moz-box-shadow:0px 3px 0px #213b6d;
+    -webkit-box-shadow: 0px 3px 0px #213b6d;
+}
+
+.fb:hover{
+    background:#2b4582;
+    background:-moz-linear-gradient(top, #2b4582 0%, #2b4582 49% , #243d79 49%, #2b4582 100% , #243d79 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #2b4582), color-stop(49% , #2b4582), color-stop(49%, #243d79), color-stop(100% , #2b4582), color-stop(100%, #243d79));
+    background:-webkit-linear-gradient(top, #2b4582 0%, #2b4582 49% , #243d79 49%, #2b4582 100% , #243d79 100%);background:-o-linear-gradient(top, #2b4582 0% , #2b4582 49%, #243d79 49% , #2b4582 100%, #243d79 100% );
+    background:-ms-linear-gradient(top, #2b4582 0%, #2b4582 49% , #243d79 49%, #2b4582 100% , #243d79 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr= '#2b4582', endColorstr = '#243d79', GradientType = 0);
+    background: linear-gradient(top, #2b4582 0%,#2b4582 49% , #243d79 49%,#2b4582 100% , #243d79 100%);box-shadow:0px 3px 0px #172d59;-moz-box-shadow: 0px 3px 0px #172d59;-webkit-box-shadow:0px 3px 0px #172d59
+}
+
+.fb:active {
+    background-color: #243d79;
+    background-image:none;
+    ox-shadow:inset 0px 1px 0px rgba(50,50,50,0.4);
+    -moz-box-shadow:inset 0px 1px 0px rgba(50,50,50,0.4);
+    -webkit-box-shadow:inset 0px 1px 0px rgba(50,50,50,0.4);
+}
+
+.fb .logo_wrapper {
+    border-right: 1px solid #2f4f85
+}
+
+.fb:hover .logo_wrapper {
+    border-right: 1px solid #284473;
+}
+
+.fb:active .logo_wrapper {
+    border-right-color:#21386e;
+}
+
+.fb .logo {
+    float: left;
+    width: 11px;
+    height: 20px;
+    background: url("../img/login_icons.png") 1px 0 no-repeat;
+}
+
+.fb > span {
+    border-left: 1px solid #627ba8;
+
+}
+
+.fb:hover > span {
+    border-left: 1px solid #51668c
+}
+
+.fb:active > span {
+    border-left-color: #2c4b94
+}
