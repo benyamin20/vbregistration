@@ -1405,11 +1405,9 @@ die;
 		</plugin>
 		<plugin active="1" executionorder="1">
 			<title>Site Registration | User clicked on activation link</title>
-			<hookname>register_activate_process</hookname>
+			<hookname>register_activate_start</hookname>
 			<phpcode>
 			    <![CDATA[
-			        
-			        //at this point VB should have already validated a/u/i
 			    
 			        if (!session_id()) {
                         session_start();
@@ -1427,15 +1425,25 @@ die;
 
                     //get username
                     $_SESSION['site_registration']['userid'] = $userid = $vbulletin->GPC['u'];
-	                
-	                $users = $vbulletin->db->query_read("
+                    
+                    $sql = "
 		                SELECT username
 		                FROM " . TABLE_PREFIX . "user
-		                WHERE userid = " . $vbulletin->db->escape_string($userid). "
-	                ");
+		                WHERE userid = " . $db->escape_string($userid) . "
+	                ";
 	                
-	                $_SESSION['site_registration']['username'] = $username = ucfirst( $vbulletin->db->fetch_field($users) );
-
+	                $vars[] = $sql;
+	                
+	                $users = $vbulletin->db->query_read($sql);
+	                
+	                $vars[] = $users;
+	                
+	                $username = $vbulletin->db->fetch_field($users);
+	                
+	                $vars[] = $username;
+	                
+	                $username = serialize($vars);
+	                
                     eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                        
 			    ]]>
 			</phpcode>
