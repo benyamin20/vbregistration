@@ -359,41 +359,34 @@ $stylevar[htmldoctype]
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
 		    <![CDATA[
-		     
-            <style type="text/css" media="all" 
-                src="includes/assets/960/css/min/reset.css" />
-            <style type="text/css" media="all" 
-                src="includes/assets/960/css/min/text.css" />
-            <style type="text/css" media="all" 
-                src="includes/assets/960/css/min/960.css" />
-            <style type="text/css" media="all" 
-                src="includes/assets/bootstrap/css/bootstrap.min.css">
-            <style type="text/css" media="all" 
-                src="includes/assets/css/fonts.css" />
-            <style type="text/css" media="all" 
-                src="includes/assets/css/styles.css" />
+                <link rel='stylesheet' href='includes/site-registration/960/css/min/text.css' />
+                <link rel='stylesheet' href='includes/site-registration/960/css/min/960.css' />
+                <link rel='stylesheet' href='includes/site-registration/bootstrap/css/bootstrap.min.css' />
+                <link rel='stylesheet' href='includes/site-registration/css/fonts.css' />
+                <link rel='stylesheet' href='includes/site-registration/css/styles.css' />
 
-            <script src="includes/assets/bootstrap/js/bootstrap.min.js"></script> 
-
-            <div id="container" class="container_12 background_yellow">
-                <div id="warning-container" >
-                    <div class="pull_left no-margin grid_2 alpha">
-                        <img src="includes/assets/img/email-icon.png" 
-                            id="email-icon" />
-                    </div>
-                    <div class="prefix_1 pull_right no-margin grid_9 omega">
-                        <h1 class="title_red no-margin">
-                        Your account Is Not Fully Active
-                        </h1>
-                        <div class="clear"></div>
-                        Please confirm your account by clicking on the email activation link
-                        <div class="clear clear_15"></div>
-                        Did not receive it? 
-                        <a href="#" class="link_blue">Resend activation email</a>
+                <div id='container' class='container_12 background_yellow not-active'>
+                    <div id='warning-container' >
+                        <div class='pull_left no-margin grid_2 alpha'>
+                            <img src='includes/site-registration/img/email-icon.png' 
+                                id='email-icon' />
+                        </div>
+                        <div class='prefix_1 pull_right no-margin grid_9 omega'>
+                            <h1 class='title_red no-margin'>
+                            Your account Is Not Fully Active
+                            </h1>
+                            <div class='clear'></div>
+                            Please confirm your account by clicking on the email activation link
+                            <div class='clear clear_15'></div>
+                            Did not receive it? 
+                            <a href="$php_self#resend" id="resend-email" class="small link_blue">
+				            Resend activation email</a>
+				            &nbsp;&nbsp;&nbsp;
+				            <span id="email-sent" class="small email-sent">
+				            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-
             ]]>
         </template>
 		<template name="site_reg_sign-in-step-1" templatetype="template" 
@@ -1099,27 +1092,8 @@ die;
 			<title>Display message if account is not active</title>
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[
-
-                $site_reg_not_activated_template = " 
-                    
-                    <div id='container' style="background-color: #FFFFCC;">
-                        <div id='warning-container' >
-                            <div class='pull_left no-margin grid_2 alpha'>
-                                <img src='includes/site-registration/img/email-icon.png' 
-                                    id='email-icon' />
-                            </div>
-                            <div class='prefix_1 pull_right no-margin grid_9 omega'>
-                                <h1 class='title_red no-margin'>
-                                Your account Is Not Fully Active
-                                </h1>
-                                <div class='clear'></div>
-                                Please confirm your account by clicking on the email activation link
-                                <div class='clear clear_15'></div>
-                                Did not receive it? 
-                                <a href='#' class='link_blue'>Resend activation email</a>
-                            </div>
-                        </div>
-                    </div>";
+               
+                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
 			        
 	                $vbulletin->templatecache['navbar'] = str_replace(
 	                    '<!-- / nav buttons bar -->', 
