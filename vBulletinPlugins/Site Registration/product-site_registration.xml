@@ -98,35 +98,43 @@ $stylevar[htmldoctype]
 				<div class="grid_8 no-margin">
 					<!-- Thumb and description -->
 					<div class="grid_1 no-margin pull-left">
-						<img src="includes/site-registration/img/thumbnail.png" />
+						<img src="$vboptions[site_registration_checktheseout_picture1]" />
 					</div>
 					<div class="grid_7 no-margin pull-right">
-						<span class="link_blue bold">Picture Battles</span>
+						<a class="link_blue bold" 
+						    href="$vboptions[site_registration_checktheseout_link3]">
+						    $vboptions[site_registration_checktheseout_text1]
+						</a>
 						<div class="clear"></div>
-						See the community's hottest pictures and vote for your favorites.
+						$vboptions[site_registration_checktheseout_description1]
 					</div>
 					<div class="clear clear_15"></div>
 
 					<!-- Thumb and description -->
 					<div class="grid_1 no-margin pull-left">
-						<img src="includes/site-registration/img/thumbnail.png" />
+						<img src="$vboptions[site_registration_checktheseout_picture2]" />
 					</div>
 					<div class="grid_7 no-margin pull-right">
-						<span class="link_blue bold">Today's Discussions</span>
+						<a class="link_blue bold" 
+						    href="$vboptions[site_registration_checktheseout_link3]">
+						    $vboptions[site_registration_checktheseout_text2]
+						</a>
 						<div class="clear"></div>
-						See what the community is talking about, and voice your opinion.
+						$vboptions[site_registration_checktheseout_description2]
 					</div>
 					<div class="clear clear_15"></div>
 
 					<!-- Thumb and description -->
 					<div class="grid_1 no-margin pull-left">
-						<img src="includes/site-registration/img/thumbnail.png" />
+						<img src="$vboptions[site_registration_checktheseout_picture3]" />
 					</div>
 					<div class="grid_7 no-margin pull-right">
-						<span class="link_blue bold">Market Place</span>
+						<a class="link_blue bold" 
+						    href="$vboptions[site_registration_checktheseout_link3]">
+						    $vboptions[site_registration_checktheseout_text3]
+						</a>
 						<div class="clear"></div>
-						Whether you're buying selling or browsing, you can't miss our
-						marketplace.
+						$vboptions[site_registration_checktheseout_description3]
 					</div>
 					<div class="clear clear_15"></div>
 
@@ -205,19 +213,25 @@ $stylevar[htmldoctype]
 							<div class="clear"></div>
 							<label class="checkbox"> <input type="checkbox"
 								id="receive-emails-from-administrators"
-								name="receive-emails-from-administrators" value="" /> Receive
-								emails from Administrators.
+								name="receive-emails-from-administrators" value="" /> 
+								Receive emails from Administrators.
 							</label>
 
 							<div class="clear"></div>
-							<label class="checkbox"> <input type="checkbox" value=""
+							<label class="checkbox"> 
+							<input type="checkbox" value=""
+							    checked="checked"
 								id="receive-emails-from-other-members"
-								name="receive-emails-from-other-members" /> Receive emails from
-								other members.
+								name="receive-emails-from-other-members" /> 
+								    Receive emails from other members.
 							</label>
 
 							<div class="clear clear_20"></div>
-							<button class="btn btn-primary grid_2 no-margin" type="button">Save</button>
+							<button class="btn btn-primary grid_2 no-margin"
+							    id="save-account-activated" 
+							    type="button">
+							    Save
+							</button>
 						</div>
 					</div>
 				</div>
@@ -343,12 +357,45 @@ $stylevar[htmldoctype]
 		]]></template>
 		<template name="site_reg_not_activated" templatetype="template" 
 		    date="1352855133" username="IB Chandak" 
-		    version="1.0"><![CDATA[<div> THIS ACCOUNT IS NOT ACTIVATED 
- - $activatelink -$username - $activateid
-<br /><br />
-$vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS IS ACTIVATION LINK which should be emails, not displayed.
+		    version="1.0">
+		    <![CDATA[
+		     
+            <style type="text/css" media="all" 
+                src="includes/assets/960/css/min/reset.css" />
+            <style type="text/css" media="all" 
+                src="includes/assets/960/css/min/text.css" />
+            <style type="text/css" media="all" 
+                src="includes/assets/960/css/min/960.css" />
+            <style type="text/css" media="all" 
+                src="includes/assets/bootstrap/css/bootstrap.min.css">
+            <style type="text/css" media="all" 
+                src="includes/assets/css/fonts.css" />
+            <style type="text/css" media="all" 
+                src="includes/assets/css/styles.css" />
 
-</div>]]></template>
+            <script src="includes/assets/bootstrap/js/bootstrap.min.js"></script> 
+
+            <div id="container" class="container_12 background_yellow">
+                <div id="warning-container" >
+                    <div class="pull_left no-margin grid_2 alpha">
+                        <img src="includes/assets/img/email-icon.png" 
+                            id="email-icon" />
+                    </div>
+                    <div class="prefix_1 pull_right no-margin grid_9 omega">
+                        <h1 class="title_red no-margin">
+                        Your account Is Not Fully Active
+                        </h1>
+                        <div class="clear"></div>
+                        Please confirm your account by clicking on the email activation link
+                        <div class="clear clear_15"></div>
+                        Did not receive it? 
+                        <a href="#" class="link_blue">Resend activation email</a>
+                    </div>
+                </div>
+            </div>
+
+            ]]>
+        </template>
 		<template name="site_reg_sign-in-step-1" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0"><![CDATA[
     $stylevar[htmldoctype]
@@ -464,7 +511,7 @@ $vboptions[bburl]/register.php?a=act&u={$userid}&i={$activateid}    -----  THIS 
 					        <span>$vboptions[site_registration_settingsfb_loginfacebook]</span>
 				        </a>
 				        <div class="clear clear_15"></div> 
-				        <span class="small light_grey">It's secure and easy!</span>                          
+				        <span class="small light_grey">It's secure and easy!</span>
                     <else />
                         &nbsp;
                     </if>
@@ -607,14 +654,14 @@ $stylevar[htmldoctype]
 			<!-- Thumb -->
 			<div class="grid_1 alpha">
 				<div class="centered">
-					<img src="$fbPicture" alt="" />
+					<img src="includes/site-registration/img/thumbnail.png" alt="" />
 				</div>
 			</div>
 
 			<!-- Create site Account -->
 			<div class="grid_4" id="create-site-account">
 
-				<h1 class="dark_grey">Welcome $fbName!</h1>
+				<h1 class="dark_grey">Welcome Ralph!</h1>
 
 				<div class="clear clear_10"></div>
 
@@ -626,7 +673,7 @@ $stylevar[htmldoctype]
 				<div class="clear clear_20"></div>
 
 				<input class="" id="email" name="email" placeholder="Email"
-					value="$fbEmail" autocomplete="off" type="email" 
+					value="ralphch@gmail.com" autocomplete="off" type="email" 
 					required />
 
 				<span class="help-block small light_grey">Keeping it real!.</span> 
@@ -635,7 +682,7 @@ $stylevar[htmldoctype]
 				
 				<input
 					class="" id="username" name="username" placeholder="Username"
-					value="$fbUsername" autocomplete="off" type="text" 
+					value="RalphAndrewChochlac" autocomplete="off" type="text" 
 					maxlength="25" required />
 
 				<span class="help-block small light_grey">Max 25 characters,
@@ -649,7 +696,7 @@ $stylevar[htmldoctype]
                     </span> 
                     <input 
                         class="fix_input_width_facebook" id="datepicker" 
-                        type="text" value="$fbBirthday"
+                        type="text"
                         placeholder="Birth Date" value="" autocomplete="off" 
                         required
                         title="You must be over 13 to register." />
@@ -1048,50 +1095,141 @@ $stylevar[htmldoctype]
 die;
 }]]></phpcode>
 		</plugin>
-		<plugin active="0" executionorder="5">
+		<plugin active="1" executionorder="1">
 			<title>Display message if account is not active</title>
 			<hookname>parse_templates</hookname>
-			<phpcode><![CDATA[if($vbulletin->userinfo['usergroupid'] == 3)
-{
-	$userid = $vbulletin->userinfo['userid'];
-	$users = $vbulletin->db->query_read("
-		SELECT activationid
-		FROM " . TABLE_PREFIX . "useractivation
-		WHERE userid = " . $userid . "
-	");
-	
-	$user['activationid'] = $vbulletin->db->fetch_field($users);
-	
-	// make random number
-	if (empty($user['activationid']))
-	{ //none exists so create one
-		$user['activationid'] = fetch_random_string(40);
-		/*insert query*/
-		$vbulletin->db->query_write("
-			REPLACE INTO " . TABLE_PREFIX . "useractivation
-				(userid, dateline, activationid, type, usergroupid)
-			VALUES
-				($userid, " . TIMENOW . ", '$user[activationid]', 0, 2)
-		");
-	}
-	else
-	{
-		$user['activationid'] = fetch_random_string(40);
-		$vbulletin->db->query_write("
-			UPDATE " . TABLE_PREFIX . "useractivation SET
-			dateline = " . TIMENOW . ",
-			activationid = '$user[activationid]'
-			WHERE userid = $userid AND type = 0
-		");
-	}
+			<phpcode><![CDATA[
 
-	$username = $vbulletin->userinfo['username'];
-	$activateid = $user['activationid'];
-
-	eval('$site_reg_not_activated .= "' . fetch_template('site_reg_not_activated') . '";');
-	$vbulletin->templatecache['navbar'] = str_replace('<!-- / nav buttons bar -->', '<!-- / nav buttons bar -->'. $site_reg_not_activated, $vbulletin->templatecache['navbar']);
-}]]></phpcode>
+                $site_reg_not_activated_template = " 
+                    
+                    <div id='container' style="background-color: #FFFFCC;">
+                        <div id='warning-container' >
+                            <div class='pull_left no-margin grid_2 alpha'>
+                                <img src='includes/site-registration/img/email-icon.png' 
+                                    id='email-icon' />
+                            </div>
+                            <div class='prefix_1 pull_right no-margin grid_9 omega'>
+                                <h1 class='title_red no-margin'>
+                                Your account Is Not Fully Active
+                                </h1>
+                                <div class='clear'></div>
+                                Please confirm your account by clicking on the email activation link
+                                <div class='clear clear_15'></div>
+                                Did not receive it? 
+                                <a href='#' class='link_blue'>Resend activation email</a>
+                            </div>
+                        </div>
+                    </div>";
+			        
+	                $vbulletin->templatecache['navbar'] = str_replace(
+	                    '<!-- / nav buttons bar -->', 
+	                    '<!-- / nav buttons bar -->'. $site_reg_not_activated_template, 
+	                    $vbulletin->templatecache['navbar']
+	                ); 
+            ]]>
+            </phpcode>
 		</plugin>
+		
+		<plugin active="1" executionorder="1">
+			<title>Site Registration | Account Activated</title>
+			<hookname>register_activateform</hookname>
+			<phpcode>
+			<![CDATA[
+                if (isset($_SERVER['QUERY_STRING'])) {
+                    $php_self = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+                } else {
+                    $php_self = $_SERVER['PHP_SELF'];
+                }
+
+                $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
+                $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
+                $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
+
+                if (!session_id()) {
+                    session_start();
+
+                    if (!isset($_SESSION['initiated'])) {
+                        session_regenerate_id();
+                        $_SESSION['initiated'] = true;
+                    }
+
+                }
+
+                if (isset($_REQUEST['u']) && isset($_REQUEST['i'])) {
+
+                    //check if username and activation code is valid
+
+                    //check if username  exists on DB
+                    $user_exists = $vbulletin->db
+                            ->query_read(
+                                    "
+		                                    SELECT userid
+		                                    FROM " . TABLE_PREFIX
+                                            . "user
+		                                    WHERE userid = '"
+                                            . $vbulletin->db
+                                                    ->escape_string($vbulletin->GPC['u'])
+                                            . "'
+	                                    ");
+
+                    if ($vbulletin->db->num_rows($user_exists)) {
+                        //user exists
+                        $valid_user = TRUE;
+                    } else {
+                        //user does not exists, show default verification page
+                        
+                    }
+
+                    //check if activation code is valid
+                    $activation_code_exists = $vbulletin->db
+                            ->query_read(
+                                    "
+		                                    SELECT activationid
+		                                    FROM " . TABLE_PREFIX
+                                            . "useractivation
+		                                    WHERE
+		                                        activationid = '"
+                                            . $vbulletin->db
+                                                    ->escape_string($vbulletin->GPC['i'])
+                                            . "'
+		                                    AND
+		                                        userid =     '"
+                                            . $vbulletin->db
+                                                    ->escape_string($vbulletin->GPC['u'])
+                                            . "'
+                                            AND type = 0
+	                                    ");
+
+                    if ($vbulletin->db->num_rows($activation_code_exists)) {
+                        //activation code is valid
+                        $valid_activation_code  = TRUE;
+                    } else {
+                        //user does not exists neither activation code,
+                        //show to default verification page
+                        
+                    }
+
+                    if($valid_activation_code && $valid_user){
+                    
+                        // delete activationid
+                        $vbulletin->db->query_write(
+                            "DELETE FROM " . TABLE_PREFIX . "useractivation 
+                                WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
+                                AND type = 0"
+                        );
+                    
+                    
+                        eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
+
+                    }
+                    
+                    
+                }
+      
+			]]>
+		    </phpcode>
+		</plugin>
+		
 		<plugin active="1" executionorder="1">
 			<title>Site Registration | Sign In: Step 1</title>
 			<hookname>register_start</hookname>
@@ -1147,24 +1285,27 @@ die;
                         }
                      
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
-			        	$code = $_REQUEST["code"];
+			        	$code           = $_REQUEST["code"];
+			        	$cliend_id      = $vbulletin->options['site_registration_settingsfb_fbapi'];
+			        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
+			        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
 
 			        	if(!$code) {
 			        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
 
 							$loginURL  = "https://www.facebook.com/dialog/oauth?";
-							$loginURL .= "client_id=304416966345499&";
-							$loginURL .= "redirect_uri=". urlencode("http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details") ."&";
+							$loginURL .= "client_id=$client_id&";
+							$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
 							$loginURL .= "state=". $_SESSION["state"] ."&";
-							$loginURL .= "scope=email,user_birthday,read_stream";
+							$loginURL .= "scope=$scope";
 
 							echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';							
 			        	} else {		
 							if($_SESSION["state"] and $_SESSION["state"] === $_REQUEST["state"]) {
 								$tokenURL  = "https://graph.facebook.com/oauth/access_token?";
-								$tokenURL .= "client_id=304416966345499&";
-								$tokenURL .= "redirect_uri=". urlencode("http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details") ."&";
-								$tokenURL .= "client_secret=773cbd12a3706e491bc4ad3247b66386&code=". $code;
+								$tokenURL .= "client_id=$client_id&";
+								$tokenURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] . "/register.php?step=confirm-facebook-details") ."&";
+								$tokenURL .= "client_secret=$client_secret&code=". $code;
 						     	$response = file_get_contents($tokenURL);
 						     	$params   = NULL;
 						     	
@@ -1176,14 +1317,14 @@ die;
 						 
 						     	$user = json_decode(file_get_contents($graphURL));
 
-						     	$fbID = $_SESSION["fbID"] = $user->id;
-						     	$fbUsername = $_SESSION["fbUsername"] = $user->username;
-						     	$fbName = $_SESSION["fbName"] = $user->name;
-						     	$fbEmail = $_SESSION["fbEmail"] = $user->email;
-						     	$fbBirthday = $_SESSION["fbBirthday"] = $user->birthday;
-						     	$fbPicture = $_SESSION["fbPicture"] = $user->picture->data->url;						     	
+						     	$fbID = $_SESSION['site_registration']["fbID"] = $user->id;
+						     	$fbUsername = $_SESSION['site_registration']["fbUsername"] = $user->username;
+						     	$fbName = $_SESSION['site_registration']["fbName"] = $user->name;
+						     	$fbEmail = $_SESSION['site_registration']["fbEmail"] = $user->email;
+						     	$fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $user->birthday;
+						     	$fbPicture = $_SESSION['site_registration']["fbPicture"] = $user->picture->data->url;						     	
 							} else {
-								echo "Login fails";
+								eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 							}
 						}
 			        	
@@ -1205,7 +1346,8 @@ die;
                             $session_email = $_SESSION['site_registration']['email'];
                             eval('print_output("' . fetch_template('site_reg_exception-not-activated') . '");');
                         }
-			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'account-activated'){
+			        }
+			        /*else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'account-activated'){
 			        	
 			        	$invalid_request = FALSE;
 			        	
@@ -1215,6 +1357,13 @@ die;
                         }else{
                             eval('print_output("' . fetch_template('site_reg_account-activated') . '");');
                         }
+			        }*/
+			        else if(isset($_REQUEST['a']) && $_REQUEST['a'] == 'ver'){
+			            //don't show the default template allow user to verify
+			            //account 
+			        }
+			        else if(isset($_REQUEST['do']) && $_REQUEST['do'] != 'signup' ){
+			            //don't show the default template
 			        }
 			        else{
 			            //default template for registration
@@ -1319,7 +1468,157 @@ die;
 			    <![CDATA[
 			    Site Registration Benefits			
 			    ]]>
-			</phrase> 
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_picture1_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 1st picture src
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_picture1_desc"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 1st picture src			
+			    ]]>
+			</phrase>			
+            <phrase name="setting_site_registration_checktheseout_picture2_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 2nd picture src
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_picture2_desc"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 2nd picture src			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_picture3_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 3rd picture src
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_picture3_desc"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 3rd picture src			
+			    ]]>
+			</phrase>
+            <phrase name="setting_site_registration_checktheseout_text1_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 1st text		
+			    ]]>
+			</phrase>
+            <phrase name="setting_site_registration_checktheseout_text1_desc"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 1st text			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_text1_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 1st text			
+			    ]]>
+			</phrase>
+            <phrase name="setting_site_registration_checktheseout_text2_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 2nd text		
+			    ]]>
+			</phrase>
+            <phrase name="setting_site_registration_checktheseout_text2_desc"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 2nd text			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_text3_title"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 3rd text		
+			    ]]>
+			</phrase>
+            <phrase name="setting_site_registration_checktheseout_text3_desc"   
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 3rd text			
+			    ]]>
+			</phrase>
+            <phrase name="setting_site_registration_checktheseout_link1_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 1st link			
+			    ]]>
+			</phrase>            
+            <phrase name="setting_site_registration_checktheseout_link1_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 1st link		
+			    ]]>
+			</phrase>            
+            <phrase name="setting_site_registration_checktheseout_link2_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 2nd link			
+			    ]]>
+			</phrase>            
+            <phrase name="setting_site_registration_checktheseout_link2_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 2nd link		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_link3_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 3rd link			
+			    ]]>
+			</phrase>            
+            <phrase name="setting_site_registration_checktheseout_link3_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 3rd link		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_description1_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out out 1st description		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_description1_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 1st description		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_description2_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out out 2nd description		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_description2_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 2nd description		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_description3_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out out 3rd description		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_checktheseout_description3_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Check these out 3rd description		
+			    ]]>
+			</phrase>
 			<phrase name="setting_site_registration_settingsfb_showfb_desc" 
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
@@ -1381,18 +1680,6 @@ die;
 			    Facebook login title			
 			    ]]>
 			</phrase>
-			<phrase name="setting_site_registration_settingsfb_locfacebook_desc" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Facebook URL			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_locfacebook_title"   
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Facebook URL			
-			    ]]>
-			</phrase>
 			<phrase name="settinggroup_site_registration_settings_group" 
 			    date="1340664607" username="fromero" version="1.0">
 			    <![CDATA[Site Registration]]>
@@ -1400,7 +1687,7 @@ die;
 			<phrase name="settinggroup_site_registration_settingsfb_group" 
 			    date="1340664607" username="fromero" version="1.0">
 			    <![CDATA[Site Registration - FB Login options]]>
-			</phrase>
+			</phrase> 
 		</phrasetype>
 	</phrases>
 	<options>
@@ -1413,7 +1700,9 @@ die;
 			<setting varname="site_registration_line_description" displayorder="20">
 				<datatype>free</datatype>
 				<defaultvalue>
+				    <![CDATA[
 				    After 15 days and 5 posts, you're automatically upgraded for free, and receive:
+				    ]]>
 				</defaultvalue>
 			</setting>
 			<setting varname="site_registration_bullets_part_1" displayorder="30">
@@ -1446,7 +1735,11 @@ die;
 			</setting>
 			<setting varname="site_registration_link_text" displayorder="50">
 				<datatype>free</datatype>
-				<defaultvalue>See benefits comparison &#187;</defaultvalue>
+				<defaultvalue>
+				    <![CDATA[
+				        See benefits comparison &#187;
+				    ]]>
+		        </defaultvalue>
 			</setting>
 			<setting varname="site_registration_benefits" displayorder="60">
 				<datatype>free</datatype>
@@ -1486,8 +1779,104 @@ die;
 					]]>
 				</defaultvalue>
 			</setting>
+			<setting varname="site_registration_checktheseout_picture1" displayorder="70">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        /includes/site-registration/img/thumbnail.png
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_text1" displayorder="80">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        Picture Battles
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_link1" displayorder="90">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        http://awesomeforum.tld/random-thread
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_description1" displayorder="100">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        See the comunity's hottest pictures and vote for your favorites.
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_picture2" displayorder="110">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        /includes/site-registration/img/thumbnail.png
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_text2" displayorder="120">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        Today's Discussions
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_link2" displayorder="130">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        http://awesomeforum.tld/random-thread
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_description2" displayorder="140">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        See what the community is talking about, and voice your opinion.
+				    ]]>
+		        </defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_picture3" displayorder="150">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        /includes/site-registration/img/thumbnail.png
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_text3" displayorder="160">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        Marketplace
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_link3" displayorder="170">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        http://awesomeforum.tld/random-thread
+				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_checktheseout_description3" displayorder="180">
+				<datatype>free</datatype>
+				<defaultvalue> 
+				    <![CDATA[
+				        Wheter you're buying or browsing, you can't miss our marketplace.
+				    ]]>
+				</defaultvalue>
+			</setting>
 		</settinggroup>
-		<settinggroup name="settinggroup_site_registration_settingsfb_group" displayorder="65536">
+        <settinggroup name="settinggroup_site_registration_settingsfb_group" displayorder="65536">
 	        <setting varname="site_registration_settingsfb_showfb" 
 			    displayorder="10">
 				<datatype>boolean</datatype>
@@ -1497,27 +1886,38 @@ die;
 			<setting varname="site_registration_settingsfb_fbapi" 
 			    displayorder="20">
 				<datatype>free</datatype>
-				<defaultvalue>304416966345499</defaultvalue>
+				<defaultvalue> 
+				    <![CDATA[
+				        304416966345499
+				    ]]>
+				</defaultvalue>
 			</setting>
 			<setting varname="site_registration_settingsfb_secretfacebook" 
 			    displayorder="30">
 				<datatype>free</datatype>
-				<defaultvalue>773cbd12a3706e491bc4ad3247b66386</defaultvalue>
+				<defaultvalue> 
+				    <![CDATA[
+				        773cbd12a3706e491bc4ad3247b66386
+				    ]]>
+				</defaultvalue>
 			</setting>
 			<setting varname="site_registration_settingsfb_scopefacebook" 
 			    displayorder="40">
 				<datatype>free</datatype>
-				<defaultvalue>email,user_birthday,read_stream</defaultvalue>
+				<defaultvalue> 
+				    <![CDATA[
+				        email,user_birthday,read_stream
+				    ]]>
+				</defaultvalue>
 			</setting>
 			<setting varname="site_registration_settingsfb_loginfacebook" 
 			    displayorder="50">
 				<datatype>free</datatype>
-				<defaultvalue>Login with Facebook</defaultvalue>
-			</setting>
-			<setting varname="site_registration_settingsfb_locfacebook" 
-			    displayorder="60">
-				<datatype>free</datatype>
-				<defaultvalue>http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details</defaultvalue>
+				<defaultvalue> 
+				    <![CDATA[
+				        Login with Facebook
+				    ]]>
+				</defaultvalue>
 			</setting>
 	    </settinggroup>
 	</options>
