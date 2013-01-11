@@ -60,11 +60,11 @@ $stylevar[htmldoctype]
 
 		<!-- Ad units -->
 		<div id="ad-units" class="grid_12">
-			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
-				<img src="includes/site-registration/img/first-ad-unit.png" />
+			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">	
+			    $vboptions[site_registration_adunit1]
 			</div>
 			<div id="second-ad-unit" class="grid_2  centered pull-right omega">
-				<img src="includes/site-registration/img/second-ad-unit.png" />
+				$vboptions[site_registration_adunit2]
 			</div>
 			<div class="clear clear_20"></div>
 			<div class="clear clear_20"></div>
@@ -72,13 +72,12 @@ $stylevar[htmldoctype]
 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">Join $vboptions[bbtitle]</span>
+			<span class="title_red">Account activated, $username! What next?</span>
 		</div>
 		<div class="clear clear_10"></div>
 
 		<!-- Login options -->
-		<div id="login-options">
-		    <h1>Account activated, $username! What next?</h1>
+		<div id="login-options"> 
 			<div class="clear clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_8" id="create-site-account">
@@ -308,11 +307,11 @@ $stylevar[htmldoctype]
 		<!-- Ad units -->
 		<div id="ad-units" class="grid_12">
 			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
-				<img src="includes/site-registration/img/first-ad-unit.png" />
+				$vboptions[site_registration_adunit1]
 			</div>
 			<div id="second-ad-unit"
 				class="grid_2  centered pull-right omega">
-				<img src="includes/site-registration/img/second-ad-unit.png" />
+				$vboptions[site_registration_adunit2]
 			</div>
 			<div class="clear clear_20"></div>
 			<div class="clear clear_20"></div>
@@ -1368,7 +1367,7 @@ die;
                             eval('print_output("' . fetch_template('site_reg_account-activated') . '");');
                         }
 			        }*/
-			        else if(isset($_REQUEST['a']) && $_REQUEST['a'] == 'ver'){
+			        else if(isset($_REQUEST['a'])){
 			            //don't show the default template allow user to verify
 			            //account 
 			        }
@@ -1401,6 +1400,43 @@ die;
 			            header("Location: /register.php");
 			        }
 			         
+			    ]]>
+			</phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Site Registration | User clicked on activation link</title>
+			<hookname>register_activate_process</hookname>
+			<phpcode>
+			    <![CDATA[
+			        
+			        //at this point VB should have already validated a/u/i
+			    
+			        if (!session_id()) {
+                        session_start();
+                    }
+			    
+                    if (isset($_SERVER['QUERY_STRING'])) {
+                        $php_self = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+                    } else {
+                        $php_self = $_SERVER['PHP_SELF'];
+                    }
+
+                    $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
+                    $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
+                    $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
+
+                    //get username
+                    $_SESSION['site_registration']['userid'] = $userid = $vbulletin->GPC['u'];
+	                
+	                $users = $vbulletin->db->query_read("
+		                SELECT username
+		                FROM " . TABLE_PREFIX . "user
+		                WHERE userid = " . $vbulletin->db->escape_string($userid). "
+	                ");
+	                
+	                $_SESSION['site_registration']['username'] = $username = ucfirst( $vbulletin->db->fetch_field($users) );
+
+                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                        
 			    ]]>
 			</phpcode>
 		</plugin>
@@ -1479,6 +1515,7 @@ die;
 			    Site Registration Benefits			
 			    ]]>
 			</phrase>
+			<!-- Check these out options -->
 			<phrase name="setting_site_registration_checktheseout_picture1_title"   
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
@@ -1629,6 +1666,34 @@ die;
 			    Check these out 3rd description		
 			    ]]>
 			</phrase>
+			<!-- FIRST AD UNIT -->
+			<phrase name="setting_site_registration_adunit1_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    First ad unit		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_adunit1_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    First ad unit		
+			    ]]>
+			</phrase>
+			<!-- SECOND AD UNITS -->
+			<phrase name="setting_site_registration_adunit2_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Second ad unit		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_adunit2_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Second ad unit		
+			    ]]>
+			</phrase>
+			
+			<!-- Facebook options -->
 			<phrase name="setting_site_registration_settingsfb_showfb_desc" 
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
@@ -1883,6 +1948,25 @@ die;
 				    <![CDATA[
 				        Wheter you're buying or browsing, you can't miss our marketplace.
 				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_adunit1" displayorder="190">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue>
+				    <![CDATA[
+				        <img src="includes/site-registration/img/first-ad-unit.png" />
+					]]>
+				</defaultvalue>
+			</setting>
+			
+			<setting varname="site_registration_adunit2" displayorder="200">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue>
+				    <![CDATA[
+                        <img src="includes/site-registration/img/second-ad-unit.png" />
+					]]>
 				</defaultvalue>
 			</setting>
 		</settinggroup>
