@@ -661,7 +661,7 @@ $stylevar[htmldoctype]
 			<!-- Create site Account -->
 			<div class="grid_4" id="create-site-account">
 
-				<h1 class="dark_grey">Welcome Ralph!</h1>
+				<h1 class="dark_grey">Welcome $fbName!</h1>
 
 				<div class="clear clear_10"></div>
 
@@ -673,7 +673,7 @@ $stylevar[htmldoctype]
 				<div class="clear clear_20"></div>
 
 				<input class="" id="email" name="email" placeholder="Email"
-					value="ralphch@gmail.com" autocomplete="off" type="email" 
+					value="$fbEmail" autocomplete="off" type="email" 
 					required />
 
 				<span class="help-block small light_grey">Keeping it real!.</span> 
@@ -682,7 +682,7 @@ $stylevar[htmldoctype]
 				
 				<input
 					class="" id="username" name="username" placeholder="Username"
-					value="RalphAndrewChochlac" autocomplete="off" type="text" 
+					value="$fbUsername" autocomplete="off" type="text" 
 					maxlength="25" required />
 
 				<span class="help-block small light_grey">Max 25 characters,
@@ -697,7 +697,7 @@ $stylevar[htmldoctype]
                     <input 
                         class="fix_input_width_facebook" id="datepicker" 
                         type="text"
-                        placeholder="Birth Date" value="" autocomplete="off" 
+                        placeholder="Birth Date" value="$fbBirthday" autocomplete="off" 
                         required
                         title="You must be over 13 to register." />
                 </div>
