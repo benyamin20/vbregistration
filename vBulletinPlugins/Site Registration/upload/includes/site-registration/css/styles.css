@@ -31,6 +31,7 @@ li {
 
 .link_blue {
 	color: #0066DD;
+	cursor: pointer;
 }
 
 .dark_grey {
@@ -315,7 +316,7 @@ li {
 .fb:active {
     background-color: #243d79;
     background-image:none;
-    ox-shadow:inset 0px 1px 0px rgba(50,50,50,0.4);
+    box-shadow:inset 0px 1px 0px rgba(50,50,50,0.4);
     -moz-box-shadow:inset 0px 1px 0px rgba(50,50,50,0.4);
     -webkit-box-shadow:inset 0px 1px 0px rgba(50,50,50,0.4);
 }

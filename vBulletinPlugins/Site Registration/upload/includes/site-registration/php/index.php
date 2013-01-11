@@ -410,8 +410,8 @@ case 'create_site_account_first_step':
             (email,birthday,initialpage)
             VALUES
             ('" . $vbulletin->db->escape_string($vbulletin->GPC['email'] ) . "',
-             '" . $vbulletin->db ->escape_string( $vbulletin->GPC['birthdate'] ) . "',
-             '" . $vbulletin->db ->escape_string($_SESSION['site_registration']['initial_page'] ) . "',
+             '" . $vbulletin->db->escape_string($vbulletin->GPC['birthdate'] ) . "',
+             '" . $vbulletin->db->escape_string($_SESSION['site_registration']['initial_page'] ) . "',
              )
         ");
 
