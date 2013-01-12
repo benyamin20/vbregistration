@@ -72,7 +72,7 @@ $stylevar[htmldoctype]
 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">Account activated, $username! What next?</span>
+			<span class="title_red">Account activated, $username_db! What next?</span>
 		</div>
 		<div class="clear clear_10"></div>
 
@@ -1422,27 +1422,21 @@ die;
                     $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
                     $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
                     $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
+ 
 
                     //get username
                     $_SESSION['site_registration']['userid'] = $userid = $vbulletin->GPC['u'];
                     
-                    $sql = "
-		                SELECT username
-		                FROM " . TABLE_PREFIX . "user
-		                WHERE userid = " . $db->escape_string($userid) . "
-	                ";
+                    $sql = "SELECT username, email
+		                    FROM " . TABLE_PREFIX . "user
+		                    WHERE userid = $userid";
+                     
+	                $users_db = $vbulletin->db->query_first($sql); 
+	                 
+	                $_SESSION['site_registration']['username'] = unhtmlspecialchars($users_db['username']);
+	                $_SESSION['site_registration']['email'] = unhtmlspecialchars($users_db['email']);
 	                
-	                $vars[] = $sql;
-	                
-	                $users = $vbulletin->db->query_read($sql);
-	                
-	                $vars[] = $users;
-	                
-	                $username = $vbulletin->db->fetch_field($users);
-	                
-	                $vars[] = $username;
-	                
-	                $username = serialize($vars);
+	                $username_db = ucfirst($users_db['username']);
 	                
                     eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                        
 			    ]]>
