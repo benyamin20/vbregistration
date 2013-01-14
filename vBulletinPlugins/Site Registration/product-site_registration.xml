@@ -25,6 +25,7 @@ $stylevar[htmldoctype]
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css" />
     <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap-fileupload.min.css">
     <link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
     <link rel="stylesheet" href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css" />
     <link media="screen" rel="stylesheet" type="text/css" href="includes/site-registration/facebox/facebox.css" />
@@ -41,6 +42,8 @@ $stylevar[htmldoctype]
                 .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
 </script>
 <script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script>
+<script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script>
+<script src="includes/site-registration/bootstrap/js/bootstrap-fileupload.min.js"></script>
 <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
 
 
@@ -164,13 +167,38 @@ $stylevar[htmldoctype]
 							<span class="bold">Your Avatar</span>
 							<div class="clear clear_15"></div>
 
-							<div id="avatar-container grid_3">
-								<div class="grid_1 no-margin pull-left">
-									<img src="includes/site-registration/img/thumbnail.png" 
-									    id="selected-avatar" />
-								</div>
-								<div class="pull_right grid_2">
-									<button class="btn">Upload</button>
+							<div id="avatar-container grid_4">
+								<!--
+								    <div class="grid_1 no-margin pull-left">
+									    <img src="includes/site-registration/img/thumbnail.png" 
+									        id="selected-avatar" />
+								    </div>
+								-->
+								<div class="pull_right grid_4">	
+									<!--
+									    <button class="btn">Upload</button>
+									-->
+									
+									<div class="fileupload fileupload-new" 
+									    data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" 
+                                            style="width: 50px; height: 50px;">
+                                                <img 
+                                                    src="http://www.placehold.it/50x50/EFEFEF/AAAAAA"
+                                                    id="selected-avatar" />
+                                        </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail" 
+                                            style="width: 50px; height: 50px;">
+                                        </div>
+                                        <span class="btn btn-file">
+                                            <span class="fileupload-new">Select image</span>
+                                            <span class="fileupload-exists">Change</span>
+                                            <input type="file" />
+                                        </span>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                </div>
+									
+									
 									<div class="clear clear_15"></div>
 									<a class="small link_blue" id="use-default">Use default.</a>
 								</div>
@@ -403,7 +431,8 @@ $stylevar[htmldoctype]
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css" />
-    <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap-tooltip.min.css" />
     <link rel="stylesheet" href="includes/site-registration/css/fonts.css" />
     <link rel="stylesheet" href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css" />
     <link media="screen" rel="stylesheet" type="text/css" href="includes/site-registration/facebox/facebox.css" />
@@ -420,6 +449,7 @@ $stylevar[htmldoctype]
                     .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
     </script>
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
+    <script src="includes/site-registration/bootstrap/js/bootstrap-tooltip.min.js"></script> 
     <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
 
     <title>Sign In - $vboptions[bbtitle]</title>
@@ -470,6 +500,7 @@ $stylevar[htmldoctype]
                             <input class="fix_input_width" id="datepicker" type="text"
 						        placeholder="Birth Date" value="" autocomplete="off" required
 						        title="You must be over 13 to register."
+						        rel="tooltip"
 						        name="birthdate" />
 				        </div>
 				    </div>
@@ -1254,13 +1285,6 @@ die;
 			        
 			        if (!session_id()) {
                         session_start();
-                        
-                        //if (!isset($_SESSION['initiated']))
-                        //{
-                        //    session_regenerate_id();
-                        //    $_SESSION['initiated'] = true;
-                        //}
-
                     }
                     
                     $_SESSION['site_registration']['initial_page'] = $php_self; 
@@ -1367,20 +1391,28 @@ die;
                         }else{
                             eval('print_output("' . fetch_template('site_reg_account-activated') . '");');
                         }
-			        }*/
+			        }
 			        else if(isset($_REQUEST['a'])){
 			            //don't show the default template allow user to verify
 			            //account 
+			            //echo 1;
+			        }else{
+                        			        
 			        }
-			        else if(isset($_REQUEST['do']) && $_REQUEST['do'] != 'signup' ){
-			            //don't show the default template
-			        }
-			        else{
-			            //default template for registration
+			        */
+			        
+			        if(isset($_REQUEST['a'] ) && $_REQUEST['a'] == 'act' ){
+			            
+			        }else{
 			            if(!(int)$vbulletin->userinfo['userid']){
-			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			            }
-			        } 
+			        }
+			         
+			         
+			         
+			         
+			        
 			    ]]>
 			</phpcode>
 		</plugin>
