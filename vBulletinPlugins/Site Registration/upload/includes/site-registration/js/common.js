@@ -139,6 +139,7 @@ jQuery(document).ready(function(jQuery) {
                     //valid entries
                     for(i = 50; i <= 100; i++ ){
                         jQuery('#progress-indicator').css("width", i + '%');
+                        jQuery('#percentage-indicator').html(i);
                     }
                     
                     try{
@@ -148,93 +149,21 @@ jQuery(document).ready(function(jQuery) {
                     }catch(e){
                     
                     }
-
-                    //redirect user to proper url
-                    //var url = response.url;    
-                    //jQuery(location).attr('href',url);
                     
-                    }
+                    jQuery('#show-great').empty();
+                    jQuery('#show-great').html("Great!");
+                    jQuery('#complete-your-profile-form').remove();
+                    jQuery('.complete-your-profile').css('min-height',420);
+                    jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
+                    
+                    
+                }
             } 
         }; 
         
 	    jQuery('#complete-your-profile-form').ajaxForm(options);
 	}
 	
-     
-	
-	/*
-	//submit "complete your profile"
-	if(jQuery("#save-account-activated").exists()){
-	
-
-	
-	    //save button
-	    jQuery("#save-account-activated").bind('click', function(){
-	        
-	        
-	        //get all values from the form
-	        var sq = secret_question = escape(jQuery("#secret_question").val());
-	        var sa = secret_answer = escape(jQuery("#secret_answer").val());
-	        var ra = receive_emails_from_administrators = jQuery("#receive-emails-from-administrators").is(':checked') ? 1 : 0;
-	        var ro = receive_emails_from_other_members = jQuery("#receive-emails-from-other-members").is(':checked') ? 1 : 0;
-	        var tz = timezone = escape(jQuery("#timezone").val());
-	        var a  = avatar = escape(jQuery("#avatar").val());
- 
-	        
-	        jQuery.ajax({
-              url: "includes/site-registration/php/index.php?op=complete_your_profile",
-              context: document.body, 
-              dataType: 'json',
-              type: 'POST',
-              cache: false,
-              contentType: 'multipart/form-data',
-              data:  'secret_question='+sq+'&secret_answer='+sa+'&receive_emails_from_administrators='+ra+'&receive_emails_from_other_members='+ro+'&timezone='+tz,
-              beforeSend: function(){
-                //show progress bar
-	            jQuery("#progress-indicator-container").addClass("progress-striped active");
-              },
-              success: function( response ) {
-                    if(response.valid_entries == false){
-                        jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
-                        jQuery('.error-label').empty();
-                        jQuery('.input-error-container').removeClass("input-error-container");
-                        jQuery('.input-error').removeClass("input-error");
-                        
-                        jQuery.each(response.messages.fields, function(index, value) {        
-                            jQuery('#'+value+'-wrapper').addClass("input-error-container");
-                            jQuery('#'+value).addClass("input-error");
-                            jQuery('#'+value+'-error-label').empty();
-                            jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
-                        });
-                    
-                    }else{
-                        //valid entries
-                        for(i = 50; i <= 100; i++ ){
-	                        jQuery('#progress-indicator').css("width", i + '%');
-	                    }
-	                    
-	                    try{
-                            jQuery('.error-label').empty();
-                            jQuery('.input-error-container').removeClass("input-error-container");
-                            jQuery('.input-error').removeClass("input-error");
-                        }catch(e){
-                        
-                        }
-
-                        //redirect user to proper url
-                        //var url = response.url;    
-                        //jQuery(location).attr('href',url);
-	                    
-                    }
-              
-                } 
-              }).done(function() { 
-                //nothing here
-            });
- 
-	    });
-	}
-	*/
 
 	
 	//site account details
