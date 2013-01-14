@@ -1335,7 +1335,7 @@ die;
 						     	$fbPicture = $_SESSION['site_registration']["fbPicture"] = $user->picture->data->url;
 
 						     	//Verify if the account already exists...
-						     	$data = $vbulletin->db->query_read("SELECT service, nonvbid, userid FROM ". TABLE_PREFIX ."vbnexus_user" WHERE nonvbid = '$fbID');
+						     	$data = $vbulletin->db->query_read("SELECT service, nonvbid, userid FROM ". TABLE_PREFIX ."vbnexus_user WHERE nonvbid = '$fbID'");
 
 						     	if(!$data) {
 						     		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
