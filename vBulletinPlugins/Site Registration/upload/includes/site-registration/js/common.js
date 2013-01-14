@@ -88,7 +88,8 @@ jQuery(document).ready(function(jQuery) {
 			});
 		}
 	}
-	
+
+    //assign default image to upload file	
 	if(jQuery("#use-default").exists()){
 	    jQuery("#use-default").bind('click', function(){
 	        jQuery("#selected-avatar").attr("src","/images/misc/unknown.gif");
@@ -96,8 +97,37 @@ jQuery(document).ready(function(jQuery) {
 	}
 	
 	
+	//submit "complete your profile"
+	if(jQuery("#save-account-activated").exists()){
+	
+	     //bind enter event to  fields
+	    jQuery("#secret_question").enterKey(function () {
+            jQuery("#save-account-activated").trigger('click');
+        });
+
+        jQuery("#secret_answer").enterKey(function () {
+            jQuery("#save-account-activated").trigger('click');
+        });
 	
 	
+	    jQuery("#save-account-activated").bind('click', function(){
+	        jQuery("#progress-indicator-container").addClass("progress-striped active"); 
+	        
+	        var secret_question = escape(jQuery("#secret_question").val());
+	        var secret_answer = escape(jQuery("#secret_answer").val());
+	        var receive_emails_from_administrators = jQuery("#receive-emails-from-administrators").is(':checked') ? 1 : 0;
+	        var receive_emails_from_other_members = jQuery("#receive-emails-from-other-members").is(':checked') ? 1 : 0;
+	        var timezone = escape(jQuery("#timezone").val());
+	        var avaar = escape(jQuery("#avatar").val());
+	        
+	        for(i = 50; i <= 100; i++ ){
+	            jQuery('#progress-indicator').css("width", i + '%');
+	        }
+	        
+	    });
+	}
+	
+
 	
 	//site account details
 	if(jQuery("#site-account-deails-create-account").exists()){
