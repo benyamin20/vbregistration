@@ -5,7 +5,7 @@ AJAX_Compatible = true;
  * check if something exists
  */
 jQuery.fn.exists = function() {
-	return this.length > 0;
+  return this.length > 0;
 }
 
 
@@ -23,9 +23,22 @@ jQuery.fn.enterKey = function (fnc) {
     })
 }
 
+$.fn.realVal = function(){
+    var $obj = $(this);
+    var val = $obj.val();
+    var type = $obj.attr('type');
+    if (type && type==='checkbox') {
+        var un_val = $obj.attr('data-unchecked');
+        if (typeof un_val==='undefined') un_val = '';
+        return $obj.prop('checked') ? val : un_val;
+    } else {
+        return val;
+    }
+};
+
 //alternative function to close a facebox thru a trigger
 closeTnC = function() {
-	jQuery(document).trigger('close.facebox');
+  jQuery(document).trigger('close.facebox');
 }
 
 /**
@@ -34,55 +47,127 @@ closeTnC = function() {
 jQuery(document).ready(function(jQuery) {
 
     //initialize any facebox
-	if (jQuery('a[rel*=facebox]').exists()) {
-		jQuery.getScript("includes/site-registration/facebox/facebox.js", function() {
-			jQuery('a[rel*=facebox]').facebox({
-				loadingImage : 'includes/site-registration/facebox/loading.gif',
-				closeImage : 'includes/site-registration/facebox/closelabel.png' 
-			});
-		});
+  if (jQuery('a[rel*=facebox]').exists()) {
+    jQuery.getScript("includes/site-registration/facebox/facebox.js", function() {
+      jQuery('a[rel*=facebox]').facebox({
+        loadingImage : 'includes/site-registration/facebox/loading.gif',
+        closeImage : 'includes/site-registration/facebox/closelabel.png' 
+      });
+    });
 
-	}
+  }
 
     //feature to alternatively close facebox
-	if (jQuery('a[class*=close-facebox]').length > 0) {
-		jQuery('a[class*=close-facebox]').bind('click', function() {
-			jQuery(document).trigger('close.facebox');
-		});
-	}
+  if (jQuery('a[class*=close-facebox]').length > 0) {
+    jQuery('a[class*=close-facebox]').bind('click', function() {
+      jQuery(document).trigger('close.facebox');
+    });
+  }
 
     // initialize date picker
-	if (jQuery("#datepicker").exists()) {
-		jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function() {
-			jQuery(function() {
-				jQuery("#datepicker").datepicker({
-					autoSize : true,
-					minDate : '-90y',
-					maxDate : '-13y',
-					changeYear : true,
-					changeMonth : true,
-					constrainInput : true
+  if (jQuery("#datepicker").exists()) {
+    jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function() {
+      jQuery(function() {
+        jQuery("#datepicker").datepicker({
+          autoSize : true,
+          minDate : '-90y',
+          maxDate : '-13y',
+          changeYear : true,
+          changeMonth : true,
+          constrainInput : true
 
-				});
-			});			
-		}); 
-		
-		//check if the calendar icon exists and bind the click action
-		// to show datepicker
-		if (jQuery('.add-on').exists()) {
-			jQuery('.add-on').bind('click', function() {
-				jQuery("#datepicker").datepicker("show");
-			});
-		}
-	}
-	
-	
-	
-	
-	//site account details
-	if(jQuery("#site-account-deails-create-account").exists()){
-	    //bind enter event to already have an account fields
-	    jQuery("#username").enterKey(function () {
+        });
+      });     
+    }); 
+    
+    //check if the calendar icon exists and bind the click action
+    // to show datepicker
+    if (jQuery('.add-on').exists()) {
+      jQuery('.add-on').bind('click', function() {
+        jQuery("#datepicker").datepicker("show");
+      });
+    }
+  }
+
+    //assign default image to upload file 
+  if(jQuery("#use-default").exists()){
+      jQuery("#use-default").bind('click', function(){
+          if(jQuery('.fileupload-exists').exists()){
+              jQuery('.fileupload-exists').trigger('click');
+          }
+          
+          jQuery("#selected-avatar").attr("src","/images/misc/unknown.gif");
+      });
+  }
+  
+  
+  //submit "complete your profile"
+  if(jQuery("#save-account-activated").exists()){
+  
+       //bind enter event to  fields
+      jQuery("#secret_question").enterKey(function () {
+            jQuery("#save-account-activated").trigger('click');
+        });
+
+        jQuery("#secret_answer").enterKey(function () {
+            jQuery("#save-account-activated").trigger('click');
+        });
+  
+      //save button
+      jQuery("#save-account-activated").bind('click', function(){
+          
+          
+          //get all values from the form
+          var sq = secret_question = escape(jQuery("#secret_question").val());
+          var sa = secret_answer = escape(jQuery("#secret_answer").val());
+          var ra = receive_emails_from_administrators = jQuery("#receive-emails-from-administrators").is(':checked') ? 1 : 0;
+          var ro = receive_emails_from_other_members = jQuery("#receive-emails-from-other-members").is(':checked') ? 1 : 0;
+          var tz = timezone = escape(jQuery("#timezone").val());
+          var a  = avatar = escape(jQuery("#avatar").val());
+          
+          
+          
+          
+          jQuery.ajax({
+              url: "includes/site-registration/php/index.php?op=complete_your_profile",
+              context: document.body, 
+              dataType: 'json',
+              type: 'POST',
+              cache: false,
+              data:  'secret_question='+sq+'&secret_answer='+sa+'&receive_emails_from_administrators='+ra+'&receive_emails_from_other_members='+ro+'&timezone='+tz,
+              beforeSend: function(){
+                //show progress bar
+              jQuery("#progress-indicator-container").addClass("progress-striped active");
+              },
+              success: function( response ) {
+                    if(response.valid_entries == false){
+                        jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
+                    
+                    }else{
+                        //valid entries
+                        for(i = 50; i <= 100; i++ ){
+                          jQuery('#progress-indicator').css("width", i + '%');
+                      }
+                    }
+              
+                } 
+              }).done(function() { 
+                //nothing here
+            });
+          
+          
+          
+          
+          
+      });
+  }
+  
+
+  
+  //site account details
+  if(jQuery("#site-account-deails-create-account").exists()){
+      //bind enter event to already have an account fields
+      jQuery("#username").enterKey(function () {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
 
@@ -91,94 +176,81 @@ jQuery(document).ready(function(jQuery) {
         });
         
         //submit and validate fields
-	    jQuery("#site-account-deails-create-account").bind('click', function(){
-	        jQuery('#have-account-error').empty(); 
-	        var username = escape(jQuery("#username").val());
-	        var password = escape(jQuery("#password").val());
-	        var confirm_password = escape(jQuery("#confirm-password").val());
-	        var security_code = escape(jQuery("#security-code").val());
-	        var terms_and_conditions = escape(jQuery("#terms-and-conditions").val());
-	        
-	        jQuery.ajax({
+      jQuery("#site-account-deails-create-account").bind('click', function(){
+          jQuery('#have-account-error').empty(); 
+          var username = escape(jQuery("#username").val());
+          var password = escape(jQuery("#password").val());
+          var confirm_password = escape(jQuery("#confirm-password").val());
+          var security_code = escape(jQuery("#security-code").val());
+          var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
+          
+          jQuery.ajax({
               url: "includes/site-registration/php/index.php?op=validate_site_account_details",
               context: document.body, 
               dataType: 'json',
               type: 'POST',
               cache: false,
-              data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions' + terms_and_conditions ,
+              data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions ,
               success: function( response ) {
                 if(response.valid_entries == false){
                 
-                    jQuery('.error-label').remove();
-                    jQuery('input.input-error').removeClass('input-error');
-
-                    jQuery.each(response.messages.fields, function(index, value) {
-                        if(jQuery('#error_'+index).length > 0){ 
-                            jQuery('#'+value+'').unwrap();
-                        }
-                    });
+                    jQuery('.error-label').empty();
+                    jQuery('.input-error-container').removeClass("input-error-container");
+                    jQuery('.input-error').removeClass("input-error");
                     
-                    if(jQuery('#username').parent().hasClass('.input-error-container')){
-                        jQuery('#username').unwrap();
-                    }
-                    
-                    if(jQuery('#password').parent().hasClass('.input-error-container')){
-                        jQuery('#password').unwrap();
-                    }
-                    
-                    if(jQuery('#confirm-password').parent().hasClass('.input-error-container')){
-                        jQuery('#confirm-password').unwrap();
-                    }
-                    
-                    if(jQuery('#security-code').parent().hasClass('.input-error-container')){
-                        jQuery('#security-code').unwrap();
-                    }
-  ;
- 
-                     
-                    //jQuery('input:not(.input-error)').parent().removeClass('input-error-container');
-                
                     jQuery.each(response.messages.fields, function(index, value) {        
-                        jQuery('#'+value+'').addClass("input-error").wrap('<div id="error_'+index+'" class="input-error-container grid_7 no-margin" />');
-                        jQuery('#error_'+index).append("<span class='error-label'>" + response.messages.errors[index] + "</span>");
+                        jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                        jQuery('#'+value).addClass("input-error");
+                        jQuery('#'+value+'-error-label').empty();
+                        jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
                     });
+ 
                 }else{
-                
+                    try{
+                        jQuery('.error-label').empty();
+                        jQuery('.input-error-container').removeClass("input-error-container");
+                        jQuery('.input-error').removeClass("input-error");
+                    }catch(e){
+                    }
+                    
+                    //redirect user to proper url
+                    var url = response.url;    
+                    jQuery(location).attr('href',url);
                 }
               }
-	        }).done(function() { 
+          }).done(function() { 
                 //nothing here
             });
-	    });
-	    
-	}
-	
-	
-	
-	
-	//already have an account features
-	if (jQuery("#login-button").exists()) {
-	
-	    //bind enter event to already have an account fields
-	    jQuery("#username").enterKey(function () {
+      });
+      
+  }
+  
+  
+  
+  
+  //already have an account features
+  if (jQuery("#login-button").exists()) {
+  
+      //bind enter event to already have an account fields
+      jQuery("#username").enterKey(function () {
             jQuery("#login-button").trigger('click');
         });
 
         jQuery("#password").enterKey(function () {
             jQuery("#login-button").trigger('click');
         });
-	
-	    //submit and validate authentication
-	    jQuery("#login-button").bind('click', function(){
-	        jQuery('#have-account-error').empty();
-	        var form = jQuery('#already-have-an-account-form');
-	        var username = escape(jQuery("#username").val());
-	        var password = escape(jQuery("#password").val());
-	        var s = '';
-	        var login = 'do';
-	        var securitytoken = 'guest';
-	    
-	        jQuery.ajax({
+  
+      //submit and validate authentication
+      jQuery("#login-button").bind('click', function(){
+          jQuery('#have-account-error').empty();
+          var form = jQuery('#already-have-an-account-form');
+          var username = escape(jQuery("#username").val());
+          var password = escape(jQuery("#password").val());
+          var s = '';
+          var login = 'do';
+          var securitytoken = 'guest';
+      
+          jQuery.ajax({
               url: "includes/site-registration/php/index.php?op=validate_login",
               context: document.body, 
               dataType: 'json',
@@ -205,33 +277,55 @@ jQuery(document).ready(function(jQuery) {
             });
             
             
-	    });
-	}
-	
-	
-	
-	
-	
-	//create site account functionality
-	if(jQuery("#create-new-account-button").exists()){
+      });
+  }
+  
+  
+  
+  //resens email functionality 
+  if (jQuery("#resend-email").exists()) {   
+  
+      var token = escape(jQuery('#token').val());
+  
+      jQuery("#resend-email").bind('click', function(){
+          jQuery.ajax({
+              url: "includes/site-registration/php/index.php?op=resend_email",
+              context: document.body,
+              dataType: 'json',
+              type: 'POST',
+              cache: false,
+              data: 'securitytoken=' + token, 
+              success: function (response) {
+                  jQuery('#email-sent').empty();
+                  jQuery('#email-sent').append(response.message);
+              }
+          });  
+      });
+    
+  }
+  
+  
+  
+  //create site account functionality
+  if(jQuery("#create-new-account-button").exists()){
         jQuery('#create-new-account-error').empty();
         
-	    
-	   //bind enter event to already have an account fields
-	    jQuery("#email").enterKey(function () {
+      
+     //bind enter event to already have an account fields
+      jQuery("#email").enterKey(function () {
             jQuery("#create-new-account-button").trigger('click');
         });
 
         jQuery("#datepicker").enterKey(function () {
             jQuery("#create-new-account-button").trigger('click');
         });
-	
-	    
-	     jQuery("#create-new-account-button").bind('click', function(){
-	        var email = escape(jQuery("#email").val());
-	        var birthdate = escape(jQuery("#datepicker").val());
-	    
-	         jQuery.ajax({
+  
+      
+       jQuery("#create-new-account-button").bind('click', function(){
+          var email = escape(jQuery("#email").val());
+          var birthdate = escape(jQuery("#datepicker").val());
+      
+           jQuery.ajax({
                   url: "includes/site-registration/php/index.php?op=create_site_account_first_step",
                   context: document.body, 
                   dataType: 'json',
@@ -263,10 +357,10 @@ jQuery(document).ready(function(jQuery) {
                 }).done(function() { 
                     //nothing here
                 });
-	     });
-	    
-	        
-	}
-	
+       });
+      
+          
+  }
+  
 
 });
