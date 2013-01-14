@@ -43,6 +43,39 @@ $op = $_GET['op'];
 
 switch ($op) {
 
+
+
+case 'complete_your_profile':
+    $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+    $valid_entries = FALSE;
+    $messages = "";
+    	        var sq = secret_question = escape(jQuery("#secret_question").val());
+	        var sa = secret_answer = escape(jQuery("#secret_answer").val());
+	        var ra = receive_emails_from_administrators = jQuery("#receive-emails-from-administrators").is(':checked') ? 1 : 0;
+	        var ro = receive_emails_from_other_members = jQuery("#receive-emails-from-other-members").is(':checked') ? 1 : 0;
+	        var tz = timezone
+	        var a  = avatar
+    
+    
+    $vbulletin->input
+            ->clean_array_gpc('p',
+                    array(  'username' => TYPE_STR, 
+                            'password' => TYPE_STR,
+                            'confirm_password' => TYPE_STR,
+                            'security_code' => TYPE_STR,
+                            'terms_and_conditions' => TYPE_INT));
+  
+  
+  
+      $arr = array(     "valid_entries" => $valid_entries, 
+                        "messages" => $messages,
+                        "url" => $url   
+            );
+
+    json_headers($arr);
+
+    break;
+    
 case 'validate_site_account_details':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
     $valid_entries = TRUE;
