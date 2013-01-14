@@ -77,18 +77,58 @@ case 'complete_your_profile':
             list($txt, $ext) = explode(".", $name);
             if(in_array($ext,$valid_formats))
             {
-                if($size<(1024*1024)){
+                if($size<(1024*100)){
                     $actual_image_name = time() . mt_rand() . "." . $ext;   
+                    //image is valid copy to DB
+
+                    /* 
+                    userid  
+                    filedata
+                    dateline
+                    filename
+                    visible
+                    filesize
+                    width    
+                    height   
+                    */
+                    
+                    $uploaded = "/tmp/" . $actual_image_name;
+                    
+                    move_uploaded_file($_FILES["photoimg"]["tmp_name"],
+                        $uploaded
+                    );
+                    
+                    list($width, $height, $type, $attr) = getimagesize($uploaded);
+                    
+                    if($width > 100){
+                        $error_type = "photoimg";
+                        $messages['fields'][] = $error_type;
+                        $messages['errors'][] = "Image width too large.";
+                        @unlink($uploaded);
+                        $error_w = TRUE;
+                    }
+                    
+                    if($height > 100){
+                        $error_type = "photoimg";
+                        $messages['fields'][] = $error_type;
+                        $messages['errors'][] = "Image height too large.";
+                        @unlink($uploaded);
+                        $error_h = TRUE;
+                    }
+                    
+                   
+                                   
                 }else{
                     $error_type = "photoimg";
                     $messages['fields'][] = $error_type;
-                    $messages['errors'][] = "Image too large.";
+                    $messages['errors'][] = "Image size too large.";
                 }
             }else{
                 $error_type = "photoimg";
                 $messages['fields'][] = $error_type;
                 $messages['errors'][] = "Invalid format: jpg, png, gif, bmp, jpeg only.";
             }
+            
         }else{
             $error_type = "photoimg";
             $messages['fields'][] = $error_type;

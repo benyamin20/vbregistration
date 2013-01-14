@@ -1158,7 +1158,7 @@ die;
 			<title>Display message if account is not active</title>
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[
-			    if((int)$vbulletin->userinfo['userid']){
+			    if((int)$vbulletin->userinfo['userid'] && $_REQUEST['do'] !="logout"){
 			        if (!session_id()) {
                         session_start();
 
@@ -1188,6 +1188,10 @@ die;
                         $email      = $_SESSION['site_registration']['email']       = $vbulletin->userinfo['email'];
                         $userid     = $_SESSION['site_registration']['userid']      = $vbulletin->userinfo['userid'];
                         $token      = $vbulletin->userinfo[securitytoken];
+                        
+                        if( empty( $token ) ){
+                            $token = "guest";
+                        }
 			            
 	                    $vbulletin->templatecache['navbar'] = str_replace(
 	                        '<!-- / nav buttons bar -->', 
