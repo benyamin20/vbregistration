@@ -89,6 +89,13 @@ jQuery(document).ready(function(jQuery) {
 		}
 	}
 	
+	if(jQuery("#use-default").exists()){
+	    jQuery("#use-default").bind('click', function(){
+	        jQuery("#selected-avatar").attr("src","/images/misc/unknown.gif");
+	    });
+	}
+	
+	
 	
 	
 	

@@ -166,12 +166,13 @@ $stylevar[htmldoctype]
 
 							<div id="avatar-container grid_3">
 								<div class="grid_1 no-margin pull-left">
-									<img src="includes/site-registration/img/thumbnail.png" />
+									<img src="includes/site-registration/img/thumbnail.png" 
+									    id="selected-avatar" />
 								</div>
 								<div class="pull_right grid_2">
 									<button class="btn">Upload</button>
 									<div class="clear clear_15"></div>
-									<a class="small link_blue">Use default.</a>
+									<a class="small link_blue" id="use-default">Use default.</a>
 								</div>
 							</div>
 
