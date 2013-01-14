@@ -41,6 +41,10 @@ closeTnC = function() {
 	jQuery(document).trigger('close.facebox');
 }
 
+
+ 
+ 
+
 /**
 * lazy load and bootstrap all elements
 */
@@ -100,11 +104,8 @@ jQuery(document).ready(function(jQuery) {
 	    });
 	}
 	
-	
-	//submit "complete your profile"
 	if(jQuery("#save-account-activated").exists()){
-	
-	     //bind enter event to  fields
+		//bind enter event to  fields
 	    jQuery("#secret_question").enterKey(function () {
             jQuery("#save-account-activated").trigger('click');
         });
@@ -112,6 +113,60 @@ jQuery(document).ready(function(jQuery) {
         jQuery("#secret_answer").enterKey(function () {
             jQuery("#save-account-activated").trigger('click');
         });
+        
+        // prepare Options Object 
+        var options = { 
+            type: 'POST',
+            dataType: 'json',
+            beforeSubmit: function(){
+                jQuery("#progress-indicator-container").addClass("progress-striped active");
+            },
+            success:    function(response) { 
+                if(response.valid_entries == false){
+                        jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
+                        jQuery('.error-label').empty();
+                        jQuery('.input-error-container').removeClass("input-error-container");
+                        jQuery('.input-error').removeClass("input-error");
+                        
+                        jQuery.each(response.messages.fields, function(index, value) {        
+                            jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                            jQuery('#'+value).addClass("input-error");
+                            jQuery('#'+value+'-error-label').empty();
+                            jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
+                        });
+                    
+                }else{
+                    //valid entries
+                    for(i = 50; i <= 100; i++ ){
+                        jQuery('#progress-indicator').css("width", i + '%');
+                    }
+                    
+                    try{
+                        jQuery('.error-label').empty();
+                        jQuery('.input-error-container').removeClass("input-error-container");
+                        jQuery('.input-error').removeClass("input-error");
+                    }catch(e){
+                    
+                    }
+
+                    //redirect user to proper url
+                    //var url = response.url;    
+                    //jQuery(location).attr('href',url);
+                    
+                    }
+            } 
+        }; 
+        
+	    jQuery('#complete-your-profile-form').ajaxForm(options);
+	}
+	
+     
+	
+	/*
+	//submit "complete your profile"
+	if(jQuery("#save-account-activated").exists()){
+	
+
 	
 	    //save button
 	    jQuery("#save-account-activated").bind('click', function(){
@@ -124,9 +179,7 @@ jQuery(document).ready(function(jQuery) {
 	        var ro = receive_emails_from_other_members = jQuery("#receive-emails-from-other-members").is(':checked') ? 1 : 0;
 	        var tz = timezone = escape(jQuery("#timezone").val());
 	        var a  = avatar = escape(jQuery("#avatar").val());
-	        
-	        
-	        
+ 
 	        
 	        jQuery.ajax({
               url: "includes/site-registration/php/index.php?op=complete_your_profile",
@@ -134,6 +187,7 @@ jQuery(document).ready(function(jQuery) {
               dataType: 'json',
               type: 'POST',
               cache: false,
+              contentType: 'multipart/form-data',
               data:  'secret_question='+sq+'&secret_answer='+sa+'&receive_emails_from_administrators='+ra+'&receive_emails_from_other_members='+ro+'&timezone='+tz,
               beforeSend: function(){
                 //show progress bar
@@ -166,9 +220,10 @@ jQuery(document).ready(function(jQuery) {
                         }catch(e){
                         
                         }
-	                    
-	                    alert(1);
-	                    
+
+                        //redirect user to proper url
+                        //var url = response.url;    
+                        //jQuery(location).attr('href',url);
 	                    
                     }
               
@@ -176,14 +231,10 @@ jQuery(document).ready(function(jQuery) {
               }).done(function() { 
                 //nothing here
             });
-	        
-	        
-	        
-	        
-	        
+ 
 	    });
 	}
-	
+	*/
 
 	
 	//site account details

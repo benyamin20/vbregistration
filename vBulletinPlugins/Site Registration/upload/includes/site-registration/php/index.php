@@ -63,6 +63,38 @@ case 'complete_your_profile':
                             'timezone' => TYPE_STR
                           )
               );
+              
+              
+    $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
+    
+    if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST")
+    {
+        $name = $_FILES['photoimg']['name'];
+        $size = $_FILES['photoimg']['size'];
+    
+        if(strlen($name))
+        {
+            list($txt, $ext) = explode(".", $name);
+            if(in_array($ext,$valid_formats))
+            {
+                if($size<(1024*1024)){
+                    $actual_image_name = time() . mt_rand() . "." . $ext;   
+                }else{
+                    $error_type = "photoimg";
+                    $messages['fields'][] = $error_type;
+                    $messages['errors'][] = "Image too large.";
+                }
+            }else{
+                $error_type = "photoimg";
+                $messages['fields'][] = $error_type;
+                $messages['errors'][] = "Invalid format: jpg, png, gif, bmp, jpeg only.";
+            }
+        }else{
+            $error_type = "photoimg";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = "Please select an image.";
+        }
+    }           
                             
   
     if (empty($vbulletin->GPC['secret_question'])) {
