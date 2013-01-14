@@ -158,8 +158,9 @@ $stylevar[htmldoctype]
 							<div class="clear"></div>
 							<!--  Progress -->
 							<span class="small bold">50% profile completeness</span>
-							<div class="progress grid_3 no-margin">
-								<div class="bar bar-success" style="width: 50%;"></div>
+							<div class="progress grid_3 no-margin" id="progress-indicator-container">
+								<div class="bar bar-success" style="width: 50%;"
+								    id="progress-indicator"></div>
 							</div>
 							<div class="clear clear_15"></div>
 
