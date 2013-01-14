@@ -39,15 +39,17 @@ if (!session_id()) {
 /**
  * Operations
  **/
-$op = $_GET['op'];
+$vbulletin->input->clean_array_gpc('g', array('op' => TYPE_STR)); 
+ 
+//$op = $_GET['op'];
+
+$op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
-
-
 case 'complete_your_profile':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
-    $valid_entries = FALSE;
+    $valid_entries = TRUE;
     $messages = "";
 	
 	//avatar
@@ -58,7 +60,9 @@ case 'complete_your_profile':
                             'secret_answer' => TYPE_STR,
                             'receive_emails_from_administrators' => TYPE_INT,
                             'receive_emails_from_other_members' => TYPE_INT,
-                            'timezone' => TYPE_STR));
+                            'timezone' => TYPE_STR
+                          )
+              );
                             
   
     if (empty($vbulletin->GPC['secret_question'])) {
@@ -99,7 +103,8 @@ case 'complete_your_profile':
     $arr = array(   
                 "valid_entries" => $valid_entries, 
                 "messages" => $messages,
-                "url" => $url   
+                "url" => $url,
+                "userid" => $userid   
             );
 
     json_headers($arr);

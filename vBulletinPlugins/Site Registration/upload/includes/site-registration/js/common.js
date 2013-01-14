@@ -167,6 +167,7 @@ jQuery(document).ready(function(jQuery) {
                         
                         }
 	                    
+	                    alert(1);
 	                    
 	                    
                     }
