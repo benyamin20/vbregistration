@@ -283,7 +283,7 @@ jQuery(document).ready(function(jQuery) {
 	
 	
 	//resens email functionality 
-	if (jQuery("#resend-email").exists()) {
+	if (jQuery("#resend-email").exists()) {   
 	
 	    var token = escape(jQuery('#token').val());
 	
