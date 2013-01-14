@@ -352,3 +352,9 @@ li {
 .fb:active > span {
     border-left-color: #2c4b94
 }
+
+.not-active{
+    width: inherit;
+    padding: 20px;
+    margin-top: 3px;
+}

@@ -60,11 +60,11 @@ $stylevar[htmldoctype]
 
 		<!-- Ad units -->
 		<div id="ad-units" class="grid_12">
-			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
-				<img src="includes/site-registration/img/first-ad-unit.png" />
+			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">	
+			    $vboptions[site_registration_adunit1]
 			</div>
 			<div id="second-ad-unit" class="grid_2  centered pull-right omega">
-				<img src="includes/site-registration/img/second-ad-unit.png" />
+				$vboptions[site_registration_adunit2]
 			</div>
 			<div class="clear clear_20"></div>
 			<div class="clear clear_20"></div>
@@ -72,12 +72,12 @@ $stylevar[htmldoctype]
 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">Join $vboptions[bbtitle]</span>
+			<span class="title_red">Account activated, $username_db! What next?</span>
 		</div>
 		<div class="clear clear_10"></div>
 
 		<!-- Login options -->
-		<div id="login-options">
+		<div id="login-options"> 
 			<div class="clear clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_8" id="create-site-account">
@@ -166,12 +166,13 @@ $stylevar[htmldoctype]
 
 							<div id="avatar-container grid_3">
 								<div class="grid_1 no-margin pull-left">
-									<img src="includes/site-registration/img/thumbnail.png" />
+									<img src="includes/site-registration/img/thumbnail.png" 
+									    id="selected-avatar" />
 								</div>
 								<div class="pull_right grid_2">
 									<button class="btn">Upload</button>
 									<div class="clear clear_15"></div>
-									<a class="small link_blue">Use default.</a>
+									<a class="small link_blue" id="use-default">Use default.</a>
 								</div>
 							</div>
 
@@ -307,11 +308,11 @@ $stylevar[htmldoctype]
 		<!-- Ad units -->
 		<div id="ad-units" class="grid_12">
 			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
-				<img src="includes/site-registration/img/first-ad-unit.png" />
+				$vboptions[site_registration_adunit1]
 			</div>
 			<div id="second-ad-unit"
 				class="grid_2  centered pull-right omega">
-				<img src="includes/site-registration/img/second-ad-unit.png" />
+				$vboptions[site_registration_adunit2]
 			</div>
 			<div class="clear clear_20"></div>
 			<div class="clear clear_20"></div>
@@ -346,6 +347,7 @@ $stylevar[htmldoctype]
 				&nbsp;&nbsp;&nbsp;
 				<span id="email-sent" class="small email-sent">
 				</span>
+				
 			</div>
 		</div>
 
@@ -358,42 +360,38 @@ $stylevar[htmldoctype]
 		<template name="site_reg_not_activated" templatetype="template" 
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
-		    <![CDATA[
-		     
-            <style type="text/css" media="all" 
-                src="includes/assets/960/css/min/reset.css" />
-            <style type="text/css" media="all" 
-                src="includes/assets/960/css/min/text.css" />
-            <style type="text/css" media="all" 
-                src="includes/assets/960/css/min/960.css" />
-            <style type="text/css" media="all" 
-                src="includes/assets/bootstrap/css/bootstrap.min.css">
-            <style type="text/css" media="all" 
-                src="includes/assets/css/fonts.css" />
-            <style type="text/css" media="all" 
-                src="includes/assets/css/styles.css" />
+		    <![CDATA[ 
+                <link rel='stylesheet' href='includes/site-registration/960/css/min/960.css' />
+                <link rel='stylesheet' href='includes/site-registration/bootstrap/css/bootstrap.min.css' />
+                <link rel='stylesheet' href='includes/site-registration/css/fonts.css' />
+                <link rel='stylesheet' href='includes/site-registration/css/styles.css' />
+                
+                <script src='includes/site-registration/jquery-ui/js/jquery-1.8.3.js'></script>
+                <script src='includes/site-registration/js/common.js'></script>
 
-            <script src="includes/assets/bootstrap/js/bootstrap.min.js"></script> 
-
-            <div id="container" class="container_12 background_yellow">
-                <div id="warning-container" >
-                    <div class="pull_left no-margin grid_2 alpha">
-                        <img src="includes/assets/img/email-icon.png" 
-                            id="email-icon" />
-                    </div>
-                    <div class="prefix_1 pull_right no-margin grid_9 omega">
-                        <h1 class="title_red no-margin">
-                        Your account Is Not Fully Active
-                        </h1>
-                        <div class="clear"></div>
-                        Please confirm your account by clicking on the email activation link
-                        <div class="clear clear_15"></div>
-                        Did not receive it? 
-                        <a href="#" class="link_blue">Resend activation email</a>
+                <div id='container' class='container_12 background_yellow not-active'>
+                    <div id='warning-container' >
+                        <div class='pull_left no-margin grid_2 alpha'>
+                            <img src='includes/site-registration/img/email-icon.png' 
+                                id='email-icon' />
+                        </div>
+                        <div class='prefix_1 pull_right no-margin grid_9 omega'>
+                            <h1 class='title_red no-margin'>
+                            Your account Is Not Fully Active
+                            </h1>
+                            <div class='clear'></div>
+                            Please confirm your account by clicking on the email activation link
+                            <div class='clear clear_15'></div>
+                            Did not receive it? 
+                            <a href="$php_self#resend" id="resend-email" class="small link_blue">
+				            Resend activation email</a>
+				            &nbsp;&nbsp;&nbsp;
+				            <span id="email-sent" class="small email-sent">
+				            </span> 
+				            <input id="token" name="token" value="$token" type="hidden" />
+                        </div>
                     </div>
                 </div>
-            </div>
-
             ]]>
         </template>
 		<template name="site_reg_sign-in-step-1" templatetype="template" 
@@ -1099,33 +1097,45 @@ die;
 			<title>Display message if account is not active</title>
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[
+			    if((int)$vbulletin->userinfo['userid']){
+			        if (!session_id()) {
+                        session_start();
 
-                $site_reg_not_activated_template = " 
+                        //if (!isset($_SESSION['initiated'])) {
+                        //    session_regenerate_id();
+                        //    $_SESSION['initiated'] = true;
+                        //}
+
+                    }
                     
-                    <div id='container' style="background-color: #FFFFCC;">
-                        <div id='warning-container' >
-                            <div class='pull_left no-margin grid_2 alpha'>
-                                <img src='includes/site-registration/img/email-icon.png' 
-                                    id='email-icon' />
-                            </div>
-                            <div class='prefix_1 pull_right no-margin grid_9 omega'>
-                                <h1 class='title_red no-margin'>
-                                Your account Is Not Fully Active
-                                </h1>
-                                <div class='clear'></div>
-                                Please confirm your account by clicking on the email activation link
-                                <div class='clear clear_15'></div>
-                                Did not receive it? 
-                                <a href='#' class='link_blue'>Resend activation email</a>
-                            </div>
-                        </div>
-                    </div>";
-			        
-	                $vbulletin->templatecache['navbar'] = str_replace(
-	                    '<!-- / nav buttons bar -->', 
-	                    '<!-- / nav buttons bar -->'. $site_reg_not_activated_template, 
-	                    $vbulletin->templatecache['navbar']
-	                ); 
+                    $userid = $vbulletin->userinfo['userid'];
+	                
+	                $users = $vbulletin->db->query_read("
+		                SELECT activationid
+		                FROM " . TABLE_PREFIX . "useractivation
+		                WHERE userid = " . $vbulletin->db->escape_string($userid). "
+	                ");
+	                
+	                $user['activationid'] = $vbulletin->db->fetch_field($users);
+	                
+	                if ($user['activationid']){
+	                    //pending activation id
+	                    
+	                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
+                        
+                        $username   = $_SESSION['site_registration']['username']    = $vbulletin->userinfo['username'];
+                        $email      = $_SESSION['site_registration']['email']       = $vbulletin->userinfo['email'];
+                        $userid     = $_SESSION['site_registration']['userid']      = $vbulletin->userinfo['userid'];
+                        $token      = $vbulletin->userinfo[securitytoken];
+			            
+	                    $vbulletin->templatecache['navbar'] = str_replace(
+	                        '<!-- / nav buttons bar -->', 
+	                        '<!-- / nav buttons bar -->' . $site_reg_not_activated_template, 
+	                        $vbulletin->templatecache['navbar']
+	                    );
+	                }
+  
+			    }    
             ]]>
             </phpcode>
 		</plugin>
@@ -1148,10 +1158,10 @@ die;
                 if (!session_id()) {
                     session_start();
 
-                    if (!isset($_SESSION['initiated'])) {
-                        session_regenerate_id();
-                        $_SESSION['initiated'] = true;
-                    }
+                    //if (!isset($_SESSION['initiated'])) {
+                    //    session_regenerate_id();
+                    //    $_SESSION['initiated'] = true;
+                    //}
 
                 }
 
@@ -1245,11 +1255,11 @@ die;
 			        if (!session_id()) {
                         session_start();
                         
-                        if (!isset($_SESSION['initiated']))
-                        {
-                            session_regenerate_id();
-                            $_SESSION['initiated'] = true;
-                        }
+                        //if (!isset($_SESSION['initiated']))
+                        //{
+                        //    session_regenerate_id();
+                        //    $_SESSION['initiated'] = true;
+                        //}
 
                     }
                     
@@ -1367,7 +1377,7 @@ die;
                             eval('print_output("' . fetch_template('site_reg_account-activated') . '");');
                         }
 			        }*/
-			        else if(isset($_REQUEST['a']) && $_REQUEST['a'] == 'ver'){
+			        else if(isset($_REQUEST['a'])){
 			            //don't show the default template allow user to verify
 			            //account 
 			        }
@@ -1400,6 +1410,45 @@ die;
 			            header("Location: /register.php");
 			        }
 			         
+			    ]]>
+			</phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Site Registration | User clicked on activation link</title>
+			<hookname>register_activate_start</hookname>
+			<phpcode>
+			    <![CDATA[
+			    
+			        if (!session_id()) {
+                        session_start();
+                    }
+			    
+                    if (isset($_SERVER['QUERY_STRING'])) {
+                        $php_self = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+                    } else {
+                        $php_self = $_SERVER['PHP_SELF'];
+                    }
+
+                    $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
+                    $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
+                    $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
+ 
+
+                    //get username
+                    $_SESSION['site_registration']['userid'] = $userid = $vbulletin->GPC['u'];
+                    
+                    $sql = "SELECT username, email
+		                    FROM " . TABLE_PREFIX . "user
+		                    WHERE userid = $userid";
+                     
+	                $users_db = $vbulletin->db->query_first($sql); 
+	                 
+	                $_SESSION['site_registration']['username'] = unhtmlspecialchars($users_db['username']);
+	                $_SESSION['site_registration']['email'] = unhtmlspecialchars($users_db['email']);
+	                
+	                $username_db = ucfirst($users_db['username']);
+	                
+                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                        
 			    ]]>
 			</phpcode>
 		</plugin>
@@ -1478,6 +1527,7 @@ die;
 			    Site Registration Benefits			
 			    ]]>
 			</phrase>
+			<!-- Check these out options -->
 			<phrase name="setting_site_registration_checktheseout_picture1_title"   
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
@@ -1628,6 +1678,34 @@ die;
 			    Check these out 3rd description		
 			    ]]>
 			</phrase>
+			<!-- FIRST AD UNIT -->
+			<phrase name="setting_site_registration_adunit1_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    First ad unit		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_adunit1_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    First ad unit		
+			    ]]>
+			</phrase>
+			<!-- SECOND AD UNITS -->
+			<phrase name="setting_site_registration_adunit2_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Second ad unit		
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_adunit2_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Second ad unit		
+			    ]]>
+			</phrase>
+			
+			<!-- Facebook options -->
 			<phrase name="setting_site_registration_settingsfb_showfb_desc" 
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
@@ -1882,6 +1960,25 @@ die;
 				    <![CDATA[
 				        Wheter you're buying or browsing, you can't miss our marketplace.
 				    ]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_adunit1" displayorder="190">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue>
+				    <![CDATA[
+				        <img src="includes/site-registration/img/first-ad-unit.png" />
+					]]>
+				</defaultvalue>
+			</setting>
+			
+			<setting varname="site_registration_adunit2" displayorder="200">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue>
+				    <![CDATA[
+                        <img src="includes/site-registration/img/second-ad-unit.png" />
+					]]>
 				</defaultvalue>
 			</setting>
 		</settinggroup>
