@@ -142,12 +142,33 @@ jQuery(document).ready(function(jQuery) {
               success: function( response ) {
                     if(response.valid_entries == false){
                         jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
+                        jQuery('.error-label').empty();
+                        jQuery('.input-error-container').removeClass("input-error-container");
+                        jQuery('.input-error').removeClass("input-error");
+                        
+                        jQuery.each(response.messages.fields, function(index, value) {        
+                            jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                            jQuery('#'+value).addClass("input-error");
+                            jQuery('#'+value+'-error-label').empty();
+                            jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
+                        });
                     
                     }else{
                         //valid entries
                         for(i = 50; i <= 100; i++ ){
 	                        jQuery('#progress-indicator').css("width", i + '%');
 	                    }
+	                    
+	                    try{
+                            jQuery('.error-label').empty();
+                            jQuery('.input-error-container').removeClass("input-error-container");
+                            jQuery('.input-error').removeClass("input-error");
+                        }catch(e){
+                        
+                        }
+	                    
+	                    
+	                    
                     }
               
                 } 

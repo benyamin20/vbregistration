@@ -49,27 +49,57 @@ case 'complete_your_profile':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
     $valid_entries = FALSE;
     $messages = "";
-    	        var sq = secret_question = escape(jQuery("#secret_question").val());
-	        var sa = secret_answer = escape(jQuery("#secret_answer").val());
-	        var ra = receive_emails_from_administrators = jQuery("#receive-emails-from-administrators").is(':checked') ? 1 : 0;
-	        var ro = receive_emails_from_other_members = jQuery("#receive-emails-from-other-members").is(':checked') ? 1 : 0;
-	        var tz = timezone
-	        var a  = avatar
-    
+	
+	//avatar
     
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array(  'username' => TYPE_STR, 
-                            'password' => TYPE_STR,
-                            'confirm_password' => TYPE_STR,
-                            'security_code' => TYPE_STR,
-                            'terms_and_conditions' => TYPE_INT));
+                    array(  'secret_question' => TYPE_STR, 
+                            'secret_answer' => TYPE_STR,
+                            'receive_emails_from_administrators' => TYPE_INT,
+                            'receive_emails_from_other_members' => TYPE_INT,
+                            'timezone' => TYPE_STR));
+                            
   
+    if (empty($vbulletin->GPC['secret_question'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $error_type = "secret_question";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
+    } else {
+
+    }     
   
+    if (empty($vbulletin->GPC['secret_answer'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $error_type = "secret_answer";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
+    } else {
+
+    }
+    
+    if (empty($vbulletin->GPC['timezone'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $error_type = "timezone";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
+    } else {
+
+    }
+    
+    $userid = $_SESSION['site_registration']['userid'];
+    
+    
+          
   
-      $arr = array(     "valid_entries" => $valid_entries, 
-                        "messages" => $messages,
-                        "url" => $url   
+    $arr = array(   
+                "valid_entries" => $valid_entries, 
+                "messages" => $messages,
+                "url" => $url   
             );
 
     json_headers($arr);

@@ -209,34 +209,36 @@ $stylevar[htmldoctype]
 							<div class="clear"></div>
 							
 							<!--  Timezone -->
-							<select name="timezone" id="timezone">
-                                <option value="">Your Timezone</option>
-                                <option value="-12">UTC -12h00</option>
-                                <option value="-11">UTC -11h00</option>
-                                <option value="-10">UTC -1h00</option>
-                                <option value="-9">UTC -9h00</option>
-                                <option value="-8">UTC -8h00</option>
-                                <option value="-7">UTC -7h00</option>
-                                <option value="-6">UTC -6h00</option>
-                                <option value="-5">UTC -5h00</option>
-                                <option value="-4">UTC -4h00</option>
-                                <option value="-3">UTC -3h00</option>
-                                <option value="-2">UTC -2h00</option>
-                                <option value="-1">UTC -1h00</option>
-                                <option value="0">UTC  0h00</option>
-                                <option value="1">UTC +1h00</option>
-                                <option value="2">UTC +2h00</option>
-                                <option value="3">UTC +3h00</option>
-                                <option value="4">UTC +4h00</option>
-                                <option value="5">UTC +5h00</option>
-                                <option value="6">UTC +6h00</option>
-                                <option value="7">UTC +7h00</option>
-                                <option value="8">UTC +8h00</option>
-                                <option value="9">UTC +9h00</option>
-                                <option value="10">UTC +10h00</option>
-                                <option value="11">UTC +11h00</option>
-                                <option value="12">UTC +12h00</option> 
-                            </select>
+							<div id="timezone-wrapper">
+							    <select name="timezone" id="timezone">
+                                    <option value="">Your Timezone</option>
+                                    <option value="-12">UTC -12h00</option>
+                                    <option value="-11">UTC -11h00</option>
+                                    <option value="-10">UTC -1h00</option>
+                                    <option value="-9">UTC -9h00</option>
+                                    <option value="-8">UTC -8h00</option>
+                                    <option value="-7">UTC -7h00</option>
+                                    <option value="-6">UTC -6h00</option>
+                                    <option value="-5">UTC -5h00</option>
+                                    <option value="-4">UTC -4h00</option>
+                                    <option value="-3">UTC -3h00</option>
+                                    <option value="-2">UTC -2h00</option>
+                                    <option value="-1">UTC -1h00</option>
+                                    <option value="0">UTC  0h00</option>
+                                    <option value="1">UTC +1h00</option>
+                                    <option value="2">UTC +2h00</option>
+                                    <option value="3">UTC +3h00</option>
+                                    <option value="4">UTC +4h00</option>
+                                    <option value="5">UTC +5h00</option>
+                                    <option value="6">UTC +6h00</option>
+                                    <option value="7">UTC +7h00</option>
+                                    <option value="8">UTC +8h00</option>
+                                    <option value="9">UTC +9h00</option>
+                                    <option value="10">UTC +10h00</option>
+                                    <option value="11">UTC +11h00</option>
+                                    <option value="12">UTC +12h00</option> 
+                                </select>
+                            </div>
 							
 							 
 							
@@ -246,13 +248,16 @@ $stylevar[htmldoctype]
 							<div class="clear clear_15"></div>
 							<span class="bold">Let's keep things safe</span>
 							<div class="clear"></div>
-							<input type="text" id="secret_question" name="secret_question"
-								placeholder="Secret Question" value="" />
-
+							<div id="secret_question-wrapper">
+							    <input type="text" id="secret_question" name="secret_question"
+								    placeholder="Secret Question" value="" />
+                            </div>
 							<div class="clear"></div>
-							<input type="text" name="secret_answer" id="secret_answer"
+							<div id="secret_answer-wrapper">
+							    <input type="text" name="secret_answer" id="secret_answer"
 								placeholder="Secret Aswer" value="" />
-
+                            </div>
+                            
                             <!--  Contact check boxes -->
 
 							<div class="clear clear_15"></div>
