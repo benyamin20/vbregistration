@@ -1322,13 +1322,22 @@ die;
 						     	$fbName = $_SESSION['site_registration']["fbName"] = $user->name;
 						     	$fbEmail = $_SESSION['site_registration']["fbEmail"] = $user->email;
 						     	$fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $user->birthday;
-						     	$fbPicture = $_SESSION['site_registration']["fbPicture"] = $user->picture->data->url;						     	
+						     	$fbPicture = $_SESSION['site_registration']["fbPicture"] = $user->picture->data->url;
+
+						     	//Verify if the account already exists...
+						     	$data = $vbulletin->db->query_read("SELECT service, nonvbid, userid FROM ". TABLE_PREFIX ."vbnexus_user" WHERE nonvbid = '$fbID');
+
+						     	if(!$data) {
+						     		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+						     	} else {
+						     		$vbUser = $vbulletin->db->fetch_field($data);
+
+						     		header("Location: index.php");
+						     	}
 							} else {
 								eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 							}
-						}
-			        	
-			        	eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+						}			        			        
 			        	
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'activate'){
 			        	
