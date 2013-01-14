@@ -1321,7 +1321,8 @@ die;
                      
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
 			        	$code           = $_REQUEST["code"];
-			        	$cliend_id      = $vbulletin->options['site_registration_settingsfb_fbapi'];
+			        	//$cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi']; //No funciona***************************
+			        	$client_id      = "304416966345499";
 			        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
 			        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
 
@@ -1333,7 +1334,7 @@ die;
 							$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
 							$loginURL .= "state=". $_SESSION["state"] ."&";
 							$loginURL .= "scope=$scope";
-
+						
 							echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';							
 			        	} else {		
 							if($_SESSION["state"] and $_SESSION["state"] === $_REQUEST["state"]) {
@@ -1358,16 +1359,40 @@ die;
 						     	$fbEmail = $_SESSION['site_registration']["fbEmail"] = $user->email;
 						     	$fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $user->birthday;
 						     	$fbPicture = $_SESSION['site_registration']["fbPicture"] = $user->picture->data->url;
+						   
+						     	//Verify if the account already exists...						     	 
+						        $sql = "SELECT `u`.`usergroupid`,
+						                       `u`.`username`,
+						                       `u`.`email`,
+						                       `n`.*
+						                FROM " . TABLE_PREFIX . "vbnexus_user `n`
+						                LEFT JOIN " . TABLE_PREFIX . "user `u` USING (`userid`)
+						                WHERE `n`.`service` = 'fb'
+						                AND `n`.`nonvbid` = '{$fbID}'";
 
-						     	//Verify if the account already exists...
-						     	$data = $vbulletin->db->query_read("SELECT service, nonvbid, userid FROM ". TABLE_PREFIX ."vbnexus_user WHERE nonvbid = '$fbID'");
-
+						        $data = $vbulletin->db->query_first($sql);
+						     	
 						     	if(!$data) {
 						     		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
 						     	} else {
-						     		$vbUser = $vbulletin->db->fetch_field($data);
+						     		// Process vBulletin login
+							        require_once(DIR . '/includes/functions_login.php');
+							        $vbulletin->userinfo = fetch_userinfo($data['userid']);
+							        $vbulletin->session->created = false;
+							        process_new_login('', false, '');
 
-						     		header("Location: index.php");
+							        // On login, store a cookie with vbnexus params
+							        if($vbulletin->session->created) {
+							            $vBNexusInfo = array(
+							                'userid'      => $res['userid'],
+							                'service'     => 'fb',
+							                'nonvbid'     => $data["nonvbid"],
+							                'can_publish' => true,
+							            );
+							            setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
+							        }
+
+						     		header("location: index.php");
 						     	}
 							} else {
 								eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
