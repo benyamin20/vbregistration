@@ -12,6 +12,27 @@ function json_headers($arr = null)
     echo json_encode($arr);
 }
 
+if (!function_exists('sys_get_temp_dir')) {
+    function sys_get_temp_dir()
+    {
+        if (!empty($_ENV['TMP'])) {
+            return realpath($_ENV['TMP']);
+        }
+        if (!empty($_ENV['TMPDIR'])) {
+            return realpath($_ENV['TMPDIR']);
+        }
+        if (!empty($_ENV['TEMP'])) {
+            return realpath($_ENV['TEMP']);
+        }
+        $tempfile = tempnam(__FILE__, '');
+        if (file_exists($tempfile)) {
+            unlink($tempfile);
+            return realpath(dirname($tempfile));
+        }
+        return null;
+    }
+}
+
 ini_set("display_errors", 1);
 error_reporting(E_ALL & ~E_NOTICE & ~8192);
 
@@ -28,20 +49,12 @@ require_once('functions_login.php');
 
 if (!session_id()) {
     session_start();
-
-    //if (!isset($_SESSION['initiated'])) {
-    //    session_regenerate_id();
-    //    $_SESSION['initiated'] = true;
-    //}
-
 }
 
 /**
  * Operations
  **/
 $vbulletin->input->clean_array_gpc('g', array('op' => TYPE_STR));
-
-//$op = $_GET['op'];
 
 $op = $vbulletin->GPC['op'];
 
@@ -56,13 +69,12 @@ case 'complete_your_profile':
 
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array(  'secret_question'   => TYPE_STR,
-                            'secret_answer'     => TYPE_STR,
+                    array('secret_question' => TYPE_STR,
+                            'secret_answer' => TYPE_STR,
                             'receive_emails_from_administrators' => TYPE_INT,
                             'receive_emails_from_other_members' => TYPE_INT,
-                            'timezone'          => TYPE_STR,
-                            'use_default'       => TYPE_STR 
-                    ));
+                            'timezone' => TYPE_STR,
+                            'use_default_image' => TYPE_STR));
 
     if (empty($vbulletin->GPC['secret_question'])) {
         $valid_entries = FALSE;
@@ -93,9 +105,8 @@ case 'complete_your_profile':
     } else {
 
     }
-    
-    
-    if($vbulletin->GPC['use_default_image']== ""){
+
+    if ($vbulletin->GPC['use_default_image'] == "") {
         //do not use default image
         $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
 
@@ -109,7 +120,9 @@ case 'complete_your_profile':
                     if ($size < (1024 * 100)) {
                         $actual_image_name = time() . mt_rand() . "." . $ext;
 
-                        $uploaded = "/tmp/" . $actual_image_name;
+                        $uploaded = realpath(
+                                sys_get_temp_dir() . DIRECTORY_SEPARATOR
+                                        . $actual_image_name);
 
                         move_uploaded_file($_FILES["photoimg"]["tmp_name"],
                                 $uploaded);
@@ -135,7 +148,7 @@ case 'complete_your_profile':
                             $error_h = TRUE;
                         }
 
-                        if (!$error_h && !$error_w) {
+                        if (!$error_h && !$error_w && $valid_entries) {
                             //image is valid copy to DB
 
                             $userid = $_SESSION['site_registration']['userid'];
@@ -195,37 +208,36 @@ case 'complete_your_profile':
                 $messages['errors'][] = "Please select an image.";
             }
         }
-    }else{
+    } else {
         //use default image
-        $default_image = realpath( $_SERVER['DOCUMENT_ROOT'] . "images/misc/unknown.gif" );
+        $default_image = realpath(
+                $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR
+                        . "images/misc/unknown.gif");
         list($width, $height, $type, $attr) = getimagesize($default_image);
-        
+
         $userid = $_SESSION['site_registration']['userid'];
-        $filedata = file_get_contents($uploaded);
+        $filedata = file_get_contents($default_image);
         $dateline = time();
-        $filename = $uploaded;
+        $filename = $default_image;
         $visible = 1;
-        $filesize = filesize($uploaded);
+        $filesize = filesize($default_image);
 
         $sql = "
             REPLACE INTO " . TABLE_PREFIX
                 . "customprofilepic
             (userid, filedata, dateline, filename, visible, filesize, width, height)
             VALUES
-            ('" . $vbulletin->db->escape_string($userid)
-                . "',
+            ('" . $vbulletin->db->escape_string($userid) . "',
              '" . $vbulletin->db->escape_string($filedata)
                 . "',
              '" . $vbulletin->db->escape_string($dateline)
                 . "',
              '" . $vbulletin->db->escape_string($filename)
                 . "',
-             '" . $vbulletin->db->escape_string($visible)
-                . "',
+             '" . $vbulletin->db->escape_string($visible) . "',
              '" . $vbulletin->db->escape_string($filesize)
                 . "',
-             '" . $vbulletin->db->escape_string($width)
-                . "',
+             '" . $vbulletin->db->escape_string($width) . "',
              '" . $vbulletin->db->escape_string($height)
                 . "'
              )
@@ -236,9 +248,6 @@ case 'complete_your_profile':
 
         $rows = $vbulletin->db->affected_rows();
     }
-    
-
-
 
     if ($valid_entries) {
         //update timezone
@@ -268,8 +277,9 @@ case 'complete_your_profile':
             $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
                     . $vbulletin->GPC['receive_emails_from_administrators']
                     . " WHERE NOT (options & "
-                    . $vbulletin->GPC['receive_emails_from_administrators'] . ")";
-            
+                    . $vbulletin->GPC['receive_emails_from_administrators']
+                    . ")";
+
             $vbulletin->db->query_write($query);
 
         }
@@ -278,15 +288,16 @@ case 'complete_your_profile':
             $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
                     . $vbulletin->GPC['receive_emails_from_other_members']
                     . " WHERE NOT (options & "
-                    . $vbulletin->GPC['receive_emails_from_other_members'] . ")";
-                    
+                    . $vbulletin->GPC['receive_emails_from_other_members']
+                    . ")";
+
             $vbulletin->db->query_write($query);
         }
 
     }
 
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-            "url" => $url, "rows" => $rows);
+            "rows" => $rows);
 
     json_headers($arr);
 
