@@ -931,6 +931,7 @@ case 'activate':
 
         vbmail($email, $subject, $message, true);
 
+         $_SESSION['site_registration']['userid'] = $userid;
         $_SESSION['site_registration']['username'] = $vbulletin->GPC['username'];
         $_SESSION['site_registration']['email'] = $vbulletin->GPC['email'];
         $_SESSION['site_registration']['birthday'] = $vbulletin->GPC['birthdate'];
