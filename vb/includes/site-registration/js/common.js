@@ -402,7 +402,7 @@ jQuery(document).ready(function(jQuery) {
     //Log-in
     if(jQuery("#log-in").exists()) {        
         jQuery("#log-in").bind('click', function() {
-            var username = escape(jQuery("#username"));
+            var username = escape(jQuery("#username").val());
             var email = escape(jQuery("#email").val());
             var birthdate = escape(jQuery("#datepicker").val());
             var avatar = escape(jQuery("#avatar").val());
