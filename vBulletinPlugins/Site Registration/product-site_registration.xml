@@ -1425,6 +1425,8 @@ die;
 							            setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
 							        }
 
+			                        $vbulletin->userinfo[securitytoken] = "guest";
+			                        
 						     		header("location: index.php");
 						     	}
 							} else {
