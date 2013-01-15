@@ -161,9 +161,17 @@ $stylevar[htmldoctype]
 							<span class="small bold"><span id="percentage-indicator">50</span>% profile completeness</span>
 							<div class="progress grid_3 no-margin" id="progress-indicator-container">
 								<div class="bar bar-success" style="width: 50%;"
-								    id="progress-indicator"></div>
+								    id="progress-indicator"></div> 
 							</div>
+							<div id="icon-ok" class="margin_left_20 hidden">
+						        <span class="">
+						            <i class="icon-ok-sign"></i>
+						        </span>
+						    </div>
 							<div class="clear clear_15"></div>
+							<div id="user-cp" class="hidden">
+							    You can always make any changes by accessing the <a class="link_blue">User CP</a>.
+							</div>
 							
 							<form id="complete-your-profile-form"
 			                name="complete_your_profile_form" 
@@ -448,7 +456,7 @@ $stylevar[htmldoctype]
 				            &nbsp;&nbsp;&nbsp;
 				            <span id="email-sent" class="small email-sent">
 				            </span> 
-				            <input id="token" name="token" value="$token" type="hidden" />
+				            <input id="token" name="token" value="###TOKEN###" type="hidden" />
                         </div>
                     </div>
                 </div>
@@ -1163,12 +1171,6 @@ die;
 			    if((int)$vbulletin->userinfo['userid'] && $_REQUEST['do'] !="logout"){
 			        if (!session_id()) {
                         session_start();
-
-                        //if (!isset($_SESSION['initiated'])) {
-                        //    session_regenerate_id();
-                        //    $_SESSION['initiated'] = true;
-                        //}
-
                     }
                     
                     $userid = $vbulletin->userinfo['userid'];
@@ -1186,18 +1188,28 @@ die;
 	                    
 	                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
                         
-                        $username   = $_SESSION['site_registration']['username']    = $vbulletin->userinfo['username'];
-                        $email      = $_SESSION['site_registration']['email']       = $vbulletin->userinfo['email'];
-                        $userid     = $_SESSION['site_registration']['userid']      = $vbulletin->userinfo['userid'];
-                        $token      = $vbulletin->userinfo[securitytoken];
+                        $username   = $_SESSION['site_registration']['username']        = $vbulletin->userinfo['username'];
+                        $email      = $_SESSION['site_registration']['email']           = $vbulletin->userinfo['email'];
+                        $userid     = $_SESSION['site_registration']['userid']          = $vbulletin->userinfo['userid'];
+                        //$security_token      = $_SESSION['site_registration']['securitytoken']   = $vbulletin->userinfo['securitytoken'];
                         
-                        if( empty( $token ) ){
-                            $token = "guest";
+                        
+                        $token_raw = sha1($vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt']) . sha1(COOKIE_SALT));
+	                    $security_token = $_SESSION['site_registration']['securitytoken'] = TIMENOW . '-' . sha1(TIMENOW . $token_raw);
+			            
+			            if( empty( $security_token ) ){
+                            $security_token = $_SESSION['site_registration']['securitytoken'] = "guest";
                         }
+			            
 			            
 	                    $vbulletin->templatecache['navbar'] = str_replace(
 	                        '<!-- / nav buttons bar -->', 
 	                        '<!-- / nav buttons bar -->' . $site_reg_not_activated_template, 
+	                        $vbulletin->templatecache['navbar']
+	                    );
+	                    
+	                    $vbulletin->templatecache['navbar'] = str_replace(
+	                        '###TOKEN###', $security_token, 
 	                        $vbulletin->templatecache['navbar']
 	                    );
 	                }

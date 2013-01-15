@@ -155,7 +155,10 @@ jQuery(document).ready(function(jQuery) {
                     jQuery('#complete-your-profile-form').remove();
                     jQuery('.complete-your-profile').css('min-height',420);
                     jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
-                    
+                    jQuery("#icon-ok").removeClass('hidden'); 
+                    jQuery("#icon-ok").show(); 
+                    jQuery("#user-cp").removeClass('hidden'); 
+                    jQuery("#user-cp").show();
                     
                 }
             } 

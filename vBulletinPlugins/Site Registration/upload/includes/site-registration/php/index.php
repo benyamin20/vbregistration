@@ -190,6 +190,38 @@ case 'complete_your_profile':
             $messages['fields'][] = $error_type;
             $messages['errors'][] = "Please select an image.";
         }
+    }
+    
+    if($valid_entries){
+        //update timezone
+
+        $sql = "REPLACE INTO " . TABLE_PREFIX . "user
+                (timezoneoffset)
+                VALUES
+                ('" . $vbulletin->db->escape_string( $vbulletin->GPC['timezone'] ) . "')";
+                        
+            /*insert query*/
+            $vbulletin->db->query_write( $sql );
+
+            $rows = $vbulletin->db->affected_rows();
+        
+    }
+    
+    if($valid_entries){
+        //update secret question and secret answer
+    }
+    
+    if($valid_entries){
+        //update who can contact you
+        if (!empty($vbulletin->GPC['secret_answer'])){
+            $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + " . $vbulletin->bf_misc_useroptions['adminemail'] . " WHERE NOT (options & " . $vbulletin->bf_misc_useroptions['adminemail'] . ")";
+         
+        }
+        
+        if (!empty($vbulletin->GPC['secret_answer'])){
+            $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + " . $vbulletin->bf_misc_useroptions['showemail'] . " WHERE NOT (options & " . $vbulletin->bf_misc_useroptions['showemail'] . ")"; 
+        }
+        
     }           
                             
  
