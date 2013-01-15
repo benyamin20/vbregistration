@@ -217,17 +217,21 @@ case 'complete_your_profile':
         //update who can contact you
         if (!empty($vbulletin->GPC['receive_emails_from_administrators'])) {
             $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
-                    . $vbulletin->bf_misc_useroptions['adminemail']
+                    . $vbulletin->GPC['receive_emails_from_administrators']
                     . " WHERE NOT (options & "
-                    . $vbulletin->bf_misc_useroptions['adminemail'] . ")";
+                    . $vbulletin->GPC['receive_emails_from_administrators'] . ")";
+            
+            $vbulletin->db->query_write($query);
 
         }
 
         if (!empty($vbulletin->GPC['receive_emails_from_other_members'])) {
             $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
-                    . $vbulletin->bf_misc_useroptions['showemail']
+                    . $vbulletin->GPC['receive_emails_from_other_members']
                     . " WHERE NOT (options & "
-                    . $vbulletin->bf_misc_useroptions['showemail'] . ")";
+                    . $vbulletin->GPC['receive_emails_from_other_members'] . ")";
+                    
+            $vbulletin->db->query_write($query);
         }
 
     }
