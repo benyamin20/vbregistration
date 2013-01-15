@@ -96,11 +96,26 @@ jQuery(document).ready(function(jQuery) {
     //assign default image to upload file	
 	if(jQuery("#use-default").exists()){
 	    jQuery("#use-default").bind('click', function(){
+	    
+	        //check if remove buton exists
 	        if(jQuery('.fileupload-exists').exists()){
 	            jQuery('.fileupload-exists').trigger('click');
 	        }
 	        
-	        jQuery("#selected-avatar").attr("src","/images/misc/unknown.gif");
+	        //set hidden to use default image
+	        jQuery("#use-default-image").val("true");
+	        
+	        //change image preview thumb
+	        jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
+	    });
+	}
+	
+	
+	if( jQuery(".fileupload-exists").exists() ){
+	    jQuery(".fileupload-exists").bind('click', function(){
+	        //set hidden to not use default image
+	        jQuery("#use-default-image").val("");
+	        jQuery("#selected-avatar").attr("src","includes/site-registration/img/thumbnail.png");
 	    });
 	}
 	

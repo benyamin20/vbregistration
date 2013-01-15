@@ -297,6 +297,12 @@ $stylevar[htmldoctype]
 							</label>
 
 							<div class="clear clear_20"></div>
+							
+							<input type="hidden" name="use_default_image"
+							    id="use-default-image"
+							    value="" 
+							    />
+							
 							<input  class="btn btn-primary grid_2 no-margin"
 							    id="save-account-activated" 
 							    type="submit" value="Save" />
@@ -1176,13 +1182,14 @@ die;
                     
                     $userid = $vbulletin->userinfo['userid'];
 	                
-	                $users = $vbulletin->db->query_read("
+	                $users = $vbulletin->db->query_first("
 		                SELECT activationid
 		                FROM " . TABLE_PREFIX . "useractivation
 		                WHERE userid = " . $vbulletin->db->escape_string($userid). "
 	                ");
 	                
-	                $user['activationid'] = $vbulletin->db->fetch_field($users);
+	                $user['activationid'] = $users['activationid']; 
+	                //$vbulletin->db->fetch_field($users);
 	                
 	                if (!empty($user['activationid'])){
 	                    //pending activation id
