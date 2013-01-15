@@ -895,7 +895,7 @@ case 'activate':
     if($valid_entries) {
         /*insert query*/
         $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."user (email, birthday, username) VALUES ('". $vbulletin->db->escape_string($vbulletin->GPC['email']) ."', '" . $vbulletin->db->escape_string($vbulletin->GPC['birthdate']) . "',
-             '". $vbulletin->db->escape_string($vbulletin->GPC['username']) . "')");
+             '". $vbulletin->GPC['username'] . "')");
 
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
