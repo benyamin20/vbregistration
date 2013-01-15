@@ -5,7 +5,7 @@ AJAX_Compatible = true;
  * check if something exists
  */
 jQuery.fn.exists = function() {
-	return this.length > 0;
+    return this.length > 0;
 }
 
 
@@ -38,7 +38,7 @@ $.fn.realVal = function(){
 
 //alternative function to close a facebox thru a trigger
 closeTnC = function() {
-	jQuery(document).trigger('close.facebox');
+    jQuery(document).trigger('close.facebox');
 }
 
 
@@ -51,78 +51,78 @@ closeTnC = function() {
 jQuery(document).ready(function(jQuery) {
 
     //initialize any facebox
-	if (jQuery('a[rel*=facebox]').exists()) {
-		jQuery.getScript("includes/site-registration/facebox/facebox.js", function() {
-			jQuery('a[rel*=facebox]').facebox({
-				loadingImage : 'includes/site-registration/facebox/loading.gif',
-				closeImage : 'includes/site-registration/facebox/closelabel.png' 
-			});
-		});
+    if (jQuery('a[rel*=facebox]').exists()) {
+        jQuery.getScript("includes/site-registration/facebox/facebox.js", function() {
+            jQuery('a[rel*=facebox]').facebox({
+                loadingImage : 'includes/site-registration/facebox/loading.gif',
+                closeImage : 'includes/site-registration/facebox/closelabel.png' 
+            });
+        });
 
-	}
+    }
 
     //feature to alternatively close facebox
-	if (jQuery('a[class*=close-facebox]').length > 0) {
-		jQuery('a[class*=close-facebox]').bind('click', function() {
-			jQuery(document).trigger('close.facebox');
-		});
-	}
+    if (jQuery('a[class*=close-facebox]').length > 0) {
+        jQuery('a[class*=close-facebox]').bind('click', function() {
+            jQuery(document).trigger('close.facebox');
+        });
+    }
 
     // initialize date picker
-	if (jQuery("#datepicker").exists()) {
-		jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function() {
-			jQuery(function() {
-				jQuery("#datepicker").datepicker({
-					autoSize : true,
-					minDate : '-90y',
-					maxDate : '-13y',
-					changeYear : true,
-					changeMonth : true,
-					constrainInput : true
+    if (jQuery("#datepicker").exists()) {
+        jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function() {
+            jQuery(function() {
+                jQuery("#datepicker").datepicker({
+                    autoSize : true,
+                    minDate : '-90y',
+                    maxDate : '-13y',
+                    changeYear : true,
+                    changeMonth : true,
+                    constrainInput : true
 
-				});
-			});			
-		}); 
-		
-		//check if the calendar icon exists and bind the click action
-		// to show datepicker
-		if (jQuery('.add-on').exists()) {
-			jQuery('.add-on').bind('click', function() {
-				jQuery("#datepicker").datepicker("show");
-			});
-		}
-	}
-	
+                });
+            });         
+        }); 
+        
+        //check if the calendar icon exists and bind the click action
+        // to show datepicker
+        if (jQuery('.add-on').exists()) {
+            jQuery('.add-on').bind('click', function() {
+                jQuery("#datepicker").datepicker("show");
+            });
+        }
+    }
+    
 
-    //assign default image to upload file	
-	if(jQuery("#use-default").exists()){
-	    jQuery("#use-default").bind('click', function(){
-	    
-	        //check if remove buton exists
-	        if(jQuery('.fileupload-exists').exists()){
-	            jQuery('.fileupload-exists').trigger('click');
-	        }
-	        
-	        //set hidden to use default image
-	        jQuery("#use-default-image").val("true");
-	        
-	        //change image preview thumb
-	        jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
-	    });
-	}
-	
-	
-	if( jQuery(".fileupload-exists").exists() ){
-	    jQuery(".fileupload-exists").bind('click', function(){
-	        //set hidden to not use default image
-	        jQuery("#use-default-image").val("");
-	        jQuery("#selected-avatar").attr("src","includes/site-registration/img/thumbnail.png");
-	    });
-	}
-	
-	if(jQuery("#save-account-activated").exists()){
-		//bind enter event to  fields
-	    jQuery("#secret_question").enterKey(function () {
+    //assign default image to upload file   
+    if(jQuery("#use-default").exists()){
+        jQuery("#use-default").bind('click', function(){
+        
+            //check if remove buton exists
+            if(jQuery('.fileupload-exists').exists()){
+                jQuery('.fileupload-exists').trigger('click');
+            }
+            
+            //set hidden to use default image
+            jQuery("#use-default-image").val("true");
+            
+            //change image preview thumb
+            jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
+        });
+    }
+    
+    
+    if( jQuery(".fileupload-exists").exists() ){
+        jQuery(".fileupload-exists").bind('click', function(){
+            //set hidden to not use default image
+            jQuery("#use-default-image").val("");
+            jQuery("#selected-avatar").attr("src","includes/site-registration/img/thumbnail.png");
+        });
+    }
+    
+    if(jQuery("#save-account-activated").exists()){
+        //bind enter event to  fields
+        jQuery("#secret_question").enterKey(function () {
             jQuery("#save-account-activated").trigger('click');
         });
 
@@ -180,15 +180,15 @@ jQuery(document).ready(function(jQuery) {
             } 
         }; 
         
-	    jQuery('#complete-your-profile-form').ajaxForm(options);
-	}
-	
+        jQuery('#complete-your-profile-form').ajaxForm(options);
+    }
+    
 
-	
-	//site account details
-	if(jQuery("#site-account-deails-create-account").exists()){
-	    //bind enter event to already have an account fields
-	    jQuery("#username").enterKey(function () {
+    
+    //site account details
+    if(jQuery("#site-account-deails-create-account").exists()){
+        //bind enter event to already have an account fields
+        jQuery("#username").enterKey(function () {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
 
@@ -197,15 +197,15 @@ jQuery(document).ready(function(jQuery) {
         });
         
         //submit and validate fields
-	    jQuery("#site-account-deails-create-account").bind('click', function(){
-	        jQuery('#have-account-error').empty(); 
-	        var username = escape(jQuery("#username").val());
-	        var password = escape(jQuery("#password").val());
-	        var confirm_password = escape(jQuery("#confirm-password").val());
-	        var security_code = escape(jQuery("#security-code").val());
-	        var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
-	        
-	        jQuery.ajax({
+        jQuery("#site-account-deails-create-account").bind('click', function(){
+            jQuery('#have-account-error').empty(); 
+            var username = escape(jQuery("#username").val());
+            var password = escape(jQuery("#password").val());
+            var confirm_password = escape(jQuery("#confirm-password").val());
+            var security_code = escape(jQuery("#security-code").val());
+            var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
+            
+            jQuery.ajax({
               url: "includes/site-registration/php/index.php?op=validate_site_account_details",
               context: document.body, 
               dataType: 'json',
@@ -216,13 +216,13 @@ jQuery(document).ready(function(jQuery) {
                 if(jQuery('#ajax-loader').exists()){
                     jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
                 }
-	          },
+              },
               success: function( response ) {
                 
                 if(jQuery('#ajax-spinner').exists()){
-	                    jQuery('#ajax-spinner').remove();
-	            }
-	                
+                        jQuery('#ajax-spinner').remove();
+                }
+                    
                 if(response.valid_entries == false){
                 
                     jQuery('.error-label').empty();
@@ -249,39 +249,39 @@ jQuery(document).ready(function(jQuery) {
                     jQuery(location).attr('href',url);
                 }
               }
-	        }).done(function() { 
+            }).done(function() { 
                 //nothing here
             });
-	    });
-	    
-	}
-	
-	
-	
-	
-	//already have an account features
-	if (jQuery("#login-button").exists()) {
-	
-	    //bind enter event to already have an account fields
-	    jQuery("#username").enterKey(function () {
+        });
+        
+    }
+    
+    
+    
+    
+    //already have an account features
+    if (jQuery("#login-button").exists()) {
+    
+        //bind enter event to already have an account fields
+        jQuery("#username").enterKey(function () {
             jQuery("#login-button").trigger('click');
         });
 
         jQuery("#password").enterKey(function () {
             jQuery("#login-button").trigger('click');
         });
-	
-	    //submit and validate authentication
-	    jQuery("#login-button").bind('click', function(){
-	        jQuery('#have-account-error').empty();
-	        var form = jQuery('#already-have-an-account-form');
-	        var username = escape(jQuery("#username").val());
-	        var password = escape(jQuery("#password").val());
-	        var s = '';
-	        var login = 'do';
-	        var securitytoken = 'guest';
-	    
-	        jQuery.ajax({
+    
+        //submit and validate authentication
+        jQuery("#login-button").bind('click', function(){
+            jQuery('#have-account-error').empty();
+            var form = jQuery('#already-have-an-account-form');
+            var username = escape(jQuery("#username").val());
+            var password = escape(jQuery("#password").val());
+            var s = '';
+            var login = 'do';
+            var securitytoken = 'guest';
+        
+            jQuery.ajax({
               url: "includes/site-registration/php/index.php?op=validate_login",
               context: document.body, 
               dataType: 'json',
@@ -308,61 +308,61 @@ jQuery(document).ready(function(jQuery) {
             });
             
             
-	    });
-	}
-	
-	
-	
-	//resens email functionality 
-	if (jQuery("#resend-email").exists()) {   
-	
-	    var token = escape(jQuery('#token').val());
-	
-	    jQuery("#resend-email").bind('click', function(){
-	        jQuery.ajax({
-	            url: "includes/site-registration/php/index.php?op=resend_email",
-	            context: document.body,
-	            dataType: 'json',
-	            type: 'POST',
-	            cache: false,
-	            data: 'securitytoken=' + token, 
-	            beforeSend: function(){
-	                jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
-	            },
-	            success: function (response) {
-	                if(jQuery('#ajax-spinner').exists()){
-	                    jQuery('#ajax-spinner').remove();
-	                }
-	                jQuery('#email-sent').empty();
-	                jQuery('#email-sent').append(response.message);
-	            }
-	        });  
-	    });
-	  
-	}
-	
-	
-	
-	//create site account functionality
-	if(jQuery("#create-new-account-button").exists()){
+        });
+    }
+    
+    
+    
+    //resens email functionality 
+    if (jQuery("#resend-email").exists()) {   
+    
+        var token = escape(jQuery('#token').val());
+    
+        jQuery("#resend-email").bind('click', function(){
+            jQuery.ajax({
+                url: "includes/site-registration/php/index.php?op=resend_email",
+                context: document.body,
+                dataType: 'json',
+                type: 'POST',
+                cache: false,
+                data: 'securitytoken=' + token, 
+                beforeSend: function(){
+                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                },
+                success: function (response) {
+                    if(jQuery('#ajax-spinner').exists()){
+                        jQuery('#ajax-spinner').remove();
+                    }
+                    jQuery('#email-sent').empty();
+                    jQuery('#email-sent').append(response.message);
+                }
+            });  
+        });
+      
+    }
+    
+    
+    
+    //create site account functionality
+    if(jQuery("#create-new-account-button").exists()){
         jQuery('#create-new-account-error').empty();
         
-	    
-	   //bind enter event to already have an account fields
-	    jQuery("#email").enterKey(function () {
+        
+       //bind enter event to already have an account fields
+        jQuery("#email").enterKey(function () {
             jQuery("#create-new-account-button").trigger('click');
         });
 
         jQuery("#datepicker").enterKey(function () {
             jQuery("#create-new-account-button").trigger('click');
         });
-	
-	    
-	     jQuery("#create-new-account-button").bind('click', function(){
-	        var email = escape(jQuery("#email").val());
-	        var birthdate = escape(jQuery("#datepicker").val());
-	    
-	         jQuery.ajax({
+    
+        
+         jQuery("#create-new-account-button").bind('click', function(){
+            var email = escape(jQuery("#email").val());
+            var birthdate = escape(jQuery("#datepicker").val());
+        
+             jQuery.ajax({
                   url: "includes/site-registration/php/index.php?op=create_site_account_first_step",
                   context: document.body, 
                   dataType: 'json',
@@ -394,11 +394,10 @@ jQuery(document).ready(function(jQuery) {
                 }).done(function() { 
                     //nothing here
                 });
-	     });
-	    
-	        
-	}
-	
+         });
+        
+            
+    }
 
     //Log-in
     if(jQuery("#log-in").exists()) {        
@@ -406,6 +405,7 @@ jQuery(document).ready(function(jQuery) {
             var username = escape(jQuery("#username"));
             var email = escape(jQuery("#email").val());
             var birthdate = escape(jQuery("#datepicker").val());
+            var avatar = escape(jQuery("#avatar").val());
         
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=activate",
@@ -413,7 +413,7 @@ jQuery(document).ready(function(jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'username='+ username + '&email='+ email +'&birthdate='+ birthdate,
+                data: 'avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate,
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
                         if(response.error_type != "datepicker") {
@@ -441,4 +441,6 @@ jQuery(document).ready(function(jQuery) {
             });
         });
     }
+    
+
 });
