@@ -149,28 +149,40 @@ $stylevar[htmldoctype]
 
 
 			<!-- Complete your profile -->
-			<form id="complete-your-profile-form"
-			    name="complete_your_profile_form" 
-			    action="includes/site-registration/php/index.php?op=complete_your_profile" 
-			    method="post"> 
+			
 			<div id="">
 				<div class="grid_4  move-to-top">
 					<div class="complete-your-profile">
 						<div class="margin_left_20">
 							<div class="clear clear_10"></div>
-							<h1>Complete your profile.</h1>
+							<h1 id="show-great">Complete your profile.</h1>
 							<div class="clear"></div>
-							<!--  Progress -->
-							<span class="small bold">50% profile completeness</span>
+							<!--  Progress --> 
+							<span class="small bold"><span id="percentage-indicator">50</span>% profile completeness</span>
 							<div class="progress grid_3 no-margin" id="progress-indicator-container">
 								<div class="bar bar-success" style="width: 50%;"
-								    id="progress-indicator"></div>
+								    id="progress-indicator"></div> 
 							</div>
+							<div id="icon-ok" class="margin_left_20 hidden">
+						        <span class="">
+						            <i class="icon-ok-sign"></i>
+						        </span>
+						    </div>
 							<div class="clear clear_15"></div>
+							<div id="user-cp" class="hidden">
+							    You can always make any changes by accessing the <a class="link_blue">User CP</a>.
+							</div>
+							
+							<form id="complete-your-profile-form"
+			                name="complete_your_profile_form" 
+			                action="includes/site-registration/php/index.php?op=complete_your_profile" 
+			                method="post"> 
 
                             <!--  Avatar -->
 							<span class="bold">Your Avatar</span>
 							<div class="clear clear_15"></div>
+							
+							
 
 							<div id="photoimg-wrapper" class="grid_4 no-margin">
 								<!--
@@ -179,11 +191,7 @@ $stylevar[htmldoctype]
 									        id="selected-avatar" />
 								    </div>
 								-->
-								<div>	
-									<!--
-									    <button class="btn">Upload</button>
-									-->
-									
+								<div>	 
 									<div class="fileupload fileupload-new" 
 									    data-provides="fileupload">
                                         <div class="fileupload-new thumbnail" 
@@ -197,18 +205,19 @@ $stylevar[htmldoctype]
                                         </div>
                                         <span class="btn btn-file">
                                             <span class="fileupload-new">Upload</span>
+                                            
                                             <span class="fileupload-exists">Change</span>
                                             <input type="file"
                                                 name="photoimg" id="photoimg" />
                                         </span>
+                                        
                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                                         <div class="clear"></div>
-                                        <span class="small error_red" id="photoimg-error-label"></span>
+                                        <a class="small link_blue" id="use-default">Use default.</a>
+                                        <span class="error-label small no-margin no-top" id="photoimg-error-label"></span>
                                 </div>
-									
-									
 									<div class="clear clear_15"></div>
-									<a class="small link_blue" id="use-default">Use default.</a>
+									
 								</div>
 							</div>
 
@@ -290,6 +299,7 @@ $stylevar[htmldoctype]
 							<input  class="btn btn-primary grid_2 no-margin"
 							    id="save-account-activated" 
 							    type="submit" value="Save" />
+							</form>
 						</div>
 					</div>
 				</div>
@@ -446,7 +456,7 @@ $stylevar[htmldoctype]
 				            &nbsp;&nbsp;&nbsp;
 				            <span id="email-sent" class="small email-sent">
 				            </span> 
-				            <input id="token" name="token" value="$token" type="hidden" />
+				            <input id="token" name="token" value="###TOKEN###" type="hidden" />
                         </div>
                     </div>
                 </div>
@@ -1161,12 +1171,6 @@ die;
 			    if((int)$vbulletin->userinfo['userid'] && $_REQUEST['do'] !="logout"){
 			        if (!session_id()) {
                         session_start();
-
-                        //if (!isset($_SESSION['initiated'])) {
-                        //    session_regenerate_id();
-                        //    $_SESSION['initiated'] = true;
-                        //}
-
                     }
                     
                     $userid = $vbulletin->userinfo['userid'];
@@ -1184,18 +1188,28 @@ die;
 	                    
 	                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
                         
-                        $username   = $_SESSION['site_registration']['username']    = $vbulletin->userinfo['username'];
-                        $email      = $_SESSION['site_registration']['email']       = $vbulletin->userinfo['email'];
-                        $userid     = $_SESSION['site_registration']['userid']      = $vbulletin->userinfo['userid'];
-                        $token      = $vbulletin->userinfo[securitytoken];
+                        $username   = $_SESSION['site_registration']['username']        = $vbulletin->userinfo['username'];
+                        $email      = $_SESSION['site_registration']['email']           = $vbulletin->userinfo['email'];
+                        $userid     = $_SESSION['site_registration']['userid']          = $vbulletin->userinfo['userid'];
+                        //$security_token      = $_SESSION['site_registration']['securitytoken']   = $vbulletin->userinfo['securitytoken'];
                         
-                        if( empty( $token ) ){
-                            $token = "guest";
+                        
+                        $token_raw = sha1($vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt']) . sha1(COOKIE_SALT));
+	                    $security_token = $_SESSION['site_registration']['securitytoken'] = TIMENOW . '-' . sha1(TIMENOW . $token_raw);
+			            
+			            if( empty( $security_token ) ){
+                            $security_token = $_SESSION['site_registration']['securitytoken'] = "guest";
                         }
+			            
 			            
 	                    $vbulletin->templatecache['navbar'] = str_replace(
 	                        '<!-- / nav buttons bar -->', 
 	                        '<!-- / nav buttons bar -->' . $site_reg_not_activated_template, 
+	                        $vbulletin->templatecache['navbar']
+	                    );
+	                    
+	                    $vbulletin->templatecache['navbar'] = str_replace(
+	                        '###TOKEN###', $security_token, 
 	                        $vbulletin->templatecache['navbar']
 	                    );
 	                }

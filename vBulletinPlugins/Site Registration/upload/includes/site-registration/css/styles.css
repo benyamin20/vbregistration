@@ -206,7 +206,7 @@ li {
 
 .complete-your-profile {
     background-color: #F1F1F1;
-    min-height: 580px;
+    min-height: 600px;
 }
 
 .move-to-top {
@@ -357,4 +357,8 @@ li {
     width: inherit;
     padding: 20px;
     margin-top: 3px;
+}
+
+.no-top{
+    top: 0 !important;
 }

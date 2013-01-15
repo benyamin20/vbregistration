@@ -65,78 +65,6 @@ case 'complete_your_profile':
               );
               
               
-    $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
-    
-    if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST")
-    {
-        $name = $_FILES['photoimg']['name'];
-        $size = $_FILES['photoimg']['size'];
-    
-        if(strlen($name))
-        {
-            list($txt, $ext) = explode(".", $name);
-            if(in_array($ext,$valid_formats))
-            {
-                if($size<(1024*100)){
-                    $actual_image_name = time() . mt_rand() . "." . $ext;   
-                    //image is valid copy to DB
-
-                    /* 
-                    userid  
-                    filedata
-                    dateline
-                    filename
-                    visible
-                    filesize
-                    width    
-                    height   
-                    */
-                    
-                    $uploaded = "/tmp/" . $actual_image_name;
-                    
-                    move_uploaded_file($_FILES["photoimg"]["tmp_name"],
-                        $uploaded
-                    );
-                    
-                    list($width, $height, $type, $attr) = getimagesize($uploaded);
-                    
-                    if($width > 100){
-                        $error_type = "photoimg";
-                        $messages['fields'][] = $error_type;
-                        $messages['errors'][] = "Image width too large.";
-                        @unlink($uploaded);
-                        $error_w = TRUE;
-                    }
-                    
-                    if($height > 100){
-                        $error_type = "photoimg";
-                        $messages['fields'][] = $error_type;
-                        $messages['errors'][] = "Image height too large.";
-                        @unlink($uploaded);
-                        $error_h = TRUE;
-                    }
-                    
-                   
-                                   
-                }else{
-                    $error_type = "photoimg";
-                    $messages['fields'][] = $error_type;
-                    $messages['errors'][] = "Image size too large.";
-                }
-            }else{
-                $error_type = "photoimg";
-                $messages['fields'][] = $error_type;
-                $messages['errors'][] = "Invalid format: jpg, png, gif, bmp, jpeg only.";
-            }
-            
-        }else{
-            $error_type = "photoimg";
-            $messages['fields'][] = $error_type;
-            $messages['errors'][] = "Please select an image.";
-        }
-    }           
-                            
-  
     if (empty($vbulletin->GPC['secret_question'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
@@ -166,17 +94,142 @@ case 'complete_your_profile':
     } else {
 
     }
+              
+              
+    $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
     
-    $userid = $_SESSION['site_registration']['userid'];
+    if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST")
+    {
+        $name = $_FILES['photoimg']['name'];
+        $size = $_FILES['photoimg']['size'];
     
+        if(strlen($name))
+        {
+            list($txt, $ext) = explode(".", $name);
+            if(in_array($ext,$valid_formats))
+            {
+                if($size<(1024*100)){
+                    $actual_image_name = time() . mt_rand() . "." . $ext;   
+                    
+                    $uploaded = "/tmp/" . $actual_image_name;
+                    
+                    move_uploaded_file($_FILES["photoimg"]["tmp_name"],
+                        $uploaded
+                    );
+                    
+                    list($width, $height, $type, $attr) = getimagesize($uploaded);
+                    
+                    if($width > 100){
+                        $valid_entries = FALSE;
+                        $error_type = "photoimg";
+                        $messages['fields'][] = $error_type;
+                        $messages['errors'][] = "Image width too large (try 100x100).";
+                        @unlink($uploaded);
+                        $error_w = TRUE;
+                    }
+                    
+                    if($height > 100){
+                        $valid_entries = FALSE;
+                        $error_type = "photoimg";
+                        $messages['fields'][] = $error_type;
+                        $messages['errors'][] = "Image height too large (try 100x100).";
+                        @unlink($uploaded);
+                        $error_h = TRUE;
+                    }
+                    
+                    
+                    if(!$error_h && !$error_w){
+                        //image is valid copy to DB
+
+                        $userid     = $_SESSION['site_registration']['userid'];  
+                        $filedata   = file_get_contents($uploaded);
+                        $dateline   = time();
+                        $filename   = $uploaded;
+                        $visible    = 1;
+                        $filesize   = filesize($uploaded);
+                        
+                        $sql = "
+                            REPLACE INTO " . TABLE_PREFIX . "customprofilepic
+                            (userid, filedata, dateline, filename, visible, filesize, width, height)
+                            VALUES
+                            ('" . $vbulletin->db->escape_string( $userid ) . "',
+                             '" . $vbulletin->db->escape_string( $filedata ) . "',
+                             '" . $vbulletin->db->escape_string( $dateline ) . "',
+                             '" . $vbulletin->db->escape_string( $filename ) . "',
+                             '" . $vbulletin->db->escape_string( $visible ) . "',
+                             '" . $vbulletin->db->escape_string( $filesize ) . "',
+                             '" . $vbulletin->db->escape_string( $width ) . "',
+                             '" . $vbulletin->db->escape_string( $height ) . "'
+                             )
+                        ";
+                        
+                        /*insert query*/
+                        $vbulletin->db->query_write( $sql );
+
+                        $rows = $vbulletin->db->affected_rows();
+                    }
+                    
+                   
+                                   
+                }else{
+                    $valid_entries = FALSE;
+                    $error_type = "photoimg";
+                    $messages['fields'][] = $error_type;
+                    $messages['errors'][] = "Image size too large (try < 100kb).";
+                }
+            }else{
+                $valid_entries = FALSE;
+                $error_type = "photoimg";
+                $messages['fields'][] = $error_type;
+                $messages['errors'][] = "Invalid format: jpg, png, gif, bmp, jpeg only.";
+            }
+            
+        }else{
+            $valid_entries = FALSE;
+            $error_type = "photoimg";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = "Please select an image.";
+        }
+    }
     
-          
-  
+    if($valid_entries){
+        //update timezone
+
+        $sql = "REPLACE INTO " . TABLE_PREFIX . "user
+                (timezoneoffset)
+                VALUES
+                ('" . $vbulletin->db->escape_string( $vbulletin->GPC['timezone'] ) . "')";
+                        
+            /*insert query*/
+            $vbulletin->db->query_write( $sql );
+
+            $rows = $vbulletin->db->affected_rows();
+        
+    }
+    
+    if($valid_entries){
+        //update secret question and secret answer
+    }
+    
+    if($valid_entries){
+        //update who can contact you
+        if (!empty($vbulletin->GPC['secret_answer'])){
+            $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + " . $vbulletin->bf_misc_useroptions['adminemail'] . " WHERE NOT (options & " . $vbulletin->bf_misc_useroptions['adminemail'] . ")";
+         
+        }
+        
+        if (!empty($vbulletin->GPC['secret_answer'])){
+            $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + " . $vbulletin->bf_misc_useroptions['showemail'] . " WHERE NOT (options & " . $vbulletin->bf_misc_useroptions['showemail'] . ")"; 
+        }
+        
+    }           
+                            
+ 
     $arr = array(   
                 "valid_entries" => $valid_entries, 
                 "messages" => $messages,
-                "url" => $url,
-                "userid" => $userid   
+                "url" => $url, 
+                "rows" => $rows   
             );
 
     json_headers($arr);
@@ -547,7 +600,7 @@ case 'create_site_account_first_step':
             VALUES
             ('" . $vbulletin->db->escape_string($vbulletin->GPC['email'] ) . "',
              '" . $vbulletin->db->escape_string($vbulletin->GPC['birthdate'] ) . "',
-             '" . $vbulletin->db->escape_string($_SESSION['site_registration']['initial_page'] ) . "',
+             '" . $vbulletin->db->escape_string($_SESSION['site_registration']['initial_page'] ) . "'
              )
         ");
 
