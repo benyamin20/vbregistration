@@ -399,6 +399,47 @@ jQuery(document).ready(function(jQuery) {
 	    
 	        
 	}
-	
+    
+	//Log-in
+    if(jQuery("#log-in").exists()) {        
+        jQuery("#log-in").bind('click', function() {
+            var username = escape(jQuery("#username"));
+            var email = escape(jQuery("#email").val());
+            var birthdate = escape(jQuery("#datepicker").val());
+        
+            jQuery.ajax({
+                url: "includes/site-registration/php/index.php?op=activate",
+                context: document.body, 
+                dataType: 'json',
+                type: 'POST',
+                cache: false,
+                data: 'username='+ username + '&email='+ email +'&birthdate='+ birthdate,
+                success: function(response) {
+                    if(response.valid_entries == false) {                                                                        
+                        if(response.error_type != "datepicker") {
+                            jQuery('#'+response.error_type+'').addClass("input-error").wrap('<div class="input-error-container" />');
+                        } else {
+                            if(email == "") {
+                                jQuery('#email').addClass("input-error").wrap('<div class="input-error-container" />');
+                            }
 
+                            if(username == "") {
+                                jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');   
+                            }
+
+                            jQuery('#'+response.error_type+'').addClass("input-error");
+                            jQuery('span.add-on').addClass("input-error");
+                        }                         
+                    } else {
+                        //redirect user to proper url
+                        var url = response.url;    
+                        jQuery(location).attr('href', url);
+                    } 
+                }
+            }).done(function() { 
+                //nothing here
+            });
+        });
+    }
+    
 });
