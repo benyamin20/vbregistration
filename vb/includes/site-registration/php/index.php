@@ -838,7 +838,7 @@ case 'activate':
     $message = "";
 
     //clean variables
-    $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR));
+    $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR, 'username' => TYPE_STR));
 
     //check if variables are set
     if(empty($vbulletin->GPC['email'])) {
@@ -846,7 +846,6 @@ case 'activate':
         $userdata->error('fieldmissing');
         $message = $userdata->errors[0];
         $error_type = "email";
-
     }
 
     $regexp = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
@@ -901,7 +900,7 @@ case 'activate':
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
         $message = "OK";
-        $url = "/register.php?step=activate";
+        $url = "register.php?step=activate";
 
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
