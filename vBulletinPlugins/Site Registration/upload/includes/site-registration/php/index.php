@@ -895,7 +895,7 @@ case 'activate':
     if($valid_entries) {
         /*insert query*/
         $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."user (email, birthday, username) VALUES ('". $vbulletin->db->escape_string($vbulletin->GPC['email']) ."', '" . $vbulletin->db->escape_string($vbulletin->GPC['birthdate']) . "',
-             '". $vbulletin->db->escape_string($vbulletin->db->escape_string($vbulletin->GPC['username'])) . "')");
+             '". $vbulletin->db->escape_string($vbulletin->GPC['username']) . "')");
 
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
@@ -904,7 +904,7 @@ case 'activate':
 
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
-        $form = "create_site_account_first_step";
+        $form = "site-account-details";
         $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
 
         $email = $vbulletin->db->escape_string($vbulletin->GPC['email']);
@@ -934,7 +934,6 @@ case 'activate':
         $_SESSION['site_registration']['username'] = $vbulletin->GPC['username'];
         $_SESSION['site_registration']['email'] = $vbulletin->GPC['email'];
         $_SESSION['site_registration']['birthday'] = $vbulletin->GPC['birthdate'];
-
     }
 
     $arr = array("valid_entries" => $valid_entries,
