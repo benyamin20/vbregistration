@@ -907,6 +907,8 @@ case 'activate':
         $parts = explode(".", $avatar);
         $extension = end($parts);
         $filedata = file_get_contents($avatar);
+        var_dump($filedata);
+        exit;
         $dateline = time();        
         $visible  = 1;
         $filesize = filesize($avatar);
