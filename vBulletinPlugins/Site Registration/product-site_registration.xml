@@ -1402,7 +1402,8 @@ $stylevar[htmldoctype]
                      
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
 			        	$code           = $_REQUEST["code"];
-			        	$cliend_id      = $vbulletin->options['site_registration_settingsfb_fbapi'];  
+			        	//$cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi'];  
+			        	$client_id		= "304416966345499";
 			        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
 			        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
 
