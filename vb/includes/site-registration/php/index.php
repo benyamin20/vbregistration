@@ -28,38 +28,241 @@ require_once('functions_login.php');
 
 if (!session_id()) {
     session_start();
+
+    //if (!isset($_SESSION['initiated'])) {
+    //    session_regenerate_id();
+    //    $_SESSION['initiated'] = true;
+    //}
+
 }
 
 /**
  * Operations
  **/
-$op = $_GET['op'];
+$vbulletin->input->clean_array_gpc('g', array('op' => TYPE_STR));
+
+//$op = $_GET['op'];
+
+$op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
+case 'complete_your_profile':
+    $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+    $valid_entries = TRUE;
+    $messages = "";
+
+    //avatar
+
+    $vbulletin->input
+            ->clean_array_gpc('p',
+                    array('secret_question' => TYPE_STR,
+                            'secret_answer' => TYPE_STR,
+                            'receive_emails_from_administrators' => TYPE_INT,
+                            'receive_emails_from_other_members' => TYPE_INT,
+                            'timezone' => TYPE_STR));
+
+    if (empty($vbulletin->GPC['secret_question'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $error_type = "secret_question";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
+    } else {
+
+    }
+
+    if (empty($vbulletin->GPC['secret_answer'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $error_type = "secret_answer";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
+    } else {
+
+    }
+
+    if (empty($vbulletin->GPC['timezone'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $error_type = "timezone";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
+    } else {
+
+    }
+
+    $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
+
+    if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
+        $name = $_FILES['photoimg']['name'];
+        $size = $_FILES['photoimg']['size'];
+
+        if (strlen($name)) {
+            list($txt, $ext) = explode(".", $name);
+            if (in_array($ext, $valid_formats)) {
+                if ($size < (1024 * 100)) {
+                    $actual_image_name = time() . mt_rand() . "." . $ext;
+
+                    $uploaded = "/tmp/" . $actual_image_name;
+
+                    move_uploaded_file($_FILES["photoimg"]["tmp_name"],
+                            $uploaded);
+
+                    list($width, $height, $type, $attr) = getimagesize(
+                            $uploaded);
+
+                    if ($width > 100) {
+                        $valid_entries = FALSE;
+                        $error_type = "photoimg";
+                        $messages['fields'][] = $error_type;
+                        $messages['errors'][] = "Image width too large (try 100x100).";
+                        @unlink($uploaded);
+                        $error_w = TRUE;
+                    }
+
+                    if ($height > 100) {
+                        $valid_entries = FALSE;
+                        $error_type = "photoimg";
+                        $messages['fields'][] = $error_type;
+                        $messages['errors'][] = "Image height too large (try 100x100).";
+                        @unlink($uploaded);
+                        $error_h = TRUE;
+                    }
+
+                    if (!$error_h && !$error_w) {
+                        //image is valid copy to DB
+
+                        $userid = $_SESSION['site_registration']['userid'];
+                        $filedata = file_get_contents($uploaded);
+                        $dateline = time();
+                        $filename = $uploaded;
+                        $visible = 1;
+                        $filesize = filesize($uploaded);
+
+                        $sql = "
+                            REPLACE INTO " . TABLE_PREFIX
+                                . "customprofilepic
+                            (userid, filedata, dateline, filename, visible, filesize, width, height)
+                            VALUES
+                            ('" . $vbulletin->db->escape_string($userid)
+                                . "',
+                             '" . $vbulletin->db->escape_string($filedata)
+                                . "',
+                             '" . $vbulletin->db->escape_string($dateline)
+                                . "',
+                             '" . $vbulletin->db->escape_string($filename)
+                                . "',
+                             '" . $vbulletin->db->escape_string($visible)
+                                . "',
+                             '" . $vbulletin->db->escape_string($filesize)
+                                . "',
+                             '" . $vbulletin->db->escape_string($width)
+                                . "',
+                             '" . $vbulletin->db->escape_string($height)
+                                . "'
+                             )
+                        ";
+
+                        /*insert query*/
+                        $vbulletin->db->query_write($sql);
+
+                        $rows = $vbulletin->db->affected_rows();
+                    }
+
+                } else {
+                    $valid_entries = FALSE;
+                    $error_type = "photoimg";
+                    $messages['fields'][] = $error_type;
+                    $messages['errors'][] = "Image size too large (try < 100kb).";
+                }
+            } else {
+                $valid_entries = FALSE;
+                $error_type = "photoimg";
+                $messages['fields'][] = $error_type;
+                $messages['errors'][] = "Invalid format: jpg, png, gif, bmp, jpeg only.";
+            }
+
+        } else {
+            $valid_entries = FALSE;
+            $error_type = "photoimg";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = "Please select an image.";
+        }
+    }
+
+    if ($valid_entries) {
+        //update timezone
+
+        $sql = "REPLACE INTO " . TABLE_PREFIX
+                . "user
+                (timezoneoffset)
+                VALUES
+                ('"
+                . $vbulletin->db->escape_string($vbulletin->GPC['timezone'])
+                . "')";
+
+        /*insert query*/
+        $vbulletin->db->query_write($sql);
+
+        $rows = $vbulletin->db->affected_rows();
+
+    }
+
+    if ($valid_entries) {
+        //update secret question and secret answer
+    }
+
+    if ($valid_entries) {
+        //update who can contact you
+        if (!empty($vbulletin->GPC['receive_emails_from_administrators'])) {
+            $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
+                    . $vbulletin->GPC['receive_emails_from_administrators']
+                    . " WHERE NOT (options & "
+                    . $vbulletin->GPC['receive_emails_from_administrators'] . ")";
+            
+            $vbulletin->db->query_write($query);
+
+        }
+
+        if (!empty($vbulletin->GPC['receive_emails_from_other_members'])) {
+            $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
+                    . $vbulletin->GPC['receive_emails_from_other_members']
+                    . " WHERE NOT (options & "
+                    . $vbulletin->GPC['receive_emails_from_other_members'] . ")";
+                    
+            $vbulletin->db->query_write($query);
+        }
+
+    }
+
+    $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
+            "url" => $url, "rows" => $rows);
+
+    json_headers($arr);
+
+    break;
+
 case 'validate_site_account_details':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
-    $valid_entries = FALSE;
+    $valid_entries = TRUE;
     $messages = "";
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array(  'username' => TYPE_STR, 
-                            'password' => TYPE_STR,
+                    array('username' => TYPE_STR, 'password' => TYPE_STR,
                             'confirm_password' => TYPE_STR,
-                            'security_code' => TYPE_STR
-                            ));
+                            'security_code' => TYPE_STR,
+                            'terms_and_conditions' => TYPE_INT));
 
     if (empty($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing'); 
-        $error_type = "username";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+    } else {
+
     }
 
     if (empty($vbulletin->GPC['password'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing'); 
+        $userdata->error('fieldmissing');
         $error_type = "password";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = $userdata->errors[0];
@@ -67,7 +270,7 @@ case 'validate_site_account_details':
 
     if (empty($vbulletin->GPC['confirm_password'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing'); 
+        $userdata->error('fieldmissing');
         $error_type = "confirm-password";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = $userdata->errors[0];
@@ -75,86 +278,234 @@ case 'validate_site_account_details':
 
     if (empty($vbulletin->GPC['security_code'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing'); 
         $error_type = "security-code";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = $userdata->errors[0];
     }
-    
-    
-    
-    if ( $vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password'] ) {
+
+    if ($vbulletin->GPC['terms_and_conditions'] != 1) {
         $valid_entries = FALSE;
-        
-        $error_type           = "confirm-password";
+        $userdata->error('fieldmissing');
+        $error_type = "terms-and-conditions";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = $userdata->errors[0];
+    }
+
+    if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
+        $valid_entries = FALSE;
+
+        $error_type = "confirm-password";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Passwords don't match";
-        
-        $error_type           = "password";
+
+        $error_type = "password";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Passwords don't match";
     }
-    
+
     $regex_username = '/^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/';
-    
-    if(!preg_match($regex_username, $vbulletin->GPC['username'])){
-        $valid_entries        = FALSE;
-        
-        $error_type           = "username";
+
+    if (!preg_match($regex_username, $vbulletin->GPC['username'])) {
+        $valid_entries = FALSE;
+
+        $error_type = "username";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Invalid username.";
-        
+        $messages['errors'][] = "The username you chose is not valid.";
+
     }
-    
-    if(strlen($vbulletin->GPC['username']) > 25){
-        $valid_entries        = FALSE;
-        
-        $error_type           = "username";
+
+    if (strlen($vbulletin->GPC['username']) > 25) {
+        $valid_entries = FALSE;
+
+        $error_type = "username";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Max 25 characters";
-        
+        $messages['errors'][] = "The username you chose is not valid.";
+
     }
-    
+
     //check if username already exists on DB
-    $user_exists = $db->query_read_slave("
+    $user_exists = $db
+            ->query_read_slave(
+                    "
 		SELECT userid, username, email, languageid
 		FROM " . TABLE_PREFIX . "user
-		WHERE username = '" . $db->escape_string($vbulletin->GPC['username']) . "'
+		WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
+                            . "'
 	");
-	
-	if ($db->num_rows($user_exists)){
-	    $valid_entries        = FALSE;
-        
-        $error_type           = "username";
+
+    if ($db->num_rows($user_exists)) {
+        $valid_entries = FALSE;
+        $error_type = "username";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Sorry, this username is already taken.";
-	}
-	
-	//check if CAPTCHA value is correct
-	if($vbulletin->GPC['security_code'] != $_SESSION['validate']['captcha']['answer'] ){
-	    $valid_entries        = FALSE;
-        
-        $error_type           = "security-code";
+    }
+
+    //check if CAPTCHA value is correct
+    if (strtoupper($vbulletin->GPC['security_code'])
+            != strtoupper($_SESSION['site_registration']['captcha']['answer'])) {
+        $valid_entries = FALSE;
+
+        $error_type = "security-code";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Invalid security code.";
-	}
-    	
-	$arr = array(
-	        "valid_entries" => $valid_entries, 
-            "messages"      => $messages, 
-            "url"           => $url  
-            );
-            
- 
+    }
+
+    if ($valid_entries) {
+        $_SESSION['site_registration']['username'] = $vbulletin
+                ->GPC['username'];
+        $_SESSION['site_registration']['password'] = $vbulletin
+                ->GPC['password'];
+
+        $token = md5(uniqid(microtime(), true));
+        $token_time = time();
+
+        $form = "site-account-details";
+        $_SESSION['site_registration'][$form . '_token'] = array(
+                'token' => $token, 'time' => $token_time);
+
+        //Create Site Account in database
+        $userdata->set('email', $_SESSION['site_registration']['email']);
+        $userdata->set('username', $_SESSION['site_registration']['username']);
+        $userdata->set('password', $_SESSION['site_registration']['password']);
+        //$userdata->set('referrerid', $vbulletin->GPC['referrername']);
+
+        // set languageid
+        $userdata->set('languageid', $vbulletin->userinfo['languageid']);
+
+        // set user title
+        $userdata
+                ->set_usertitle('', false,
+                        $vbulletin->usergroupcache["$newusergroupid"], false,
+                        false);
+
+        // set profile fields
+        // $customfields = $userdata->set_userfields($vbulletin->GPC['userfield'], true, 'register');
+
+        // set birthday
+        $userdata->set('showbirthday', $vbulletin->GPC['showbirthday']);
+
+        //mm/dd/yyyy
+        $date_parts = explode("/", $_SESSION['site_registration']['birthday']);
+
+        $month = $date_parts[0];
+        $year = $date_parts[2];
+        $day = $date_parts[1];
+
+        $userdata
+                ->set('birthday',
+                        array('day' => $day, 'month' => $month, 'year' => $year));
+
+        // assign user to usergroup 3 if email needs verification
+        if ($vbulletin->options['verifyemail']) {
+            $newusergroupid = 3;
+        } else if ($vbulletin->options['moderatenewmembers']
+                OR $vbulletin->GPC['coppauser']) {
+            $newusergroupid = 4;
+        } else {
+            $newusergroupid = 2;
+        }
+        // set usergroupid
+        $userdata->set('usergroupid', $newusergroupid);
+
+        // set time options
+        //$userdata->set_dst($vbulletin->GPC['dst']);
+        //$userdata->set('timezoneoffset', $vbulletin->GPC['timezoneoffset']);
+
+        // register IP address
+        $userdata->set('ipaddress', IPADDRESS);
+
+        $userdata->pre_save();
+
+        if (!empty($userdata->errors)) {
+            //errors?
+            $valid_entries = FALSE;
+            $messages = "An error ocurred please try again later.";
+            // . var_export( $userdata->errors, true);
+
+        } else {
+            // save the data
+            $_SESSION['site_registration']['userid'] = $vbulletin
+                    ->userinfo['userid'] = $userid = $userdata->save();
+
+            $userinfo = fetch_userinfo($userid);
+            $userdata_rank = &datamanager_init('User', $vbulletin,
+                    ERRTYPE_SILENT);
+            $userdata_rank->set_existing($userinfo);
+            $userdata_rank->set('posts', 0);
+            $userdata_rank->save();
+
+            $vbulletin->session->created = false;
+            //process_new_login('', false, '');
+            process_new_login('', '', '');
+
+            //Send Activation Email: Refer to Automated Emails
+            // send new user email
+            $username = $_SESSION['site_registration']['username'];
+            $email = $_SESSION['site_registration']['email'];
+
+            $activateid = build_user_activation_id($userid,
+                    (($vbulletin->options['moderatenewmembers']
+                            OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
+
+            eval(fetch_email_phrases('activateaccount'));
+
+            if (empty($subject)) {
+                $subject = "Please activate your account";
+            }
+
+            vbmail($email, $subject, $message, true);
+
+            //Redirect user to Activation Screen
+            $url = "register.php?step=activate";
+        }
+
+    }
+
+    $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
+            "url" => $url);
 
     json_headers($arr);
-		
+
+    break;
+
+//case 'test':
+//    echo (fetch_email_phrases('newuser', 0));
+//break;
+
+case 'resend_email':
+    if (isset($_SESSION['site_registration']['email'])) {
+        $username = $_SESSION['site_registration']['username'];
+        $email = $_SESSION['site_registration']['email'];
+        $userid = $_SESSION['site_registration']['userid'];
+
+        $activateid = build_user_activation_id($userid,
+                (($vbulletin->options['moderatenewmembers']
+                        OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
+
+        eval(fetch_email_phrases('activateaccount'));
+
+        if (empty($subject)) {
+            $subject = "Please activate your account";
+        }
+
+        vbmail($email, $subject, $message, true);
+
+        $messages = "Email sent!";
+
+    } else {
+        $messages = "Unable to send email, please try again later.";
+    }
+
+    $arr = array("message" => $messages);
+
+    json_headers($arr);
+
     break;
 
 //create site account on register.php
 case 'create_site_account_first_step':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
-    $valid_entries = FALSE;
+    $valid_entries = TRUE;
     $message = "";
 
     //clean variables
@@ -175,6 +526,27 @@ case 'create_site_account_first_step':
 
     //validate email
     if (preg_match($regexp, $vbulletin->GPC['email'])) {
+
+        //check if email already exists on DB
+        $user_exists = $db
+                ->query_read_slave(
+                        "
+		    SELECT userid, username, email, languageid
+		    FROM " . TABLE_PREFIX . "user
+		    WHERE UPPER(email) = '"
+                                . strtoupper(
+                                        $db
+                                                ->escape_string(
+                                                        $vbulletin
+                                                                ->GPC['email']))
+                                . "'
+	    ");
+
+        if ($db->num_rows($user_exists)) {
+            $valid_entries = FALSE;
+            $message = "The email address you entered is already in use.";
+            $error_type = "email";
+        }
 
     } else {
         $valid_entries = FALSE;
@@ -211,48 +583,56 @@ case 'create_site_account_first_step':
             //fetch_error('under_thirteen_registration_denied');
         } else {
 
-            $temp_table_query = "
+        }
+    }
+
+    if ($valid_entries) {
+
+        $temp_table_query = "
             CREATE TEMPORARY TABLE IF NOT EXISTS " . TABLE_PREFIX
-                    . "siteregistration_temp (
+                . "siteregistration_temp (
                 email VARCHAR(128) NOT NULL DEFAULT '',
-                birthday VARCHAR(12) NOT NULL DEFAULT ''
+                birthday VARCHAR(12) NOT NULL DEFAULT '',
+                initialpage VARCHAR(255) NOT NULL DEFAULT ''
             )";
 
-            $vbulletin->db->query_write($temp_table_query);
+        $vbulletin->db->query_write($temp_table_query);
 
-            /*insert query*/
-            $vbulletin->db
-                    ->query_write(
-                            "
-                INSERT IGNORE INTO " . TABLE_PREFIX
-                                    . "siteregistration_temp
-                (email,birthday)
-                VALUES
-                ('" . $vbulletin->db->escape_string($vbulletin->GPC['email'])
-                                    . "',
-                 '"
-                                    . $vbulletin->db
-                                            ->escape_string(
-                                                    $vbulletin
-                                                            ->GPC['birthdate'])
-                                    . "')
-            ");
+        /*insert query*/
+        $vbulletin->db
+                ->query_write(
+                        "
+            INSERT IGNORE INTO " . TABLE_PREFIX
+                                . "siteregistration_temp
+            (email,birthday,initialpage)
+            VALUES
+            ('" . $vbulletin->db->escape_string($vbulletin->GPC['email'])
+                                . "',
+             '" . $vbulletin->db->escape_string($vbulletin->GPC['birthdate'])
+                                . "',
+             '"
+                                . $vbulletin->db
+                                        ->escape_string(
+                                                $_SESSION['site_registration']['initial_page'])
+                                . "'
+             )
+        ");
 
-            $rows = $vbulletin->db->affected_rows();
+        $rows = $vbulletin->db->affected_rows();
+        $valid_entries = TRUE;
+        $message = "OK";
+        $url = "/register.php?step=site-account-details";
 
-            $valid_entries = TRUE;
-            $message = "OK";
-            $url = "/register.php?step=site-account-details";
+        $token = md5(uniqid(microtime(), true));
+        $token_time = time();
+        $form = "create_site_account_first_step";
+        $_SESSION['site_registration'][$form . '_token'] = array(
+                'token' => $token, 'time' => $token_time);
 
-            $token = md5(uniqid(microtime(), true));
-            $token_time = time();
-            $form = "create_site_account_first_step";
-            $_SESSION['validate'][$form . '_token'] = array('token' => $token,
-                    'time' => $token_time);
+        $_SESSION['site_registration']['email'] = $vbulletin->GPC['email'];
+        $_SESSION['site_registration']['birthday'] = $vbulletin
+                ->GPC['birthdate'];
 
-            $_SESSION['validate']['email'] = $vbulletin->GPC['email'];
-            $_SESSION['validate']['birthday'] = $vbulletin->GPC['birthdate'];
-        }
     }
 
     $arr = array("valid_entries" => $valid_entries,
@@ -288,7 +668,6 @@ default:
             $message = $userdata->errors;
         } else {
             $message = "Sorry please check your username and password";
-            //$userdata->errors[0];
         }
 
     } else {

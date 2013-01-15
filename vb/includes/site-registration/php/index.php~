@@ -1,0 +1,85 @@
+<?php
+
+
+    //path setup
+    set_include_path(
+        get_include_path()
+        . PATH_SEPARATOR
+        . realpath('../../../')
+        . PATH_SEPARATOR
+        . realpath('../../../includes/') 
+        
+    );
+    
+    function json_headers($arr = null){
+        header('Content-type: text/json');
+        header('Content-type: application/json');
+        echo json_encode($arr);
+    }
+    
+    ini_set("display_errors",1);
+    error_reporting(E_ALL & ~E_NOTICE & ~8192);
+
+    define('CSRF_PROTECTION', true);
+    define('THIS_SCRIPT', 'site-registration');
+    
+  
+    //include required files
+    chdir(realpath('../../../'));
+
+    require_once('global.php');
+    require_once('functions_user.php');
+    require_once('functions_misc.php');
+    
+    
+    /**
+     * Operations
+     **/
+    $op = $_GET['op'];
+    
+    
+    switch($op){
+    
+        case 'validate_login':
+        default:
+        
+            // init user datamanager class
+	        $userdata    =& datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+            $valid_login = FALSE;   
+            $message     = "";
+            
+            //clean input variables
+	        $vbulletin->input->clean_array_gpc('p', array(     
+		        'username'            => TYPE_STR,
+		        'password'            => TYPE_STR    
+	        ));
+	        
+	        //check if variables are set
+	        if ( empty( $vbulletin->GPC['username']) OR 
+	             empty($vbulletin->GPC['password'])
+	            )
+	        {
+	            $valid_login = FALSE;
+		        $userdata->error('fieldmissing');
+		        if(count($userdata->errors) > 1){
+		            $message = $userdata->errors;
+		        }else{
+		            $message = "Sorry please check your userame and password";
+		                        //$userdata->errors[0];
+		        }
+		        
+	        }else{
+	            $valid_login = TRUE;  
+	            $message = "OK";     
+	        }
+           
+            $arr = array(   "valid_login" => $valid_login,
+                            "message"  => $message 
+                            );
+     
+            json_headers($arr);
+            
+           
+        break;
+    
+    }
