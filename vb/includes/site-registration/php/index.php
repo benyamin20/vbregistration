@@ -414,11 +414,11 @@ case 'validate_site_account_details':
     $user_exists = $db
             ->query_first(
                     "
-		SELECT userid, username, email, languageid
-		FROM " . TABLE_PREFIX . "user
-		WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
+        SELECT userid, username, email, languageid
+        FROM " . TABLE_PREFIX . "user
+        WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
                             . "'
-	");
+    ");
 
     if (!empty($user_exists['username'])) {
         $valid_entries = FALSE;
@@ -618,16 +618,16 @@ case 'create_site_account_first_step':
         $user_exists = $db
                 ->query_read_slave(
                         "
-		    SELECT userid, username, email, languageid
-		    FROM " . TABLE_PREFIX . "user
-		    WHERE UPPER(email) = '"
+            SELECT userid, username, email, languageid
+            FROM " . TABLE_PREFIX . "user
+            WHERE UPPER(email) = '"
                                 . strtoupper(
                                         $db
                                                 ->escape_string(
                                                         $vbulletin
                                                                 ->GPC['email']))
                                 . "'
-	    ");
+        ");
 
         if ($db->num_rows($user_exists)) {
             $valid_entries = FALSE;
