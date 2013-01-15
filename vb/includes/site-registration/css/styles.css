@@ -362,3 +362,8 @@ li {
 .no-top{
     top: 0 !important;
 }
+
+#ajax-loader{
+    line-height: 26px;
+    margin-left: 15px !important;
+}

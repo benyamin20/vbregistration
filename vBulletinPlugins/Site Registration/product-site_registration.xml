@@ -435,6 +435,7 @@ $stylevar[htmldoctype]
 				<a href="$php_self#resend" id="resend-email" class="small link_blue">
 				Resend Email</a>
 				&nbsp;&nbsp;&nbsp;
+				<span id="ajax-loader"></span>
 				<span id="email-sent" class="small email-sent">
 				</span>
 				
@@ -476,6 +477,7 @@ $stylevar[htmldoctype]
                             <a href="$php_self#resend" id="resend-email" class="small link_blue">
 				            Resend activation email</a>
 				            &nbsp;&nbsp;&nbsp;
+				            <span id="ajax-loader"></span>
 				            <span id="email-sent" class="small email-sent">
 				            </span> 
 				            <input id="token" name="token" value="###TOKEN###" type="hidden" />
@@ -1051,11 +1053,14 @@ $stylevar[htmldoctype]
 				    </label>
 				</div>
  
-				<div class="clear clear_15"></div> 
-				<button class="btn btn-primary grid_3 no-margin"
-                        type="button" id="site-account-deails-create-account">
-                        Create Account
-                </button>
+				<div class="clear clear_15"></div>
+				<div class="grid_7 no-margin">
+				    <button class="btn btn-primary grid_3 no-margin"
+                            type="button" id="site-account-deails-create-account">
+                            Create Account
+                    </button>
+                    <span id="ajax-loader"></span>
+                </div>
 			</div>
  
 
@@ -1132,59 +1137,65 @@ $stylevar[htmldoctype]
 		<plugin active="0" executionorder="5">
 			<title>Display Registration page when we get no permissions error.</title>
 			<hookname>error_nopermission</hookname>
-			<phpcode><![CDATA[if(!(int)$vbulletin->userinfo['userid'])
-{
-	$reg_ref = '';
-	switch(THIS_SCRIPT)
-	{
-		case 'newthread':
-			echo 'This is newthread page';
-			$reg_ref = 'reg-new-thread';
-			break;
-		case 'newreply':
-			//if url contains "noquote=1", that means its not quote, else its quote
-			var_dump($vbulletin->GPC);
-			if($vbulletin->GPC['noquote'] == 1)
-			{
-				echo 'This is newreply page with noquote';
-				$reg_ref = 'reg-post-reply';
-			}
-			else if($vbulletin->GPC['quoteall'] == 1)
-			{
-				echo 'This is newreply page with quote all';
-				$reg_ref = 'reg-reply-quote-all';
-			}
-			else if(isset($vbulletin->GPC['vbulletin_multiquote'])&& !empty($vbulletin->GPC['vbulletin_multiquote']))
-			{
-				echo 'This is newreply page with multi quote';
-				$reg_ref = 'reg-reply-multi-quote';
-			}
-			else
-			{
-				// if quote/:
-				echo 'This is newreply page with quote';
-				$reg_ref = 'reg-reply-quote';
-			}
-			break;
-		case 'memberlist':
-			echo 'This is memberlist page';
-			$reg_ref = 'reg-member-list';
-			break;
-		case 'garage':
-			echo 'This is garage page';
-			$reg_ref = 'reg-garage';
-			break;
-		case 'album':
-			echo 'This is album page';
-			$reg_ref = 'reg-add-album';
-			break;
-		case 'picturecomment':
-			echo 'This is picturecomment page';
-			$reg_ref = 'reg-picture-comment';
-			break;
-	}
-die;
-}]]></phpcode>
+			<phpcode>
+			    <![CDATA[
+                /*
+                if(!(int)$vbulletin->userinfo['userid'])
+                {
+                    $reg_ref = '';
+                    switch(THIS_SCRIPT)
+                    {
+                        case 'newthread':
+	                        echo 'This is newthread page';
+	                        $reg_ref = 'reg-new-thread';
+	                        break;
+                        case 'newreply':
+	                        //if url contains "noquote=1", that means its not quote, else its quote
+	                        var_dump($vbulletin->GPC);
+	                        if($vbulletin->GPC['noquote'] == 1)
+	                        {
+		                        echo 'This is newreply page with noquote';
+		                        $reg_ref = 'reg-post-reply';
+	                        }
+	                        else if($vbulletin->GPC['quoteall'] == 1)
+	                        {
+		                        echo 'This is newreply page with quote all';
+		                        $reg_ref = 'reg-reply-quote-all';
+	                        }
+	                        else if(isset($vbulletin->GPC['vbulletin_multiquote'])&& !empty($vbulletin->GPC['vbulletin_multiquote']))
+	                        {
+		                        echo 'This is newreply page with multi quote';
+		                        $reg_ref = 'reg-reply-multi-quote';
+	                        }
+	                        else
+	                        {
+		                        // if quote/:
+		                        echo 'This is newreply page with quote';
+		                        $reg_ref = 'reg-reply-quote';
+	                        }
+	                        break;
+                        case 'memberlist':
+	                        echo 'This is memberlist page';
+	                        $reg_ref = 'reg-member-list';
+	                        break;
+                        case 'garage':
+	                        echo 'This is garage page';
+	                        $reg_ref = 'reg-garage';
+	                        break;
+                        case 'album':
+	                        echo 'This is album page';
+	                        $reg_ref = 'reg-add-album';
+	                        break;
+                        case 'picturecomment':
+	                        echo 'This is picturecomment page';
+	                        $reg_ref = 'reg-picture-comment';
+	                        break;
+                    }
+                die;
+                }
+                */
+            ]]>
+        </phpcode>
 		</plugin>
 		<plugin active="1" executionorder="1">
 			<title>Display message if account is not active</title>
@@ -1391,8 +1402,7 @@ die;
                      
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
 			        	$code           = $_REQUEST["code"];
-			        	//$cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi']; //No funciona***************************
-			        	$client_id      = "304416966345499";
+			        	$cliend_id      = $vbulletin->options['site_registration_settingsfb_fbapi'];  
 			        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
 			        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
 
@@ -1579,10 +1589,8 @@ die;
 	                $_SESSION['site_registration']['email'] = unhtmlspecialchars($users_db['email']);
 	                
 	                $username_db = ucfirst($users_db['username']);
-	                
-	                
-	                
-	                
+	
+	
 	                //check if the link is valid and that there's a pending activation
 	                //to be performed
 	                
@@ -1621,17 +1629,13 @@ die;
 	                    //delete pending activation code and show activation
 	                    //home page
 	                    
-	                    /*
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
                                 AND type = 0"
                         );
                         
-                        */
-                        
-                        
-		                $prev_url = $vbulletin->options['forumhome'] . '.php' . $vbulletin->session->vars['sessionurl_q'];
+                        $prev_url = $vbulletin->options['forumhome'] . '.php' . $vbulletin->session->vars['sessionurl_q'];
 	                        
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
 	                

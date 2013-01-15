@@ -212,7 +212,17 @@ jQuery(document).ready(function(jQuery) {
               type: 'POST',
               cache: false,
               data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions ,
+              beforeSend: function(){
+                if(jQuery('#ajax-loader').exists()){
+                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                }
+	          },
               success: function( response ) {
+                
+                if(jQuery('#ajax-spinner').exists()){
+	                    jQuery('#ajax-spinner').remove();
+	            }
+	                
                 if(response.valid_entries == false){
                 
                     jQuery('.error-label').empty();
@@ -316,7 +326,13 @@ jQuery(document).ready(function(jQuery) {
 	            type: 'POST',
 	            cache: false,
 	            data: 'securitytoken=' + token, 
+	            beforeSend: function(){
+	                jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+	            },
 	            success: function (response) {
+	                if(jQuery('#ajax-spinner').exists()){
+	                    jQuery('#ajax-spinner').remove();
+	                }
 	                jQuery('#email-sent').empty();
 	                jQuery('#email-sent').append(response.message);
 	            }

@@ -412,7 +412,7 @@ case 'validate_site_account_details':
 
     //check if username already exists on DB
     $user_exists = $db
-            ->query_read_slave(
+            ->query_first(
                     "
 		SELECT userid, username, email, languageid
 		FROM " . TABLE_PREFIX . "user
@@ -420,7 +420,7 @@ case 'validate_site_account_details':
                             . "'
 	");
 
-    if ($db->num_rows($user_exists)) {
+    if (!empty($user_exists['username'])) {
         $valid_entries = FALSE;
         $error_type = "username";
         $messages['fields'][] = $error_type;
