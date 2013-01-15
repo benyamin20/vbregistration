@@ -1422,6 +1422,8 @@ die;
 						     	if(!$data) {
 						     		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
 						     	} else {
+						     		$vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $data["userid"] ."'");
+
 						     		// Process vBulletin login
 							        require_once(DIR . '/includes/functions_login.php');
 							        $vbulletin->userinfo = fetch_userinfo($data['userid']);
@@ -1431,7 +1433,7 @@ die;
 							        // On login, store a cookie with vbnexus params
 							        if($vbulletin->session->created) {
 							            $vBNexusInfo = array(
-							                'userid'      => $res['userid'],
+							                'userid'      => $data['userid'],
 							                'service'     => 'fb',
 							                'nonvbid'     => $data["nonvbid"],
 							                'can_publish' => true,
