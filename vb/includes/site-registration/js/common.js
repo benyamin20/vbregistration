@@ -93,23 +93,6 @@ jQuery(document).ready(function(jQuery) {
 		}
 	}
 	
-	
-	
-    if(jQuery("#send-me-there").exists()){
-	    jQuery("#usend-me-there").bind('click', function(){
-	        jQuery.ajax({
-                url: "includes/site-registration/php/index.php?op=go_there",
-                context: document.body, 
-                dataType: 'json',
-                type: 'POST',
-                cache: false,
-                success: function( response ) {
-                    
-                }
-            });
-	    });
-	}
-
 
     //assign default image to upload file	
 	if(jQuery("#use-default").exists()){

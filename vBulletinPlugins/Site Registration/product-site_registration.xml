@@ -86,11 +86,17 @@ $stylevar[htmldoctype]
 			<div class="grid_8" id="create-site-account">
 				<h1>Go Back To Where I Was</h1>
 				<div class="clear clear_15"></div>
-				<p class="small light_grey">Start New Thread - General
-					Discussion Forums</p>
+				
+				<p class="small light_grey">
+				 <if condition="$page_title">
+				    $page_title
+				 </if>
+				</p>
+				
 				<div class="clear"></div>
-				<button class="btn grid_4 no-margin"
-				    id="send-me-there">Send Me There &#187;</button>
+				<a class="btn grid_4 no-margin"
+				    href="$prev_url"
+				    id="send-me-there">Send Me There &#187;</a>
 
 				<div class="clear clear_20"></div>
 				<div class="clear clear_20"></div>
@@ -1574,7 +1580,65 @@ die;
 	                
 	                $username_db = ucfirst($users_db['username']);
 	                
-                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                        
+	                
+	                
+	                
+	                //check if the link is valid and that there's a pending activation
+	                //to be performed
+	                
+	                
+	                //check if activation code is valid
+                    $activation_code_exists = $vbulletin->db
+                            ->query_first(
+                                    "
+		                                    SELECT activationid
+		                                    FROM " . TABLE_PREFIX
+                                            . "useractivation
+		                                    WHERE
+		                                        activationid = '"
+                                            . $vbulletin->db
+                                                    ->escape_string($vbulletin->GPC['i'])
+                                            . "'
+		                                    AND
+		                                        userid =     '"
+                                            . $vbulletin->db
+                                                    ->escape_string($vbulletin->GPC['u'])
+                                            . "'
+                                            AND type = 0
+	                                    ");
+
+                    if (!empty($activation_code_exists['activationid'])) {
+                        //activation code is valid
+                        $valid_activation_code  = TRUE;
+                    } else {
+                        //user does not exists neither activation code,
+                        //show to default verification page
+                    }
+ 
+	                
+	                if($valid_activation_code){
+	                
+	                    //delete pending activation code and show activation
+	                    //home page
+	                    
+	                    /*
+	                    $vbulletin->db->query_write(
+                            "DELETE FROM " . TABLE_PREFIX . "useractivation 
+                                WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
+                                AND type = 0"
+                        );
+                        
+                        */
+                        
+                        
+		                $prev_url = $vbulletin->options['forumhome'] . '.php' . $vbulletin->session->vars['sessionurl_q'];
+	                        
+	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
+	                
+	                }else{
+	                
+	                }
+	                                 
 			    ]]>
 			</phpcode>
 		</plugin>

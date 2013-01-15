@@ -61,31 +61,11 @@ $op = $vbulletin->GPC['op'];
 switch ($op) {
 
 
-case 'go_there':
-
-    $userid = $_SESSION['site_registration']['userid'];
-
-    $details = $vbulletin->db->query_first("
-        SELECT initialpage
-        FROM " . TABLE_PREFIX . "siteregistration_temp
-        WHERE userid = " . $vbulletin->db->escape_string($userid). "
-    ");
-
-    $url = $user['initialpage'] = $details['initialpage'];
-
-    $arr = array("url" => $url);
-
-    json_headers($arr);
-
-    break;
-
 case 'complete_your_profile':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
     $valid_entries = TRUE;
     $messages = "";
-
-    //avatar
-
+ 
     $vbulletin->input
             ->clean_array_gpc('p',
                     array('secret_question' => TYPE_STR,
