@@ -898,6 +898,7 @@ case 'activate':
              '". $vbulletin->GPC['username'] . "')");
 
 
+        $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
         $message = "OK";
