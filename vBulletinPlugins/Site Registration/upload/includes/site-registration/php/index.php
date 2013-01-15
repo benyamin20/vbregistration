@@ -918,8 +918,10 @@ case 'activate':
 
         //Send Activation Email: Refer to Automated Emails
         // send new user email
-        $username = $_SESSION['site_registration']['username'];
-        $email = $_SESSION['site_registration']['email'];
+        $_SESSION['site_registration']['userid'] = $userid;
+        $username = $_SESSION['site_registration']['username'] = $vbulletin->GPC['username'];
+        $email    = $_SESSION['site_registration']['email'] = $vbulletin->GPC['email'];
+        $_SESSION['site_registration']['birthday'] = $vbulletin->GPC['birthdate'];
 
         $activateid = build_user_activation_id($userid, (($vbulletin->options['moderatenewmembers'] OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
 
@@ -930,11 +932,6 @@ case 'activate':
         }
 
         vbmail($email, $subject, $message, true);
-
-         $_SESSION['site_registration']['userid'] = $userid;
-        $_SESSION['site_registration']['username'] = $vbulletin->GPC['username'];
-        $_SESSION['site_registration']['email'] = $vbulletin->GPC['email'];
-        $_SESSION['site_registration']['birthday'] = $vbulletin->GPC['birthdate'];
     }
 
     $arr = array("valid_entries" => $valid_entries,
