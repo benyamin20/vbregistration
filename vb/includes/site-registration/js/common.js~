@@ -1,0 +1,75 @@
+jQuery.fn.exists = function() {
+	return this.length > 0;
+}
+
+$(document).ready(function($) {
+
+	if ($('a[rel*=facebox]').exists()) {
+		$.getScript("includes/site-registration/facebox/facebox.js", function() {
+			$('a[rel*=facebox]').facebox({
+				loadingImage : 'includes/site-registration/facebox/loading.gif',
+				closeImage : 'includes/site-registration/facebox/closelabel.png' 
+			});
+		});
+
+	}
+
+	if ($('a[class*=close-facebox]').length > 0) {
+		$('a[class*=close-facebox]').bind('click', function() {
+			$(document).trigger('close.facebox');
+		});
+	}
+
+
+
+	if ($("#datepicker").exists()) {
+		$.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function() {
+			$(function() {
+				$("#datepicker").datepicker({
+					autoSize : true,
+					minDate : '-90y',
+					maxDate : '-13y',
+					changeYear : true,
+					changeMonth : true,
+					constrainInput : true
+
+				});
+			});			
+		}); 
+		
+		if ($('.add-on').exists()) {
+			$('.add-on').bind('click', function() {
+				$("#datepicker").datepicker("show");
+			});
+		}
+	}
+	
+	if ($("#login-button").exists()) {
+	    $("#login-button").bind('click', function(){
+	        var form = $('#already-have-an-account-form');
+	    
+	        $.ajax({
+              url: "includes/site-registration/php/index.php?op=validate_login",
+              context: document.body, 
+              dataType: 'json',
+              type: 'POST',
+              cache: false,
+              data: form.serialize(),
+              success: function( response ) {
+                if(response.valid_login == false){
+                    $('#have-account-error').html(response.message).show();
+                }
+                //console.log( response );
+              }
+            }).done(function() {
+              //$(this).addClass("done");
+            });
+	    });
+	}
+	
+
+});
+
+closeTnC = function() {
+	$(document).trigger('close.facebox');
+}

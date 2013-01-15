@@ -60,6 +60,25 @@ $op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
+
+case 'go_there':
+
+    $userid = $_SESSION['site_registration']['userid'];
+
+    $details = $vbulletin->db->query_first("
+        SELECT initialpage
+        FROM " . TABLE_PREFIX . "siteregistration_temp
+        WHERE userid = " . $vbulletin->db->escape_string($userid). "
+    ");
+
+    $url = $user['initialpage'] = $details['initialpage'];
+
+    $arr = array("url" => $url);
+
+    json_headers($arr);
+
+    break;
+
 case 'complete_your_profile':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
     $valid_entries = TRUE;
@@ -120,9 +139,7 @@ case 'complete_your_profile':
                     if ($size < (1024 * 100)) {
                         $actual_image_name = time() . mt_rand() . "." . $ext;
 
-                        $uploaded = realpath(
-                                sys_get_temp_dir() . DIRECTORY_SEPARATOR
-                                        . $actual_image_name);
+                        $uploaded = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $actual_image_name;
 
                         move_uploaded_file($_FILES["photoimg"]["tmp_name"],
                                 $uploaded);
@@ -269,6 +286,36 @@ case 'complete_your_profile':
 
     if ($valid_entries) {
         //update secret question and secret answer
+        $temp_table_query = "
+            CREATE  TABLE IF NOT EXISTS " . TABLE_PREFIX
+                . "siteregistration_security_details (
+                userid INT(128) NOT NULL,
+                question VARCHAR(255) NOT NULL,
+                answer VARCHAR(255) NOT NULL
+            )";
+
+        $vbulletin->db->query_write($temp_table_query);
+        
+        $userid     = $_SESSION['site_registration']['userid'];
+        $question   = $vbulletin->GPC['secret_question'];
+        $answer     = $vbulletin->GPC['secret_answer'];
+        $salt       = $vbulletin->userinfo['salt'];
+    
+
+        /*insert query*/
+        $vbulletin->db
+                ->query_write(
+                        "
+            REPLACE INTO " . TABLE_PREFIX
+                                . "siteregistration_security_details
+            (userid,question,answer)
+            VALUES
+            (   '" . $vbulletin->db->escape_string($userid). "',
+                AES_ENCRYPT('" . $vbulletin->db->escape_string($question). "','" . $salt . "'),
+                AES_ENCRYPT('" . $vbulletin->db->escape_string($answer). "','" . $salt . "')
+             )
+        ");
+
     }
 
     if ($valid_entries) {
@@ -649,7 +696,7 @@ case 'create_site_account_first_step':
     if ($valid_entries) {
 
         $temp_table_query = "
-            CREATE TEMPORARY TABLE IF NOT EXISTS " . TABLE_PREFIX
+            CREATE TABLE IF NOT EXISTS " . TABLE_PREFIX
                 . "siteregistration_temp (
                 email VARCHAR(128) NOT NULL DEFAULT '',
                 birthday VARCHAR(12) NOT NULL DEFAULT '',

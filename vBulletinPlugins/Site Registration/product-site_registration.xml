@@ -19,7 +19,7 @@ $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
 <!-- <base href="$vboptions[bburl]/" /> -->
-<title>Account Activated- $vboptions[bbtitle]</title>
+<title>Account Activated - $vboptions[bbtitle]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
@@ -56,7 +56,7 @@ $stylevar[htmldoctype]
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
 			<a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
 		        </a>
 		</div>
 		<div class="clear clear_30"></div>
@@ -89,7 +89,8 @@ $stylevar[htmldoctype]
 				<p class="small light_grey">Start New Thread - General
 					Discussion Forums</p>
 				<div class="clear"></div>
-				<button class="btn grid_4 no-margin">Send Me There &#187;</button>
+				<button class="btn grid_4 no-margin"
+				    id="send-me-there">Send Me There &#187;</button>
 
 				<div class="clear clear_20"></div>
 				<div class="clear clear_20"></div>
@@ -170,7 +171,7 @@ $stylevar[htmldoctype]
 						    </div>
 							<div class="clear clear_15"></div>
 							<div id="user-cp" class="hidden">
-							    You can always make any changes by accessing the <a class="link_blue">User CP</a>.
+							    You can always make any changes by accessing the <a href="$vboptions[bburl]/profile.php?do=editoptions" class="link_blue">User CP</a>.
 							</div>
 							
 							<form id="complete-your-profile-form"
@@ -228,32 +229,40 @@ $stylevar[htmldoctype]
 							<!--  Timezone -->
 							<div id="timezone-wrapper">
 							    <select name="timezone" id="timezone">
-                                    <option value="">Your Timezone</option>
-                                    <option value="-12">UTC -12h00</option>
-                                    <option value="-11">UTC -11h00</option>
-                                    <option value="-10">UTC -1h00</option>
-                                    <option value="-9">UTC -9h00</option>
-                                    <option value="-8">UTC -8h00</option>
-                                    <option value="-7">UTC -7h00</option>
-                                    <option value="-6">UTC -6h00</option>
-                                    <option value="-5">UTC -5h00</option>
-                                    <option value="-4">UTC -4h00</option>
-                                    <option value="-3">UTC -3h00</option>
-                                    <option value="-2">UTC -2h00</option>
-                                    <option value="-1">UTC -1h00</option>
-                                    <option value="0">UTC  0h00</option>
-                                    <option value="1">UTC +1h00</option>
-                                    <option value="2">UTC +2h00</option>
-                                    <option value="3">UTC +3h00</option>
-                                    <option value="4">UTC +4h00</option>
-                                    <option value="5">UTC +5h00</option>
-                                    <option value="6">UTC +6h00</option>
-                                    <option value="7">UTC +7h00</option>
-                                    <option value="8">UTC +8h00</option>
-                                    <option value="9">UTC +9h00</option>
-                                    <option value="10">UTC +10h00</option>
-                                    <option value="11">UTC +11h00</option>
-                                    <option value="12">UTC +12h00</option> 
+                                    <option value="" selected="selected">Your Timezone</option> 
+				                    <option class="" value="-12">(GMT -12:00) Eniwetok, Kwajalein</option>
+                                    <option class="" value="-11">(GMT -11:00) Midway Island, Samoa</option>
+                                    <option class="" value="-10">(GMT -10:00) Hawaii</option>
+                                    <option class="" value="-9">(GMT -9:00) Alaska</option>
+                                    <option class="" value="-8">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+                                    <option class="" value="-7">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+                                    <option class="" value="-6">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+                                    <option class="" value="-5">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+                                    <option class="" value="-4.5">(GMT -4:30) Caracas</option>
+                                    <option class="" value="-4">(GMT -4:00) Atlantic Time (Canada), La Paz, Santiago</option>
+                                    <option class="" value="-3.5">(GMT -3:30) Newfoundland</option>
+                                    <option class="" value="-3">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                                    <option class="" value="-2">(GMT -2:00) Mid-Atlantic</option>
+                                    <option class="" value="-1">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
+                                    <option class="" value="0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+                                    <option class="" value="1">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
+                                    <option class="" value="2">(GMT +2:00) Kaliningrad, South Africa, Cairo</option>
+                                    <option class="" value="3">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+                                    <option class="" value="3.5">(GMT +3:30) Tehran</option>
+                                    <option class="" value="4">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                                    <option class="" value="4.5">(GMT +4:30) Kabul</option>
+                                    <option class="" value="5">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+                                    <option class="" value="5.5">(GMT +5:30) Mumbai, Kolkata, Chennai, New Delhi</option>
+                                    <option class="" value="5.75">(GMT +5:45) Kathmandu</option>
+                                    <option class="" value="6">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                                    <option class="" value="6.5">(GMT +6:30) Yangon, Cocos Islands</option>
+                                    <option class="" value="7">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                                    <option class="" value="8">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+                                    <option class="" value="9">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+                                    <option class="" value="9.5">(GMT +9:30) Adelaide, Darwin</option>
+                                    <option class="" value="10">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+                                    <option class="" value="11">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+                                    <option class="" value="12">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
                                 </select>
                             </div>
 							
@@ -375,7 +384,7 @@ $stylevar[htmldoctype]
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
 			<a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
 		        </a>
 		</div>
 		<div class="clear clear_30"></div>
@@ -510,7 +519,7 @@ $stylevar[htmldoctype]
 		    <!-- Site logo -->
 		    <div id="logo" class="grid_4">
 		        <a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
 		        </a>
 		    </div>
 		    <div class="clear clear_30"></div>
@@ -712,7 +721,7 @@ $stylevar[htmldoctype]
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
 			<a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
 		        </a>
 		</div>
 		<div class="clear clear_30"></div>
@@ -946,7 +955,7 @@ $stylevar[htmldoctype]
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
 			<a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" /> 
+		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
 		        </a>
 		</div>
 		<div class="clear clear_30"></div>
@@ -1430,6 +1439,8 @@ die;
 						     	if(!$data) {
 						     		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
 						     	} else {
+						     		$vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $data["userid"] ."'");
+
 						     		// Process vBulletin login
 							        require_once(DIR . '/includes/functions_login.php');
 							        $vbulletin->userinfo = fetch_userinfo($data['userid']);
@@ -1439,7 +1450,7 @@ die;
 							        // On login, store a cookie with vbnexus params
 							        if($vbulletin->session->created) {
 							            $vBNexusInfo = array(
-							                'userid'      => $res['userid'],
+							                'userid'      => $data['userid'],
 							                'service'     => 'fb',
 							                'nonvbid'     => $data["nonvbid"],
 							                'can_publish' => true,
@@ -1447,6 +1458,8 @@ die;
 							            setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
 							        }
 
+			                        $vbulletin->userinfo[securitytoken] = "guest";
+			                        
 						     		header("location: index.php");
 						     	}
 							} else {
