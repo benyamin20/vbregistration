@@ -747,9 +747,11 @@ $stylevar[htmldoctype]
 			<!-- Thumb -->
 			<div class="grid_1 alpha">
 				<div class="centered">
-					<img src="includes/site-registration/img/thumbnail.png" alt="" />
+					<img src="$fbPicture" alt="" />
 				</div>
 			</div>
+
+			<input id="avatar" name="avatar" type="hidden" value="$fbPicture" />
 
 			<!-- Create site Account -->
 			<div class="grid_4" id="create-site-account">

@@ -838,7 +838,7 @@ case 'activate':
     $message = "";
 
     //clean variables
-    $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR, 'username' => TYPE_STR));
+    $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR, 'username' => TYPE_STR, 'avatar' => TYPE_STR));
 
     //check if variables are set
     if(empty($vbulletin->GPC['email'])) {
@@ -897,10 +897,47 @@ case 'activate':
         $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."user (email, birthday, username) VALUES ('". $vbulletin->db->escape_string($vbulletin->GPC['email']) ."', '" . $vbulletin->db->escape_string($vbulletin->GPC['birthdate']) . "',
              '". $vbulletin->GPC['username'] . "')");
 
+
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
         $message = "OK";
         $url = "register.php?step=activate";
+
+        $parts = explode(".", $avatar);
+        $extension = end($parts);
+        $filedata = file_get_contents($avatar);
+        $dateline = time();        
+        $visible  = 1;
+        $filesize = filesize($avatar);
+        $filename = substr(md5(time()), 0, 10) .".". $extension;
+
+        $sql = "
+            REPLACE INTO " . TABLE_PREFIX
+                . "customprofilepic
+            (userid, filedata, dateline, filename, visible, filesize, width, height)
+            VALUES
+            ('" . $vbulletin->db->escape_string($userid)
+                . "',
+             '" . $vbulletin->db->escape_string($filedata)
+                . "',
+             '" . $vbulletin->db->escape_string($dateline)
+                . "',
+             '" . $vbulletin->db->escape_string($filename)
+                . "',
+             '" . $vbulletin->db->escape_string($visible)
+                . "',
+             '" . $vbulletin->db->escape_string($filesize)
+                . "',
+             '" . $vbulletin->db->escape_string($width)
+                . "',
+             '" . $vbulletin->db->escape_string($height)
+                . "'
+             )
+        ";
+
+        /*insert query*/
+        $vbulletin->db->query_write($sql);
+
 
         $token = md5(uniqid(microtime(), true));
         $token_time = time();

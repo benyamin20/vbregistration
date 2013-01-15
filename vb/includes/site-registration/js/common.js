@@ -405,6 +405,7 @@ jQuery(document).ready(function(jQuery) {
             var username = escape(jQuery("#username"));
             var email = escape(jQuery("#email").val());
             var birthdate = escape(jQuery("#datepicker").val());
+            var avatar = escape(jQuery("#avatar").val());
         
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=activate",
@@ -412,7 +413,7 @@ jQuery(document).ready(function(jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'username='+ username + '&email='+ email +'&birthdate='+ birthdate,
+                data: 'avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate,
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
                         if(response.error_type != "datepicker") {
