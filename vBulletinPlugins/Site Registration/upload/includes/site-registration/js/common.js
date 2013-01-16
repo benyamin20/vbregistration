@@ -446,32 +446,19 @@ jQuery(document).ready(function(jQuery) {
     if(jQuery("#link-account").exists()) {        
         jQuery("#link-account").bind('click', function() {
             var username = escape(jQuery("#username").val());
-            var password = jQuery.md5(escape(jQuery("#password-member").val()));
+            var password = escape(jQuery("#password-member").val());
         
             jQuery.ajax({
-                url: "register.php?step=confirm-facebook-details&link=true",
+                url: "includes/site-registration/php/index.php?op=linkaccount",
                 context: document.body, 
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
                 data: 'username='+ username + '&password='+ password,
                 success: function(response) {
-                    if(response.valid_entries == false) {                                                                        
-                        if(password == "") {
-                            jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
-                        }
-
-                        if(username == "") {
-                            jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');   
-                        }
-
-                        jQuery('#'+response.error_type+'').addClass("input-error");
-                        jQuery('span.add-on').addClass("input-error");                                            
-                    } else {
-                        //redirect user to proper url
-                        var url = response.url;    
-                        jQuery(location).attr('href', url);
-                    } 
+                    //redirect user to proper url
+                    var url = response.url;    
+                    jQuery(location).attr('href', url);                    
                 }
             }).done(function() { 
                 //nothing here

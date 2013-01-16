@@ -445,8 +445,7 @@ jQuery(document).ready(function(jQuery) {
     //Log-in
     if(jQuery("#link-account").exists()) {        
         jQuery("#link-account").bind('click', function() {
-            var username = escape(jQuery("#username").val());
-            var password = jQuery.md5(escape(jQuery("#password-member").val()));
+            var username = escape(jQuery("#username").val());            
         
             jQuery.ajax({
                 url: "register.php?step=confirm-facebook-details&link=true",
@@ -454,13 +453,9 @@ jQuery(document).ready(function(jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'username='+ username + '&password='+ password,
+                data: 'username='+ username,
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
-                        if(password == "") {
-                            jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
-                        }
-
                         if(username == "") {
                             jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');   
                         }
