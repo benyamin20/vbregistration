@@ -708,7 +708,7 @@ case 'create_site_account_first_step':
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
         $message = "OK";
-        $url = "/register.php?step=site-account-details";
+        $url = "register.php?step=site-account-details";
 
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
