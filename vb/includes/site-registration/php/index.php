@@ -1062,7 +1062,7 @@ case "linkaccount" :
 
                 $userinfo = fetch_userinfo($userid);
                 $vbulletin->session->created = false;                
-                process_new_login('', '', '');
+                process_new_login('', false, '');
 
                 $url = "index.php";
 
