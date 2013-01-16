@@ -893,10 +893,11 @@ case 'activate':
     }
 
     if($valid_entries) {
+        $fbID = $_SESSION['site_registration']["fbID"];
+
         /*insert query*/
         $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."user (email, birthday, username) VALUES ('". $vbulletin->db->escape_string($vbulletin->GPC['email']) ."', '" . $vbulletin->db->escape_string($vbulletin->GPC['birthdate']) . "',
              '". $vbulletin->GPC['username'] . "')");
-
 
         $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();
@@ -953,6 +954,8 @@ case 'activate':
         $data = $vbulletin->db->query_first($sql);
 
         $userid = $data["userid"];
+
+        $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '". $fbID . "', '". $userid ."', '1'");
 
         //Send Activation Email: Refer to Automated Emails
         // send new user email
