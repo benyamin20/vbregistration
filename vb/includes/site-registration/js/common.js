@@ -342,7 +342,6 @@ jQuery(document).ready(function(jQuery) {
     }
     
     
-    
     //create site account functionality
     if(jQuery("#create-new-account-button").exists()){
         jQuery('#create-new-account-error').empty();
