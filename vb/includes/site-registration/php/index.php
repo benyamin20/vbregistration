@@ -992,18 +992,14 @@ case "linkaccount" :
     //clean variables
     $vbulletin->input->clean_array_gpc('p', array('username' => TYPE_STR, 'password' => TYPE_STR));
 
-    //check if variables are set
-    if(empty($vbulletin->GPC['email'])) {
-        $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
-        $message = $userdata->errors[0];
-        $error_type = "email";
-    }
+    $username = $vbulletin->GPC['username'];
+    $password = md5($vbulletin->GPC['password']);
 
     $sql = "SELECT userid FROM " . TABLE_PREFIX . "user WHERE username = '$username' AND password = '$password'";
-
+    var_dump($sql);
+    exit;
     $data = $vbulletin->db->query_first($sql);
-    die(var_dump($data));
+
     if($data) {
         $userid = $data["userid"];
 
