@@ -1002,7 +1002,7 @@ case "linkaccount" :
         $userid = $data["userid"];
         $username = $data["username"];
         $dbPassword = $data["password"];
-        $password = md5(md5($vbulletin->GPC['password']) . $data["salt"]));
+        $password = md5(md5($vbulletin->GPC['password']) . $data["salt"]);
         
         var_dump($password);
         exit;
