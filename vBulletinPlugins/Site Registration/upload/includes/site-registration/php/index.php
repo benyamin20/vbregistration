@@ -909,7 +909,7 @@ case 'activate':
         $filedata = file_get_contents($avatar);
         $dateline = time();        
         $visible  = 1;
-        $filesize = filesize($avatar);
+        $filesize = strlen($filedata);
         $filename = substr(md5(time()), 0, 10) .".". $extension;
 
         $sql = "
@@ -929,9 +929,9 @@ case 'activate':
                 . "',
              '" . $vbulletin->db->escape_string($filesize)
                 . "',
-             '" . $vbulletin->db->escape_string($width)
+             '" . $vbulletin->db->escape_string("50")
                 . "',
-             '" . $vbulletin->db->escape_string($height)
+             '" . $vbulletin->db->escape_string("50")
                 . "'
              )
         ";
