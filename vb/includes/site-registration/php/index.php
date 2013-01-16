@@ -993,7 +993,7 @@ case "linkaccount" :
     $vbulletin->input->clean_array_gpc('p', array('username' => TYPE_STR, 'password' => TYPE_STR));
 
     $username = $vbulletin->GPC['username'];
-    $password = md5($vbulletin->GPC['password']);
+    $password = $vbulletin->GPC['password'];
 
     $sql = "SELECT userid FROM " . TABLE_PREFIX . "user WHERE username = '$username' AND password = '$password'";
     var_dump($password);
