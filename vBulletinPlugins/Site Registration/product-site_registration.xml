@@ -1137,7 +1137,7 @@ $stylevar[htmldoctype]
 	</templates>
 	<plugins>
 		<plugin active="1" executionorder="1">
-			<title>Display message if account is not active</title>
+			<title>Site Registration | Display message if account is not active</title>
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[
 			    if((int)$vbulletin->userinfo['userid'] && $_REQUEST['do'] !="logout"){
