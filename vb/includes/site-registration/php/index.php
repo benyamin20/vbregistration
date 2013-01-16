@@ -955,7 +955,7 @@ case 'activate':
 
         $userid = $data["userid"];
 
-        $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '". $fbID . "', '". $userid ."', '1'");
+        $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '". $fbID . "', '". $userid ."', '1')");
 
         //Send Activation Email: Refer to Automated Emails
         // send new user email
