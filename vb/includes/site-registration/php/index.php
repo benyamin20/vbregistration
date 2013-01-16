@@ -1065,10 +1065,14 @@ case "linkaccount" :
                 process_new_login('', '', '');
 
                 if(isset($_SESSION['site_registration']['initial_page'])) {
-                    header("location: ". $_SESSION['site_registration']['initial_page'] ."");
+                    $url = $_SESSION['site_registration']['initial_page'];
                 } else {
-                    header("location: index.php");
+                    $url = "index.php";
                 }
+
+                $arr = array("url" => $url);
+
+                json_headers($arr);
             }
         }                        
     }    
