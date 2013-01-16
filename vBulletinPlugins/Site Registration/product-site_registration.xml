@@ -1318,8 +1318,7 @@ $stylevar[htmldoctype]
 			<hookname>register_start</hookname>
 			<phpcode>
 			    <![CDATA[
-			        $php_self = $_SERVER['REQUEST_URI'];
-			        
+			        $php_self = $_SERVER['REQUEST_URI'];			        
 			        
 			        if (!session_id()) {
                         session_start();
@@ -1356,7 +1355,10 @@ $stylevar[htmldoctype]
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
                      
-			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
+			        } elseif(isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details' && isset($_REQUEST["link"])) {
+			        	echo "SIii";
+			        	exit;
+			        } else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
 			        	$code           = $_REQUEST["code"];
 			        	$cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi'];  
 			        	
