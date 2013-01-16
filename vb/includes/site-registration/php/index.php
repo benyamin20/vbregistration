@@ -992,9 +992,9 @@ case "linkaccount" :
     //clean variables
     $vbulletin->input->clean_array_gpc('p', array('username' => TYPE_STR, 'password' => TYPE_STR));
 
-    $username = $vbulletin->GPC['username'];    
+    $user = $_REQUEST["username"];
 
-    $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX . "user WHERE username = '$username'";
+    $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX . "user WHERE username = '$user'";
     
     $data = $vbulletin->db->query_first($sql);
     var_dump($data);
