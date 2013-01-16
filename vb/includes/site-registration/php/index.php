@@ -997,7 +997,8 @@ case "linkaccount" :
     $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX . "user WHERE username = '$username'";
     
     $data = $vbulletin->db->query_first($sql);
-
+    var_dump($data);
+    exit;
     if($data) {
         $userid = $data["userid"];
         $username = $data["username"];
