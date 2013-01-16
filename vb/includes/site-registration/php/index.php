@@ -1055,7 +1055,6 @@ case "linkaccount" :
                 /*insert query*/
                 $vbulletin->db->query_write($sql);
 
-
                 $token = md5(uniqid(microtime(), true));
                 $token_time = time();
                 $form = "site-account-details";
