@@ -177,7 +177,7 @@ $stylevar[htmldoctype]
 						    </div>
 							<div class="clear clear_15"></div>
 							<div id="user-cp" class="hidden">
-							    You can always make any changes by accessing the <a href="$vboptions[bburl]/profile.php?do=editoptions" class="link_blue">User CP</a>.
+							    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="link_blue">User CP</a>.
 							</div>
 							
 							<form id="complete-your-profile-form"
@@ -1136,69 +1136,6 @@ $stylevar[htmldoctype]
 		]]></template>
 	</templates>
 	<plugins>
-		<plugin active="0" executionorder="5">
-			<title>Display Registration page when we get no permissions error.</title>
-			<hookname>error_nopermission</hookname>
-			<phpcode>
-			    <![CDATA[
-                /*
-                if(!(int)$vbulletin->userinfo['userid'])
-                {
-                    $reg_ref = '';
-                    switch(THIS_SCRIPT)
-                    {
-                        case 'newthread':
-	                        echo 'This is newthread page';
-	                        $reg_ref = 'reg-new-thread';
-	                        break;
-                        case 'newreply':
-	                        //if url contains "noquote=1", that means its not quote, else its quote
-	                        var_dump($vbulletin->GPC);
-	                        if($vbulletin->GPC['noquote'] == 1)
-	                        {
-		                        echo 'This is newreply page with noquote';
-		                        $reg_ref = 'reg-post-reply';
-	                        }
-	                        else if($vbulletin->GPC['quoteall'] == 1)
-	                        {
-		                        echo 'This is newreply page with quote all';
-		                        $reg_ref = 'reg-reply-quote-all';
-	                        }
-	                        else if(isset($vbulletin->GPC['vbulletin_multiquote'])&& !empty($vbulletin->GPC['vbulletin_multiquote']))
-	                        {
-		                        echo 'This is newreply page with multi quote';
-		                        $reg_ref = 'reg-reply-multi-quote';
-	                        }
-	                        else
-	                        {
-		                        // if quote/:
-		                        echo 'This is newreply page with quote';
-		                        $reg_ref = 'reg-reply-quote';
-	                        }
-	                        break;
-                        case 'memberlist':
-	                        echo 'This is memberlist page';
-	                        $reg_ref = 'reg-member-list';
-	                        break;
-                        case 'garage':
-	                        echo 'This is garage page';
-	                        $reg_ref = 'reg-garage';
-	                        break;
-                        case 'album':
-	                        echo 'This is album page';
-	                        $reg_ref = 'reg-add-album';
-	                        break;
-                        case 'picturecomment':
-	                        echo 'This is picturecomment page';
-	                        $reg_ref = 'reg-picture-comment';
-	                        break;
-                    }
-                die;
-                }
-                */
-            ]]>
-        </phpcode>
-		</plugin>
 		<plugin active="1" executionorder="1">
 			<title>Display message if account is not active</title>
 			<hookname>parse_templates</hookname>
@@ -1248,9 +1185,39 @@ $stylevar[htmldoctype]
 	                        '###TOKEN###', $security_token, 
 	                        $vbulletin->templatecache['navbar']
 	                    );
+	                    
+	                    
 	                }
-  
+	            
 			    }    
+			    
+			    
+			    $element = "";
+			    
+			    
+			    $php_self = $_SERVER['REQUEST_URI'];
+			    
+			    if(preg_match("/member/", $php_self)){
+			        $element = "?ref=reg-member-list";
+			    }else if(preg_match("/garage/", $php_self)){
+			        $element = "?ref=reg-garage";
+			    }else if(preg_match("/album/", $php_self)){
+			        $element = "?ref=reg-add-album";
+			    }else if(preg_match("/picture/", $php_self)){
+			        $element = "?ref=reg-picture-comment";
+			    }else{
+			        $element = "?ref=reg-global-nav";
+			    }
+			    
+			    
+			    
+			    //check incoming element
+                $vbulletin->templatecache['navbar'] = str_replace(
+                    'register.php', "register.php" . $element, 
+                    $vbulletin->templatecache['navbar']
+                );
+			    
+			    
             ]]>
             </phpcode>
 		</plugin>
@@ -1260,11 +1227,7 @@ $stylevar[htmldoctype]
 			<hookname>register_activateform</hookname>
 			<phpcode>
 			<![CDATA[
-                if (isset($_SERVER['QUERY_STRING'])) {
-                    $php_self = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
-                } else {
-                    $php_self = $_SERVER['PHP_SELF'];
-                }
+                $php_self = $_SERVER['REQUEST_URI'];
 
                 $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
                 $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
@@ -1272,11 +1235,6 @@ $stylevar[htmldoctype]
 
                 if (!session_id()) {
                     session_start();
-
-                    //if (!isset($_SESSION['initiated'])) {
-                    //    session_regenerate_id();
-                    //    $_SESSION['initiated'] = true;
-                    //}
 
                 }
 
@@ -1360,11 +1318,7 @@ $stylevar[htmldoctype]
 			<hookname>register_start</hookname>
 			<phpcode>
 			    <![CDATA[
-			        if(isset($_SERVER['QUERY_STRING'])){
-			            $php_self = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
-			        }else{
-			            $php_self = $_SERVER['PHP_SELF'];
-			        }
+			        $php_self = $_SERVER['REQUEST_URI'];
 			        
 			        
 			        if (!session_id()) {
@@ -1404,8 +1358,12 @@ $stylevar[htmldoctype]
                      
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
 			        	$code           = $_REQUEST["code"];
-			        	//$cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi'];  
-			        	$client_id		= "304416966345499";
+			        	$cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi'];  
+			        	
+			        	if(empty($cliend_id)){
+			        	    $client_id		= "304416966345499";
+			        	}
+			        	
 			        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
 			        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
 
@@ -1543,7 +1501,7 @@ $stylevar[htmldoctype]
 			<hookname>newthread_start</hookname>
 			<phpcode>
 			    <![CDATA[
-			        $php_self = $_SERVER['PHP_SELF'] .= '?' . $_SERVER['QUERY_STRING'];
+			        $php_self = $_SERVER['REQUEST_URI'];
 			        
 			        if (!session_id()) {
                         session_start();
@@ -1552,12 +1510,102 @@ $stylevar[htmldoctype]
                     $_SESSION['site_registration']['initial_page'] = $php_self; 
                     
 			        if(!(int)$vbulletin->userinfo['userid']){
-			            header("Location: /register.php");
+			            header("Location: register.php?ref=reg-new-thread");
 			        }
 			         
 			    ]]>
 			</phpcode>
 		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Site Registration | Display Registration page when we get no permissions error.</title>
+			<hookname>error_nopermission</hookname>
+			<phpcode>
+			    <![CDATA[
+			        $php_self = $_SERVER['REQUEST_URI'];
+			        
+			        if (!session_id()) {
+                        session_start();
+                    }
+                    
+                    $_SESSION['site_registration']['initial_page'] = $php_self; 
+                    
+			        if(!(int)$vbulletin->userinfo['userid']){
+ 
+                        $reg_ref = '';
+                        switch(THIS_SCRIPT)
+                        {
+                            case 'newthread':
+	                            $reg_ref = 'reg-new-thread';
+	                            break;
+                            case 'newreply':
+	                            //if url contains "noquote=1", that means its not quote, else its quote
+	                           
+	                            if($vbulletin->GPC['noquote'] == 1)
+	                            {
+		                            $reg_ref = 'reg-post-reply';
+	                            }
+	                            else if($vbulletin->GPC['quoteall'] == 1)
+	                            {
+		                            $reg_ref = 'reg-reply-quote-all';
+	                            }
+	                            else if(isset($vbulletin->GPC['vbulletin_multiquote'])&& !empty($vbulletin->GPC['vbulletin_multiquote']))
+	                            {
+		                            $reg_ref = 'reg-reply-multi-quote';
+	                            }
+	                            else
+	                            {
+		                            // if quote/:
+		                            $reg_ref = 'reg-reply-quote';
+	                            }
+	                            break;
+                            case 'memberlist':
+	                            $reg_ref = 'reg-member-list';
+	                            break;
+                            case 'garage':
+	                            $reg_ref = 'reg-garage';
+	                            break;
+                            case 'album':
+	                            $reg_ref = 'reg-add-album';
+	                            break;
+                            case 'picturecomment':
+	                            $reg_ref = 'reg-picture-comment';
+	                            break;
+                        }
+			        
+			            header("Location: register.php?ref=$reg_ref");
+			        } 
+			    ]]>
+			</phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
+			<title>Site Registration | New reply</title>
+			<hookname>newreply_start</hookname>
+			<phpcode>
+			    <![CDATA[
+			        $php_self = $_SERVER['REQUEST_URI'];
+			        
+			        if (!session_id()) {
+                        session_start();
+                    }
+                    
+                    $_SESSION['site_registration']['initial_page'] = $php_self; 
+
+                    
+			        if(!(int)$vbulletin->userinfo['userid']){
+			            if(isset($_REQUEST['noquote']) && $_REQUEST['noquote'] == 1 ){
+			                header("Location: register.php?ref=reg-post-reply");
+			            }else if(isset($_REQUEST['multiquote']) || isset($_REQUEST['vbulletin_multiquote']) ){
+			                header("Location: register.php?ref=reg-reply-multi-quote");
+			            }else{
+			                header("Location: register.php?ref=reg-reply-quote");
+			            }
+			            
+			        }
+			         
+			    ]]>
+			</phpcode>
+		</plugin>
+		
 		<plugin active="1" executionorder="1">
 			<title>Site Registration | User clicked on activation link</title>
 			<hookname>register_activate_start</hookname>
@@ -1568,11 +1616,7 @@ $stylevar[htmldoctype]
                         session_start();
                     }
 			    
-                    if (isset($_SERVER['QUERY_STRING'])) {
-                        $php_self = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
-                    } else {
-                        $php_self = $_SERVER['PHP_SELF'];
-                    }
+                    $php_self = $_SERVER['REQUEST_URI'];
 
                     $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
                     $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
@@ -1638,8 +1682,13 @@ $stylevar[htmldoctype]
                                 AND type = 0"
                         );
                         
-                        $prev_url = $vbulletin->options['forumhome'] . '.php' . $vbulletin->session->vars['sessionurl_q'];
-	                        
+                        
+                        if(empty($_SESSION['site_registration']['initial_page'])){
+                            $prev_url = $vbulletin->options['forumhome'] . '.php' . $vbulletin->session->vars['sessionurl_q'];
+                        }else{
+                            $prev_url = $_SESSION['site_registration']['initial_page'];
+                        }
+                        
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
 	                
 	                }else{
