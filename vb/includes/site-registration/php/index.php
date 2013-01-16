@@ -994,7 +994,7 @@ case "linkaccount" :
 
     $username = $vbulletin->GPC['username'];    
 
-    $sql = "SELECT userid, username, password FROM " . TABLE_PREFIX . "user WHERE username = '$username'";
+    $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX . "user WHERE username = '$username'";
     
     $data = $vbulletin->db->query_first($sql);
 
