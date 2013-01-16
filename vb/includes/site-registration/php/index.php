@@ -996,7 +996,7 @@ case "linkaccount" :
     $password = md5($vbulletin->GPC['password']);
 
     $sql = "SELECT userid FROM " . TABLE_PREFIX . "user WHERE username = '$username' AND password = '$password'";
-    var_dump($sql);
+    var_dump($password);
     exit;
     $data = $vbulletin->db->query_first($sql);
 
