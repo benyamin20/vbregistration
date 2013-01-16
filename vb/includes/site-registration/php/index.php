@@ -992,16 +992,20 @@ case "linkaccount" :
     //clean variables
     $vbulletin->input->clean_array_gpc('p', array('username' => TYPE_STR, 'password' => TYPE_STR));
 
-    $username = $vbulletin->GPC['username'];
-    $password = $vbulletin->GPC['password'];
+    $username = $vbulletin->GPC['username'];    
 
-    $sql = "SELECT userid FROM " . TABLE_PREFIX . "user WHERE username = '$username' AND password = '$password'";
-    var_dump($password);
-    exit;
+    $sql = "SELECT userid, username, password FROM " . TABLE_PREFIX . "user WHERE username = '$username'";
+    
     $data = $vbulletin->db->query_first($sql);
 
     if($data) {
         $userid = $data["userid"];
+        $username = $data["username"];
+        $dbPassword = $data["password"];
+        $password = md5(md5($vbulletin->GPC['password']) . $data["salt"]));
+        
+        var_dump($password);
+        exit;
 
         $code = $_REQUEST["code"];
         $cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi'];  
