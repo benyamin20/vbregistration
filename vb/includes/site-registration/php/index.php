@@ -708,7 +708,7 @@ case 'create_site_account_first_step':
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
         $message = "OK";
-        $url = "register.php?step=site-account-details";
+        $url = "/register.php?step=site-account-details";
 
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
@@ -980,6 +980,120 @@ case 'activate':
             "rows" => $rows);
 
     json_headers($arr);
+
+break;
+
+
+case "linkaccount" :
+    $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+    $valid_entries = TRUE;
+    $message = "";
+
+    //clean variables
+    $vbulletin->input->clean_array_gpc('p', array('username' => TYPE_STR, 'password' => TYPE_STR));
+
+    //check if variables are set
+    if(empty($vbulletin->GPC['email'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $message = $userdata->errors[0];
+        $error_type = "email";
+    }
+
+    $sql = "SELECT userid FROM " . TABLE_PREFIX . "user WHERE username = '$username' AND password = '$password'";
+
+    $data = $vbulletin->db->query_first($sql);
+    die(var_dump($data));
+    if($data) {
+        $userid = $data["userid"];
+
+        $code = $_REQUEST["code"];
+        $cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi'];  
+                        
+        if(empty($cliend_id)){
+            $client_id      = "304416966345499";
+        }
+                
+        $scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
+        $client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
+
+        if(!$code) {
+            $_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
+
+            $loginURL  = "https://www.facebook.com/dialog/oauth?";
+            $loginURL .= "client_id=$client_id&";
+            $loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details&link=true") ."&";
+            $loginURL .= "state=". $_SESSION["state"] ."&";
+            $loginURL .= "scope=$scope";
+        
+            echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';                            
+        } else {        
+            if($_SESSION["state"] and $_SESSION["state"] === $_REQUEST["state"]) {
+                $tokenURL  = "https://graph.facebook.com/oauth/access_token?";
+                $tokenURL .= "client_id=$client_id&";
+                $tokenURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] . "/register.php?step=confirm-facebook-details") ."&";
+                $tokenURL .= "client_secret=$client_secret&code=". $code;
+                $response = file_get_contents($tokenURL);
+                $params   = NULL;
+                
+                parse_str($response, $params);
+
+                $_SESSION["access_token"] = $params["access_token"];
+
+                $graphURL = "https://graph.facebook.com/me?fields=id,name,email,birthday,picture,timezone,username&access_token=". $params["access_token"];
+         
+                $user = json_decode(file_get_contents($graphURL));
+
+                $fbID = $_SESSION['site_registration']["fbID"] = $user->id;
+                $fbUsername = $_SESSION['site_registration']["fbUsername"] = $user->username;
+                $fbName = $_SESSION['site_registration']["fbName"] = $user->name;
+                $fbEmail = $_SESSION['site_registration']["fbEmail"] = $user->email;
+                $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $user->birthday;
+                $fbPicture = $_SESSION['site_registration']["fbPicture"] = $user->picture->data->url;
+           
+                //Verify if the account already exists...                                
+                $sql = "SELECT `u`.`usergroupid`,
+                               `u`.`username`,
+                               `u`.`email`,
+                               `n`.*
+                        FROM " . TABLE_PREFIX . "vbnexus_user `n`
+                        LEFT JOIN " . TABLE_PREFIX . "user `u` USING (`userid`)
+                        WHERE `n`.`service` = 'fb'
+                        AND `n`.`nonvbid` = '{$fbID}'";
+
+                $data = $vbulletin->db->query_first($sql);
+                
+                if(!$data) {
+                    eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+                } else {
+                    $vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $data["userid"] ."'");
+
+                    // Process vBulletin login
+                    require_once(DIR . '/includes/functions_login.php');
+                    $vbulletin->userinfo = fetch_userinfo($data['userid']);
+                    $vbulletin->session->created = false;
+                    process_new_login('', false, '');
+
+                    // On login, store a cookie with vbnexus params
+                    if($vbulletin->session->created) {
+                        $vBNexusInfo = array(
+                            'userid'      => $data['userid'],
+                            'service'     => 'fb',
+                            'nonvbid'     => $data["nonvbid"],
+                            'can_publish' => true,
+                        );
+                        setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
+                    }
+
+                    $vbulletin->userinfo[securitytoken] = "guest";
+                    
+                    header("location: index.php");
+                }
+            } else {
+                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+            }
+        }                
+    }    
 
 break;
 
