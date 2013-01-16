@@ -1017,7 +1017,7 @@ case "linkaccount" :
 
             $data = $vbulletin->db->query_first($sql);
 
-            if(!$data) {
+            if(!$data and strlen($fbID) > 1) {
                 $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '". $fbID . "', '". $userid ."', '1')");
 
                 $parts = explode(".", $avatar);
@@ -1064,11 +1064,7 @@ case "linkaccount" :
                 $vbulletin->session->created = false;                
                 process_new_login('', '', '');
 
-                if(isset($_SESSION['site_registration']['initial_page'])) {
-                    $url = $_SESSION['site_registration']['initial_page'];
-                } else {
-                    $url = "index.php";
-                }
+                $url = "index.php";
 
                 $arr = array("url" => $url);
 
