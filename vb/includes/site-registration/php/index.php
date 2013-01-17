@@ -207,9 +207,7 @@ case 'complete_your_profile':
         }
     } else {
         //use default image
-        $default_image =  
-                $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR
-                        . "images/misc/unknown.gif" ;
+        $default_image = realpath("../../". "images/misc/unknown.gif") ;
         list($width, $height, $type, $attr) = getimagesize($default_image);
 
         $userid = $_SESSION['site_registration']['userid'];
