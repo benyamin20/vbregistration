@@ -208,6 +208,9 @@ case 'complete_your_profile':
     } else {
         //use default image
         $default_image = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "images/misc/unknown.gif";
+        
+        
+        
         list($width, $height, $type, $attr) = getimagesize($default_image);
 
         $userid = $_SESSION['site_registration']['userid'];
@@ -322,7 +325,7 @@ case 'complete_your_profile':
     }
 
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-            "rows" => $rows);
+            "rows" => $rows, "image"=> $default_image);
 
     json_headers($arr);
 
