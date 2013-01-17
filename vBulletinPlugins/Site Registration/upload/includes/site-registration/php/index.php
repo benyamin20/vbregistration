@@ -14,7 +14,9 @@ function json_headers($arr = null)
 
 function json_headers_ie_support($arr = null)
 {
-    header('Content-type: text/plain');
+    header('Pragma: no-cache');
+    header('Cache-Control: private, no-cache');
+    header('Content-Disposition: inline; filename="files.json"');
     echo json_encode($arr);
 }
 
