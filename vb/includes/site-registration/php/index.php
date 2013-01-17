@@ -1060,8 +1060,9 @@ case "linkaccount" :
                 $form = "site-account-details";
                 $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
 
-                $vbulletin->userinfo = fetch_userinfo($userid);
-              
+                require_once(DIR . '/includes/functions_login.php');
+                $vbulletin->userinfo = fetch_userinfo($data['userid']);
+                $vbulletin->session->created = false;
                 process_new_login('', false, '');
 
                 $url = "index.php";
