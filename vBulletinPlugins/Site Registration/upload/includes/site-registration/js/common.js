@@ -342,7 +342,6 @@ jQuery(document).ready(function(jQuery) {
     }
     
     
-    
     //create site account functionality
     if(jQuery("#create-new-account-button").exists()){
         jQuery('#create-new-account-error').empty();
@@ -442,10 +441,10 @@ jQuery(document).ready(function(jQuery) {
         });
     }
 
-    //Log-in
+   //Log-in
     if(jQuery("#link-account").exists()) {        
         jQuery("#link-account").bind('click', function() {
-            var username = escape(jQuery("#username").val());
+            var username = escape(jQuery("#username-member").val());
             var password = escape(jQuery("#password-member").val());
         
             jQuery.ajax({

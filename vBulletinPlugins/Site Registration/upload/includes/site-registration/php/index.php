@@ -986,109 +986,109 @@ break;
 
 case "linkaccount" :
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+
     $valid_entries = TRUE;
-    $message = "";
+    $message = "OK";
+    $url = "register.php?step=activate";
 
     //clean variables
     $vbulletin->input->clean_array_gpc('p', array('username' => TYPE_STR, 'password' => TYPE_STR));
 
-    $username = $vbulletin->GPC['username'];
-    $password = md5($vbulletin->GPC['password']);
+    $user = $_REQUEST["username"];
 
-    $sql = "SELECT userid FROM " . TABLE_PREFIX . "user WHERE username = '$username' AND password = '$password'";
-    var_dump($sql);
-    exit;
+    $sql = "SELECT userid, username, password, salt FROM ". TABLE_PREFIX ."user WHERE username = '$user'";
+    
     $data = $vbulletin->db->query_first($sql);
-
+        
     if($data) {
         $userid = $data["userid"];
+        $username = $data["username"];
+        $dbPassword = $data["password"];
+        $password = md5(md5($vbulletin->GPC['password']) . $data["salt"]);
+        $fbID = $_SESSION['site_registration']["fbID"];
+        $avatar = $_SESSION['site_registration']["fbPicture"];
 
-        $code = $_REQUEST["code"];
-        $cliend_id    = $vbulletin->options['site_registration_settingsfb_fbapi'];  
-                        
-        if(empty($cliend_id)){
-            $client_id      = "304416966345499";
-        }
-                
-        $scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
-        $client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
+        if($dbPassword != $password) {
+            $arr = array("valid_entries" => false,
+            "error_type" => "password", "message" => "Incorrect Login", "url" => $url,
+            "rows" => $rows);
+        } else {
+            $sql = "SELECT nonvbid, userid FROM ". TABLE_PREFIX ."vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
 
-        if(!$code) {
-            $_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
+            $data = $vbulletin->db->query_first($sql);
 
-            $loginURL  = "https://www.facebook.com/dialog/oauth?";
-            $loginURL .= "client_id=$client_id&";
-            $loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details&link=true") ."&";
-            $loginURL .= "state=". $_SESSION["state"] ."&";
-            $loginURL .= "scope=$scope";
-        
-            echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';                            
-        } else {        
-            if($_SESSION["state"] and $_SESSION["state"] === $_REQUEST["state"]) {
-                $tokenURL  = "https://graph.facebook.com/oauth/access_token?";
-                $tokenURL .= "client_id=$client_id&";
-                $tokenURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] . "/register.php?step=confirm-facebook-details") ."&";
-                $tokenURL .= "client_secret=$client_secret&code=". $code;
-                $response = file_get_contents($tokenURL);
-                $params   = NULL;
-                
-                parse_str($response, $params);
+            if(!$data and strlen($fbID) > 1) {
+                $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '". $fbID . "', '". $userid ."', '1')");
 
-                $_SESSION["access_token"] = $params["access_token"];
+                $parts = explode(".", $avatar);
+                $extension = end($parts);
+                $filedata = file_get_contents($avatar);
+                $dateline = time();        
+                $visible  = 1;
+                $filesize = strlen($filedata);
+                $filename = substr(md5(time()), 0, 10) .".". $extension;
 
-                $graphURL = "https://graph.facebook.com/me?fields=id,name,email,birthday,picture,timezone,username&access_token=". $params["access_token"];
-         
-                $user = json_decode(file_get_contents($graphURL));
+                $sql = "
+                    REPLACE INTO " . TABLE_PREFIX
+                        . "customprofilepic
+                    (userid, filedata, dateline, filename, visible, filesize, width, height)
+                    VALUES
+                    ('" . $vbulletin->db->escape_string($userid)
+                        . "',
+                     '" . $vbulletin->db->escape_string($filedata)
+                        . "',
+                     '" . $vbulletin->db->escape_string($dateline)
+                        . "',
+                     '" . $vbulletin->db->escape_string($filename)
+                        . "',
+                     '" . $vbulletin->db->escape_string($visible)
+                        . "',
+                     '" . $vbulletin->db->escape_string($filesize)
+                        . "',
+                     '" . $vbulletin->db->escape_string("50")
+                        . "',
+                     '" . $vbulletin->db->escape_string("50")
+                        . "'
+                     )
+                ";
 
-                $fbID = $_SESSION['site_registration']["fbID"] = $user->id;
-                $fbUsername = $_SESSION['site_registration']["fbUsername"] = $user->username;
-                $fbName = $_SESSION['site_registration']["fbName"] = $user->name;
-                $fbEmail = $_SESSION['site_registration']["fbEmail"] = $user->email;
-                $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $user->birthday;
-                $fbPicture = $_SESSION['site_registration']["fbPicture"] = $user->picture->data->url;
-           
-                //Verify if the account already exists...                                
-                $sql = "SELECT `u`.`usergroupid`,
-                               `u`.`username`,
-                               `u`.`email`,
-                               `n`.*
-                        FROM " . TABLE_PREFIX . "vbnexus_user `n`
-                        LEFT JOIN " . TABLE_PREFIX . "user `u` USING (`userid`)
-                        WHERE `n`.`service` = 'fb'
-                        AND `n`.`nonvbid` = '{$fbID}'";
+                /*insert query*/
+                $vbulletin->db->query_write($sql);
 
-                $data = $vbulletin->db->query_first($sql);
-                
-                if(!$data) {
-                    eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
-                } else {
-                    $vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $data["userid"] ."'");
+                $token = md5(uniqid(microtime(), true));
+                $token_time = time();
+                $form = "site-account-details";
+                $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
 
-                    // Process vBulletin login
-                    require_once(DIR . '/includes/functions_login.php');
-                    $vbulletin->userinfo = fetch_userinfo($data['userid']);
-                    $vbulletin->session->created = false;
-                    process_new_login('', false, '');
 
-                    // On login, store a cookie with vbnexus params
-                    if($vbulletin->session->created) {
-                        $vBNexusInfo = array(
-                            'userid'      => $data['userid'],
-                            'service'     => 'fb',
-                            'nonvbid'     => $data["nonvbid"],
-                            'can_publish' => true,
-                        );
-                        setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
-                    }
 
-                    $vbulletin->userinfo[securitytoken] = "guest";
-                    
-                    header("location: index.php");
-                }
-            } else {
-                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+                require_once(DIR . '/includes/functions_login.php');
+                $vbulletin->userinfo = fetch_userinfo($userid);
+                $vbulletin->session->created = false;
+                process_new_login('', '', '');
+
+                $newsession =& new vB_Session($vbulletin, '', $vbulletin->userinfo['userid'], '', $vbulletin->session->vars['styleid'], $vbulletin->session->vars['languageid']);
+                $newsession->set('userid', $userid);
+                $newsession->set('loggedin', 1);
+
+                $newsession->set_session_visibility(($vbulletin->superglobal_size['_COOKIE'] > 0));
+                $newsession->fetch_userinfo();
+
+                $vbulletin->session =& $newsession;
+                $vbulletin->userinfo = $newsession->userinfo;
+                $vbulletin->userinfo['lang_locale'] = $lang_info['lang_locale'];
+                $vbulletin->userinfo['lang_charset'] = $lang_info['lang_charset'];
+
+                setcookie("bbuserid", $userid, time()+1000000, "/");
+                setcookie("bbpassword", $password, time()+1000000, "/");
+
+                $url = "index.php";
+
+                $arr = array("url" => $url);
+
+                json_headers($arr);
             }
-        }                
+        }                        
     }    
 
 break;
