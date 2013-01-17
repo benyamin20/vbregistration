@@ -22,3 +22,7 @@
 .placeholder { 
     color: #aaa; 
 }
+
+.upload-group{
+    margin-left: -1px !important;
+}

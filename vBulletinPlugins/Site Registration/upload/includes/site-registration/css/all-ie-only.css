@@ -13,3 +13,7 @@
 .not-active{
     width: 100% !important;   
 }
+
+.upload-group{
+    margin-left: -1px !important;
+}
