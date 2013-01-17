@@ -40,11 +40,7 @@ $stylevar[htmldoctype]
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<script type="text/javascript">
-    if (window.jQuery == undefined)
-        document
-                .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
-</script>
+<script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js">\x3C/script>')</script>
 <script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script>
 <script src="includes/site-registration/bootstrap/js/bootstrap-fileupload.min.js"></script> 
 <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
@@ -380,11 +376,7 @@ $stylevar[htmldoctype]
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<script type="text/javascript">
-    if (window.jQuery == undefined)
-        document
-                .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
-</script>
+<script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js">\x3C/script>')</script>
 <script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
 <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
  
@@ -519,11 +511,7 @@ $stylevar[htmldoctype]
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 
-    <script type="text/javascript">
-        if (window.jQuery == undefined)
-            document
-                    .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
-    </script>
+    <script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js">\x3C/script>')</script>
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
     <script src="includes/site-registration/bootstrap/js/bootstrap-tooltip.min.js"></script> 
     <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
@@ -727,11 +715,7 @@ $stylevar[htmldoctype]
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<script type="text/javascript">
-    if (window.jQuery == undefined)
-        document
-                .write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
-</script>
+<script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js">\x3C/script>')</script>
 <script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
 <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
  
@@ -967,11 +951,7 @@ $stylevar[htmldoctype]
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<script type="text/javascript">
-	if (window.jQuery == undefined)
-		document
-				.write(unescape('%3Cscript src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js" type="text/javascript"%3E%3C/script%3E'));
-</script>
+<script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js">\x3C/script>')</script>
 <script src="includes/site-registration/bootstrap/js/bootstrap.min.js"></script> 
 <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
 
