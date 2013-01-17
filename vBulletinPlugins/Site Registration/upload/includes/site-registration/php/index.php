@@ -207,7 +207,7 @@ case 'complete_your_profile':
         }
     } else {
         //use default image
-        $default_image = get_cwd() . "../../../images/misc/unknown.gif";
+        $default_image = getcwd() . "../../../images/misc/unknown.gif";
   
         
         list($width, $height, $type, $attr) = getimagesize($default_image);
