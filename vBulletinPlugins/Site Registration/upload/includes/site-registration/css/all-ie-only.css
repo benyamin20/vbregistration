@@ -1,5 +1,5 @@
 #what-you-get{
-    margin-top: 280px !important;
+    margin-top: 10px !important;
 }
 
 #create-new-account-button{
@@ -14,12 +14,10 @@
     width: 100% !important;   
 }
 
-/*
+
 .vertical-rule{
     background-size: 10px !important;
 }
-
-*/
 
 .placeholder { 
     color: #aaa; 
