@@ -1060,10 +1060,24 @@ case "linkaccount" :
                 $form = "site-account-details";
                 $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
 
+
+
                 require_once(DIR . '/includes/functions_login.php');
                 $vbulletin->userinfo = fetch_userinfo($userid);
                 $vbulletin->session->created = false;
                 process_new_login('', '', '');
+
+                $newsession =& new vB_Session($vbulletin, '', $vbulletin->userinfo['userid'], '', $vbulletin->session->vars['styleid'], $vbulletin->session->vars['languageid']);
+                $newsession->set('userid', $userid);
+                $newsession->set('loggedin', 1);
+
+                $newsession->set_session_visibility(($vbulletin->superglobal_size['_COOKIE'] > 0));
+                $newsession->fetch_userinfo();
+                
+                $vbulletin->session =& $newsession;
+                $vbulletin->userinfo = $newsession->userinfo;
+                $vbulletin->userinfo['lang_locale'] = $lang_info['lang_locale'];
+                $vbulletin->userinfo['lang_charset'] = $lang_info['lang_charset'];
 
                 vbsetcookie('userid', $userid, true, true, true);
                 vbsetcookie('password', $password, true, true, true);
