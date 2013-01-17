@@ -318,6 +318,8 @@ $stylevar[htmldoctype]
 							    value="" 
 							    />
 							
+							<input id="securitytoken" name="securitytoken" value="$token" type="hidden" />
+							
 							<input  class="btn btn-primary grid_2 no-margin"
 							    id="save-account-activated" 
 							    type="submit" value="Save" />
@@ -1625,7 +1627,7 @@ $stylevar[htmldoctype]
                     //get username
                     $_SESSION['site_registration']['userid'] = $userid = $vbulletin->GPC['u'];
                     
-                    $sql = "SELECT username, email
+                    $sql = "SELECT username, email, salt, userid
 		                    FROM " . TABLE_PREFIX . "user
 		                    WHERE userid = $userid";
                      
@@ -1669,8 +1671,13 @@ $stylevar[htmldoctype]
                         //show to default verification page
                     }
  
+ 
+                     $token_raw = sha1($users_db['userid'] . sha1($users_db['salt']) . sha1(COOKIE_SALT));
+	                 $security_token = $_SESSION['site_registration']['securitytoken'] = TIMENOW . '-' . sha1(TIMENOW . $token_raw);
+ 
+                     $token = $security_token;
 	                
-	                if($valid_activation_code){
+	                 if($valid_activation_code){
 	                
 	                    //delete pending activation code and show activation
 	                    //home page
