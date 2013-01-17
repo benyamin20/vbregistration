@@ -14,6 +14,17 @@
     width: 100% !important;   
 }
 
+/*
+.vertical-rule{
+    background-size: 10px !important;
+}
+
+*/
+
+.placeholder { 
+    color: #aaa; 
+}
+
 .upload-group{
     margin-left: -1px !important;
 }
