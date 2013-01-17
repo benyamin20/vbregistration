@@ -1067,7 +1067,7 @@ case "linkaccount" :
                 $vbulletin->session->created = false;
                 process_new_login('', '', '');
 
-                $newsession =& new vB_Session($vbulletin, '', $vbulletin->userinfo['userid'], '', $vbulletin->session->vars['styleid'], $vbulletin->session->vars['languageid']);
+                $newsession =& new vB_Session($vbulletin, '', $userid, '', $vbulletin->session->vars['styleid'], $vbulletin->session->vars['languageid']);
                 $newsession->set('userid', $userid);
                 $newsession->set('loggedin', 1);
 
