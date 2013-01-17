@@ -505,6 +505,14 @@ $stylevar[htmldoctype]
     <!--[if IE]>
 	    <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css" />
     <![endif]-->
+    
+    <!--[if gte IE 9]>
+      <style type="text/css">
+        .gradient {
+           filter: none;
+        }
+      </style>
+    <![endif]-->
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -562,7 +570,7 @@ $stylevar[htmldoctype]
 					        <span class="add-on"> <i class="icon-calendar"></i>
 					        </span> 
                             <input class="fix_input_width" id="datepicker" type="text"
-						        placeholder="Birth Date" value="" autocomplete="off" required
+						         value="" autocomplete="off" required
 						        title="You must be over 13 to register."
 						        rel="tooltip"
 						        name="birthdate" />
@@ -578,7 +586,7 @@ $stylevar[htmldoctype]
 			
                 <if condition="$vboptions['site_registration_settingsfb_showfb']">
                     <!-- OR -->
-	                <div class="grid_1 vertical-rule">
+	                <div class="grid_1 vertical-rule gradient">
 		                <div class="centered">
 			                <div class="horizontal-wrapper">
 				                <sub>OR</sub>
