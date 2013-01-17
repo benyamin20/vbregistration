@@ -1079,8 +1079,8 @@ case "linkaccount" :
                 $vbulletin->userinfo['lang_locale'] = $lang_info['lang_locale'];
                 $vbulletin->userinfo['lang_charset'] = $lang_info['lang_charset'];
 
-                setcookie("userid", $userid, time()+1000000, "/");
-                setcookie("password", $password, time()+1000000, "/");
+                setcookie("bbuserid", $userid, time()+1000000, "/");
+                setcookie("bbpassword", $password, time()+1000000, "/");
 
                 $url = "index.php";
 
