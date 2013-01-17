@@ -12,6 +12,13 @@ function json_headers($arr = null)
     echo json_encode($arr);
 }
 
+function json_headers_ie_support($arr = null)
+{
+    header('Content-type: text/plain');
+    echo json_encode($arr);
+}
+
+
 if (!function_exists('sys_get_temp_dir')) {
     function sys_get_temp_dir()
     {
@@ -549,7 +556,7 @@ case 'validate_site_account_details':
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
             "url" => $url);
 
-    json_headers($arr);
+    json_headers_ie_support($arr);
 
     break;
 

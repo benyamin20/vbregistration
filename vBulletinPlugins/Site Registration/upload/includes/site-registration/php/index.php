@@ -12,6 +12,13 @@ function json_headers($arr = null)
     echo json_encode($arr);
 }
 
+function json_headers_ie_support($arr = null)
+{
+    header('Content-type: text/plain');
+    echo json_encode($arr);
+}
+
+
 if (!function_exists('sys_get_temp_dir')) {
     function sys_get_temp_dir()
     {
@@ -105,7 +112,7 @@ case 'complete_your_profile':
 
     }
 
-    if ($vbulletin->GPC['use_default_image'] != "true") {
+    if ($vbulletin->GPC['use_default_image'] == "") {
         //do not use default image
         $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
 
@@ -208,8 +215,6 @@ case 'complete_your_profile':
     } else {
         //use default image
         $default_image = getcwd() . "/images/misc/unknown.gif";
-  
-        
         list($width, $height, $type, $attr) = getimagesize($default_image);
 
         $userid = $_SESSION['site_registration']['userid'];
@@ -551,7 +556,7 @@ case 'validate_site_account_details':
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
             "url" => $url);
 
-    json_headers($arr);
+    json_headers_ie_support($arr);
 
     break;
 
