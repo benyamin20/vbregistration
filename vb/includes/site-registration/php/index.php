@@ -1061,7 +1061,7 @@ case "linkaccount" :
                 $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
 
                 require_once(DIR . '/includes/functions_login.php');
-                $vbulletin->userinfo = fetch_userinfo($data['userid']);
+                $vbulletin->userinfo = fetch_userinfo($userid);
                 $vbulletin->session->created = false;
                 process_new_login('', false, '');
 
