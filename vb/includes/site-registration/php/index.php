@@ -1065,11 +1065,14 @@ case "linkaccount" :
                 $vbulletin->session->created = false;
                 process_new_login('', '', '');
 
+                vbsetcookie('userid', $userid, true, true, true);
+                vbsetcookie('password', $password, true, true, true);
+
                 $url = "index.php";
 
                 $arr = array("url" => $url);
 
-                #json_headers($arr);
+                json_headers($arr);
             }
         }                        
     }    
