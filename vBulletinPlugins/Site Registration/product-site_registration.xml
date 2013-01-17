@@ -586,13 +586,16 @@ $stylevar[htmldoctype]
 			
                 <if condition="$vboptions['site_registration_settingsfb_showfb']">
                     <!-- OR -->
-	                <div class="grid_1 vertical-rule gradient">
-		                <div class="centered">
-			                <div class="horizontal-wrapper">
-				                <sub>OR</sub>
-			                </div> 
-		                </div>    
-	                </div>                        
+                    <div>
+                        <div class="one-pixel vertical-rule gradient"></div>
+	                    <div class="grid_1">
+		                    <div class="centered">
+			                    <div class="horizontal-wrapper">
+				                    <sub>OR</sub>
+			                    </div> 
+		                    </div>    
+	                    </div>               
+	                </div>         
                 <else />
 	                <div class="grid_1">
                         &nbsp;    
