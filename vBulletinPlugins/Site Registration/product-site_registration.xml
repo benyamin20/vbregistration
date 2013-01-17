@@ -95,7 +95,7 @@ $stylevar[htmldoctype]
 				
 				<div class="clear"></div>
 				<a class="btn grid_4 no-margin"
-				    href="$prev_url"
+				    href="$prev_url&go_back=1"
 				    id="send-me-there">Send Me There &#187;</a>
 
 				<div class="clear clear_20"></div>
