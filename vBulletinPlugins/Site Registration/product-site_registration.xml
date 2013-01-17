@@ -505,14 +505,7 @@ $stylevar[htmldoctype]
     <!--[if IE]>
 	    <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css" />
     <![endif]-->
-    
-    <!--[if gte IE 9]>
-      <style type="text/css">
-        .gradient {
-           filter: none;
-        }
-      </style>
-    <![endif]-->
+ 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -586,16 +579,13 @@ $stylevar[htmldoctype]
 			
                 <if condition="$vboptions['site_registration_settingsfb_showfb']">
                     <!-- OR -->
-                    <div>
-                        <div class="one-pixel vertical-rule gradient"></div>
-	                    <div class="grid_1">
-		                    <div class="centered">
-			                    <div class="horizontal-wrapper">
-				                    <sub>OR</sub>
-			                    </div> 
-		                    </div>    
-	                    </div>               
-	                </div>         
+	                <div class="grid_1 vertical-rule">
+		                <div class="centered">
+			                <div class="horizontal-wrapper">
+				                <sub>OR</sub>
+			                </div> 
+		                </div>    
+	                </div>                        
                 <else />
 	                <div class="grid_1">
                         &nbsp;    
