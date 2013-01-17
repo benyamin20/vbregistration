@@ -37,7 +37,7 @@ $.fn.realVal = function(){
 };
 
 //alternative function to close a facebox thru a trigger
-closeTnC = function() {
+function closeTnC() {
     jQuery(document).trigger('close.facebox');
 }
 
