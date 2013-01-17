@@ -13,3 +13,12 @@
 .not-active{
     width: 100% !important;   
 }
+
+.vertical-rule{
+    background-size: 10px !important;
+}
+
+
+.placeholder { 
+    color: #aaa; 
+}
