@@ -1063,7 +1063,7 @@ case "linkaccount" :
                 require_once(DIR . '/includes/functions_login.php');
                 $vbulletin->userinfo = fetch_userinfo($userid);
                 $vbulletin->session->created = false;
-                process_new_login('', false, '');
+                process_new_login('', '', '');
 
                 $url = "index.php";
 
