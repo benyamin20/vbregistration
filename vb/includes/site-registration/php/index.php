@@ -1069,7 +1069,7 @@ case "linkaccount" :
 
                 $arr = array("url" => $url);
 
-                json_headers($arr);
+                #json_headers($arr);
             }
         }                        
     }    
