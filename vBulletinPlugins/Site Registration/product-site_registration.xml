@@ -904,12 +904,12 @@ $stylevar[htmldoctype]
 					<td id="action-icons">
 						<div id="action-icons-container">
 							<div class="pull-left">
-								<a class="btn close-facebox" href="$vboptions[bburl]$php_self#cancel"
+								<a class="btn close-facebox" href="$php_self#cancel"
 									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
 							</div>
 							<div class="pull-right">
 								<a class="btn btn-primary span2 close-facebox"
-									onclick="closeTnC();" href="$vboptions[bburl]$php_self#accept"
+									onclick="closeTnC();" href="$php_self#accept"
 									id="accept_terms_and_conditions">Accept</a>
 							</div>
 						</div>
@@ -1023,7 +1023,7 @@ $stylevar[htmldoctype]
 				        title="CAPTCHA"  />
 				    <!--
 				    <span style="cursor: pointer;" id="refresh_imagereg">
-				        <a href="$vboptions[bburl]$php_self#">Refresh Image</a>
+				        <a href="$php_self#">Refresh Image</a>
 				    </span>
 				    <script src="clientscript/vbulletin_ajax_imagereg.js?v=387" type="text/javascript"></script>
 				    <script type="text/javascript">vB_AJAX_ImageReg_Init();</script>
@@ -1116,12 +1116,12 @@ $stylevar[htmldoctype]
 					<td id="action-icons">
 						<div id="action-icons-container">
 							<div class="pull-left">
-								<a class="btn close-facebox" href="$vboptions[bburl]$php_self#cancel"
+								<a class="btn close-facebox" href="$php_self#cancel"
 									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
 							</div>
 							<div class="pull-right">
 								<a class="btn btn-primary span2 close-facebox"
-									onclick="closeTnC();" href="$vboptions[bburl]$php_self#accept"
+									onclick="closeTnC();" href="$php_self#accept"
 									id="accept_terms_and_conditions">Accept</a>
 							</div>
 						</div>
@@ -1675,11 +1675,12 @@ $stylevar[htmldoctype]
 	                    //delete pending activation code and show activation
 	                    //home page
 	                    
+	                    /*
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
                                 AND type = 0"
-                        );
+                        );*/
                         
                         
                         if(empty($_SESSION['site_registration']['initial_page'])){
@@ -1687,7 +1688,7 @@ $stylevar[htmldoctype]
                         }else{
                             $rs = $vbulletin->db->query_first(
                                 "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
-                                WHERE email = '". $vbulletin->db->escape_string($email) ."'
+                                WHERE email = '". $vbulletin->db->escape_string($email) ."'"
                             );
                             
                             if(empty($rs['initialpage'])){

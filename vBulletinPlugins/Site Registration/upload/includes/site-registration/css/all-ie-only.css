@@ -24,6 +24,12 @@
     font-weight: lighter !important; 
 }
 
-.upload-group{
-    margin-left: -1px !important;
+#upload-group{
+    float: right;
+    margin-right: 151px !important;
+    position: relative !important;
+    top: -50px !important;
 }
+
+
+
