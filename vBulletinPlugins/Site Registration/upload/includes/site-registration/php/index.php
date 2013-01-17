@@ -333,7 +333,7 @@ case 'complete_your_profile':
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
             "rows" => $rows, "image"=> $default_image);
 
-    json_headers($arr);
+    json_headers_ie_support($arr);
 
     break;
 
@@ -558,7 +558,7 @@ case 'validate_site_account_details':
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
             "url" => $url);
 
-    json_headers_ie_support($arr);
+    json_headers($arr);
 
     break;
 
