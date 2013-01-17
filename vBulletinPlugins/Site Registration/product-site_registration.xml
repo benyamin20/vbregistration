@@ -218,7 +218,7 @@ $stylevar[htmldoctype]
                                                 name="photoimg" id="photoimg" />
                                         </span>
                                         
-                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload" id="remove">Remove</a>
                                         <div class="clear"></div>
                                         <a class="small link_blue" id="use-default">Use default.</a>
                                         <span class="error-label small no-margin no-top" id="photoimg-error-label"></span>
