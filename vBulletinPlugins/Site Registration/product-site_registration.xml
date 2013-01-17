@@ -1650,7 +1650,7 @@ $stylevar[htmldoctype]
 	                $users_db = $vbulletin->db->query_first($sql); 
 	                 
 	                $_SESSION['site_registration']['username'] = unhtmlspecialchars($users_db['username']);
-	                $_SESSION['site_registration']['email'] = unhtmlspecialchars($users_db['email']);
+	                $email = $_SESSION['site_registration']['email'] = unhtmlspecialchars($users_db['email']);
 	                
 	                $username_db = ucfirst($users_db['username']);
 	
@@ -1703,7 +1703,16 @@ $stylevar[htmldoctype]
                         if(empty($_SESSION['site_registration']['initial_page'])){
                             $prev_url = $vbulletin->options['forumhome'] . '.php' . $vbulletin->session->vars['sessionurl_q'];
                         }else{
-                            $prev_url = $_SESSION['site_registration']['initial_page'];
+                            $rs = $vbulletin->db->query_first(
+                                "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
+                                WHERE email = '". $vbulletin->db->escape_string($email) ."'
+                            );
+                            
+                            if(empty($rs['initialpage'])){
+                                $prev_url = "index.php";
+                            }else{
+                                $prev_url = $rs['initialpage'];
+                            }
                         }
                         
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
