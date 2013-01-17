@@ -564,7 +564,8 @@ $stylevar[htmldoctype]
 					        </span> 
                             <input class="fix_input_width" id="datepicker" type="text"
 						         value="" autocomplete="off" required
-						        title="You must be over 13 to register."
+						        title="Birth Date: You must be over 13 to register."
+						        alt="Birth Date: You must be over 13 to register."
 						        rel="tooltip"
 						        name="birthdate" />
 				        </div>
@@ -663,7 +664,7 @@ $stylevar[htmldoctype]
 			    <div class="small grid_3 alpha">
 			        $vboptions[site_registration_bullets_part_1]
 				    <div class="clear clear_30"></div>
-				    <a href="$vboptions[bburl]$php_self#info"  
+				    <a href="$php_self#info"  
                                        id="benefit-comparison" class="link_blue"
 					    rel="facebox">$vboptions[site_registration_link_text]</a>
 
@@ -793,9 +794,9 @@ $stylevar[htmldoctype]
                     <input 
                         class="fix_input_width_facebook" id="datepicker" 
                         type="text"
-                        placeholder="Birth Date" value="$fbBirthday" autocomplete="off" 
+                        value="$fbBirthday" autocomplete="off" 
                         required
-                        title="You must be over 13 to register." />
+                        title="Birthday: You must be over 13 to register." />
                 </div>
                 
                 <div class="clear clear_15"></div>
@@ -806,7 +807,7 @@ $stylevar[htmldoctype]
 					   required checked="checked" />
 				    <span class="small light_grey"> Yes sir, I have read and
 						agreed with the 
-						<a href="$vboptions[bburl]$php_self#info" class="link_blue" rel="facebox">Terms
+						<a href="$php_self#info" class="link_blue" rel="facebox">Terms
 							&amp; Conditions.</a>
 				    </span>
 				</label>
@@ -1050,7 +1051,7 @@ $stylevar[htmldoctype]
 					       checked="checked" />
 					    <span class="small light_grey">
 					       Yes sir, I have read and agreed with the 
-					       <a href="$vboptions[bburl]$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
+					       <a href="$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
 					    </span>
 				    </label>
 				</div>

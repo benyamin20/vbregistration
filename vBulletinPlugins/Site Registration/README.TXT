@@ -13,7 +13,7 @@
        
     FACEBOOK INTEGRATION
     
-    	1. You need to access to https://developers.facebook.com/apps
+    1. You need to access to https://developers.facebook.com/apps
 	2. Click on Create New App
 		-Set the App Name and click continue
 	3. You need to set up the App Domains (where the app will run), need to enable the Sandbox Mode 
@@ -24,6 +24,8 @@
 
     
     
+    
+    IMPORTANT NOTES:
   
     
     - there's a group setting under "site registration options" (may appear as blank --this is a bug)
