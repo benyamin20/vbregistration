@@ -76,11 +76,13 @@ jQuery(document).ready(function(jQuery) {
             jQuery(function() {
                 jQuery("#datepicker").datepicker({
                     autoSize : true,
-                    minDate : '-90y',
+                    minDate : '-120y',
                     maxDate : '-13y',
                     changeYear : true,
                     changeMonth : true,
-                    constrainInput : true
+                    constrainInput : true,
+                    hideIfNoPrevNext:  false,
+                    yearRange: '1900:2100'
 
                 });
             });         
