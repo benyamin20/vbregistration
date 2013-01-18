@@ -366,7 +366,6 @@ jQuery(document).ready(function(jQuery) {
     
     //resens email functionality 
     if (jQuery("#resend-email").exists()) {   
-    
         jQuery("#resend-email").bind('click', function(){
         
             var token = escape(jQuery('#token').val());
@@ -379,6 +378,7 @@ jQuery(document).ready(function(jQuery) {
                 cache: false,
                 data: 'securitytoken=' + token, 
                 beforeSend: function(){
+                    jQuery('#email-sent').empty();
                     jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
                 },
                 success: function (response) {
