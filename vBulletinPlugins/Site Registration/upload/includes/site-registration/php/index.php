@@ -836,7 +836,7 @@ default:
                 $vbulletin->GPC['vb_login_md5password_utf'], 1, true)) {
 
             // check password
-            exec_strike_user($vbulletin->userinfo['username']);
+            exec_strike_user($vbulletin->GPC['vb_login_username']);
 
             if ($vbulletin->GPC['logintype'] === 'cplogin'
                     OR $vbulletin->GPC['logintype'] === 'modcplogin') {
