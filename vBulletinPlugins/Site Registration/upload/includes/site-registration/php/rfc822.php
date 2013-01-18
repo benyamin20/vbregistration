@@ -22,8 +22,8 @@
 		#
 
 		$defaults = array(
-			'allow_comments'	=> true,
-			'public_internet'	=> true, # turn this off for 'strict' mode
+			'allow_comments'	=> false,
+			'public_internet'	=> false, # turn this off for 'strict' mode
 		);
 
 		$opts = array();

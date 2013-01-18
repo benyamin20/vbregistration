@@ -20,7 +20,6 @@ function json_headers_ie_support($arr = null)
     echo json_encode($arr);
 }
 
-
 if (!function_exists('sys_get_temp_dir')) {
     function sys_get_temp_dir()
     {
@@ -48,6 +47,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~8192);
 define('CSRF_PROTECTION', true);
 define('THIS_SCRIPT', 'site-registration');
 
+require_once("rfc822.php");
 //include required files
 chdir(realpath('../../../'));
 
@@ -69,54 +69,50 @@ $op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
-
-
 //regenerate securiy token for each page
 
 case 'regenerate_security_token':
+    $token_raw = sha1(
+            $vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt'])
+                    . sha1(COOKIE_SALT));
+    $security_token = $_SESSION['site_registration']['securitytoken'] = TIMENOW
+            . '-' . sha1(TIMENOW . $token_raw);
 
-    $token_raw = sha1($vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt']) . sha1(COOKIE_SALT));
-	$security_token = $_SESSION['site_registration']['securitytoken'] = TIMENOW . '-' . sha1(TIMENOW . $token_raw);
-			            
-    if( empty( $security_token ) ){
+    if (empty($security_token)) {
         $security_token = $_SESSION['site_registration']['securitytoken'] = "guest";
     }
-			            
-    $arr = array(
-            'token' => $security_token,
-    );
-    
+
+    $arr = array('token' => $security_token,);
+
     json_headers($arr);
-break;
+    break;
 
 //regenerate ajax token
 case 'regenerate_token':
-    //generate captcha value
+//generate captcha value
     require_once(DIR . '/includes/class_humanverify.php');
-    $verification =& vB_HumanVerify::fetch_library($vbulletin);
+    $verification = &vB_HumanVerify::fetch_library($vbulletin);
     $human_verify = $verification->generate_token();
-    
+
     $_SESSION['site_registration']['captcha']['hash'] = $human_verify['hash'];
     $_SESSION['site_registration']['captcha']['answer'] = $human_verify['answer'];
-    
+
     //register captcha value
-    $hv_token  = $human_verify['hash'];
-    
-    $arr = array(
-            'token' => $hv_token,
-            'url'   => $vbulletin->options['bburl']  . "/image.php?type=hv&hash=" . $hv_token
-    );
-    
+    $hv_token = $human_verify['hash'];
+
+    $arr = array('token' => $hv_token,
+            'url' => $vbulletin->options['bburl'] . "/image.php?type=hv&hash="
+                    . $hv_token);
+
     json_headers($arr);
 
-break;
-
+    break;
 
 case 'complete_your_profile':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
     $valid_entries = TRUE;
     $messages = "";
- 
+
     $vbulletin->input
             ->clean_array_gpc('p',
                     array('secret_question' => TYPE_STR,
@@ -170,7 +166,8 @@ case 'complete_your_profile':
                     if ($size < (1024 * 100)) {
                         $actual_image_name = time() . mt_rand() . "." . $ext;
 
-                        $uploaded = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $actual_image_name;
+                        $uploaded = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+                                . $actual_image_name;
 
                         move_uploaded_file($_FILES["photoimg"]["tmp_name"],
                                 $uploaded);
@@ -324,12 +321,11 @@ case 'complete_your_profile':
             )";
 
         $vbulletin->db->query_write($temp_table_query);
-        
-        $userid     = $_SESSION['site_registration']['userid'];
-        $question   = $vbulletin->GPC['secret_question'];
-        $answer     = $vbulletin->GPC['secret_answer'];
-        $salt       = $vbulletin->userinfo['salt'];
-    
+
+        $userid = $_SESSION['site_registration']['userid'];
+        $question = $vbulletin->GPC['secret_question'];
+        $answer = $vbulletin->GPC['secret_answer'];
+        $salt = $vbulletin->userinfo['salt'];
 
         /*insert query*/
         $vbulletin->db
@@ -339,9 +335,13 @@ case 'complete_your_profile':
                                 . "siteregistration_security_details
             (userid,question,answer)
             VALUES
-            (   '" . $vbulletin->db->escape_string($userid). "',
-                AES_ENCRYPT('" . $vbulletin->db->escape_string($question). "','" . $salt . "'),
-                AES_ENCRYPT('" . $vbulletin->db->escape_string($answer). "','" . $salt . "')
+            (   '" . $vbulletin->db->escape_string($userid)
+                                . "',
+                AES_ENCRYPT('" . $vbulletin->db->escape_string($question)
+                                . "','" . $salt
+                                . "'),
+                AES_ENCRYPT('" . $vbulletin->db->escape_string($answer) . "','"
+                                . $salt . "')
              )
         ");
 
@@ -373,7 +373,7 @@ case 'complete_your_profile':
     }
 
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-            "rows" => $rows, "image"=> $default_image);
+            "rows" => $rows, "image" => $default_image);
 
     json_headers_ie_support($arr);
 
@@ -650,47 +650,6 @@ case 'create_site_account_first_step':
                     array('email' => TYPE_STR, 'birthdate' => TYPE_STR));
 
     //check if variables are set
-    if (empty($vbulletin->GPC['email'])) {
-        $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
-        $message = $userdata->errors[0];
-        $error_type = "email";
-
-    }
-
-    $regexp = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
-
-    //validate email
-    if (preg_match($regexp, $vbulletin->GPC['email'])) {
-
-        //check if email already exists on DB
-        $user_exists = $db
-                ->query_read_slave(
-                        "
-            SELECT userid, username, email, languageid
-            FROM " . TABLE_PREFIX . "user
-            WHERE UPPER(email) = '"
-                                . strtoupper(
-                                        $db
-                                                ->escape_string(
-                                                        $vbulletin
-                                                                ->GPC['email']))
-                                . "'
-        ");
-
-        if ($db->num_rows($user_exists)) {
-            $valid_entries = FALSE;
-            $message = "The email address you entered is already in use.";
-            $error_type = "email";
-        }
-
-    } else {
-        $valid_entries = FALSE;
-        $message = "Invalid email";
-        $error_type = "email";
-    }
-
-    //check if variables are set
     if (empty($vbulletin->GPC['birthdate'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
@@ -720,6 +679,55 @@ case 'create_site_account_first_step':
         } else {
 
         }
+    }
+
+    //check if variables are set
+    if (empty($vbulletin->GPC['email'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $message = $userdata->errors[0];
+        $error_type = "email";
+
+    }
+
+    //validate email
+    if (is_valid_email_address($vbulletin->GPC['email'])) {
+
+        list($email_name, $email_domain) = split("@", $vbulletin->GPC['email']);
+
+        if (!checkdnsrr($email_domain, "MX")) {
+            $valid_entries = FALSE;
+            $message = "Invalid email address. No MX records found for domain.";
+            $error_type = "email";
+
+        } else {
+            //check if email already exists on DB
+            $user_exists = $db
+                    ->query_read_slave(
+                            "
+                SELECT userid, username, email, languageid
+                FROM " . TABLE_PREFIX
+                                    . "user
+                WHERE UPPER(email) = '"
+                                    . strtoupper(
+                                            $db
+                                                    ->escape_string(
+                                                            $vbulletin
+                                                                    ->GPC['email']))
+                                    . "'
+            ");
+
+            if ($db->num_rows($user_exists)) {
+                $valid_entries = FALSE;
+                $message = "The email address you entered is already in use.";
+                $error_type = "email";
+            }
+        }
+
+    } else {
+        $valid_entries = FALSE;
+        $message = "Invalid email";
+        $error_type = "email";
     }
 
     if ($valid_entries) {
@@ -860,8 +868,9 @@ default:
                         $vbulletin->options['bburl'],
                         $vbulletin->session->vars['sessionurl']);
             }
-            
-            if(empty($message) || $_SESSION['site_registration']['login_strikes'] > 4 ){
+
+            if (empty($message)
+                    || $_SESSION['site_registration']['login_strikes'] > 4) {
                 $message = "You have entered an invalid username or password.";
             }
         } else {
@@ -877,26 +886,25 @@ default:
         }
 
     }
-    
+
     //rewrite message
-    
+
     $message = strip_tags($message);
-    
-    $search[0]  = "/You have entered an invalid username or password./";
+
+    $search[0] = "/You have entered an invalid username or password./";
     $replace[0] = "<b>You have entered an invalid username or password.</b>";
-    
+
     $search[1] = "/Please press the back button, enter the correct details and try again./";
     $replace[1] = "";
-    
+
     $search[2] = "/Don't forget that the password is case sensitive./";
     $replace[2] = "Your password is case sensitive.";
-    
+
     $search[3] = "/Forgotten your password\? Click here\!/";
     $replace[3] = "<br /><br />";
-    
+
     $search[4] = "/out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes./";
     $replace[4] = "out of 5 login attempts, and you will be unable to log in for 15 minutes after all five have been used.";
-    
 
     $message = preg_replace($search, $replace, $message);
 
@@ -913,26 +921,36 @@ case 'activate':
     $message = "";
 
     //clean variables
-    $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR, 'username' => TYPE_STR, 'avatar' => TYPE_STR));
+    $vbulletin->input
+            ->clean_array_gpc('p',
+                    array('email' => TYPE_STR, 'birthdate' => TYPE_STR,
+                            'username' => TYPE_STR, 'avatar' => TYPE_STR));
 
     //check if variables are set
-    if(empty($vbulletin->GPC['email'])) {
+    if (empty($vbulletin->GPC['email'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $message = $userdata->errors[0];
         $error_type = "email";
     }
-    
-    require_once("rfc822.php");
 
     //$regexp = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
 
     //validate email
     if (is_valid_email_address($vbulletin->GPC['email'])) {
         //check if email already exists on DB
-        $user_exists = $db->query_read_slave("SELECT userid, username, email, languageid FROM " . TABLE_PREFIX . "user WHERE UPPER(email) = '". strtoupper($db->escape_string($vbulletin->GPC['email'])) . "'");
+        $user_exists = $db
+                ->query_read_slave(
+                        "SELECT userid, username, email, languageid FROM "
+                                . TABLE_PREFIX . "user WHERE UPPER(email) = '"
+                                . strtoupper(
+                                        $db
+                                                ->escape_string(
+                                                        $vbulletin
+                                                                ->GPC['email']))
+                                . "'");
 
-        if($db->num_rows($user_exists)) {
+        if ($db->num_rows($user_exists)) {
             $valid_entries = FALSE;
             $message = "The email address you entered is already in use.";
             $error_type = "email";
@@ -962,19 +980,34 @@ case 'activate':
         $year = $date_parts[2];
         $day = $date_parts[1];
 
-        if($year > 1970 AND mktime(0, 0, 0, $month, $day, $year) > mktime(0, 0, 0, $current['month'], $current['day'], $current['year'] - 13)) {
+        if ($year > 1970
+                AND mktime(0, 0, 0, $month, $day, $year)
+                        > mktime(0, 0, 0, $current['month'], $current['day'],
+                                $current['year'] - 13)) {
             $valid_entries = FALSE;
             $message = "You must be over 13 to register";
             //fetch_error('under_thirteen_registration_denied');
-        } else {}
+        } else {
+        }
     }
 
-    if($valid_entries) {
+    if ($valid_entries) {
         $fbID = $_SESSION['site_registration']["fbID"];
 
         /*insert query*/
-        $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."user (email, birthday, username) VALUES ('". $vbulletin->db->escape_string($vbulletin->GPC['email']) ."', '" . $vbulletin->db->escape_string($vbulletin->GPC['birthdate']) . "',
-             '". $vbulletin->GPC['username'] . "')");
+        $vbulletin->db
+                ->query_write(
+                        "INSERT IGNORE INTO " . TABLE_PREFIX
+                                . "user (email, birthday, username) VALUES ('"
+                                . $vbulletin->db
+                                        ->escape_string(
+                                                $vbulletin->GPC['email'])
+                                . "', '"
+                                . $vbulletin->db
+                                        ->escape_string(
+                                                $vbulletin->GPC['birthdate'])
+                                . "',
+             '" . $vbulletin->GPC['username'] . "')");
 
         $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();
@@ -985,30 +1018,27 @@ case 'activate':
         $parts = explode(".", $avatar);
         $extension = end($parts);
         $filedata = file_get_contents($avatar);
-        $dateline = time();        
-        $visible  = 1;
+        $dateline = time();
+        $visible = 1;
         $filesize = strlen($filedata);
-        $filename = substr(md5(time()), 0, 10) .".". $extension;
+        $filename = substr(md5(time()), 0, 10) . "." . $extension;
 
         $sql = "
             REPLACE INTO " . TABLE_PREFIX
                 . "customprofilepic
             (userid, filedata, dateline, filename, visible, filesize, width, height)
             VALUES
-            ('" . $vbulletin->db->escape_string($userid)
-                . "',
+            ('" . $vbulletin->db->escape_string($userid) . "',
              '" . $vbulletin->db->escape_string($filedata)
                 . "',
              '" . $vbulletin->db->escape_string($dateline)
                 . "',
              '" . $vbulletin->db->escape_string($filename)
                 . "',
-             '" . $vbulletin->db->escape_string($visible)
-                . "',
+             '" . $vbulletin->db->escape_string($visible) . "',
              '" . $vbulletin->db->escape_string($filesize)
                 . "',
-             '" . $vbulletin->db->escape_string("50")
-                . "',
+             '" . $vbulletin->db->escape_string("50") . "',
              '" . $vbulletin->db->escape_string("50")
                 . "'
              )
@@ -1017,31 +1047,41 @@ case 'activate':
         /*insert query*/
         $vbulletin->db->query_write($sql);
 
-
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
         $form = "site-account-details";
-        $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
+        $_SESSION['site_registration'][$form . '_token'] = array(
+                'token' => $token, 'time' => $token_time);
 
         $email = $vbulletin->db->escape_string($vbulletin->GPC['email']);
 
         //Verify if the account already exists...                                
-        $sql = "SELECT userid FROM " . TABLE_PREFIX . "user WHERE email = '$email'";
+        $sql = "SELECT userid FROM " . TABLE_PREFIX
+                . "user WHERE email = '$email'";
 
         $data = $vbulletin->db->query_first($sql);
 
         $userid = $data["userid"];
 
-        $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '". $fbID . "', '". $userid ."', '1')");
+        $vbulletin->db
+                ->query_write(
+                        "INSERT IGNORE INTO " . TABLE_PREFIX
+                                . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
+                                . $fbID . "', '" . $userid . "', '1')");
 
         //Send Activation Email: Refer to Automated Emails
         // send new user email
         $_SESSION['site_registration']['userid'] = $userid;
-        $username = $_SESSION['site_registration']['username'] = $vbulletin->GPC['username'];
-        $email    = $_SESSION['site_registration']['email'] = $vbulletin->GPC['email'];
-        $_SESSION['site_registration']['birthday'] = $vbulletin->GPC['birthdate'];
+        $username = $_SESSION['site_registration']['username'] = $vbulletin
+                ->GPC['username'];
+        $email = $_SESSION['site_registration']['email'] = $vbulletin
+                ->GPC['email'];
+        $_SESSION['site_registration']['birthday'] = $vbulletin
+                ->GPC['birthdate'];
 
-        $activateid = build_user_activation_id($userid, (($vbulletin->options['moderatenewmembers'] OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
+        $activateid = build_user_activation_id($userid,
+                (($vbulletin->options['moderatenewmembers']
+                        OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
 
         eval(fetch_email_phrases('activateaccount'));
 
@@ -1058,10 +1098,9 @@ case 'activate':
 
     json_headers($arr);
 
-break;
+    break;
 
-
-case "linkaccount" :
+case "linkaccount":
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
 
     $valid_entries = TRUE;
@@ -1069,15 +1108,18 @@ case "linkaccount" :
     $url = "register.php?step=activate";
 
     //clean variables
-    $vbulletin->input->clean_array_gpc('p', array('username' => TYPE_STR, 'password' => TYPE_STR));
+    $vbulletin->input
+            ->clean_array_gpc('p',
+                    array('username' => TYPE_STR, 'password' => TYPE_STR));
 
     $user = $_REQUEST["username"];
 
-    $sql = "SELECT userid, username, password, salt FROM ". TABLE_PREFIX ."user WHERE username = '$user'";
-    
+    $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX
+            . "user WHERE username = '$user'";
+
     $data = $vbulletin->db->query_first($sql);
-        
-    if($data) {
+
+    if ($data) {
         $userid = $data["userid"];
         $username = $data["username"];
         $dbPassword = $data["password"];
@@ -1085,25 +1127,30 @@ case "linkaccount" :
         $fbID = $_SESSION['site_registration']["fbID"];
         $avatar = $_SESSION['site_registration']["fbPicture"];
 
-        if($dbPassword != $password) {
-            $arr = array("valid_entries" => false,
-            "error_type" => "password", "message" => "Incorrect Login", "url" => $url,
-            "rows" => $rows);
+        if ($dbPassword != $password) {
+            $arr = array("valid_entries" => false, "error_type" => "password",
+                    "message" => "Incorrect Login", "url" => $url,
+                    "rows" => $rows);
         } else {
-            $sql = "SELECT nonvbid, userid FROM ". TABLE_PREFIX ."vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
+            $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
+                    . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
 
             $data = $vbulletin->db->query_first($sql);
 
-            if(!$data and strlen($fbID) > 1) {
-                $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX ."vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '". $fbID . "', '". $userid ."', '1')");
+            if (!$data and strlen($fbID) > 1) {
+                $vbulletin->db
+                        ->query_write(
+                                "INSERT IGNORE INTO " . TABLE_PREFIX
+                                        . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
+                                        . $fbID . "', '" . $userid . "', '1')");
 
                 $parts = explode(".", $avatar);
                 $extension = end($parts);
                 $filedata = file_get_contents($avatar);
-                $dateline = time();        
-                $visible  = 1;
+                $dateline = time();
+                $visible = 1;
                 $filesize = strlen($filedata);
-                $filename = substr(md5(time()), 0, 10) .".". $extension;
+                $filename = substr(md5(time()), 0, 10) . "." . $extension;
 
                 $sql = "
                     REPLACE INTO " . TABLE_PREFIX
@@ -1135,29 +1182,32 @@ case "linkaccount" :
                 $token = md5(uniqid(microtime(), true));
                 $token_time = time();
                 $form = "site-account-details";
-                $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
-
-
+                $_SESSION['site_registration'][$form . '_token'] = array(
+                        'token' => $token, 'time' => $token_time);
 
                 require_once(DIR . '/includes/functions_login.php');
                 $vbulletin->userinfo = fetch_userinfo($userid);
                 $vbulletin->session->created = false;
                 process_new_login('', '', '');
 
-                $newsession =& new vB_Session($vbulletin, '', $userid, '', $vbulletin->session->vars['styleid'], $vbulletin->session->vars['languageid']);
+                $newsession = &new vB_Session($vbulletin, '', $userid, '',
+                        $vbulletin->session->vars['styleid'],
+                        $vbulletin->session->vars['languageid']);
                 $newsession->set('userid', $userid);
                 $newsession->set('loggedin', 1);
 
-                $newsession->set_session_visibility(($vbulletin->superglobal_size['_COOKIE'] > 0));
+                $newsession
+                        ->set_session_visibility(
+                                ($vbulletin->superglobal_size['_COOKIE'] > 0));
                 $newsession->fetch_userinfo();
 
-                $vbulletin->session =& $newsession;
+                $vbulletin->session = &$newsession;
                 $vbulletin->userinfo = $newsession->userinfo;
                 $vbulletin->userinfo['lang_locale'] = $lang_info['lang_locale'];
                 $vbulletin->userinfo['lang_charset'] = $lang_info['lang_charset'];
 
-                setcookie("bbuserid", $userid, time()+1000000, "/");
-                setcookie("bbpassword", $password, time()+1000000, "/");
+                setcookie("bbuserid", $userid, time() + 1000000, "/");
+                setcookie("bbpassword", $password, time() + 1000000, "/");
 
                 $url = "index.php";
 
@@ -1165,9 +1215,10 @@ case "linkaccount" :
 
                 json_headers($arr);
             }
-        }                        
-    }    
+        }
+    }
 
-break;
+    break;
 
 }
+
