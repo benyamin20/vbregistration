@@ -338,7 +338,14 @@ jQuery(document).ready(function(jQuery) {
               type: 'POST',
               cache: false,
               data: 'vb_login_username='+ username +'&vb_login_password='+ password +'&s='+s+'&login='+login+'&securitytoken='+securitytoken,
+              beforeSend: function(){ 
+                    jQuery('#ajax-loader-secondary').append('<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />');
+              },
               success: function( response, status, xhr ) {
+              
+                  if(jQuery('#ajax-spinner-secondary').exists()){
+                            jQuery('#ajax-spinner-secondary').remove();
+                  }
               
                 var ct = xhr.getResponseHeader("content-type") || "";
                 
