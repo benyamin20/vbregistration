@@ -245,6 +245,10 @@ li {
 	min-width: 600px;
 }
 
+.popup{
+    width: 621px;
+}
+
 .terms-and-conditions{
 	font-size: 18px;
     font-weight: bold;
