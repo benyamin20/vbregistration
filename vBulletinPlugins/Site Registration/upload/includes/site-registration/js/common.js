@@ -335,24 +335,14 @@ jQuery(document).ready(function(jQuery) {
             jQuery.ajax({
               url: "includes/site-registration/php/index.php?op=validate_login",
               context: document.body, 
-              dataType: 'json',
               type: 'POST',
               cache: false,
               data: 'vb_login_username='+ username +'&vb_login_password='+ password +'&s='+s+'&login='+login+'&securitytoken='+securitytoken,
               success: function( response, status, xhr ) {
               
                 var ct = xhr.getResponseHeader("content-type") || "";
-                if (ct.indexOf('xml') > -1) {
-                    jQuery('#have-account-error').empty();
-                    jQuery('#have-account-error').html(response.error);
-                    jQuery('#have-account-spacer').addClass("clear_15");
-                    
-                    jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');
-                    jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
-                }
                 
-                
-                if (ct.indexOf('json') > -1) {
+                if(ct == "application/json") {
                     if(response.valid_login == false){
                         //mark elements as invalid
                         jQuery('#have-account-error').html(response.message);
@@ -366,11 +356,22 @@ jQuery(document).ready(function(jQuery) {
                         var url = response.url;    
                         jQuery(location).attr('href',url);
                     }
-                } 
+                }else{
+                    var error = '<b>Wrong username or password.</b> You have used up your failed login quota! <br /><br /> Please wait 15 minutes before trying again.';
+                
+                    jQuery('#have-account-error').empty();
+                    jQuery('#have-account-error').html(error);
+                    jQuery('#have-account-spacer').addClass("clear_15");
+                    
+                    jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');
+                    jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
+                }
+                
+                 
               
               }
             }).done(function() { 
-                //nothing here
+                //nothing here 
             });
             
             
