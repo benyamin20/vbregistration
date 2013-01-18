@@ -70,6 +70,29 @@ $op = $vbulletin->GPC['op'];
 switch ($op) {
 
 
+//regenerate ajax token
+case 'regenerate_token':
+    //generate captcha value
+    require_once(DIR . '/includes/class_humanverify.php');
+    $verification =& vB_HumanVerify::fetch_library($vbulletin);
+    $human_verify = $verification->generate_token();
+    
+    $_SESSION['site_registration']['captcha']['hash'] = $human_verify['hash'];
+    $_SESSION['site_registration']['captcha']['answer'] = $human_verify['answer'];
+    
+    //register captcha value
+    $hv_token  = $human_verify['hash'];
+    
+    $arr = array(
+            'token' => $hv_token,
+            'url'   => $vbulletin->options['bburl']  . "/image.php?type=hv&hash=" . $hv_token
+    );
+    
+    json_headers($arr);
+
+break;
+
+
 case 'complete_your_profile':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
     $valid_entries = TRUE;

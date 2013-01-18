@@ -364,3 +364,7 @@ li {
     line-height: 26px;
     margin-left: 15px !important;
 }
+
+.cursor-pointer{
+    cursor: pointer;
+}

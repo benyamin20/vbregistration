@@ -1023,6 +1023,11 @@ $stylevar[htmldoctype]
 				        src="$vboptions[bburl]/image.php?type=hv&hash=$hv_token" 
 				        id="imagereg" class="grid_3 no-margin"
 				        title="CAPTCHA"  />
+				        
+				    <span class="cursor-pointer small link_blue" id="refresh-captcha">
+				        Refresh Image   <span id="ajax-loader"></span> 
+				    </span>
+				    
 				    <!--
 				    <span style="cursor: pointer;" id="refresh_imagereg">
 				        <a href="$php_self#">Refresh Image</a>
@@ -1059,7 +1064,8 @@ $stylevar[htmldoctype]
 				</div>
  
 				<div class="clear clear_15"></div>
-				<div class="grid_7 no-margin">
+				<div class="grid_7 no-margin"> 
+				    <input id="token" name="token" value="$security_token" type="hidden" />
 				    <button class="btn btn-primary grid_3 no-margin"
                             type="button" id="site-account-deails-create-account">
                             Create Account
@@ -1350,6 +1356,14 @@ $stylevar[htmldoctype]
 	                    
 	                    //register captcha value
 	                    $hv_token  = $human_verify['hash'];
+	                    
+	                    $token_raw = sha1($vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt']) . sha1(COOKIE_SALT));
+	                    $security_token = $_SESSION['site_registration']['securitytoken'] = TIMENOW . '-' . sha1(TIMENOW . $token_raw);
+			            
+			            if( empty( $security_token ) ){
+                            $security_token = $_SESSION['site_registration']['securitytoken'] = "guest";
+                        }
+			            
                         
                         //check for direct access to action
                         if($invalid_request){ 

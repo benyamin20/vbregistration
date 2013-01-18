@@ -97,6 +97,43 @@ jQuery(document).ready(function(jQuery) {
         }
     }
     
+    
+    
+    //refresh captcha on click
+    if(jQuery('#refresh-captcha').exists()){
+        jQuery("#refresh-captcha").bind('click', function(){
+            var token = escape(jQuery("#token").val());
+            jQuery.ajax({
+                url: "includes/site-registration/php/index.php?op=regenerate_token",
+                context: document.body,
+                dataType: 'json',
+                type: 'POST',
+                cache: false,
+                data: 'securitytoken=' + token, 
+                beforeSend: function(){
+                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+ 
+                },
+                success: function (response) {
+                
+                    var src = response.url;    
+                    jQuery("#imagereg").attr('src', src);   
+    
+                    
+                    if(jQuery('#ajax-spinner').exists()){
+                        jQuery('#ajax-spinner').remove();
+                    }
+                    
+                    
+                    
+                    
+                     
+                }
+            });
+        
+        });
+    }
+    
 
     //assign default image to upload file   
     if(jQuery("#use-default").exists()){
@@ -208,6 +245,7 @@ jQuery(document).ready(function(jQuery) {
             var confirm_password = escape(jQuery("#confirm-password").val());
             var security_code = escape(jQuery("#security-code").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
+            var token = escape(jQuery("#token").val());
             
             jQuery.ajax({
               url: "includes/site-registration/php/index.php?op=validate_site_account_details",
@@ -215,7 +253,7 @@ jQuery(document).ready(function(jQuery) {
               dataType: 'json',
               type: 'POST',
               cache: false,
-              data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions ,
+              data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken='+ token,
               beforeSend: function(){
                 if(jQuery('#ajax-loader').exists()){
                     jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
