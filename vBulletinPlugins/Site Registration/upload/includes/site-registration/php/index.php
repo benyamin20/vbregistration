@@ -891,7 +891,7 @@ default:
     $search[2] = "/Don't forget that the password is case sensitive./";
     $replace[2] = "Your password is case sensitive.";
     
-    $search[3] = "/Forgotten your password? Click here!/";
+    $search[3] = "/Forgotten your password\? Click here\!/";
     $replace[3] = "<br /><br />";
     
     $search[4] = "/out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes./";
