@@ -367,9 +367,10 @@ jQuery(document).ready(function(jQuery) {
     //resens email functionality 
     if (jQuery("#resend-email").exists()) {   
     
-        var token = escape(jQuery('#token').val());
-    
         jQuery("#resend-email").bind('click', function(){
+        
+            var token = escape(jQuery('#token').val());
+        
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=resend_email",
                 context: document.body,

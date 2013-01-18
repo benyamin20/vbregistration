@@ -439,8 +439,9 @@ $stylevar[htmldoctype]
 				&nbsp;&nbsp;&nbsp;
 				<span id="ajax-loader"></span>
 				<span id="email-sent" class="small email-sent">
-				</span>
 				
+				</span>
+				<input type="hidden" name="token" id="token" value="" />
 			</div>
 		</div>
 
