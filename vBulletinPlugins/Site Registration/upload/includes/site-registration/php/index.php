@@ -922,11 +922,13 @@ case 'activate':
         $message = $userdata->errors[0];
         $error_type = "email";
     }
+    
+    require_once("rfc822.php");
 
-    $regexp = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
+    //$regexp = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
 
     //validate email
-    if (preg_match($regexp, $vbulletin->GPC['email'])) {
+    if (is_valid_email_address($vbulletin->GPC['email'])) {
         //check if email already exists on DB
         $user_exists = $db->query_read_slave("SELECT userid, username, email, languageid FROM " . TABLE_PREFIX . "user WHERE UPPER(email) = '". strtoupper($db->escape_string($vbulletin->GPC['email'])) . "'");
 
