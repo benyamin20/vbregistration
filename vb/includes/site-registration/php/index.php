@@ -860,6 +860,10 @@ default:
                         $vbulletin->options['bburl'],
                         $vbulletin->session->vars['sessionurl']);
             }
+            
+            if(empty($message)){
+                $message = "You have entered an invalid username or password.";
+            }
         } else {
             // create new session
             exec_unstrike_user($vbulletin->GPC['vb_login_username']);
@@ -873,6 +877,28 @@ default:
         }
 
     }
+    
+    //rewrite message
+    
+    $message = strip_tags($message);
+    
+    $search[0]  = "/You have entered an invalid username or password./";
+    $replace[0] = "<b>You have entered an invalid username or password.</b>";
+    
+    $search[1] = "/Please press the back button, enter the correct details and try again./";
+    $replace[1] = "";
+    
+    $search[2] = "/Don't forget that the password is case sensitive./";
+    $replace[2] = "Your password is case sensitive.";
+    
+    $search[3] = "/Forgotten your password? Click here/";
+    $replace[3] = "Your password is case sensitive.";
+    
+    $search[4] = "/out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes./";
+    $replace[4] = "out of 5 login attempts, and you will be unable to log in for 15 minutes after all five have been used.";
+    
+
+    $message = preg_replace($search, $replace, $message);
 
     $arr = array("valid_login" => $valid_login, "message" => $message,
             "url" => $url);
