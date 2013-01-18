@@ -339,20 +339,35 @@ jQuery(document).ready(function(jQuery) {
               type: 'POST',
               cache: false,
               data: 'vb_login_username='+ username +'&vb_login_password='+ password +'&s='+s+'&login='+login+'&securitytoken='+securitytoken,
-              success: function( response ) {
-                if(response.valid_login == false){
-                    //mark elements as invalid
-                    jQuery('#have-account-error').html(response.message);
+              success: function( response, status, xhr ) {
+              
+                var ct = xhr.getResponseHeader("content-type") || "";
+                if (ct.indexOf('xml') > -1) {
+                    jQuery('#have-account-error').empty();
+                    jQuery('#have-account-error').html(response.error);
                     jQuery('#have-account-spacer').addClass("clear_15");
                     
                     jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');
                     jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
+                }
+                
+                
+                if (ct.indexOf('json') > -1) {
+                    if(response.valid_login == false){
+                        //mark elements as invalid
+                        jQuery('#have-account-error').html(response.message);
+                        jQuery('#have-account-spacer').addClass("clear_15");
                     
-                }else{
-                    //redirect user to proper url
-                    var url = response.url;    
-                    jQuery(location).attr('href',url);
+                        jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');
+                        jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
+                    
+                    }else{
+                        //redirect user to proper url
+                        var url = response.url;    
+                        jQuery(location).attr('href',url);
+                    }
                 } 
+              
               }
             }).done(function() { 
                 //nothing here

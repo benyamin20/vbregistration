@@ -1513,6 +1513,20 @@ $stylevar[htmldoctype]
 			</phpcode>
 		</plugin>
 		<plugin active="1" executionorder="1">
+			<title>Site Registration | Sign In: Step 1 - count strikes</title>
+			<hookname>login_strikes</hookname>
+			<phpcode>
+			    <![CDATA[
+			        if (!session_id()) {
+                        session_start();
+                    }
+                    
+                    $_SESSION['site_registration']['login_strikes'] = $strikes; 
+                     
+			    ]]>
+			</phpcode>
+		</plugin>
+		<plugin active="1" executionorder="1">
 			<title>Site Registration | Sign In: Step 1 - Log In (open while logged out)</title>
 			<hookname>newthread_start</hookname>
 			<phpcode>

@@ -861,7 +861,7 @@ default:
                         $vbulletin->session->vars['sessionurl']);
             }
             
-            if(empty($message)){
+            if(empty($message) || $_SESSION['site_registration']['login_strikes'] > 4 ){
                 $message = "You have entered an invalid username or password.";
             }
         } else {
