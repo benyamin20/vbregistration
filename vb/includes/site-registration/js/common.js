@@ -98,6 +98,19 @@ jQuery(document).ready(function(jQuery) {
     }
     
     
+    //regenerate token to avoid getting security errors
+    if(jQuery('#token').exists()){
+        jQuery(function() {
+            function update() {
+                jQuery.getJSON("includes/site-registration/php/index.php?op=regenerate_security_token", 
+                function(json){
+                    jQuery('#token').val(json.token);  
+                });
+            }
+            setInterval(update, 30000);
+            update();
+        });    
+    }
     
     //refresh captcha on click
     if(jQuery('#refresh-captcha').exists()){
@@ -123,10 +136,6 @@ jQuery(document).ready(function(jQuery) {
                     if(jQuery('#ajax-spinner-secondary').exists()){
                         jQuery('#ajax-spinner-secondary').remove();
                     }
-                    
-                    
-                    
-                    
                      
                 }
             });

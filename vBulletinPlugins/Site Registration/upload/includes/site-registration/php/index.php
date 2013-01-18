@@ -70,6 +70,25 @@ $op = $vbulletin->GPC['op'];
 switch ($op) {
 
 
+
+//regenerate securiy token for each page
+
+case 'regenerate_security_token':
+
+    $token_raw = sha1($vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt']) . sha1(COOKIE_SALT));
+	$security_token = $_SESSION['site_registration']['securitytoken'] = TIMENOW . '-' . sha1(TIMENOW . $token_raw);
+			            
+    if( empty( $security_token ) ){
+        $security_token = $_SESSION['site_registration']['securitytoken'] = "guest";
+    }
+			            
+    $arr = array(
+            'token' => $security_token,
+    );
+    
+    json_headers($arr);
+break;
+
 //regenerate ajax token
 case 'regenerate_token':
     //generate captcha value
