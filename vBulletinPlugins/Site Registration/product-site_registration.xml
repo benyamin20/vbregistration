@@ -1025,7 +1025,7 @@ $stylevar[htmldoctype]
 				        title="CAPTCHA"  />
 				        
 				    <span class="cursor-pointer small link_blue" id="refresh-captcha">
-				        Refresh Image   <span id="ajax-loader"></span> 
+				        Refresh Image   <span id="ajax-loader-secondary"></span> 
 				    </span>
 				    
 				    <!--

@@ -111,7 +111,7 @@ jQuery(document).ready(function(jQuery) {
                 cache: false,
                 data: 'securitytoken=' + token, 
                 beforeSend: function(){
-                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader-secondary').append('<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />');
  
                 },
                 success: function (response) {
@@ -120,8 +120,8 @@ jQuery(document).ready(function(jQuery) {
                     jQuery("#imagereg").attr('src', src);   
     
                     
-                    if(jQuery('#ajax-spinner').exists()){
-                        jQuery('#ajax-spinner').remove();
+                    if(jQuery('#ajax-spinner-secondary').exists()){
+                        jQuery('#ajax-spinner-secondary').remove();
                     }
                     
                     
