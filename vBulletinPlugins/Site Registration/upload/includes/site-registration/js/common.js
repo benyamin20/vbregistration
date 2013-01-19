@@ -339,13 +339,13 @@ jQuery(document).ready(function(jQuery) {
               cache: false,
               data: 'vb_login_username='+ username +'&vb_login_password='+ password +'&s='+s+'&login='+login+'&securitytoken='+securitytoken,
               beforeSend: function(){ 
-                    jQuery('#ajax-loader-secondary').append('<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />');
+                    //jQuery('#ajax-loader-secondary').append('<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />');
               },
               success: function( response, status, xhr ) {
               
-                  if(jQuery('#ajax-spinner-secondary').exists()){
-                            jQuery('#ajax-spinner-secondary').remove();
-                  }
+                  //if(jQuery('#ajax-spinner-secondary').exists()){
+                  //          jQuery('#ajax-spinner-secondary').remove();
+                  //}
               
                 var ct = xhr.getResponseHeader("content-type") || "";
                 
@@ -446,18 +446,24 @@ jQuery(document).ready(function(jQuery) {
                   success: function( response ) {
                     if(response.valid_entries == false){
                         //mark elements as invalid
-                        jQuery('#create-site-account-error').html(response.message);
-                        jQuery('#create-site-account-spacer').addClass("clear_15");
+
+                        jQuery('.error-label').empty();
+                        jQuery('.input-error-container').removeClass("input-error-container");
+                        jQuery('span.add-on').removeClass("input-error");
+                        jQuery('.input-error').removeClass("input-error");
                         
-                        if(response.error_type != "datepicker"){
-                            jQuery('#'+response.error_type+'').addClass("input-error").wrap('<div class="input-error-container" />');
-                        }else{
-                            if(email == ""){
-                                jQuery('#email').addClass("input-error").wrap('<div class="input-error-container" />');
+                        jQuery.each(response.messages.fields, function(index, value) {        
+                            jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                            jQuery('#'+value).addClass("input-error");
+                            jQuery('#'+value+'-error-label').empty(); 
+                            jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
+                            
+                            if(value == 'datepicker'){
+                                jQuery('span.add-on').addClass("input-error");    
                             }
-                            jQuery('#'+response.error_type+'').addClass("input-error");
-                            jQuery('span.add-on').addClass("input-error");
-                        } 
+                            
+                            
+                        });
                         
                     }else{
                         //redirect user to proper url

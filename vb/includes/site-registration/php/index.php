@@ -653,8 +653,8 @@ case 'create_site_account_first_step':
     if (empty($vbulletin->GPC['birthdate'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $message = $userdata->errors[0];
-        $error_type = "datepicker";
+        $messages['errors'][] = $message = "Invalid date.";
+        $messages['fields'][] = $error_type = "datepicker";
 
     } else {
         //validate if 13+
@@ -668,25 +668,35 @@ case 'create_site_account_first_step':
         $month = $date_parts[0];
         $year = $date_parts[2];
         $day = $date_parts[1];
+        
+        
+        if( checkdate( $month , $day , $year ) ){
+            if ($year > 1970
+                    AND mktime(0, 0, 0, $month, $day, $year)
+                            > mktime(0, 0, 0, $current['month'], $current['day'],
+                                    $current['year'] - 13)) {
+                $valid_entries = FALSE;
+                $messages['errors'][] = $message = "You must be over 13 to register";
+                $messages['fields'][] = $error_type = "datepicker";
+                //fetch_error('under_thirteen_registration_denied');
+            } else {
 
-        if ($year > 1970
-                AND mktime(0, 0, 0, $month, $day, $year)
-                        > mktime(0, 0, 0, $current['month'], $current['day'],
-                                $current['year'] - 13)) {
+            }        
+        }else{
             $valid_entries = FALSE;
-            $message = "You must be over 13 to register";
-            //fetch_error('under_thirteen_registration_denied');
-        } else {
-
+            $messages['errors'][] = $message = "Invalid date.";
+            $messages['fields'][] = $error_type = "datepicker";
         }
+        
+        
     }
 
     //check if variables are set
     if (empty($vbulletin->GPC['email'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $message = $userdata->errors[0];
-        $error_type = "email";
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "email";
 
     }
 
@@ -697,8 +707,8 @@ case 'create_site_account_first_step':
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
-            $message = "Invalid email address. No MX records found for domain.";
-            $error_type = "email";
+            $messages['errors'][] = $message = "Invalid email address. No MX records found for domain.";
+            $messages['fields'][] = $error_type = "email";
 
         } else {
             //check if email already exists on DB
@@ -719,15 +729,15 @@ case 'create_site_account_first_step':
 
             if ($db->num_rows($user_exists)) {
                 $valid_entries = FALSE;
-                $message = "The email address you entered is already in use.";
-                $error_type = "email";
+                $messages['errors'][] = $message = "The email address you entered is already in use.";
+                $messages['fields'][] = $error_type = "email";
             }
         }
 
     } else {
         $valid_entries = FALSE;
-        $message = "Invalid email";
-        $error_type = "email";
+        $messages['errors'][] = $message = "Invalid email";
+        $messages['fields'][] = $error_type = "email";
     }
 
     if ($valid_entries) {
@@ -779,9 +789,11 @@ case 'create_site_account_first_step':
 
     }
 
-    $arr = array("valid_entries" => $valid_entries,
-            "error_type" => $error_type, "message" => $message, "url" => $url,
-            "rows" => $rows);
+    $arr = array(   "valid_entries" => $valid_entries,
+                    "messages" => $messages, 
+                    "url" => $url,
+                    "rows" => $rows
+                    );
 
     json_headers($arr);
 
