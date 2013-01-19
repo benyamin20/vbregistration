@@ -264,15 +264,15 @@ jQuery(document).ready(function(jQuery) {
               cache: false,
               data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken='+ token,
               beforeSend: function(){
-                if(jQuery('#ajax-loader').exists()){
-                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
-                }
+                //if(jQuery('#ajax-loader').exists()){
+                //    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                //}
               },
               success: function( response ) {
                 
-                if(jQuery('#ajax-spinner').exists()){
-                        jQuery('#ajax-spinner').remove();
-                }
+                //if(jQuery('#ajax-spinner').exists()){
+                //        jQuery('#ajax-spinner').remove();
+                //}
                     
                 if(response.valid_entries == false){
                 
