@@ -442,7 +442,7 @@ jQuery(document).ready(function(jQuery) {
                   dataType: 'json',
                   type: 'POST',
                   cache: false,
-                  data: 'email='+ email +'&birthdate='+ birthdate,
+                  data: 'email='+ email +'&birthdate='+ birthdate + '&securitytoken=guest',
                   success: function( response ) {
                     if(response.valid_entries == false){
                         //mark elements as invalid
