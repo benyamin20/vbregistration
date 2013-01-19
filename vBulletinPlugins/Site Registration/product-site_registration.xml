@@ -1372,7 +1372,7 @@ $stylevar[htmldoctype]
                         
                         //check for direct access to action
                         if($invalid_request){ 
-			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');    
+			                header("Location: register.php");   
                         }else{
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
@@ -1460,7 +1460,9 @@ $stylevar[htmldoctype]
 						     		header("location: index.php");
 						     	}
 							} else {
-								eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+								if(!(int)$vbulletin->userinfo['userid']){
+			                        eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			                    }
 							}
 						}			        			        
 			        	
@@ -1475,7 +1477,9 @@ $stylevar[htmldoctype]
 			        	
 			        	//check for direct access to action
 			        	if($invalid_request){ 
-			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');    
+			                if(!(int)$vbulletin->userinfo['userid']){
+			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			                }    
                         }else{
                             $session_email = $_SESSION['site_registration']['email'];
                             eval('print_output("' . fetch_template('site_reg_exception-not-activated') . '");');
@@ -1487,7 +1491,9 @@ $stylevar[htmldoctype]
 			        	
 			        	//check for direct access to action
 			        	if($invalid_request){ 
-			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');    
+			                if(!(int)$vbulletin->userinfo['userid']){
+			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			                }    
                         }else{
                             eval('print_output("' . fetch_template('site_reg_account-activated') . '");');
                         }
