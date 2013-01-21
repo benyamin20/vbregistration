@@ -614,8 +614,9 @@ case 'validate_site_account_details':
             if (empty($subject)) {
                 $subject = "Please activate your account";
             }
+            
 
-            vbmail($email, $subject, $message, true);
+            vbmail($email, $subject, $message, false);
 
             //Redirect user to Activation Screen
             $url = "register.php?step=activate";
@@ -646,7 +647,7 @@ case 'resend_email':
             $subject = "Please activate your account";
         }
 
-        vbmail($email, $subject, $message, true);
+        vbmail($email, $subject, $message, false);
 
         $messages = "Email sent!";
 
@@ -1118,7 +1119,7 @@ case 'activate':
             $subject = "Please activate your account";
         }
 
-        vbmail($email, $subject, $message, true);
+        vbmail($email, $subject, $message, false);
     }
 
     $arr = array("valid_entries" => $valid_entries,
