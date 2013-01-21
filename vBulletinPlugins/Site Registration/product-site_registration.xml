@@ -485,7 +485,7 @@ $headinclude
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
 		    <![CDATA[ 		     
-		    <a href="register.php?step=confirm-facebook-details" title="Sign in with Facebook"><img src="includes/site-registration/img/facebook_en.png" alt="Sign in with Facebook" class="no-border"></a>
+		    <a href="register.php&step=confirm-facebook-details" title="Sign in with Facebook"><img src="includes/site-registration/img/facebook_en.png" alt="Sign in with Facebook" class="no-border"></a>
 		    ]]>
         </template>
 
