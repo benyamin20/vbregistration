@@ -393,3 +393,7 @@ li {
 .activate-account-container{
     min-height: 600px !important;
 }
+
+a:link, body_alink {
+    color: #333 !important;
+}
