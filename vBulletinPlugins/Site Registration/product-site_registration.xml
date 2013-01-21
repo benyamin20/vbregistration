@@ -342,7 +342,7 @@ $headinclude
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
     <div id="footer">
         <div><div><div>
@@ -468,7 +468,7 @@ $headinclude
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
     <div id="footer">
         <div><div><div>
@@ -727,7 +727,7 @@ $headinclude
 	    
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
     <div id="footer">
         <div><div><div>
@@ -980,7 +980,7 @@ $headinclude
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
     <div id="footer">
         <div><div><div>
@@ -1213,7 +1213,7 @@ $headinclude
     
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
 	
     <div id="footer">
