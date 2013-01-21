@@ -175,7 +175,7 @@ jQuery(document).ready(function(jQuery) {
     if( jQuery(".fileupload-exists").exists() ){
         jQuery(".fileupload-exists").bind('click', function(){
             //set hidden to not use default image
-            jQuery("#use-default-image").val("");
+            jQuery("#use-default-image").val("true");
             jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
         });
     }
