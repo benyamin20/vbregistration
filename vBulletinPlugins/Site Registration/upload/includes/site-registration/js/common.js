@@ -76,6 +76,12 @@ jQuery(document).ready(function(jQuery) {
 
     // initialize date picker
     if (jQuery("#datepicker").exists()) {
+        var current_year    = new Date().getFullYear();
+        var year            = 1970;
+        
+        var offset          =  current_year - year;
+        var default_date    = "-"+ offset + "y";
+        
         jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function() {
             jQuery(function() {
                 jQuery("#datepicker").datepicker({
@@ -91,7 +97,8 @@ jQuery(document).ready(function(jQuery) {
                         if(jQuery("#placeholder-datepicker").exists()){
                             jQuery("#placeholder-datepicker").remove();
                         }
-                    }
+                    },
+                    defaultDate: default_date
                 });
             });         
         }); 
