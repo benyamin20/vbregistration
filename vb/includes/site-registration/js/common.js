@@ -164,8 +164,8 @@ jQuery(document).ready(function(jQuery) {
         jQuery("#use-default").bind('click', function(){
         
             //set hidden to use default image
-            jQuery("#use-default-image").val("default");
-            jQuery("input[name=use_default_image]").val("default");
+            jQuery("#use-default-image").val("true");
+            jQuery("input[name=use_default_image]").val("true");
             
             //change image preview thumb
             jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
@@ -179,8 +179,8 @@ jQuery(document).ready(function(jQuery) {
         jQuery(".fileupload-exists").bind('click', function(){
         
             //set hidden to use default image
-            jQuery("#use-default-image").val("default");
-            jQuery("input[name=use_default_image]").val("default");
+            jQuery("#use-default-image").val("true");
+            jQuery("input[name=use_default_image]").val("true");
             
             //change image preview thumb
             jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");

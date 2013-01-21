@@ -317,7 +317,7 @@ $stylevar[htmldoctype]
 							
 							<input type="hidden" name="use_default_image"
 							    id="use-default-image"
-							    value="default" 
+							    value="true" 
 							    />
 							
 							<input id="securitytoken" name="securitytoken" value="$token" type="hidden" />

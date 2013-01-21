@@ -152,7 +152,7 @@ case 'complete_your_profile':
 
     }
 
-    if ($vbulletin->GPC['use_default_image'] == "") {
+    if ($_FILES['photoimg']['name'] != "") {
         //do not use default image
         $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
 
