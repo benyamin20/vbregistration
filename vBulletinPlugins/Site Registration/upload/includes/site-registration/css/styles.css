@@ -373,6 +373,17 @@ li {
     cursor: pointer;
 }
 
-.smallfont .page{
-    display: none;
+ #footer{
+    display: none !important;
+    visibility:hidden !important;
+}
+
+.smallfont{
+    display: none !important;
+    visibility:hidden !important;
+} 
+
+.page{
+    display: none !important;
+    visibility:hidden !important;
 }

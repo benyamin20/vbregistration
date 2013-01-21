@@ -335,8 +335,16 @@ $stylevar[htmldoctype]
 		<div class="clear"></div>
 
 	</div>
-    
-    $footer
+	
+	<!-- footer -->
+	<script type="text/javascript">
+	vBulletin_init = function(){}
+	</script>
+    <div id="footer">
+        <div><div><div>
+        $footer
+    </div>
+    <!-- footer -->
 
 </body>
 </html>
@@ -449,7 +457,15 @@ $stylevar[htmldoctype]
 
 	</div>
 	
-	$footer
+	<!-- footer -->
+	<script type="text/javascript">
+	vBulletin_init = function(){}
+	</script>
+    <div id="footer">
+        <div><div><div>
+        $footer
+    </div>
+    <!-- footer -->
 	
 </body>
 </html>
@@ -694,7 +710,15 @@ $stylevar[htmldoctype]
 	        $vboptions[site_registration_benefits]
 	    </div>
 	    
-	    $footer
+	<!-- footer -->
+	<script type="text/javascript">
+	vBulletin_init = function(){}
+	</script>
+    <div id="footer">
+        <div><div><div>
+        $footer
+    </div>
+    <!-- footer -->
 	    
     </body>
     </html>
@@ -933,7 +957,16 @@ $stylevar[htmldoctype]
 		</table>
 	</div>
 	
-    $footer
+	
+	<!-- footer -->
+	<script type="text/javascript">
+	vBulletin_init = function(){}
+	</script>
+    <div id="footer">
+        <div><div><div>
+        $footer
+    </div>
+    <!-- footer -->
     
 </body>
 </html>
@@ -1153,7 +1186,16 @@ $stylevar[htmldoctype]
 		</table>
 	</div>
     
-    $footer
+	<!-- footer -->
+	<script type="text/javascript">
+	vBulletin_init = function(){}
+	</script>
+	
+    <div id="footer">
+        <div><div><div>
+        $footer
+    </div>
+    <!-- footer -->
     
 </body>
 </html>
