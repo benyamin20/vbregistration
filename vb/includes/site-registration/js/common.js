@@ -9,6 +9,10 @@ jQuery.fn.exists = function() {
 }
 
 
+	
+
+
+
 /**
  * bind function to check if enter is pressed
  */
@@ -159,6 +163,8 @@ jQuery(document).ready(function(jQuery) {
             //change image preview thumb
             jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
         });
+        
+        jQuery("#use-default").trigger('click');
     }
     
     

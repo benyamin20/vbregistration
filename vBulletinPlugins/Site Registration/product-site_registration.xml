@@ -194,7 +194,7 @@ $stylevar[htmldoctype]
 							<div id="photoimg-wrapper" class="grid_4 no-margin">
 								<!--
 								    <div class="grid_1 no-margin pull-left">
-									    <img src="includes/site-registration/img/thumbnail.png" 
+									    <img src="images/misc/unknown.gif" 
 									        id="selected-avatar" />
 								    </div>
 								-->
@@ -204,7 +204,7 @@ $stylevar[htmldoctype]
                                         <div class="fileupload-new thumbnail" 
                                             style="width: 50px; height: 50px;">
                                                 <img 
-                                                    src="includes/site-registration/img/thumbnail.png"
+                                                    src="images/misc/unknown.gif"
                                                     id="selected-avatar" />
                                         </div>
                                         <div class="fileupload-preview fileupload-exists thumbnail" 
