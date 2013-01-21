@@ -176,7 +176,7 @@ jQuery(document).ready(function(jQuery) {
         jQuery(".fileupload-exists").bind('click', function(){
             //set hidden to not use default image
             jQuery("#use-default-image").val("");
-            jQuery("#selected-avatar").attr("src","includes/site-registration/img/thumbnail.png");
+            jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
         });
     }
     
