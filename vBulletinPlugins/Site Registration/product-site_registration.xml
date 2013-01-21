@@ -649,7 +649,7 @@ $headinclude
 				        <!-- FB login -->
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
-				        <a class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]" id="gn_fb_button" href="register.php?step=confirm-facebook-details">
+				        <a onclick="FB.Connect.requireSession();" class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]" id="gn_fb_button" href="#">
 					        <div class="logo_wrapper">
 						        <span class="logo"></span>
 					        </div> 
@@ -742,6 +742,15 @@ $headinclude
         <div><div><div>
         $footer
     </div>
+
+    <div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=324953487621707";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
     <!-- footer -->
 	    
     </body>
