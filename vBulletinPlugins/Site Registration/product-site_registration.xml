@@ -2268,7 +2268,7 @@ $headinclude
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        /includes/site-registration/img/thumbnail.png
+				        includes/site-registration/img/thumbnail.png
 				    ]]>
 				</defaultvalue>
 			</setting>
@@ -2300,7 +2300,7 @@ $headinclude
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        /includes/site-registration/img/thumbnail.png
+				        includes/site-registration/img/thumbnail.png
 				    ]]>
 				</defaultvalue>
 			</setting>
@@ -2332,7 +2332,7 @@ $headinclude
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        /includes/site-registration/img/thumbnail.png
+				        includes/site-registration/img/thumbnail.png
 				    ]]>
 				</defaultvalue>
 			</setting>
