@@ -181,8 +181,8 @@ jQuery(document).ready(function(jQuery) {
     }
     
     
-    if( jQuery("#photoimg").exists() ){
-        jQuery("#photoimg").bind('click', function(){
+    if( jQuery(".fileupload-new").exists() ){
+        jQuery(".fileupload-new").bind('click', function(){
             //set hidden to not use default image
             jQuery("#use-default-image").val("");
         });
