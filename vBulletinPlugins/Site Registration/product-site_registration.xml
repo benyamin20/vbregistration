@@ -222,7 +222,7 @@ $stylevar[htmldoctype]
                                         
                                         <a href="#" class="btn fileupload-exists" data-dismiss="fileupload" id="remove">Remove</a>
                                         <div class="clear"></div>
-                                        <a class="small link_blue" id="use-default">Use default.</a>
+                                        <!-- <a class="small link_blue" id="use-default">Use default.</a> -->
                                         <span class="error-label small no-margin no-top" id="photoimg-error-label"></span>
                                 </div>
 									<div class="clear clear_15"></div>
@@ -317,7 +317,7 @@ $stylevar[htmldoctype]
 							
 							<input type="hidden" name="use_default_image"
 							    id="use-default-image"
-							    value="" 
+							    value="true" 
 							    />
 							
 							<input id="securitytoken" name="securitytoken" value="$token" type="hidden" />
@@ -869,8 +869,7 @@ $stylevar[htmldoctype]
 				    <input type="checkbox" value=""
 					   id="terms-and-conditions" name="terms-and-conditions" 
 					    checked="checked" />
-				    <span class="small light_grey"> Yes sir, I have read and
-						agreed with the 
+				    <span class="small light_grey"> Yes, I agree with the
 						<a href="$php_self#info" class="link_blue" rel="facebox">Terms
 							&amp; Conditions.</a>
 				    </span>
@@ -972,9 +971,9 @@ $stylevar[htmldoctype]
 									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
 							</div>
 							<div class="pull-right">
-								<a class="btn btn-primary span3 close-facebox"
+								<a class="btn btn-primary span2 close-facebox"
 									onclick="closeTnC();" href="$php_self#accept"
-									id="accept_terms_and_conditions">Yes, I agree with the Terms &amp; Conditions.</a>
+									id="accept_terms_and_conditions">Accept</a>
 							</div>
 						</div>
 					</td>
@@ -1132,7 +1131,7 @@ $stylevar[htmldoctype]
 					       name="terms-and-conditions" 
 					       checked="checked" />
 					    <span class="small light_grey">
-					       Yes sir, I have read and agreed with the 
+					       Yes, I agree with the
 					       <a href="$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
 					    </span>
 				    </label>
@@ -1203,9 +1202,9 @@ $stylevar[htmldoctype]
 									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
 							</div>
 							<div class="pull-right">
-								<a class="btn btn-primary span3 close-facebox"
+								<a class="btn btn-primary span2 close-facebox"
 									onclick="closeTnC();" href="$php_self#accept"
-									id="accept_terms_and_conditions">Yes, I agree with the Terms &amp; Conditions.</a>
+									id="accept_terms_and_conditions">Accept</a>
 							</div>
 						</div>
 					</td>

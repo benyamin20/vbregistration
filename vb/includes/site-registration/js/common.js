@@ -163,26 +163,26 @@ jQuery(document).ready(function(jQuery) {
     if(jQuery("#use-default").exists()){
         jQuery("#use-default").bind('click', function(){
         
-            //check if remove buton exists
-            if(jQuery('.fileupload-exists').exists()){
-                jQuery('.fileupload-exists').trigger('click');
-            }
-            
             //set hidden to use default image
             jQuery("#use-default-image").val("true");
+            jQuery("input[name=use_default_image]").val("true");
             
             //change image preview thumb
             jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
         });
         
-        jQuery("#use-default").trigger('click');
+        
     }
     
     
     if( jQuery(".fileupload-exists").exists() ){
         jQuery(".fileupload-exists").bind('click', function(){
-            //set hidden to not use default image
+        
+            //set hidden to use default image
             jQuery("#use-default-image").val("true");
+            jQuery("input[name=use_default_image]").val("true");
+            
+            //change image preview thumb
             jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
         });
     }
@@ -190,12 +190,19 @@ jQuery(document).ready(function(jQuery) {
     
     if( jQuery(".fileupload-new").exists() ){
         jQuery(".fileupload-new").bind('click', function(){
-            //set hidden to not use default image
+        
+            //set hidden to use default image
             jQuery("#use-default-image").val("");
+            jQuery("input[name=use-default-image]").val("");
+ 
         });
     }
     
     
+    
+    
+    
+
     
     if(jQuery("#save-account-activated").exists()){
         //bind enter event to  fields
