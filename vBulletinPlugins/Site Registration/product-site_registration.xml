@@ -18,9 +18,7 @@
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
-<!-- vB header include -->
-$headinclude
-<!-- /vB header include -->
+ 
 <!-- <base href="$vboptions[bburl]/" /> -->
 
 <title>Account Activated - $vboptions[bbtitle]</title>
@@ -342,7 +340,7 @@ $headinclude
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	//vBulletin_init = function(){}
+	vBulletin_init = function(){}
 	</script>
     <div id="footer" class="container_12">
         <div><div><div>
@@ -367,9 +365,7 @@ $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
 
-<!-- vB header include -->
-$headinclude
-<!-- /vB header include -->
+ 
 
 <title>Please Activate Your Account - $vboptions[bbtitle]</title>
  
@@ -468,7 +464,7 @@ $headinclude
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	//vBulletin_init = function(){}
+	vBulletin_init = function(){}
 	</script>
     <div id="footer"  class="container_12">
         <div><div><div>
@@ -533,9 +529,7 @@ $headinclude
     <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
     <head>
     
-    <!-- vB header include -->
-    $headinclude
-    <!-- /vB header include -->
+ 
     
     <!-- <base href="$vboptions[bburl]/" />  -->
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
@@ -736,7 +730,7 @@ $headinclude
 	    
 	<!-- footer -->
 	<script type="text/javascript">
-	//vBulletin_init = function(){}
+	vBulletin_init = function(){}
 	</script>
     <div id="footer"  class="container_12">
         <div><div><div>
@@ -762,11 +756,7 @@ $headinclude
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
-
-<!-- vB header include -->
-$headinclude
-<!-- /vB header include -->
-
+ 
 <!-- <base href="$vboptions[bburl]/" /> -->
 <title>Confirm You Details - $vboptions[bbtitle]</title>
 <link rel="stylesheet" type="text/css" media="all"
@@ -984,9 +974,9 @@ $headinclude
 									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
 							</div>
 							<div class="pull-right">
-								<a class="btn btn-primary span2 close-facebox"
+								<a class="btn btn-primary span3 close-facebox"
 									onclick="closeTnC();" href="$php_self#accept"
-									id="accept_terms_and_conditions">Accept</a>
+									id="accept_terms_and_conditions">Yes, I agree with the Terms &amp; Conditions.</a>
 							</div>
 						</div>
 					</td>
@@ -998,7 +988,7 @@ $headinclude
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	//vBulletin_init = function(){}
+	vBulletin_init = function(){}
 	</script>
     <div id="footer"  class="container_12">
         <div><div><div>
@@ -1017,10 +1007,7 @@ $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
 
-<!-- vB header include -->
-$headinclude
-<!-- /vB header include -->
-
+ 
 <!-- <base href="$vboptions[bburl]/" /> -->
 <title>Step 2 - Site Account - $vboptions[bbtitle]</title>
  
@@ -1218,9 +1205,9 @@ $headinclude
 									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
 							</div>
 							<div class="pull-right">
-								<a class="btn btn-primary span2 close-facebox"
+								<a class="btn btn-primary span3 close-facebox"
 									onclick="closeTnC();" href="$php_self#accept"
-									id="accept_terms_and_conditions">Accept</a>
+									id="accept_terms_and_conditions">Yes, I agree with the Terms &amp; Conditions.</a>
 							</div>
 						</div>
 					</td>
@@ -1231,7 +1218,7 @@ $headinclude
     
 	<!-- footer -->
 	<script type="text/javascript">
-	//vBulletin_init = function(){}
+	vBulletin_init = function(){}
 	</script>
 	
     <div id="footer"  class="container_12">

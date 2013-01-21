@@ -76,6 +76,12 @@ jQuery(document).ready(function(jQuery) {
 
     // initialize date picker
     if (jQuery("#datepicker").exists()) {
+        var current_year    = new Date().getFullYear();
+        var year            = 1970;
+        
+        var offset          =  current_year - year;
+        var default_date    = "-"+ offset + "y";
+        
         jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function() {
             jQuery(function() {
                 jQuery("#datepicker").datepicker({
@@ -91,7 +97,8 @@ jQuery(document).ready(function(jQuery) {
                         if(jQuery("#placeholder-datepicker").exists()){
                             jQuery("#placeholder-datepicker").remove();
                         }
-                    }
+                    },
+                    defaultDate: default_date
                 });
             });         
         }); 
@@ -175,14 +182,14 @@ jQuery(document).ready(function(jQuery) {
     if( jQuery(".fileupload-exists").exists() ){
         jQuery(".fileupload-exists").bind('click', function(){
             //set hidden to not use default image
-            jQuery("#use-default-image").val("");
+            jQuery("#use-default-image").val("true");
             jQuery("#selected-avatar").attr("src","images/misc/unknown.gif");
         });
     }
     
     
-    if( jQuery("#photoimg").exists() ){
-        jQuery("#photoimg").bind('click', function(){
+    if( jQuery(".fileupload-new").exists() ){
+        jQuery(".fileupload-new").bind('click', function(){
             //set hidden to not use default image
             jQuery("#use-default-image").val("");
         });
