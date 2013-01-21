@@ -406,7 +406,7 @@ $headinclude
 
 <body>
 	<!-- main container -->
-	<div id="container" class="container_12">
+	<div id="container" class="container_12  activate-account-container">
 		<div class="clear clear_15"></div>
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
