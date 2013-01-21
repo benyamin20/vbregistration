@@ -480,6 +480,15 @@ $headinclude
 </html>
 		
 		]]></template>
+
+		<template name="facebook_button" templatetype="template" 
+		    date="1352855133" username="IB Chandak" 
+		    version="1.0">
+		    <![CDATA[ 
+		    <a href="http://www.codejobs.biz/es/users/service/facebook/login" title="Sign in with Facebook"><img src="http://www.codejobs.biz/www/applications/users/views/images/login/facebook_es.png" alt="Sign in with Facebook" class="no-border"></a>
+		    ]]>
+        </template>
+
 		<template name="site_reg_not_activated" templatetype="template" 
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
@@ -1252,7 +1261,8 @@ $headinclude
 	                    //pending activation id
 	                    
 	                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
-                        
+                        $facebook_button = fetch_template('facebook_button');
+
                         $username   = $_SESSION['site_registration']['username']        = $vbulletin->userinfo['username'];
                         $email      = $_SESSION['site_registration']['email']           = $vbulletin->userinfo['email'];
                         $userid     = $_SESSION['site_registration']['userid']          = $vbulletin->userinfo['userid'];
@@ -1266,6 +1276,11 @@ $headinclude
                             $security_token = $_SESSION['site_registration']['securitytoken'] = "guest";
                         }
 			            
+			            $vbulletin->templatecache['navbar'] = str_replace(
+			            	'<!-- / login form -->',
+			            	'<!-- / login form -->' . $facebook_button,
+			            	$vbulletin->templatecache['navbar']
+			            );
 			            
 	                    $vbulletin->templatecache['navbar'] = str_replace(
 	                        '<!-- / nav buttons bar -->', 
