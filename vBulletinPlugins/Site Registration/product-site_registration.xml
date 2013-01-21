@@ -18,7 +18,11 @@
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+<!-- vB header include -->
+$headinclude
+<!-- /vB header include -->
 <!-- <base href="$vboptions[bburl]/" /> -->
+
 <title>Account Activated - $vboptions[bbtitle]</title>
 
 	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
@@ -362,6 +366,11 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+
+<!-- vB header include -->
+$headinclude
+<!-- /vB header include -->
+
 <title>Please Activate Your Account - $vboptions[bbtitle]</title>
  
 <link rel="stylesheet" type="text/css" media="all"
@@ -514,6 +523,11 @@ $stylevar[htmldoctype]
     $stylevar[htmldoctype]
     <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
     <head>
+    
+    <!-- vB header include -->
+    $headinclude
+    <!-- /vB header include -->
+    
     <!-- <base href="$vboptions[bburl]/" />  -->
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
@@ -588,11 +602,12 @@ $stylevar[htmldoctype]
 				        <div class="input-prepend ">
 					        <span class="add-on"> <i class="icon-calendar"></i>
 					        </span> 
-                            <input class="fix_input_width" id="datepicker" type="text"
+                            <input class="fix_input_width ie-align-picker" id="datepicker" type="text"
 						         value="" autocomplete="off" 
 						        title="Birth Date: You must be over 13 to register."
 						        alt="Birth Date: You must be over 13 to register."
 						        rel="tooltip"
+						        placeholder="Birth Date"
 						        name="birthdate" />
 				        </div>
 				    </div>
@@ -729,6 +744,11 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+
+<!-- vB header include -->
+$headinclude
+<!-- /vB header include -->
+
 <!-- <base href="$vboptions[bburl]/" /> -->
 <title>Confirm You Details - $vboptions[bbtitle]</title>
 <link rel="stylesheet" type="text/css" media="all"
@@ -978,6 +998,11 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+
+<!-- vB header include -->
+$headinclude
+<!-- /vB header include -->
+
 <!-- <base href="$vboptions[bburl]/" /> -->
 <title>Step 2 - Site Account - $vboptions[bbtitle]</title>
  
