@@ -650,7 +650,7 @@ $stylevar[htmldoctype]
 				        <!-- FB login -->
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
-				        <a href="$loginURL" class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]" id="gn_fb_button" href="#">
+				        <a href="$loginURL" class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]" id="gn_fb_button" onclick="window.open(this.href, this.target, 'width=300,height=400'); return false;">
 					        <div class="logo_wrapper">
 						        <span class="logo"></span>
 					        </div> 
