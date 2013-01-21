@@ -344,7 +344,7 @@ $headinclude
 	<script type="text/javascript">
 	//vBulletin_init = function(){}
 	</script>
-    <div id="footer">
+    <div id="footer" class="container_12">
         <div><div><div>
         $footer
     </div>
@@ -470,7 +470,7 @@ $headinclude
 	<script type="text/javascript">
 	//vBulletin_init = function(){}
 	</script>
-    <div id="footer">
+    <div id="footer"  class="container_12">
         <div><div><div>
         $footer
     </div>
@@ -729,7 +729,7 @@ $headinclude
 	<script type="text/javascript">
 	//vBulletin_init = function(){}
 	</script>
-    <div id="footer">
+    <div id="footer"  class="container_12">
         <div><div><div>
         $footer
     </div>
@@ -982,7 +982,7 @@ $headinclude
 	<script type="text/javascript">
 	//vBulletin_init = function(){}
 	</script>
-    <div id="footer">
+    <div id="footer"  class="container_12">
         <div><div><div>
         $footer
     </div>
@@ -1216,7 +1216,7 @@ $headinclude
 	//vBulletin_init = function(){}
 	</script>
 	
-    <div id="footer">
+    <div id="footer"  class="container_12">
         <div><div><div>
         $footer
     </div>
