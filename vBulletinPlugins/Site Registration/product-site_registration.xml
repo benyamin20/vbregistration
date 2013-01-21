@@ -1261,7 +1261,7 @@ $headinclude
 	                    //pending activation id
 	                    
 	                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
-                        $facebook_button = fetch_template('facebook_button');
+                        
 
                         $username   = $_SESSION['site_registration']['username']        = $vbulletin->userinfo['username'];
                         $email      = $_SESSION['site_registration']['email']           = $vbulletin->userinfo['email'];
@@ -1276,11 +1276,7 @@ $headinclude
                             $security_token = $_SESSION['site_registration']['securitytoken'] = "guest";
                         }
 			            
-			            $vbulletin->templatecache['navbar'] = str_replace(
-			            	'<!-- / login form -->',
-			            	'<!-- / login form -->' . $facebook_button,
-			            	$vbulletin->templatecache['navbar']
-			            );
+			            
 			            
 	                    $vbulletin->templatecache['navbar'] = str_replace(
 	                        '<!-- / nav buttons bar -->', 
@@ -1296,6 +1292,14 @@ $headinclude
 	                    
 	                }
 	            
+			    }else{
+			            $facebook_button = fetch_template('facebook_button');
+			            
+			            $vbulletin->templatecache['navbar'] = str_replace(
+			            	'<!-- / login form -->',
+			            	'<!-- / login form -->' . $facebook_button,
+			            	$vbulletin->templatecache['navbar']
+			            );
 			    }    
 			    
 			    
