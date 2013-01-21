@@ -27,8 +27,8 @@ li {
 }
 
 .link_blue {
-	color: #0066DD;
-	cursor: pointer;
+	color: #0066DD !important;
+	cursor: pointer !important;
 }
 
 .dark_grey {
@@ -389,3 +389,7 @@ li {
     visibility:hidden !important;
 }
 */
+
+.activate-account-container{
+    min-height: 600px !important;
+}
