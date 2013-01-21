@@ -378,6 +378,10 @@ case 'complete_your_profile':
     json_headers_ie_support($arr);
 
     break;
+    
+/**
+* register.php?step=site-account-details
+**/
 
 case 'validate_site_account_details':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
@@ -571,8 +575,30 @@ case 'validate_site_account_details':
             $userdata_rank->save();
 
             $vbulletin->session->created = false;
-            //process_new_login('', false, '');
-            process_new_login('', '', '');
+
+            //create a new login for user
+
+            process_new_login('', false, '');
+            //process_new_login('', '', '');
+
+            $newsession = &new vB_Session($vbulletin, '', $userid, '',
+                    $vbulletin->session->vars['styleid'],
+                    $vbulletin->session->vars['languageid']);
+
+            $newsession->set('userid', $userid);
+            $newsession->set('loggedin', 1);
+
+            $newsession
+                    ->set_session_visibility(
+                            ($vbulletin->superglobal_size['_COOKIE'] > 0));
+            $newsession->fetch_userinfo();
+
+            $vbulletin->session = &$newsession;
+            $vbulletin->userinfo = $newsession->userinfo;
+            $vbulletin->userinfo['lang_locale'] = $lang_info['lang_locale'];
+            $vbulletin->userinfo['lang_charset'] = $lang_info['lang_charset'];
+
+
 
             //Send Activation Email: Refer to Automated Emails
             // send new user email
@@ -603,10 +629,6 @@ case 'validate_site_account_details':
     json_headers($arr);
 
     break;
-
-//case 'test':
-//    echo (fetch_email_phrases('newuser', 0));
-//break;
 
 case 'resend_email':
     if (isset($_SESSION['site_registration']['email'])) {
@@ -668,27 +690,25 @@ case 'create_site_account_first_step':
         $month = $date_parts[0];
         $year = $date_parts[2];
         $day = $date_parts[1];
-        
-        
-        if( checkdate( $month , $day , $year ) ){
+
+        if (checkdate($month, $day, $year)) {
             if ($year > 1970
                     AND mktime(0, 0, 0, $month, $day, $year)
-                            > mktime(0, 0, 0, $current['month'], $current['day'],
-                                    $current['year'] - 13)) {
+                            > mktime(0, 0, 0, $current['month'],
+                                    $current['day'], $current['year'] - 13)) {
                 $valid_entries = FALSE;
                 $messages['errors'][] = $message = "You must be over 13 to register";
                 $messages['fields'][] = $error_type = "datepicker";
                 //fetch_error('under_thirteen_registration_denied');
             } else {
 
-            }        
-        }else{
+            }
+        } else {
             $valid_entries = FALSE;
             $messages['errors'][] = $message = "Invalid date.";
             $messages['fields'][] = $error_type = "datepicker";
         }
-        
-        
+
     }
 
     //check if variables are set
@@ -789,11 +809,8 @@ case 'create_site_account_first_step':
 
     }
 
-    $arr = array(   "valid_entries" => $valid_entries,
-                    "messages" => $messages, 
-                    "url" => $url,
-                    "rows" => $rows
-                    );
+    $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
+            "url" => $url, "rows" => $rows);
 
     json_headers($arr);
 
