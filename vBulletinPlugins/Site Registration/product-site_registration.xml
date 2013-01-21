@@ -19,7 +19,7 @@ $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
 <!-- vB header include -->
-$headinclude
+<!-- $headinclude -->
 <!-- /vB header include -->
 <!-- <base href="$vboptions[bburl]/" /> -->
 
@@ -368,7 +368,7 @@ $stylevar[htmldoctype]
 <head>
 
 <!-- vB header include -->
-$headinclude
+<!-- $headinclude -->
 <!-- /vB header include -->
 
 <title>Please Activate Your Account - $vboptions[bbtitle]</title>
@@ -533,9 +533,9 @@ $headinclude
     <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
     <head>
     
-    <!-- vB header include -->
-    $headinclude
-    <!-- /vB header include -->
+<!-- vB header include -->
+<!-- $headinclude -->
+<!-- /vB header include -->
     
     <!-- <base href="$vboptions[bburl]/" />  -->
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
@@ -755,7 +755,7 @@ $stylevar[htmldoctype]
 <head>
 
 <!-- vB header include -->
-$headinclude
+<!-- $headinclude -->
 <!-- /vB header include -->
 
 <!-- <base href="$vboptions[bburl]/" /> -->
@@ -1009,7 +1009,7 @@ $stylevar[htmldoctype]
 <head>
 
 <!-- vB header include -->
-$headinclude
+<!-- $headinclude -->
 <!-- /vB header include -->
 
 <!-- <base href="$vboptions[bburl]/" /> -->
