@@ -484,8 +484,8 @@ $headinclude
 		<template name="facebook_button" templatetype="template" 
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
-		    <![CDATA[ 
-		    <a href="http://www.codejobs.biz/es/users/service/facebook/login" title="Sign in with Facebook"><img src="http://www.codejobs.biz/www/applications/users/views/images/login/facebook_es.png" alt="Sign in with Facebook" class="no-border"></a>
+		    <![CDATA[ 		     
+		    <a href="register.php?step=confirm-facebook-details" title="Sign in with Facebook"><img src="includes/site-registration/img/facebook_en.png" alt="Sign in with Facebook" class="no-border"></a>
 		    ]]>
         </template>
 
