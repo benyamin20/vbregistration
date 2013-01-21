@@ -48,3 +48,8 @@
     position: relative !important;
     width: 180px !important;
 }
+
+#placehoder-datepicker{
+    left: 33px !important;
+    top: 19px !important;
+}
