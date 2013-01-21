@@ -42,7 +42,7 @@
 
 */
 
-span < #datepicker{
+.ie-align-picker{
     margin-left: 28px !important;
     margin-top:  -30px !important;
     position: relative !important;
