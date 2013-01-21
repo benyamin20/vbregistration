@@ -645,23 +645,6 @@ $stylevar[htmldoctype]
 	                </div>
                 </if>
 
-                <?php
-	                $code      = $_REQUEST["code"];
-				    $client_id = "304416966345499"; //$vbulletin->options['site_registration_settingsfb_fbapi'];  
-				        	
-				    $scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
-				    $client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
-
-				    $_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
-
-					$loginURL  = "https://www.facebook.com/dialog/oauth?";
-					$loginURL .= "client_id=$client_id&";
-					$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
-					$loginURL .= "state=". $_SESSION["state"] ."&";
-					$loginURL .= "scope=$scope&";
-					$loginURL .= "display=popup";
-				?>				
-
 			    <div class="grid_3">
                     <if condition="$vboptions['site_registration_settingsfb_showfb']">
 				        <!-- FB login -->
@@ -1616,7 +1599,24 @@ $stylevar[htmldoctype]
 			            
 			        }else{
 			            if(!(int)$vbulletin->userinfo['userid']){
-			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			            	$code      = $_REQUEST["code"];
+				        	$client_id = "304416966345499"; //$vbulletin->options['site_registration_settingsfb_fbapi'];  
+				        	
+				        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
+				        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
+
+				        	if(!$code) {
+				        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
+
+								$loginURL  = "https://www.facebook.com/dialog/oauth?";
+								$loginURL .= "client_id=$client_id&";
+								$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
+								$loginURL .= "state=". $_SESSION["state"] ."&";
+								$loginURL .= "scope=$scope&";
+								$loginURL .= "display=popup";													
+				        	} 				        	
+
+			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			            }
 			        }
 			         
