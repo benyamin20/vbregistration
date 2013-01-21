@@ -335,6 +335,8 @@ $stylevar[htmldoctype]
 		<div class="clear"></div>
 
 	</div>
+    
+    $footer
 
 </body>
 </html>
@@ -446,6 +448,8 @@ $stylevar[htmldoctype]
 		</div>
 
 	</div>
+	
+	$footer
 	
 </body>
 </html>
@@ -689,6 +693,9 @@ $stylevar[htmldoctype]
 	    <div id="info">
 	        $vboptions[site_registration_benefits]
 	    </div>
+	    
+	    $footer
+	    
     </body>
     </html>
 		]]></template>
@@ -925,7 +932,9 @@ $stylevar[htmldoctype]
 			</tbody>
 		</table>
 	</div>
-
+	
+    $footer
+    
 </body>
 </html>
 		
@@ -1143,7 +1152,9 @@ $stylevar[htmldoctype]
 			</tbody>
 		</table>
 	</div>
-
+    
+    $footer
+    
 </body>
 </html>
 		

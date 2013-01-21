@@ -372,3 +372,7 @@ li {
 .cursor-pointer{
     cursor: pointer;
 }
+
+.smallfont .page{
+    display: none;
+}
