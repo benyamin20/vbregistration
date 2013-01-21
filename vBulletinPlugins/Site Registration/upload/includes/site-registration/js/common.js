@@ -180,6 +180,16 @@ jQuery(document).ready(function(jQuery) {
         });
     }
     
+    
+    if( jQuery("#photoimg").exists() ){
+        jQuery("#photoimg").bind('click', function(){
+            //set hidden to not use default image
+            jQuery("#use-default-image").val("");
+        });
+    }
+    
+    
+    
     if(jQuery("#save-account-activated").exists()){
         //bind enter event to  fields
         jQuery("#secret_question").enterKey(function () {
