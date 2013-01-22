@@ -89,7 +89,7 @@ li {
 	-webkit-border-radius: 5px;
 	-webkit-user-select: none;
 	border-radius: 5px;
-	display: block;
+	display: inline-block;
 	height: 37px;
 	min-width: 200px;
 	user-select: none;

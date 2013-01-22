@@ -558,10 +558,18 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
 
     <title>Sign In - $vboptions[bbtitle]</title>
-    <meta name="description" content="?" /> 
+    <meta name="description" content="?" />    
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=324953487621707";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
     </head>
 
     <body>
+    	<div id="fb-root"></div>
 	    <!-- main container -->
 	    <div id="container" class="container_12">
 		    <div class="clear clear_15"></div>
@@ -637,13 +645,20 @@ $stylevar[htmldoctype]
 	                </div>
                 </if>
 
-			
 			    <div class="grid_3">
                     <if condition="$vboptions['site_registration_settingsfb_showfb']">
 				        <!-- FB login -->
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
-				        <a class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]" id="gn_fb_button" href="register.php?step=confirm-facebook-details">
+				        <script>
+					       	function openModalPopup() {            
+					       		var win = window.open('$loginURL', 'facebook-login', 'width=400,height=400'); 						    
+							    
+							    alert(window.location);
+							}
+						</script>
+
+				        <a id="facebook-login" href="#" class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]" id="gn_fb_button" onclick="openModalPopup()">
 					        <div class="logo_wrapper">
 						        <span class="logo"></span>
 					        </div> 
@@ -735,7 +750,7 @@ $stylevar[htmldoctype]
     <div id="footer"  class="container_12">
         <div><div><div>
         $footer
-    </div>
+    </div>    
     <!-- footer -->
 	    
     </body>
@@ -1459,10 +1474,6 @@ $stylevar[htmldoctype]
                         }else{
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
-                     
-			        } elseif(isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details' && isset($_REQUEST["link"])) {
-			        	echo "SIii";
-			        	exit;
 			        } else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
 			        	$code      = $_REQUEST["code"];
 			        	$client_id = "304416966345499"; //$vbulletin->options['site_registration_settingsfb_fbapi'];  
@@ -1477,7 +1488,8 @@ $stylevar[htmldoctype]
 							$loginURL .= "client_id=$client_id&";
 							$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
 							$loginURL .= "state=". $_SESSION["state"] ."&";
-							$loginURL .= "scope=$scope";
+							$loginURL .= "scope=$scope&";
+							$loginURL .= "display=popup";
 						
 							echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';							
 			        	} else {		
@@ -1594,7 +1606,24 @@ $stylevar[htmldoctype]
 			            
 			        }else{
 			            if(!(int)$vbulletin->userinfo['userid']){
-			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			            	$code      = $_REQUEST["code"];
+				        	$client_id = "304416966345499"; //$vbulletin->options['site_registration_settingsfb_fbapi'];  
+				        	
+				        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
+				        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
+
+				        	if(!$code) {
+				        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
+
+								$loginURL  = "https://www.facebook.com/dialog/oauth?";
+								$loginURL .= "client_id=$client_id&";
+								$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
+								$loginURL .= "state=". $_SESSION["state"] ."&";
+								$loginURL .= "scope=$scope&";
+								$loginURL .= "display=popup";													
+				        	} 				        	
+
+			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			            }
 			        }
 			         
