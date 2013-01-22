@@ -1056,7 +1056,7 @@ $stylevar[htmldoctype]
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
 			<span class="title_red">
-			     Great! Pick your username and password:
+			     Pick your username and password:
 			</span>
 		</div>
 		<div class="clear clear_10"></div>
@@ -1075,7 +1075,7 @@ $stylevar[htmldoctype]
 				</div>
 				
 				<span class="help-block small light_grey">
-				    Max 25 characters, no spaces please.
+				    Maximum 25 characters
 				</span>
 				
 				<div class="grid_7 no-margin" id="password-wrapper">	
@@ -1085,9 +1085,8 @@ $stylevar[htmldoctype]
 					       type="password"  /> 
 					<span class="error-label" id="password-error-label"></span>
 				</div>
-				<span class="help-block small light_grey">
-				    You know the drill, make it safe.
-				</span>
+				
+				<div class="clear clear_10"></div>
 				
 				<div class="grid_7 no-margin" id="confirm-password-wrapper">
 				    <input class="" id="confirm-password" name="confirm-password"
@@ -1097,28 +1096,7 @@ $stylevar[htmldoctype]
 				    <span class="error-label" id="confirm-password-error-label"></span>    
 				</div>
 					
-				<span class="help-block small"></span>
-				
-				<div class="centered" id="security-image">
-				    <img width="220" border="0" height="61" alt="" 
-				        src="$vboptions[bburl]/image.php?type=hv&hash=$hv_token" 
-				        id="imagereg" class="grid_3 no-margin"
-				        title="CAPTCHA"  />
-				        
-				    <span class="cursor-pointer small link_blue" id="refresh-captcha">
-				        Refresh Image   <span id="ajax-loader-secondary"></span> 
-				    </span>
-				    
-				    <!--
-				    <span style="cursor: pointer;" id="refresh_imagereg">
-				        <a href="$php_self#">Refresh Image</a>
-				    </span>
-				    <script src="clientscript/vbulletin_ajax_imagereg.js?v=387" type="text/javascript"></script>
-				    <script type="text/javascript">vB_AJAX_ImageReg_Init();</script>
-				    -->
-				</div>
-				
-				<div class="clear clear_15"></div>
+				<div class="clear clear_10"></div>
 				
 				<div class="grid_7 no-margin" id="security-code-wrapper">
 				    <input class="" id="security-code" name="security-code"
@@ -1128,9 +1106,24 @@ $stylevar[htmldoctype]
 			        <span class="error-label" id="security-code-error-label"></span>
 			    </div>
 				
-				<span class="help-block small light_grey"></span>
+				<div class="clear clear_10"></div>
 				
-				<div class="clear"></div>
+				
+				
+				<div class="" id="security-image">
+				    <img width="220" border="0" height="61" alt="" 
+				        src="$vboptions[bburl]/image.php?type=hv&hash=$hv_token" 
+				        id="imagereg" class="grid_3 no-margin"
+				        title="CAPTCHA"  />
+				        
+				    <span class="cursor-pointer small link_blue" id="refresh-captcha">
+				        Refresh Image   <span id="ajax-loader-secondary"></span> 
+				    </span>
+				    
+ 
+				</div>
+				
+				<div class="clear clear_15"></div>
 				
 				<div class="grid_7 no-margin" id="terms-and-conditions-wrapper">
 				    <label class="checkbox grid_3 no-margin fix-tnc-width">
