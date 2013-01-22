@@ -651,7 +651,7 @@ $stylevar[htmldoctype]
 				        <div class="clear"></div>
 				        <script>
 					       	function openModalPopup() {            
-					       		var win = window.open('http://www.muucms.com/vb/facebook.php', 'facebook-login', 'width=400,height=400'); 						    							   							   
+					       		var win = window.open('facebook.php', 'facebook-login', 'width=400,height=400'); 						    							   							   
 							}
 						</script>
 
