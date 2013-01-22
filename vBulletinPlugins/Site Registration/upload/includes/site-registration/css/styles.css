@@ -277,6 +277,11 @@ li {
     
 }
 .input-error-container{
+    background: url("../img/redx.png") no-repeat scroll 227px 28px
+	transparent !important;
+}
+
+.large-input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 8px
 	transparent !important;
 }
@@ -394,6 +399,15 @@ li {
     min-height: 600px !important;
 }
 
- #have-account-error{
+#have-account-error{
     padding-right: 20px; 
+}
+
+
+label{
+    margin:0; 
+    padding:0 2px; 
+    font-size:11px; 
+    font-weight:bold; 
+    color:#666666;
 }
