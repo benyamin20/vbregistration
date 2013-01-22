@@ -389,8 +389,8 @@ jQuery(document).ready(function(jQuery) {
                         jQuery('#have-account-error').html(response.message);
                         jQuery('#have-account-spacer').addClass("clear_15");
                     
-                        jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');
-                        jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
+                        jQuery('#username').addClass("input-error").wrap('<div class="large-input-error-container" />');
+                        jQuery('#password').addClass("input-error").wrap('<div class="large-input-error-container" />');
                     
                     }else{
                         //redirect user to proper url
@@ -404,8 +404,8 @@ jQuery(document).ready(function(jQuery) {
                     jQuery('#have-account-error').html(error);
                     jQuery('#have-account-spacer').addClass("clear_15");
                     
-                    jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');
-                    jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
+                    jQuery('#username').addClass("input-error").wrap('<div class="large-input-error-container" />');
+                    jQuery('#password').addClass("input-error").wrap('<div class="large-input-error-container" />');
                 }
                 
                  

@@ -378,10 +378,10 @@ case 'complete_your_profile':
     json_headers_ie_support($arr);
 
     break;
-    
+
 /**
-* register.php?step=site-account-details
-**/
+ * register.php?step=site-account-details
+ **/
 
 case 'validate_site_account_details':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
@@ -573,28 +573,28 @@ case 'validate_site_account_details':
             $userdata_rank->set_existing($userinfo);
             $userdata_rank->set('posts', 0);
             $userdata_rank->save();
-            
-            
+
             //start new session
-            $vbulletin->userinfo = $vbulletin->db->query_first(
-                "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
-                username, password, salt FROM " . TABLE_PREFIX . "user 
-                WHERE userid = " . $userid
-            );
+            $vbulletin->userinfo = $vbulletin->db
+                    ->query_first(
+                            "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                username, password, salt FROM " . TABLE_PREFIX
+                                    . "user 
+                WHERE userid = " . $userid);
 
             require_once(DIR . '/includes/functions_login.php');
-            
-            vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
-			vbsetcookie('password', md5($vbulletin->userinfo['password'] . COOKIE_SALT), true, true, true);
-			
-			
-			process_new_login('', 1, $vbulletin->GPC['cssprefs']);
-			
-			cache_permissions($vbulletin->userinfo, true);
 
-	        $vbulletin->session->save();
+            vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
+                    true);
+            vbsetcookie('password',
+                    md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
+                    true, true);
 
+            process_new_login('', 1, $vbulletin->GPC['cssprefs']);
 
+            cache_permissions($vbulletin->userinfo, true);
+
+            $vbulletin->session->save();
 
             //Send Activation Email: Refer to Automated Emails
             // send new user email
@@ -610,7 +610,6 @@ case 'validate_site_account_details':
             if (empty($subject)) {
                 $subject = "Please activate your account";
             }
-            
 
             vbmail($email, $subject, $message, false);
 
