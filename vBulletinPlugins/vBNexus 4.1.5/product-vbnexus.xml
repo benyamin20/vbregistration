@@ -261,7 +261,7 @@ if($vbulletin->db->query_first("SHOW TABLES LIKE '" . TABLE_PREFIX . "vbnexus_no
             <title>Setup Plugin</title>
             <hookname>init_startup</hookname>
             <phpcode><![CDATA[// Path to vBNexus files
-define('VBNEXUS_DIR', '/var/ibvbshare/vbnexus4.1.5');
+define('VBNEXUS_DIR', 'includes/vbnexus4.1.5');
 
 require_once(VBNEXUS_DIR . '/vBNexus.php');
 
