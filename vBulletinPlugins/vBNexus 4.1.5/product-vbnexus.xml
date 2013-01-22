@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<product productid="vbnexus" active="0">
+    <title>vB Nexus</title>
+    <description />
+    <version>4.1.8</version>
+    <url />
+    <versioncheckurl />
+    <dependencies>
+        <dependency dependencytype="mysql" minversion="5.0.0" maxversion="" />
+        <dependency dependencytype="php" minversion="5.0.0" maxversion="" />
+        <dependency dependencytype="vbulletin" minversion="3.7.0" maxversion="" />
+    </dependencies>
+    <codes>
+        <code version="4.0">
+            <installcode><![CDATA[# Create vbnexus users table
+$vbulletin->db->query_write("
+    CREATE TABLE IF NOT EXISTS `" . TABLE_PREFIX . "vbnexus_user` (
+      `service` enum('fb','gfc') NOT NULL,
+      `nonvbid` varchar(30) NOT NULL,
+      `userid` int(11) NOT NULL,
+      `associated` tinyint(1) NOT NULL DEFAULT '0',
+      PRIMARY KEY (`service`,`nonvbid`)
+    ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+");
+
+# Move records from older versions to the new table// check for new columns and add if necessary
+if($vbulletin->db->query_first("SHOW TABLES LIKE '" . TABLE_PREFIX . "vbnexus_nonvbuser'")) {
+    $vbulletin->db->query_write("
+        INSERT IGNORE INTO `" . TABLE_PREFIX . "vbnexus_user` (`service`, `nonvbid`, `userid`, `associated`)
+        SELECT IF(`type` = 1, 'fb', 'gfc'),
+               CONCAT(IF(`nonvbid` < 10000000000000000000 AND `type` = 2, '0', ''), CAST(`nonvbid` AS CHAR)),
+               `userid`,
+               `associated`
+        FROM `" . TABLE_PREFIX . "vbnexus_nonvbuser`
+    ");
+}]]></installcode>
+            <uninstallcode />
+        </code>
+    </codes>
+    <templates>
+        <template name="vbnexus_buttons" templatetype="template" date="1317854823" username="dbind" version="4.1.6"><![CDATA[
+<if condition="!$show['member']">
+    <div class="smallfont" style="text-align:center; padding-bottom:10px;">
+        $vbphrase[vbnexus_buttons_legend]
+    </div>
+
+    <script type="text/javascript">
+        function vBNexusLoginRedirect(service) {
+            window.location = "$vboptions[bburl]/login.php?do=login&vbnexus_service=" + service + "&loc=$vboptions[vbnexus_loc]";
+        }
+    </script>
+
+    <!-- Google Friend Connect -->
+    <if condition="$show['vbnexus_button_gfc']">
+        <div id="vbnexus_gfc_button" title="$vbphrase[vbnexus_google_login_title]" style="float:left;"></div>
+
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            if (google) google.load("friendconnect", "0.8");
+        </script>
+        <script type="text/javascript">
+            if (google) {
+                google.friendconnect.container.initOpenSocialApi({
+                    site: "$vboptions[vbnexusconfig_google_apikey]",
+                    onload: function(token){
+                        if (!window.GFClogin) window.GFClogin = true;
+                        else if (token) vBNexusLoginRedirect('gfc');
+                    }
+                });
+                google.friendconnect.renderSignInButton({"id": "vbnexus_gfc_button",
+                                                         text: "$vbphrase[vbnexus_google_login_text]",
+                                                         style: "long"});
+            }
+        </script>
+    </if>
+
+
+    <!-- Facebook Social Plugin -->
+    <if condition="$show['vbnexus_button_fb']">
+        <div id="fb-root"></div>
+        <div style="margin-top:-1px; text-align:center;">
+            <a class="fb_button fb_button_medium" href="javascript:void(0);" title="$vbphrase[vbnexus_facebook_login_title]" id="FB_login_button">
+                <span class="fb_button_text">$vbphrase[vbnexus_facebook_login_text]</span>
+            </a>
+        </div>
+
+        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+        <script type="text/javascript">
+            document.getElementById('FB_login_button').onclick = function() {
+                FB.init({
+                    appId : "$vboptions[vbnexusconfig_facebook_appid]",
+                    status: true, // check login status
+                    cookie: true, // enable cookies to allow the server to access the session
+                    oauth : true  // enables OAuth 2.0
+                });
+                FB.login(function(res){
+                    if (res.status == 'connected') vBNexusLoginRedirect('fb');
+                }, {scope: '$vboptions[vbnexus_fb_scope]'});
+            }
+        </script>
+    </if>
+</if>]]></template>
+        <template name="vbnexus_fb_publish_options" templatetype="template" date="1317854823" username="master" version="4.0"><![CDATA[
+<fieldset class="fieldset" style="margin-top: $stylevar[cellpadding]px">
+<legend>Facebook</legend>
+<div style="padding:$stylevar[formspacer]px">
+    <label id="fb_pulishlabel" for="vbnexus_publish">
+        <img src="http://www.facebook.com/favicon.ico" height="16" width="16" style="position:relative; top:1px;" />
+        <input type="checkbox" tabindex="1" name="vbnexus_publish" value="1" $checked />
+        <input type="hidden" name="hdn_vbnexus_publish" value="1" />
+        $vbphrase[vbnexus_fb_publish_text]
+    </label>
+</div>
+</fieldset>]]></template>
+        <template name="vbnexus_3_gfc_invalid_email" templatetype="template" date="1317854823" username="master" version="4.1.5"><![CDATA[<if condition="$vbnexus_error">
+  <table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+    <tr>
+      <td class="alt1"><ul id="error-list"><li>$vbnexus_error</li></ul></td>
+    </tr>
+  </table>
+</if>
+
+<h3>Notice</h3>
+
+<p>Due to the recent announcement that Google will <strong>be shutting down Friend Connect on March 1</strong>, we need to update all Friend Connect accounts.</p>
+
+<p>Make sure to provide a valid email and password below to prevent loss of access to this forum. Thank you!</p>
+
+<form action="$vboptions[bburl]/$vboptions[forumhome].php?do=login&loc=$vbnexus_loc&vbnexus_service=gfc" method="post">
+    <table cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+      <tr>
+        <td class="alt1" width="150px"></td>
+        <td class="alt1">Your username is: <strong>$vBNexusUser[username]</strong></td>
+      </tr>
+      <tr>
+        <td class="alt1" width="150px">Email Address:</td>
+        <td class="alt1"><input type="text" class="bginput" name="email" size="50" maxlength="50" value="$vBNexusUser[email]" dir="ltr"></td>
+      </tr>
+      <tr>
+        <td class="alt1" width="150px">New Password:</td>
+        <td class="alt1"><input type="password" class="bginput" name="password" size="30" maxlength="50" value="" dir="ltr"></td>
+      </tr>
+      <tr>
+        <td class="alt1" width="150px">Repeat Password:</td>
+        <td class="alt1"><input type="password" class="bginput" name="password2" size="30" maxlength="50" value="" dir="ltr"></td>
+      </tr>
+      <tr>
+        <td class="alt1" colspan="2">
+          <input type="submit" class="button" name="vbnexus_gfc_fix" value="$vbphrase[accept]" />
+          <input type="reset" class="button" value="$vbphrase[reset_fields]" />
+        </td>
+      </tr>
+    </table>
+</form>]]></template>
+        <template name="vbnexus_registration" templatetype="template" date="1317854825" username="dbind" version="4.0"><![CDATA[
+<table cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">
+      <div id="error-list-container" <if condition="$vbnexus_registration_error">style="display:block"<else />style="display:none"</if>>
+            <table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+              <tr><td class="tcat">$vbphrase[errors]</td></tr>
+              <tr><td class="alt1"><ul id="error-list">$vbnexus_registration_error</ul></td></tr>
+            </table>
+      </div>
+      <br/>
+
+      <form action="$vboptions[bburl]/$vboptions[forumhome].php?do=login&loc=$vbnexus_loc" method="post">
+        <input type="hidden" name="vbnexus_registration_type" value="new" />
+        <input type="hidden" name="vbnexus_userid" value="$vbnexus_userid" />
+        <input type="hidden" name="vbnexus_service" value="$vbnexus_service" />
+        <input type="hidden" name="vbnexus_default_email" value="$vBNexusUser[default_email]" />
+        <table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+          <tr>
+            <td class="tcat">
+              <if condition="$vBNexusUser['userid']">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="60" rowspan="4" align="center" valign="middle"><if condition="$vBNexusUser['avatar']"><img src="$vBNexusUser[avatar]" border="0" height="65px" style="padding-right:5px;" /></if></td>
+                    <td><strong>Welcome, $vBNexusUser[name]!</strong></td>
+                  </tr>
+                  <tr><td><strong>$vbphrase[vbnexus_new_member_text]</strong></td></tr>
+                  <tr><td class="smallfont">You are currently signing in with your <strong>$vBNexusUser[service]</strong> account</td></tr>
+                  <tr><td class="smallfont"><if condition="$vBNexusUser['avatar']">(Please note: your avatar is not publicly displayed)</if></td></tr>
+                </table>
+              </if>
+            </td>
+          </tr>
+          <tr>
+            <td class="alt1">Public Username:
+                <input type="text" class="bginput" name="username" size="50" maxlength="$vboptions[maxuserlength]" value="$vBNexusUser[name]" />
+            </td>
+          </tr>
+          <tr>
+            <td class="alt1">Email Address:
+                <input type="text" class="bginput" name="email" size="50" maxlength="50" value="$vBNexusUser[email]" dir="ltr">
+            </td>
+          </tr>
+          <if condition="$vbnexus_service == 'fb' && $vbnexus_can_publish">
+            <tr>
+                <td class="alt1">
+                    <label for="vbnexus_fb_publish">
+                        <input type="checkbox" tabindex="1" id="vbnexus_fb_publish" value="1" name="vbnexus_fb_publish" $vbnexus_fb_publish_checked />
+                        <img src="http://www.facebook.com/favicon.ico" alt="$vbphrase[vbnexus_fb_publish_text]" />
+                        $vbphrase[vbnexus_fb_publish_text]
+                    </label>
+                </td>
+            </tr>
+          </if>
+          <tr>
+            <td class="alt1">
+              <input type="submit" class="button" value="$vbphrase[log_in]" />
+                      <input type="reset" class="button" value="$vbphrase[reset_fields]" />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+
+    <td width="50%" valign="top">
+      <div id="error-list-container-existing" <if condition="$show['errors_existing']">style="display:block"<else />style="display:none"</if>>
+            <table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+              <tr><td class="tcat">$vbphrase[errors]</td></tr>
+              <tr><td class="alt1"><ul id="error-list-existing">$errorlist_existing</ul></td></tr>
+            </table>
+      </div>
+      <br/>
+
+      <form action="$vboptions[bburl]/$vboptions[forumhome].php?do=login&loc=$vbnexus_loc" method="post">
+        <input type="hidden" name="vbnexus_registration_type" value="link" />
+        <input type="hidden" name="vbnexus_userid" value="$vbnexus_userid" />
+        <input type="hidden" name="vbnexus_service" value="$vbnexus_service" />
+        <table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+          <tr><td class="tcat">$vbnexus_existing_member_text</td></tr>
+          <tr>
+            <td class="alt1">
+              Existing Username:
+              <input type="text" class="bginput" name="username" size="35" maxlength="$vboptions[maxuserlength]" value="" />
+            </td>
+          </tr>
+          <tr>
+            <td class="alt1">
+              Existing Password:
+              <input type="password" class="bginput" name="password" size="35" value="" />
+            </td>
+          </tr>
+          <tr>
+            <td class="alt1">
+              <input type="submit" class="button" value="$vbphrase[log_in]" />
+                      <input type="reset" class="button" value="$vbphrase[reset_fields]" />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>]]></template>
+    </templates>
+    <plugins>
+        <plugin active="1" executionorder="5">
+            <title>Setup Plugin</title>
+            <hookname>init_startup</hookname>
+            <phpcode><![CDATA[// Path to vBNexus files
+define('VBNEXUS_DIR', 'includes/vbnexus4.1.5');
+
+require_once(VBNEXUS_DIR . '/vBNexus.php');
+
+// Include vBNexus phrases
+$phrasegroups = array_merge($phrasegroups, array('vbnexus'));
+
+// Cache connect template
+$globaltemplates[] = 'vbnexus_buttons';
+$globaltemplates[] = 'vbnexus_registration';
+
+$vbnexus_uri = strstr($_SERVER['REQUEST_URI'], 'do=log') ? create_full_url($vbulletin->url) : $_SERVER['REQUEST_URI'];
+$vbnexus_loc = !empty($_REQUEST['loc']) ? $_REQUEST['loc'] : base64_encode($vbnexus_uri);
+
+
+// Add hooks in runtime for feed hooks (checkboxes and publishing plugins)
+// This way to add hooks has the advantage of making it really easy to extend
+// to new feeds in the future without touching but one method
+if (vBNexus::getInstance()->getOption('enable_feeds')) {
+    vBNexus::register_feed_hooks();
+}]]></phpcode>
+        </plugin>
+        <plugin active="1" executionorder="5">
+            <title>vB Nexus (Add Login Buttons)</title>
+            <hookname>global_start</hookname>
+            <phpcode><![CDATA[// Disable the product for mobile devices
+if (!preg_match('/^m\./', $_SERVER['SERVER_NAME'])) {
+    $vBNexus = vBNexus::getInstance();
+    $show['vbnexus_button_fb'] = $vBNexus->isEnabled('fb');
+    //$show['vbnexus_button_gfc'] = $vBNexus->isEnabled('gfc');
+	$show['vbnexus_button_gfc'] = false;
+	
+    // Don't include login buttons if no service is enabled/configured
+    if ($show['vbnexus_button_fb'] || $show['vbnexus_button_gfc']) {
+        // Let's determine where to introduce the HTML for the buttons
+        $vbnexus_buttons = fetch_template('vbnexus_buttons');
+        switch ($vBNexus->getConfig('buttons_position')) {
+            case 'left':        // Left of Login Form
+                // Get the right phrase for buttons legend
+                $vbphrase['vbnexus_buttons_legend'] = $vbphrase['vbnexus_buttons_legend_left'];
+                $vbnexus_original = '/<td[^<]+\<\!\-\- *login *form *\-\-\>/';
+                $vbnexus_extended = "<td class='alt2' nowrap='nowrap'>{$vbnexus_buttons}</td>\\0";
+                break;
+            case 'right':       // Right of Login Form
+                $vbnexus_original = '/\<\!\-\- *\/ *login *form *\-\-\>\s*\<\/td\>/s';
+                $vbnexus_extended = "\\0<td class='alt2' nowrap='nowrap'>{$vbnexus_buttons}</td>";
+                break;
+            case 'below':       // Below Login Form
+                $vbnexus_original = '/\$vbphrase\[log_in\].+\/>/';
+                $vbnexus_extended = "\\0</td></tr><tr><td class='alt2' colspan='3'><hr />{$vbnexus_buttons}";
+                break;
+            default:
+                break;
+        }
+
+        $vbulletin->templatecache['navbar'] = preg_replace($vbnexus_original, $vbnexus_extended, $vbulletin->templatecache['navbar']);
+        $vbulletin->options['vbnexus_loc'] = $vbnexus_loc;
+        $vbulletin->options['vbnexus_fb_scope'] = $vBNexus->getConfig('fb_perms');
+    }
+}]]></phpcode>
+        </plugin>
+        <plugin active="1" executionorder="5">
+            <title>vB Nexus (Login and Registration)</title>
+            <hookname>global_setup_complete</hookname>
+            <phpcode><![CDATA[$vBNexus = vBNexus::getInstance();
+
+// All login and register requests have a vbnexus_service parameter (fb || gfc)
+if (!$vbulletin->userinfo['userid'] && !empty($_REQUEST['vbnexus_service'])) {
+    $vbnexus_service = $_REQUEST['vbnexus_service'];
+    $vBNexus->setConfig('vbnexus_service', $vbnexus_service);
+
+$vbnexus_userid = !empty($_POST['vbnexus_userid']) ? $_POST['vbnexus_userid'] : 0;
+$vBNexus->setConfig('vbnexus_userid', $vbnexus_userid);
+
+
+/**
+ * The presence of param vbnexus_registration_type indicates we're registering a new
+ * vbnexus user. Registration type is either 'new' or 'link' (to existing vb account)
+ */
+if (!empty($_POST['vbnexus_registration_type'])) {
+    $vbnexus_regType = $_POST['vbnexus_registration_type'];
+
+    $vbnexus_regData = array(
+        'type'          => $vbnexus_regType,
+        'service'       => $_POST['vbnexus_service'],
+        'userid'        => $_POST['vbnexus_userid'],
+        'username'      => $_POST['username'],
+        'password'      => (($vbnexus_regType == 'link') ? $_POST['password'] : NULL),
+        'email'         => (($vbnexus_regType == 'new') ? $_POST['email'] : NULL),
+        'coded_email'   => (($vbnexus_regType == 'new') ? $vBNexus->codedEmail($_POST['email']) : NULL),
+        'default_email' => (($vbnexus_regType == 'new') ? $_POST['vbnexus_default_email'] : NULL),
+        'publish'       => (($vbnexus_regType == 'new') ? !empty($_POST['vbnexus_fb_publish']) : false),
+    );
+    $vbnexus_result = $vBNexus->register($vbnexus_regData);
+
+    // If validation failed, process the error and set flag registration_pending
+    $vbnexus_registration_error = '';   // Var in template vbnexus_registration
+    if ($vbnexus_result !== true) {
+        if (preg_match('/^vbnexus_/', $vbnexus_result)) {
+            $vbnexus_result = $vbphrase[$vbnexus_result];
+        }
+        $vbnexus_registration_error = "<li>{$vbnexus_result}</li>";
+        $vBNexus->setFlag('registration_pending');
+    }
+}
+
+// Attempt to login using service vbnexus_service
+if (!$vBNexus->getFlag('registration_pending')) {
+    if ($vBNexus->login($vbnexus_service)) {   // Registered already, successfull login
+        vbsetcookie('imloggedin', 'yes', ($send_cookies AND $cookieuser), true, true);
+        $vbulletin->url = base64_decode($vbnexus_loc);
+        do_login_redirect();
+    } else {                                   // User not found in db (first-timer)
+        $vBNexus->setFlag('registration_pending');
+    }
+}
+
+// If flag registration_pending is set, we show the user vbnexus registration form
+if ($vBNexus->getFlag('registration_pending')) {
+    $vBNexusUser = $vBNexus->getUserData();
+
+    $vBNexusUser['default_email'] = $vBNexus->codedEmail($vBNexusUser['email']);
+
+    $vbnexus_can_publish = $vBNexus->canPublish();
+
+    $vbnexus_service = $vBNexus->getConfig('vbnexus_service');
+    $vbnexus_userid = $vBNexus->getConfig('vbnexus_userid');
+    $vbnexus_new_member_text = $vbphrase["vbnexus_new_member_text"];
+    $vbnexus_existing_member_text = $vbphrase["vbnexus_existing_member_text_{$vbnexus_service}"];
+
+    if (!empty($_REQUEST['vbnexus_fb_publish'])) {
+        $vbnexus_fb_publish_checked = $_REQUEST['vbnexus_fb_publish'] ? 'checked="checked"' : '';
+    } elseif ($vBNexus->getOption('postsfeeds_checked')) {
+        $vbnexus_fb_publish_checked = 'checked="checked"';
+    }
+
+    // Restore user-provided username/email if present, instead of defaul service's
+    // email. This happens when there was a mistake (e.g. invalid username or email)
+    if (!empty($_POST['username'])) $vBNexusUser['name'] = $_POST['username'];
+    if (!empty($_POST['email'])) $vBNexusUser['email'] = $_POST['email'];
+
+    eval('$navbar = "' . fetch_template('navbar') .  fetch_template('vbnexus_registration') . '";');
+    eval('print_output("' . fetch_template('FORUMHOME') . '");');
+    }
+}]]></phpcode>
+        </plugin>
+        <plugin active="1" executionorder="1">
+            <title>vB Nexus (Delete vB Nexus User on vB User Deletion)</title>
+            <hookname>userdata_delete</hookname>
+            <phpcode><![CDATA[if ($this->existing['userid']) {
+    vBNexus::getInstance()->deleteUser($this->existing['userid']);
+}]]></phpcode>
+        </plugin>
+        <plugin active="1" executionorder="1">
+            <title>vB Nexus (Group vB Nexus Templates)</title>
+            <hookname>template_groups</hookname>
+            <phpcode><![CDATA[$only['vbnexus'] = 'vB Nexus';]]></phpcode>
+        </plugin>
+    </plugins>
+    <phrases>
+        <phrasetype name="vB Nexus" fieldname="vbnexus">
+            <phrase name="vbnexus_buttons_legend" date="1317866115" username="master" version="4.0"><![CDATA[...or sign in using an external account]]></phrase>
+            <phrase name="vbnexus_buttons_legend_left" date="1317866115" username="master" version="4.0"><![CDATA[Sign in using an external account]]></phrase>
+            <phrase name="vbnexus_existing_member_text_fb" date="1317884544" username="master" version="4.0"><![CDATA[Already a member?<br /><br />Stay up-to-date: link Facebook to your forum account.]]></phrase>
+            <phrase name="vbnexus_existing_member_text_gfc" date="1317884578" username="master" version="4.0"><![CDATA[Already a member?<br /><br />Stay up-to-date: link your existing forum account to your Google, Twitter, Yahoo, OpenID, AIM or NetLog accounts.]]></phrase>
+            <phrase name="vbnexus_facebook_login_text" date="1317749835" username="master" version="4.0"><![CDATA[Log In]]></phrase>
+            <phrase name="vbnexus_facebook_login_title" date="1317754622" username="master" version="3.0"><![CDATA[Log in using your Facebook account]]></phrase>
+            <phrase name="vbnexus_fb_publish_text" date="1317935822" username="master" version="4.0"><![CDATA[Publish this to your Facebook Stream]]></phrase>
+            <phrase name="vbnexus_google_login_text" date="1317864732" username="master" version="4.0"><![CDATA[Sign In]]></phrase>
+            <phrase name="vbnexus_google_login_title" date="1317864858" username="master" version="4.0"><![CDATA[Sign in with Google, Twitter, Yahoo, AIM, OpenID, Netlog...]]></phrase>
+            <phrase name="vbnexus_invalid_login" date="1317935909" username="master" version="4.0"><![CDATA[Please fill all required fields to proceed.]]></phrase>
+            <phrase name="vbnexus_new_member_text" date="1317884411" username="master" version="4.0"><![CDATA[New member? Please choose your public Username for the boards]]></phrase>
+            <phrase name="vbnexus_registration_failed" date="1317935984" username="master" version="4.0"><![CDATA[An error occured while attempting to register your external account. Please try again in a few minutes.
+<br />If the problem persists, contact the site admin.]]></phrase>
+            <phrase name="vbnexus_registration_linking_failed" date="1317935885" username="master" version="4.0"><![CDATA[An error occurred when trying to link the external account to your existing local account.]]></phrase>
+            <phrase name="vbnexus_registration_wrong_credentials" date="1317935822" username="master" version="4.0"><![CDATA[The username and password you provided do not match any user in our system.]]></phrase>
+        </phrasetype>
+        <phrasetype name="vBulletin Settings" fieldname="vbsettings">
+            <phrase name="setting_vbnexusconfig_buttons_position_desc" date="1318955832" username="master" version="4.0"><![CDATA[Select in which spot to place vB Nexus Login Buttons (relative to the usual login form)]]></phrase>
+            <phrase name="setting_vbnexusconfig_buttons_position_title" date="1318955832" username="master" version="4.0"><![CDATA[Buttons Positioning]]></phrase>
+            <phrase name="setting_vbnexusconfig_enable_feeds_desc" date="1249061811" username="dbind" version="4.0"><![CDATA[You can set this option any time later without prejudice to existing users. When Facebook Feeds and Notifications is enabled, users are prompted (once) to give your application publish_stream permission]]></phrase>
+            <phrase name="setting_vbnexusconfig_enable_feeds_title" date="1249061811" username="dbind" version="4.0"><![CDATA[Enable Feeds and Notifications]]></phrase>
+            <phrase name="setting_vbnexusconfig_facebook_appid_desc" date="1249061811" username="pshah" version="1.0"><![CDATA[Enter your FB Application ID to enable Facebook Social Plugin service]]></phrase>
+            <phrase name="setting_vbnexusconfig_facebook_appid_title" date="1249061811" username="pshah" version="1.0"><![CDATA[Facebook Application Id]]></phrase>
+            <phrase name="setting_vbnexusconfig_facebook_applicationsecret_desc" date="1249061870" username="pshah" version="1.0"><![CDATA[Enter your FB Application Secret to enable Facebook Social Plugin service]]></phrase>
+            <phrase name="setting_vbnexusconfig_facebook_applicationsecret_title" date="1249061870" username="pshah" version="1.0"><![CDATA[Facebook Application Secret]]></phrase>
+            <phrase name="setting_vbnexusconfig_google_apikey_desc" date="1249061811" username="pshah" version="1.0"><![CDATA[Enter your GFC site ID to enable Google Friend Connect service]]></phrase>
+            <phrase name="setting_vbnexusconfig_google_apikey_title" date="1249061811" username="pshah" version="1.0"><![CDATA[Google Friend Connect Site ID]]></phrase>
+            <phrase name="setting_vbnexusconfig_postsfeeds_checked_desc" date="1249061811" username="dbind" version="4.0"><![CDATA[When enabled (not recommended), users will have to explicitly uncheck the "Publish to Stream" option if they don't want to post to their streams.<br /><br />This option only makes sense when Feeds and Notifications is enabled]]></phrase>
+            <phrase name="setting_vbnexusconfig_postsfeeds_checked_title" date="1249061811" username="dbind" version="4.0"><![CDATA[Check "Publish to Stream" buttons by default]]></phrase>
+            <phrase name="settinggroup_vbnexusconfig" date="1249061715" username="pshah" version="1.0"><![CDATA[vB Nexus Configuration]]></phrase>
+        </phrasetype>
+    </phrases>
+    <options>
+        <settinggroup name="vbnexusconfig" displayorder="620">
+            <setting varname="vbnexusconfig_google_apikey" displayorder="10">
+                <datatype>free</datatype>
+            </setting>
+            <setting varname="vbnexusconfig_facebook_appid" displayorder="20">
+                <datatype>free</datatype>
+            </setting>
+            <setting varname="vbnexusconfig_facebook_applicationsecret" displayorder="30">
+                <datatype>free</datatype>
+            </setting>
+            <setting varname="vbnexusconfig_enable_feeds" displayorder="40">
+                <datatype>boolean</datatype>
+                <optioncode>yesno</optioncode>
+                <defaultvalue>0</defaultvalue>
+            </setting>
+            <setting varname="vbnexusconfig_postsfeeds_checked" displayorder="50">
+                <datatype>boolean</datatype>
+                <optioncode>yesno</optioncode>
+                <defaultvalue>0</defaultvalue>
+            </setting>
+            <setting varname="vbnexusconfig_buttons_position" displayorder="60">
+                <datatype>free</datatype>
+                <optioncode>select:piped
+left|Left
+right|Right
+below|Below</optioncode>
+                <defaultvalue>left</defaultvalue>
+            </setting>
+        </settinggroup>
+    </options>
+    <helptopics>
+    </helptopics>
+    <cronentries>
+    </cronentries>
+    <faqentries>
+    </faqentries>
+</product>

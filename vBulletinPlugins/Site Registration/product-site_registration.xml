@@ -482,14 +482,6 @@ $stylevar[htmldoctype]
 		
 		]]></template>
 
-		<template name="facebook_button" templatetype="template" 
-		    date="1352855133" username="IB Chandak" 
-		    version="1.0">
-		    <![CDATA[ 		     
-		    <a href="register.php&step=confirm-facebook-details" title="Sign in with Facebook"><img src="includes/site-registration/img/facebook_en.png" alt="Sign in with Facebook" class="no-border"></a>
-		    ]]>
-        </template>
-
 		<template name="site_reg_not_activated" templatetype="template" 
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
@@ -1305,15 +1297,7 @@ $stylevar[htmldoctype]
 	                    
 	                }
 	            
-			    }else{
-			            $facebook_button = fetch_template('facebook_button');
-			            
-			            $vbulletin->templatecache['navbar'] = str_replace(
-			            	'<!-- / login form -->',
-			            	'<!-- / login form -->' . $facebook_button,
-			            	$vbulletin->templatecache['navbar']
-			            );
-			    }    
+			    } 
 			    
 			    
 			    $element = "";

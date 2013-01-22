@@ -18,7 +18,7 @@
 | cannot tell you the correct values for the variables    |
 | in this file.                                           |
 \*-------------------------------------------------------*/
-
+//define('DISABLE_HOOKS', true);
 	//	****** DATABASE TYPE ******
 	//	This is the type of the database server on which your vBulletin database will be located.
 	//	Valid options are mysql and mysqli, for slave support add _slave.  Try to use mysqli if you are using PHP 5 and MySQL 4.1+
