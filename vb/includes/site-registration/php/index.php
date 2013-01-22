@@ -773,7 +773,7 @@ case 'create_site_account_first_step':
         $vbulletin->db
                 ->query_write(
                         "
-            INSERT IGNORE INTO " . TABLE_PREFIX
+            REPLACE INTO " . TABLE_PREFIX
                                 . "siteregistration_temp
             (email,birthday,initialpage)
             VALUES
