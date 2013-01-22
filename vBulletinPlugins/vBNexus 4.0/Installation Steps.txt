@@ -1,0 +1,5 @@
+1. Make sure the vbnexus files are accessible through /var/ibvbshare/vbnexus4.1.5
+2. Install the product
+3. Get the Facebook App ID & App Secret from https://developers.facebook.com/apps
+4. Add the above Facebook params to the product's vbulletin options
+5. Enable the product
