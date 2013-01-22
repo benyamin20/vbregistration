@@ -1006,14 +1006,22 @@ case 'activate':
         $year = $date_parts[2];
         $day = $date_parts[1];
 
-        if ($year > 1970
-                AND mktime(0, 0, 0, $month, $day, $year)
-                        > mktime(0, 0, 0, $current['month'], $current['day'],
-                                $current['year'] - 13)) {
-            $valid_entries = FALSE;
-            $message = "You must be over 13 to register";
-            //fetch_error('under_thirteen_registration_denied');
+        if (checkdate($month, $day, $year)) {
+            if ($year > 1970
+                    AND mktime(0, 0, 0, $month, $day, $year)
+                            > mktime(0, 0, 0, $current['month'],
+                                    $current['day'], $current['year'] - 13)) {
+                $valid_entries = FALSE;
+                $messages['errors'][] = $message = "You must be over 13 to register";
+                $messages['fields'][] = $error_type = "datepicker";
+                //fetch_error('under_thirteen_registration_denied');
+            } else {
+
+            }
         } else {
+            $valid_entries = FALSE;
+            $messages['errors'][] = $message = "Invalid date.";
+            $messages['fields'][] = $error_type = "datepicker";
         }
     }
 
