@@ -573,30 +573,26 @@ case 'validate_site_account_details':
             $userdata_rank->set_existing($userinfo);
             $userdata_rank->set('posts', 0);
             $userdata_rank->save();
+            
+            
+            //start new session
+            $vbulletin->userinfo = $vbulletin->db->query_first(
+                "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                username, password, salt FROM " . TABLE_PREFIX . "user 
+                WHERE userid = " . $userid
+            );
 
-            $vbulletin->session->created = false;
+            require_once(DIR . '/includes/functions_login.php');
+            
+            vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
+			vbsetcookie('password', md5($vbulletin->userinfo['password'] . COOKIE_SALT), true, true, true);
+			
+			
+			process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+			
+			cache_permissions($vbulletin->userinfo, true);
 
-            //create a new login for user
-
-            process_new_login('', false, '');
-            //process_new_login('', '', '');
-
-            $newsession = &new vB_Session($vbulletin, '', $userid, '',
-                    $vbulletin->session->vars['styleid'],
-                    $vbulletin->session->vars['languageid']);
-
-            $newsession->set('userid', $userid);
-            $newsession->set('loggedin', 1);
-
-            $newsession
-                    ->set_session_visibility(
-                            ($vbulletin->superglobal_size['_COOKIE'] > 0));
-            $newsession->fetch_userinfo();
-
-            $vbulletin->session = &$newsession;
-            $vbulletin->userinfo = $newsession->userinfo;
-            $vbulletin->userinfo['lang_locale'] = $lang_info['lang_locale'];
-            $vbulletin->userinfo['lang_charset'] = $lang_info['lang_charset'];
+	        $vbulletin->session->save();
 
 
 
