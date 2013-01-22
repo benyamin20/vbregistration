@@ -18,6 +18,7 @@
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+ $headinclude
  
 <!-- <base href="$vboptions[bburl]/" /> -->
 
@@ -52,15 +53,16 @@ $stylevar[htmldoctype]
 </head>
 
 <body>
+ 
 	<!-- main container -->
 	<div id="container" class="container_12">
 		<div class="clear clear_15"></div>
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
-			<a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
-		        </a>
+			$header
 		</div>
+		</div></div></div><!-- close header -->
+		
 		<div class="clear clear_30"></div>
 
 		<!-- Ad units -->
@@ -341,7 +343,7 @@ $stylevar[htmldoctype]
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
     <div id="footer" class="container_12">
         <div><div><div>
@@ -365,6 +367,7 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+ $headinclude
 
  
 
@@ -402,15 +405,16 @@ $stylevar[htmldoctype]
 </head>
 
 <body>
+ 
 	<!-- main container -->
 	<div id="container" class="container_12  activate-account-container">
 		<div class="clear clear_15"></div>
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
-			<a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
-		        </a>
+			$header
 		</div>
+		</div></div></div><!-- close header -->
+		
 		<div class="clear clear_30"></div>
 
 		<!-- Ad units -->
@@ -465,7 +469,7 @@ $stylevar[htmldoctype]
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
     <div id="footer"  class="container_12">
         <div><div><div>
@@ -529,6 +533,7 @@ $stylevar[htmldoctype]
     $stylevar[htmldoctype]
     <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
     <head>
+ $headinclude
     
  
     
@@ -570,16 +575,18 @@ $stylevar[htmldoctype]
     </head>
 
     <body>
+ 
     	<div id="fb-root"></div>
 	    <!-- main container -->
 	    <div id="container" class="container_12">
 		    <div class="clear clear_15"></div>
 		    <!-- Site logo -->
 		    <div id="logo" class="grid_4">
-		        <a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
-		        </a>
+		        $header
 		    </div>
+		    
+		    </div></div></div> <!-- close header -->
+		    
 		    <div class="clear clear_30"></div>
 		    <!-- Site heading -->
 		    <div id="site-heading" class="grid_12">
@@ -633,7 +640,7 @@ $stylevar[htmldoctype]
 			    </div>
                        
 			
-                <if condition="$vboptions['site_registration_settingsfb_showfb']">
+                <if condition="$show['vbnexus_button_fb']">
                     <!-- OR -->
 	                <div class="grid_1 vertical-rule">
 		                <div class="centered">
@@ -649,7 +656,7 @@ $stylevar[htmldoctype]
                 </if>
 
 			    <div class="grid_3">
-                    <if condition="$vboptions['site_registration_settingsfb_showfb']">
+                    <if condition="$show['vbnexus_button_fb']">
 				        <!-- FB login -->
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
@@ -749,7 +756,7 @@ $stylevar[htmldoctype]
 	    
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
     <div id="footer"  class="container_12">
         <div><div><div>
@@ -766,6 +773,7 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+ $headinclude
  
 <!-- <base href="$vboptions[bburl]/" /> -->
 <title>Confirm You Details - $vboptions[bbtitle]</title>
@@ -801,15 +809,16 @@ $stylevar[htmldoctype]
 </head>
 
 <body>
+ 
 	<!-- main container -->
 	<div id="container" class="container_12 activate-account-container">
 		<div class="clear clear_15"></div>
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
-			<a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
-		        </a>
+			$header
 		</div>
+		</div></div></div> <!-- close header -->
+		
 		<div class="clear clear_30"></div>
 
 		<!-- Site heading -->
@@ -997,7 +1006,7 @@ $stylevar[htmldoctype]
 	
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
     <div id="footer"  class="container_12">
         <div><div><div>
@@ -1015,6 +1024,7 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+ $headinclude
 
  
 <!-- <base href="$vboptions[bburl]/" /> -->
@@ -1048,15 +1058,16 @@ $stylevar[htmldoctype]
 </head>
 
 <body>
+ 
 	<!-- main container -->
 	<div id="container" class="container_12">
 		<div class="clear clear_15"></div>
 		<!-- Site logo -->
 		<div id="logo" class="grid_4">
-			<a href="$vboptions[bburl]">
-		            <img src="$stylevar[titleimage]" id="site-logo" alt="$vboptions[bbtitle]" /> 
-		        </a>
+			$header
 		</div>
+		</div></div></div><!-- close header -->
+		
 		<div class="clear clear_30"></div>
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
@@ -1224,7 +1235,7 @@ $stylevar[htmldoctype]
     
 	<!-- footer -->
 	<script type="text/javascript">
-	vBulletin_init = function(){}
+	//vBulletin_init = function(){}
 	</script>
 	
     <div id="footer"  class="container_12">
@@ -1789,7 +1800,7 @@ $stylevar[htmldoctype]
                     //get username
                     $_SESSION['site_registration']['userid'] = $userid = $vbulletin->GPC['u'];
                     
-                    $sql = "SELECT username, email, salt, userid
+                    $sql = "SELECT username, email, salt, userid, birthday
 		                    FROM " . TABLE_PREFIX . "user
 		                    WHERE userid = $userid";
                      
@@ -1797,6 +1808,7 @@ $stylevar[htmldoctype]
 	                 
 	                $_SESSION['site_registration']['username'] = unhtmlspecialchars($users_db['username']);
 	                $email = $_SESSION['site_registration']['email'] = unhtmlspecialchars($users_db['email']);
+	                $birthday = $_SESSION['site_registration']['birthday'] = ($users_db['birthday']);
 	                
 	                $username_db = ucfirst($users_db['username']);
 	
@@ -1852,10 +1864,14 @@ $stylevar[htmldoctype]
                         );
                         
                         
+                        $birthday = preg_replace("/\-/","/", $birthday);
+                        
+                        $sql = "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
+                            WHERE email = '". $vbulletin->db->escape_string($email) ."'
+                            AND   birthday = '". $vbulletin->db->escape_string($birthday) ."' ";
                         
                         $rs = $vbulletin->db->query_first(
-                            "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
-                            WHERE email = '". $vbulletin->db->escape_string($email) ."'"
+                            $sql
                         );
                         
                         if(empty($rs['initialpage'])){
@@ -1871,7 +1887,7 @@ $stylevar[htmldoctype]
                         if( strlen( $str ) > 0 ){
                             preg_match("/\<title\>(.*)\<\/title\>/" , $str , $title );
                             $page_title = $title[1];
-                        }
+                        } 
                         
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
 	                
