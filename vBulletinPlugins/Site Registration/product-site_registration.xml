@@ -90,14 +90,12 @@ $stylevar[htmldoctype]
 				<div class="clear clear_15"></div>
 				
 				<p class="small light_grey">
-				 <if condition="$page_title">
 				    $page_title
-				 </if>
 				</p>
 				
 				<div class="clear"></div>
 				<a class="btn grid_4 no-margin"
-				    href="$prev_url&go_back=1"
+				    href="$prev_url"
 				    id="send-me-there">Send Me There &#187;</a>
 
 				<div class="clear clear_20"></div>
@@ -237,6 +235,7 @@ $stylevar[htmldoctype]
 							<!--  Timezone -->
 							<div id="timezone-wrapper">
 							    <select name="timezone" id="timezone">
+							        $time_zone_select
                                     <option value="" selected="selected">Your Timezone</option> 
 				                    <option class="" value="-12">(GMT -12:00) Eniwetok, Kwajalein</option>
                                     <option class="" value="-11">(GMT -11:00) Midway Island, Samoa</option>
@@ -1436,8 +1435,10 @@ $stylevar[htmldoctype]
                         session_start();
                     }
                     
-                    $_SESSION['site_registration']['initial_page'] = $php_self; 
-
+                    if(empty($_SESSION['site_registration']['initial_page'])){
+                        $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
+                    }
+                    
 			        //invoke site account details template
 			        if(isset($_REQUEST['step']) && $_REQUEST['step'] == 'site-account-details'){
 			        
@@ -1659,7 +1660,9 @@ $stylevar[htmldoctype]
                         session_start();
                     }
                     
-                    $_SESSION['site_registration']['initial_page'] = $php_self; 
+                    if(empty($_SESSION['site_registration']['initial_page'])){
+                        $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
+                    }
                     
 			        if(!(int)$vbulletin->userinfo['userid']){
 			            header("Location: register.php?ref=reg-new-thread");
@@ -1679,7 +1682,9 @@ $stylevar[htmldoctype]
                         session_start();
                     }
                     
-                    $_SESSION['site_registration']['initial_page'] = $php_self; 
+                    //if(empty($_SESSION['site_registration']['initial_page'])){
+                        $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
+                    //}
                     
 			        if(!(int)$vbulletin->userinfo['userid']){
  
@@ -1740,7 +1745,9 @@ $stylevar[htmldoctype]
                         session_start();
                     }
                     
-                    $_SESSION['site_registration']['initial_page'] = $php_self; 
+                    if(empty($_SESSION['site_registration']['initial_page'])){
+                        $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
+                    } 
 
                     
 			        if(!(int)$vbulletin->userinfo['userid']){
@@ -1841,19 +1848,25 @@ $stylevar[htmldoctype]
                         );
                         
                         
-                        if(empty($_SESSION['site_registration']['initial_page'])){
-                            $prev_url = $vbulletin->options['forumhome'] . '.php' . $vbulletin->session->vars['sessionurl_q'];
+                        
+                        $rs = $vbulletin->db->query_first(
+                            "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
+                            WHERE email = '". $vbulletin->db->escape_string($email) ."'"
+                        );
+                        
+                        if(empty($rs['initialpage'])){
+                            $prev_url = "index.php";
                         }else{
-                            $rs = $vbulletin->db->query_first(
-                                "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
-                                WHERE email = '". $vbulletin->db->escape_string($email) ."'"
-                            );
-                            
-                            if(empty($rs['initialpage'])){
-                                $prev_url = "index.php";
-                            }else{
-                                $prev_url = $rs['initialpage'];
-                            }
+                            $prev_url = $rs['initialpage'];
+                        }
+                        
+                        
+                        $fetch_url = $prev_url;
+                        $str = file_get_contents($fetch_url);
+                        
+                        if( strlen( $str ) > 0 ){
+                            preg_match("/\<title\>(.*)\<\/title\>/" , $str , $title );
+                            $page_title = $title[1];
                         }
                         
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
