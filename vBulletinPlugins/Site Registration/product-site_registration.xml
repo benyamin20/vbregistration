@@ -851,8 +851,7 @@ $stylevar[htmldoctype]
 					value="$fbUsername" autocomplete="off" type="text" 
 					maxlength="25"  />
 
-				<span class="help-block small light_grey">Max 25 characters,
-					no spaces please.</span>
+				<span class="help-block tiny dark_grey">Maximum 25 characters.</span>
 
 
 				<div class="clear clear_15"></div>
@@ -1072,7 +1071,7 @@ $stylevar[htmldoctype]
 					<span class="error-label" id="username-error-label"></span> 
 				</div>
 				
-				<span class="help-block small light_grey">
+				<span class="help-block tiny dark_grey">
 				    Maximum 25 characters
 				</span>
 				
