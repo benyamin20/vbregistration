@@ -584,7 +584,7 @@ $stylevar[htmldoctype]
                 <div class="clear"></div>
 			    <!-- Create site Account -->
 			    <div class="grid_3" id="create-site-account"> 
-                    <div class="clear clear_15"></div>
+                    <div class="clear clear_20"></div>
 				    <h1>Create Site Account</h1>
 				    <div class="clear clear_15"></div>
 				    <div class="error_red small" id="create-site-account-error">
