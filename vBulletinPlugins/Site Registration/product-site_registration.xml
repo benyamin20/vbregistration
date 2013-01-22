@@ -652,9 +652,7 @@ $stylevar[htmldoctype]
 				        <div class="clear"></div>
 				        <script>
 					       	function openModalPopup() {            
-					       		var win = window.open('$loginURL', 'facebook-login', 'width=400,height=400'); 						    
-							    
-							    alert(window.location);
+					       		var win = window.open('http://www.muucms.com/vb/facebook.php', 'facebook-login', 'width=400,height=400'); 						    							   							   
 							}
 						</script>
 
@@ -1620,7 +1618,9 @@ $stylevar[htmldoctype]
 								$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
 								$loginURL .= "state=". $_SESSION["state"] ."&";
 								$loginURL .= "scope=$scope&";
-								$loginURL .= "display=popup";													
+								$loginURL .= "display=popup";			
+
+								$_SESSION["fbLoginURL"] = $loginURL;										
 				        	} 				        	
 
 			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
