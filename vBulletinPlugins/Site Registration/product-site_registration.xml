@@ -133,10 +133,8 @@ $stylevar[htmldoctype]
 
                         <!--  Avatar -->
 						<label>Your Avatar</label>
-						<div class="clear"></div>
-						
-						
-
+						<div class="clear clear_5"></div>
+		 
 						<div id="photoimg-wrapper" class="grid_4 no-margin">
 							<!--
 							    <div class="grid_1 no-margin pull-left">
