@@ -448,3 +448,7 @@ hr{
 .fix-line-height{
     line-height: 30px;
 }
+
+#what-you-get{
+    margin-top: -60px;
+}

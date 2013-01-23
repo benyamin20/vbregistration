@@ -725,7 +725,7 @@ $stylevar[htmldoctype]
 
 		    <div class="clear"></div>
 
-		    <div id="what-you-get" class="grid_12">
+		    <div id="what-you-get" class="grid_8">
 
 			    <h3 id="benefits-title">
 			        $vboptions[site_registration_title]
@@ -746,7 +746,7 @@ $stylevar[htmldoctype]
 
 			    </div>
 
-			    <div class="small grid_8 prefix_1 omega">
+			    <div class="small grid_3 prefix_1 omega">
 				    $vboptions[site_registration_bullets_part_2]
 			    </div>
 
