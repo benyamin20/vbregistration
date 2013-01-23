@@ -361,8 +361,10 @@ li {
 
 .not-active{
     width: inherit;
-    padding: 20px;
-    margin-top: 3px;
+    padding-left:   15px;
+    padding-right:  15px;
+    padding-top:    20px;
+    padding-bottom: 20px;
 }
 
 .no-top{
@@ -451,4 +453,31 @@ hr{
 
 #what-you-get{
     margin-top: -60px;
+}
+
+.not-fully-active{
+    font-size: 16px;
+    font-weight: bold;
+    color: #800000;
+    line-height: 25px;
+}
+
+.please-confirm-account{
+    font-size: 16px;
+    font-weight: normal;
+    color: #333333;
+}
+
+.did-not-receive{
+    font-size: 12px; 
+    font-weight: bold;
+    font-color: #333333;
+}
+
+#resend-email{
+    font-weight: normal !important;
+}
+
+#email-icon{
+    padding-top:15px;
 }

@@ -510,18 +510,18 @@ $stylevar[htmldoctype]
 
                 <div id='container' class='container_12 background_yellow not-active'>
                     <div id='warning-container' >
-                        <div class='pull_left no-margin grid_2 alpha'>
-                            <img src='includes/site-registration/img/email-icon.png' 
+                        <div class='pull-left no-margin grid_1 alpha'>
+                            <img src='includes/site-registration/img/icon-email-medium.png' 
                                 id='email-icon' />
                         </div>
-                        <div class='prefix_1 pull_right no-margin grid_9 omega'>
-                            <h1 class='title_red no-margin'>
+                        <div class='margin_left_20 grid_9 omega'>
+                            <h1 class='not-fully-active no-margin'>
                             Your account Is Not Fully Active
                             </h1>
                             <div class='clear'></div>
-                            Please confirm your account by clicking on the email activation link
+                            <span class="please-confirm-account">Please confirm your account by clicking on the email activation link</span>
                             <div class='clear clear_15'></div>
-                            Did not receive it? 
+                            <span class="did-not-receive">Did not receive it? 
                             <a href="$php_self#resend" id="resend-email" class="small link_blue">
 				            Resend activation email</a>
 				            &nbsp;&nbsp;&nbsp;
