@@ -1,6 +1,8 @@
 
 AJAX_Compatible = true;
 
+var md5_loaded = false;
+
 /**
  * check if something exists
  */
@@ -54,11 +56,11 @@ function closeTnC() {
 */
 jQuery(document).ready(function(jQuery) {
 
-    jQuery(':input[placeholder]').placeholder();
+    //jQuery(':input[placeholder]').placeholder();
     
-    if(jQuery('input[id*="password"]').exists()){
+    if(jQuery('input[id*="password"]').exists() && !md5_loaded){
        jQuery.getScript("includes/site-registration/js/md5.js", function() {
-       
+            md5_loaded = true;
        });
     }
 
