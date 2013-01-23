@@ -54,7 +54,7 @@ function closeTnC() {
 */
 jQuery(document).ready(function(jQuery) {
 
-    jQuery(':input[placeholder]').placeholder();
+    //jQuery(':input[placeholder]').placeholder();
     
     if(jQuery('input[id*="password"]').exists()){
        jQuery.getScript("includes/site-registration/js/md5.js", function() {

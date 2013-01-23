@@ -860,7 +860,7 @@ default:
         $original_userinfo = $vbulletin->userinfo;
 
         $vbulletin->GPC['vb_login_md5password'] = $vbulletin
-                ->GPC['vb_login_md5password_utf'] = md5(
+                ->GPC['vb_login_md5password_utf'] = (
                 $vbulletin->GPC['vb_login_password']);
 
         if (!verify_authentication($vbulletin->GPC['vb_login_username'],
