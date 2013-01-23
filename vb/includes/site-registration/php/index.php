@@ -372,8 +372,7 @@ case 'complete_your_profile':
 
     }
 
-    $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-            "rows" => $rows, "image" => $default_image);
+    $arr = array("valid_entries" => $valid_entries, "messages" => $messages  );
 
     json_headers_ie_support($arr);
 
@@ -806,7 +805,7 @@ case 'create_site_account_first_step':
     }
 
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-            "url" => $url, "rows" => $rows);
+            "url" => $url );
 
     json_headers($arr);
 
@@ -1126,8 +1125,7 @@ case 'activate':
     }
 
     $arr = array("valid_entries" => $valid_entries,
-            "error_type" => $error_type, "message" => $message, "url" => $url,
-            "rows" => $rows);
+            "error_type" => $error_type, "message" => $message, "url" => $url );
 
     json_headers($arr);
 
@@ -1162,8 +1160,7 @@ case "linkaccount":
 
         if ($dbPassword != $password) {
             $arr = array("valid_entries" => false, "error_type" => "password",
-                    "message" => "Incorrect Login", "url" => $url,
-                    "rows" => $rows);
+                    "message" => "Incorrect Login", "url" => $url );
         } else {
             $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                     . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";

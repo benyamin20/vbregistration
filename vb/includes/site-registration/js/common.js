@@ -234,10 +234,16 @@ jQuery(document).ready(function(jQuery) {
                         jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
                         jQuery('.error-label').empty();
                         jQuery('.input-error-container').removeClass("input-error-container");
+                        //jQuery('.large-input-error-container').removeClass("large-input-error-container");
                         jQuery('.input-error').removeClass("input-error");
                         
-                        jQuery.each(response.messages.fields, function(index, value) {        
-                            jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                        jQuery.each(response.messages.fields, function(index, value) {
+                            //if(value == 'timezone'){
+                            //    jQuery('#'+value+'-wrapper').addClass("large-input-error-container");    
+                            //}else{
+                                jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                            //}        
+                            
                             jQuery('#'+value).addClass("input-error");
                             jQuery('#'+value+'-error-label').empty();
                             jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
@@ -253,6 +259,7 @@ jQuery(document).ready(function(jQuery) {
                     try{
                         jQuery('.error-label').empty();
                         jQuery('.input-error-container').removeClass("input-error-container");
+                        //jQuery('.large-input-error-container').removeClass("large-input-error-container");
                         jQuery('.input-error').removeClass("input-error");
                     }catch(e){
                     

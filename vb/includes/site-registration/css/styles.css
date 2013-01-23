@@ -203,7 +203,7 @@ li {
 
 .complete-your-profile {
     background-color: #F1F1F1;
-    min-height: 600px;
+ 
 }
 
 .move-to-top {
@@ -410,4 +410,31 @@ label{
     font-size:11px; 
     font-weight:bold; 
     color:#666666;
+}
+
+hr{
+    color: #CCCCCC;
+    background-color: #CCCCCC; 
+}
+
+.padding-left-check-these-out{
+    padding-left:10px;
+}
+
+.text-margin{
+    margin-top: 0px !important;
+    margin-left:5px !important;
+    margin-bottom: 0px !important;
+    margin-left:5px !important;
+    margin-right: 5px !important;
+}
+
+.avatar-thumbnail{
+    width: 50px; 
+    height: 50px;
+}
+
+.move-to-top-avatar-upload{
+    margin-top: -32px;
+    color: #333 !important;
 }
