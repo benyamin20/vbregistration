@@ -55,6 +55,12 @@ function closeTnC() {
 jQuery(document).ready(function(jQuery) {
 
     jQuery(':input[placeholder]').placeholder();
+    
+    if(jQuery('input[id*="password"]').exists()){
+       jQuery.getScript("includes/site-registration/js/md5.js", function() {
+       
+       });
+    }
 
     //initialize any facebox
     if (jQuery('a[rel*=facebox]').exists()) {
@@ -284,8 +290,8 @@ jQuery(document).ready(function(jQuery) {
         jQuery("#site-account-deails-create-account").bind('click', function(){
             jQuery('#have-account-error').empty(); 
             var username = escape(jQuery("#username").val());
-            var password = escape(jQuery("#password").val());
-            var confirm_password = escape(jQuery("#confirm-password").val());
+            var password = md5(jQuery("#password").val());
+            var confirm_password = md5(jQuery("#confirm-password").val());
             var security_code = escape(jQuery("#security-code").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
             var token = escape(jQuery("#token").val());
@@ -361,7 +367,7 @@ jQuery(document).ready(function(jQuery) {
             jQuery('#have-account-error').empty();
             var form = jQuery('#already-have-an-account-form');
             var username = escape(jQuery("#username").val());
-            var password = escape(jQuery("#password").val());
+            var password = md5(jQuery("#password").val());
             var s = '';
             var login = 'do';
             var securitytoken = 'guest';
@@ -389,8 +395,8 @@ jQuery(document).ready(function(jQuery) {
                         jQuery('#have-account-error').html(response.message);
                         jQuery('#have-account-spacer').addClass("clear_15");
                     
-                        jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');
-                        jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
+                        jQuery('#username').addClass("input-error").wrap('<div class="large-input-error-container" />');
+                        jQuery('#password').addClass("input-error").wrap('<div class="large-input-error-container" />');
                     
                     }else{
                         //redirect user to proper url
@@ -404,8 +410,8 @@ jQuery(document).ready(function(jQuery) {
                     jQuery('#have-account-error').html(error);
                     jQuery('#have-account-spacer').addClass("clear_15");
                     
-                    jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');
-                    jQuery('#password').addClass("input-error").wrap('<div class="input-error-container" />');
+                    jQuery('#username').addClass("input-error").wrap('<div class="large-input-error-container" />');
+                    jQuery('#password').addClass("input-error").wrap('<div class="large-input-error-container" />');
                 }
                 
                  
@@ -560,7 +566,7 @@ jQuery(document).ready(function(jQuery) {
     if(jQuery("#link-account").exists()) {        
         jQuery("#link-account").bind('click', function() {
             var username = escape(jQuery("#username-member").val());
-            var password = escape(jQuery("#password-member").val());
+            var password = md5(jQuery("#password-member").val());
         
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=linkaccount",
