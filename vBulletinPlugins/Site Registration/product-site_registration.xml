@@ -523,7 +523,7 @@ $stylevar[htmldoctype]
                             <div class='clear clear_15'></div>
                             <span class="did-not-receive">Did not receive it? 
                             <a href="$php_self#resend" id="resend-email" class="small link_blue">
-				            Resend activation email</a>
+				            Resend Activation Email</a>
 				            &nbsp;&nbsp;&nbsp;
 				            <span id="ajax-loader"></span>
 				            <span id="email-sent" class="small email-sent">
