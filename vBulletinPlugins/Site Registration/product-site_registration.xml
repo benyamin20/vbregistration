@@ -88,28 +88,30 @@ $stylevar[htmldoctype]
 			<div class="clear clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_8" id="create-site-account">
-				<h1>Would you like yo complete your profile?</h1>
-				<div class="clear clear_20"></div>
+			    <div id="would-you-like">
+				    <h1>Would you like yo complete your profile?</h1>
+				    <div class="clear clear_20"></div>
 				
 				
-				<div class="clear"></div>
-				<a class="grid_4 no-margin link_blue normal bold"
-				    href="$prev_url"
-				    id="send-me-there">No, thanks. Take me to where I was &#187;</a>
+				    <div class="clear"></div>
+				    <a class="grid_4 no-margin link_blue normal bold"
+				        href="$prev_url"
+				        id="send-me-there">No, thanks. Take me to where I was &#187;</a>
 
-				<div class="clear clear_30"></div>
-				<hr class="span5 no-margin" />
-				<div class="clear clear_10"></div>
-				
+				    <div class="clear clear_30"></div>
+				    <hr class="span5 no-margin" />
+				    <div class="clear clear_10"></div>
+				</div>
 				
 				<div class="">
 				<!--
 				    margin_left_20
 				-->
 					<div class="">
+					    <h1 id="show-great"></h1>
 						<div class="clear clear_10"></div> 
 						<!--  Progress --> 
-						<span class="small bold"><span id="percentage-indicator">50</span>% profile completeness</span>
+						<span class="small bold fix-line-height"><span id="percentage-indicator">50</span>% profile completeness</span>
 						<div class="clear"></div>
 						
 						<div class="progress grid_3 no-margin" id="progress-indicator-container">
@@ -122,8 +124,13 @@ $stylevar[htmldoctype]
 					        </span>
 					    </div>
 						<div class="clear clear_15"></div>
-						<div id="user-cp" class="hidden">
+						<div id="user-cp" class="hidden grid_3 no-margin">
 						    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="link_blue">User CP</a>.
+						    <div class="clear clear_20"></div>
+						    <div class="clear clear_15"></div>
+						    <a class="grid_4 no-margin link_blue normal bold"
+				                href="$prev_url"
+				                id="send-me-there">Now, take me to where I was &#187;</a>
 						</div>
 						
 						<form id="complete-your-profile-form"
@@ -174,7 +181,7 @@ $stylevar[htmldoctype]
 							</div>
 						</div>
 
-						<div class="clear clear_15"></div>
+						<div class="clear"></div>
 
 						<div class="clear"></div>
 						
@@ -219,13 +226,10 @@ $stylevar[htmldoctype]
                                 <option class="" value="12">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
                             </select>
                         </div>
-						
-						 
-						
-						
+ 
 						<!-- Secret inputs  -->
 
-						<div class="clear clear_15"></div> 
+						<div class="clear"></div> 
 						<div class="clear"></div>
 						<div id="secret_question-wrapper">
 						<label for="secret_question">Secret Question</label>

@@ -438,3 +438,13 @@ hr{
     margin-top: -32px;
     color: #333 !important;
 }
+
+.checkbox{
+    font-size: 12px !important;
+    font-weight: normal !important;
+    color: #000 !important;
+}
+
+.fix-line-height{
+    line-height: 30px;
+}

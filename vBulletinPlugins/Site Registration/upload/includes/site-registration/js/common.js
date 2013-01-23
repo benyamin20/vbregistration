@@ -48,6 +48,13 @@ function closeTnC() {
 }
 
 
+function get_time_zone_offset() {
+     var current_date = new Date();
+     var gmt_offset = (current_date.getTimezoneOffset() * -1) / 60;
+     return gmt_offset;
+}
+
+
 (function(a){var b="placeholder"in document.createElement("input"),c=a.browser.opera&&a.browser.version<10.5;a.fn.placeholder=function(d){var d=a.extend({},a.fn.placeholder.defaults,d),e=d.placeholderCSS.left;return b?this:this.each(function(){var b=a(this),f=a.trim(b.val()),g=b.width(),h=b.height(),i=this.id?this.id:"placeholder"+ +(new Date),j=b.attr("placeholder"),k=a("<label class='placeholder' id='placeholder-"+i+"' for="+i+">"+j+"</label>");d.placeholderCSS.width=g,d.placeholderCSS.height=h,d.placeholderCSS.color=d.color,d.placeholderCSS.left=!c||this.type!="email"&&this.type!="url"?e:"11%",k.css(d.placeholderCSS),b.wrap(d.inputWrapper),b.attr("id",i).after(k),f&&k.hide(),b.focus(function(){a.trim(b.val())||k.hide()}),b.blur(function(){a.trim(b.val())||k.show()})})},a.fn.placeholder.defaults={inputWrapper:'<span style="position:relative; display:block;"></span>',placeholderCSS:{font:"14px Helvetica",color:"#999999",position:"absolute",left:"5px",top:"8px","overflow-x":"hidden",display:"block"}}})(jQuery);
  
 
@@ -57,6 +64,15 @@ function closeTnC() {
 jQuery(document).ready(function(jQuery) {
 
     //jQuery(':input[placeholder]').placeholder();
+    
+    //try to automatically assign timezone
+    if(jQuery("#timezone").exists()){
+        try{
+            jQuery("#timezone").val(get_time_zone_offset());
+        }catch(e){
+        
+        }
+    }
     
     if(jQuery('input[id*="password"]').exists() && !md5_loaded){
        jQuery.getScript("includes/site-registration/js/md5.js", function() {
@@ -265,8 +281,9 @@ jQuery(document).ready(function(jQuery) {
                     
                     }
                     
+                    jQuery('#would-you-like').hide();
                     jQuery('#show-great').empty();
-                    jQuery('#show-great').html("Great!");
+                    jQuery('#show-great').html("Thanks!");
                     jQuery('#complete-your-profile-form').remove();
                     jQuery('.complete-your-profile').css('min-height',420);
                     jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
