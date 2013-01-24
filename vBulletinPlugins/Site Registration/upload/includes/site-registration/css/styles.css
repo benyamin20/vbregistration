@@ -52,7 +52,7 @@ li {
 }
 
 .background_yellow {
-	background-color: #FFFFCC;
+	background-color: #FFFFCC !important;
 }
 
 .clear_5 {
