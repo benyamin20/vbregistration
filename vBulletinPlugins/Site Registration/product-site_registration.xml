@@ -579,7 +579,9 @@ $stylevar[htmldoctype]
 
 		<script>
 			function vBNexusLoginRedirect() {
-				window.location = "http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details";
+				FB.api('/me', {fields: 'name,id,location,birthday'}, function(result) {
+					console.log(result);
+				});				
 			}
 
 			FB.init({
@@ -588,16 +590,6 @@ $stylevar[htmldoctype]
 				cookie: true, // enable cookies to allow the server to access the session
 				oauth : true // enables OAuth 2.0
 			});
-
-			$(document).ready(function() {
-				$("#FB_login_button").on("click", function(e) {				
-					FB.login(function(res){
-						if(res.status == 'connected') {
-							vBNexusLoginRedirect();
-						}
-					}, {scope: '$vboptions[vbnexus_fb_scope]'});
-				});
-			});	
 		</script>
 
 
@@ -686,7 +678,7 @@ $stylevar[htmldoctype]
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
 
-				       <fb:login-button size="xlarge" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
+				       	<fb:login-button size="xlarge" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
 
 				        <div class="clear clear_15"></div> 
 				        <span class="small light_grey">It's secure and easy!</span>
