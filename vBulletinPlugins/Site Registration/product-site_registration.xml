@@ -570,18 +570,38 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
 
     <title>Sign In - $vboptions[bbtitle]</title>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=324953487621707";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
+    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+
     </head>
 
     <body>
- 
     	<div id="fb-root"></div>
+
+		<script>
+			function vBNexusLoginRedirect() {
+				window.location = "http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details";
+			}
+
+			FB.init({
+				appId : "$vboptions[vbnexusconfig_facebook_appid]",
+				status: true, // check login status
+				cookie: true, // enable cookies to allow the server to access the session
+				oauth : true // enables OAuth 2.0
+			});
+
+			$(document).ready(function() {
+				$("#FB_login_button").on("click", function(e) {				
+					FB.login(function(res){
+						if(res.status == 'connected') {
+							vBNexusLoginRedirect();
+						}
+					}, {scope: '$vboptions[vbnexus_fb_scope]'});
+				});
+			});	
+		</script>
+
+
+
 	    <!-- main container -->
 	    <div id="container" class="container_12">
 		    <div class="clear clear_15"></div>
@@ -665,18 +685,9 @@ $stylevar[htmldoctype]
 				        <!-- FB login -->
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
-				        <script>
-					       	function openModalPopup() {            
-					       		var win = window.open('facebook.php', 'facebook-login', 'width=400,height=400'); 						    							   							   
-							}
-						</script>
 
-				        <a id="facebook-login" href="#" class="fb login_button" title="$vboptions[site_registration_settingsfb_loginfacebook]" id="gn_fb_button" onclick="openModalPopup()">
-					        <div class="logo_wrapper">
-						        <span class="logo"></span>
-					        </div> 
-					        <span>$vboptions[site_registration_settingsfb_loginfacebook]</span>
-				        </a>
+				       <fb:login-button size="xlarge" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
+
 				        <div class="clear clear_15"></div> 
 				        <span class="small light_grey">It's secure and easy!</span>
                     <else />
@@ -1487,10 +1498,10 @@ $stylevar[htmldoctype]
                         }
 			        } else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
 			        	$code      = $_REQUEST["code"];
-			        	$client_id = "304416966345499"; //$vbulletin->options['site_registration_settingsfb_fbapi'];  
+			        	$client_id = $vboptions[vbnexusconfig_facebook_appid];
 			        	
-			        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
-			        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
+			        	$scope          = $vboptions[vbnexus_fb_scope];
+			        	$client_secret  = $vboptions[vbnexusconfig_facebook_applicationsecret];
 
 			        	if(!$code) {
 			        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
