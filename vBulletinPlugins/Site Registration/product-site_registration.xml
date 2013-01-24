@@ -984,13 +984,12 @@ $stylevar[htmldoctype]
 					<td id="action-icons">
 						<div id="action-icons-container">
 							<div class="pull-left">
-								<a class="btn close-facebox" href="$php_self#cancel"
-									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
+								<button class="btn close-facebox"  
+								id="cancel_terms_and_conditions">Cancel</button>
 							</div>
 							<div class="pull-right">
-								<a class="btn btn-primary span2 close-facebox"
-									onclick="closeTnC();" href="$php_self#accept"
-									id="accept_terms_and_conditions">Accept</a>
+								<button class="btn btn-primary span2 close-facebox"
+									onclick="closeTnC();">Accept</button>
 							</div>
 						</div>
 					</td>
