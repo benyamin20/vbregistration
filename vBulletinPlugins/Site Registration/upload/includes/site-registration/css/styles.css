@@ -475,7 +475,7 @@ hr{
 }
 
 #resend-email{
-    font-weight: normal !important;
+    font-weight: normal !important !important;
 }
 
 #email-icon{
