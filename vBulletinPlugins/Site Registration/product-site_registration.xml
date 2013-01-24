@@ -88,69 +88,205 @@ $stylevar[htmldoctype]
 			<div class="clear clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_8" id="create-site-account">
-				<h1>Go Back To Where I Was</h1>
-				<div class="clear clear_15"></div>
+			    <div id="would-you-like">
+				    <h1>Would you like yo complete your profile?</h1>
+				    <div class="clear clear_20"></div>
 				
-				<p class="small light_grey">
-				    $page_title
-				</p>
 				
-				<div class="clear"></div>
-				<a class="btn grid_4 no-margin"
-				    href="$prev_url"
-				    id="send-me-there">Send Me There &#187;</a>
+				    <div class="clear"></div>
+				    <a class="grid_4 no-margin link_blue normal bold"
+				        href="$prev_url"
+				        id="send-me-there">No, thanks. Take me to where I was &#187;</a>
 
-				<div class="clear clear_20"></div>
-				<div class="clear clear_20"></div>
-
-				<span class="normal  bold">Check These Out</span>
-
-				<div class="clear clear_20"></div>
-
-				<div class="grid_8 no-margin">
-					<!-- Thumb and description -->
-					<div class="grid_1 no-margin pull-left">
-						<img src="$vboptions[site_registration_checktheseout_picture1]" />
-					</div>
-					<div class="grid_7 no-margin pull-right">
-						<a class="link_blue bold" 
-						    href="$vboptions[site_registration_checktheseout_link3]">
-						    $vboptions[site_registration_checktheseout_text1]
-						</a>
-						<div class="clear"></div>
-						$vboptions[site_registration_checktheseout_description1]
-					</div>
-					<div class="clear clear_15"></div>
-
-					<!-- Thumb and description -->
-					<div class="grid_1 no-margin pull-left">
-						<img src="$vboptions[site_registration_checktheseout_picture2]" />
-					</div>
-					<div class="grid_7 no-margin pull-right">
-						<a class="link_blue bold" 
-						    href="$vboptions[site_registration_checktheseout_link3]">
-						    $vboptions[site_registration_checktheseout_text2]
-						</a>
-						<div class="clear"></div>
-						$vboptions[site_registration_checktheseout_description2]
-					</div>
-					<div class="clear clear_15"></div>
-
-					<!-- Thumb and description -->
-					<div class="grid_1 no-margin pull-left">
-						<img src="$vboptions[site_registration_checktheseout_picture3]" />
-					</div>
-					<div class="grid_7 no-margin pull-right">
-						<a class="link_blue bold" 
-						    href="$vboptions[site_registration_checktheseout_link3]">
-						    $vboptions[site_registration_checktheseout_text3]
-						</a>
-						<div class="clear"></div>
-						$vboptions[site_registration_checktheseout_description3]
-					</div>
-					<div class="clear clear_15"></div>
-
+				    <div class="clear clear_30"></div>
+				    <hr class="span5 no-margin" />
+				    <div class="clear clear_10"></div>
 				</div>
+				
+				<div class="">
+				<!--
+				    margin_left_20
+				-->
+					<div class="">
+					    <h1 id="show-great"></h1>
+						<div class="clear clear_10"></div> 
+						<!--  Progress --> 
+						<span class="small bold fix-line-height"><span id="percentage-indicator">50</span>% profile completeness</span>
+						<div class="clear"></div>
+						
+						<div class="progress grid_3 no-margin" id="progress-indicator-container">
+							<div class="bar bar-success" style="width: 50%;"
+							    id="progress-indicator"></div> 
+						</div>
+						<div id="icon-ok" class="margin_left_20 hidden">
+					        <span class="">
+					            <i class="icon-ok-sign"></i>
+					        </span>
+					    </div>
+						<div class="clear clear_15"></div>
+						<div id="user-cp" class="hidden grid_3 no-margin">
+						    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="link_blue">User CP</a>.
+						    <div class="clear clear_20"></div>
+						    <div class="clear clear_15"></div>
+						    <a class="grid_4 no-margin link_blue normal bold"
+				                href="$prev_url"
+				                id="send-me-there">Now, take me to where I was &#187;</a>
+						</div>
+						
+						<form id="complete-your-profile-form"
+		                name="complete_your_profile_form" 
+		                action="includes/site-registration/php/index.php?op=complete_your_profile" 
+		                method="post"> 
+
+                        <!--  Avatar -->
+						<label>Your Avatar</label>
+						<div class="clear clear_5"></div>
+		 
+						<div id="photoimg-wrapper" class="grid_4 no-margin">
+							<!--
+							    <div class="grid_1 no-margin pull-left">
+								    <img src="images/misc/unknown.gif" 
+								        id="selected-avatar" />
+							    </div>
+							-->
+							<div>	 
+								<div class="fileupload fileupload-new" 
+								    data-provides="fileupload">
+                                    <div class="fileupload-new 
+                                                thumbnail
+                                                avatar-thumbnail">
+                                            <img 
+                                                src="images/misc/unknown.gif"
+                                                id="selected-avatar" />
+                                    </div>
+                                    <div class="fileupload-preview 
+                                                fileupload-exists 
+                                                thumbnail avatar-thumbnail">
+                                    </div>
+                                    <span class="btn btn-file move-to-top-avatar-upload" id="upload-group">
+                                        <span class="fileupload-new">Upload</span>
+                                        
+                                        <span class="fileupload-exists move-to-top-avatar-upload">Change</span>
+                                        <input type="file"
+                                            name="photoimg" id="photoimg" />
+                                    </span>
+                                    
+                                    <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
+                                    <div class="clear"></div>
+                                    <!-- <a class="small link_blue" id="use-default">Use default.</a> -->
+                                    <span class="error-label small no-margin no-top" id="photoimg-error-label"></span>
+                            </div>
+								<div class="clear"></div>
+								
+							</div>
+						</div>
+
+						<div class="clear"></div>
+
+						<div class="clear"></div>
+						
+						<!--  Timezone -->
+						<div id="timezone-wrapper">
+						    <label for="timezone">Your Timezone</label>
+						    <select name="timezone" id="timezone">
+						        $time_zone_select
+                                <option value="" selected="selected"></option> 
+			                    <option class="" value="-12">(GMT -12:00) Eniwetok, Kwajalein</option>
+                                <option class="" value="-11">(GMT -11:00) Midway Island, Samoa</option>
+                                <option class="" value="-10">(GMT -10:00) Hawaii</option>
+                                <option class="" value="-9">(GMT -9:00) Alaska</option>
+                                <option class="" value="-8">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+                                <option class="" value="-7">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+                                <option class="" value="-6">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+                                <option class="" value="-5">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+                                <option class="" value="-4.5">(GMT -4:30) Caracas</option>
+                                <option class="" value="-4">(GMT -4:00) Atlantic Time (Canada), La Paz, Santiago</option>
+                                <option class="" value="-3.5">(GMT -3:30) Newfoundland</option>
+                                <option class="" value="-3">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                                <option class="" value="-2">(GMT -2:00) Mid-Atlantic</option>
+                                <option class="" value="-1">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
+                                <option class="" value="0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+                                <option class="" value="1">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
+                                <option class="" value="2">(GMT +2:00) Kaliningrad, South Africa, Cairo</option>
+                                <option class="" value="3">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+                                <option class="" value="3.5">(GMT +3:30) Tehran</option>
+                                <option class="" value="4">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                                <option class="" value="4.5">(GMT +4:30) Kabul</option>
+                                <option class="" value="5">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+                                <option class="" value="5.5">(GMT +5:30) Mumbai, Kolkata, Chennai, New Delhi</option>
+                                <option class="" value="5.75">(GMT +5:45) Kathmandu</option>
+                                <option class="" value="6">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                                <option class="" value="6.5">(GMT +6:30) Yangon, Cocos Islands</option>
+                                <option class="" value="7">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                                <option class="" value="8">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+                                <option class="" value="9">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+                                <option class="" value="9.5">(GMT +9:30) Adelaide, Darwin</option>
+                                <option class="" value="10">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+                                <option class="" value="11">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+                                <option class="" value="12">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+                            </select>
+                        </div>
+ 
+						<!-- Secret inputs  -->
+
+						<div class="clear"></div> 
+						<div class="clear"></div>
+						<div id="secret_question-wrapper">
+						<label for="secret_question">Secret Question</label>
+						    <input type="text" id="secret_question" name="secret_question"
+							    title="Secret Question" value="" />
+                        </div>
+						<div class="clear"></div>
+						<div id="secret_answer-wrapper">
+						    <label for="secret_answer">Secret Answer</label>
+						    <input type="text" name="secret_answer" id="secret_answer"
+							title="Secret Aswer" value="" />
+                        </div>
+                        
+                        <!--  Contact check boxes -->
+
+						<div class="clear"></div>
+						<label>Who can contact you?</label>
+						<div class="clear"></div>
+						<label class="checkbox"> 
+						<input type="checkbox"
+							id="receive-emails-from-administrators"
+							name="receive_emails_from_administrators"  /> 
+							Receive emails from Administrators.
+						</label>
+
+						<div class="clear"></div>
+						<label class="checkbox"> 
+						<input type="checkbox" 
+						    checked="checked"
+							id="receive-emails-from-other-members"
+							name="receive_emails_from_other_members" /> 
+							    Receive emails from other members.
+						</label>
+
+						<div class="clear clear_20"></div>
+						
+						<input type="hidden" name="use_default_image"
+						    id="use-default-image"
+						    value="true" 
+						    />
+						
+						<input id="securitytoken" name="securitytoken" value="$token" type="hidden" />
+						
+						<input  class="btn btn-primary grid_2 no-margin"
+						    id="save-account-activated" 
+						    type="submit" value="Save" />
+						</form>
+					</div>
+				</div>
+				
+				
+
+				<span class="normal  bold"></span>
+
+				<div class="clear clear_20"></div>
+
+				
 
 			</div>
 
@@ -159,181 +295,59 @@ $stylevar[htmldoctype]
 
 			<!-- Complete your profile -->
 			
-			<div id="">
-				<div class="grid_4  move-to-top">
-					<div class="complete-your-profile">
-						<div class="margin_left_20">
-							<div class="clear clear_10"></div>
-							<h1 id="show-great">Complete your profile.</h1>
-							<div class="clear"></div>
-							<!--  Progress --> 
-							<span class="small bold"><span id="percentage-indicator">50</span>% profile completeness</span>
-							<div class="progress grid_3 no-margin" id="progress-indicator-container">
-								<div class="bar bar-success" style="width: 50%;"
-								    id="progress-indicator"></div> 
-							</div>
-							<div id="icon-ok" class="margin_left_20 hidden">
-						        <span class="">
-						            <i class="icon-ok-sign"></i>
-						        </span>
-						    </div>
-							<div class="clear clear_15"></div>
-							<div id="user-cp" class="hidden">
-							    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="link_blue">User CP</a>.
-							</div>
-							
-							<form id="complete-your-profile-form"
-			                name="complete_your_profile_form" 
-			                action="includes/site-registration/php/index.php?op=complete_your_profile" 
-			                method="post"> 
+			<div id=""> 
+			    
+				<div class="grid_4  move-to-top complete-your-profile">
+				    <div class="clear clear_10"></div>
+				    <h1 class="padding-left-check-these-out">Inside $vboptions[bbtitle]</h1>
+					<!-- check these out -->
+					<div class="grid_4 no-margin padding-left-check-these-out">
+					    <!-- Thumb and description -->
+					    <div class="grid_1 no-margin pull-left">
+						    <img src="$vboptions[site_registration_checktheseout_picture1]" />
+					    </div>
+					    <div class="grid_3 text-margin pull-right">
+						    <a class="link_blue bold" 
+						        href="$vboptions[site_registration_checktheseout_link3]">
+						        $vboptions[site_registration_checktheseout_text1]
+						    </a>
+						    <div class="clear"></div>
+						    $vboptions[site_registration_checktheseout_description1]
+					    </div>
+					    <div class="clear clear_20"></div>
 
-                            <!--  Avatar -->
-							<span class="bold">Your Avatar</span>
-							<div class="clear clear_15"></div>
-							
-							
+					    <!-- Thumb and description -->
+					    <div class="grid_1 no-margin pull-left">
+						    <img src="$vboptions[site_registration_checktheseout_picture2]" />
+					    </div>
+					    <div class="grid_3 text-margin pull-right">
+						    <a class="link_blue bold" 
+						        href="$vboptions[site_registration_checktheseout_link3]">
+						        $vboptions[site_registration_checktheseout_text2]
+						    </a>
+						    <div class="clear"></div>
+						    $vboptions[site_registration_checktheseout_description2]
+					    </div>
+					    <div class="clear clear_20"></div>
 
-							<div id="photoimg-wrapper" class="grid_4 no-margin">
-								<!--
-								    <div class="grid_1 no-margin pull-left">
-									    <img src="images/misc/unknown.gif" 
-									        id="selected-avatar" />
-								    </div>
-								-->
-								<div>	 
-									<div class="fileupload fileupload-new" 
-									    data-provides="fileupload">
-                                        <div class="fileupload-new thumbnail" 
-                                            style="width: 50px; height: 50px;">
-                                                <img 
-                                                    src="images/misc/unknown.gif"
-                                                    id="selected-avatar" />
-                                        </div>
-                                        <div class="fileupload-preview fileupload-exists thumbnail" 
-                                            style="width: 50px; height: 50px;">
-                                        </div>
-                                        <span class="btn btn-file" id="upload-group">
-                                            <span class="fileupload-new">Upload</span>
-                                            
-                                            <span class="fileupload-exists">Change</span>
-                                            <input type="file"
-                                                name="photoimg" id="photoimg" />
-                                        </span>
-                                        
-                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload" id="remove">Remove</a>
-                                        <div class="clear"></div>
-                                        <!-- <a class="small link_blue" id="use-default">Use default.</a> -->
-                                        <span class="error-label small no-margin no-top" id="photoimg-error-label"></span>
-                                </div>
-									<div class="clear clear_15"></div>
-									
-								</div>
-							</div>
-
-							<div class="clear clear_15"></div>
-
-							<div class="clear"></div>
-							
-							<!--  Timezone -->
-							<div id="timezone-wrapper">
-							    <select name="timezone" id="timezone">
-							        $time_zone_select
-                                    <option value="" selected="selected">Your Timezone</option> 
-				                    <option class="" value="-12">(GMT -12:00) Eniwetok, Kwajalein</option>
-                                    <option class="" value="-11">(GMT -11:00) Midway Island, Samoa</option>
-                                    <option class="" value="-10">(GMT -10:00) Hawaii</option>
-                                    <option class="" value="-9">(GMT -9:00) Alaska</option>
-                                    <option class="" value="-8">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
-                                    <option class="" value="-7">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
-                                    <option class="" value="-6">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
-                                    <option class="" value="-5">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
-                                    <option class="" value="-4.5">(GMT -4:30) Caracas</option>
-                                    <option class="" value="-4">(GMT -4:00) Atlantic Time (Canada), La Paz, Santiago</option>
-                                    <option class="" value="-3.5">(GMT -3:30) Newfoundland</option>
-                                    <option class="" value="-3">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
-                                    <option class="" value="-2">(GMT -2:00) Mid-Atlantic</option>
-                                    <option class="" value="-1">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
-                                    <option class="" value="0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
-                                    <option class="" value="1">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
-                                    <option class="" value="2">(GMT +2:00) Kaliningrad, South Africa, Cairo</option>
-                                    <option class="" value="3">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
-                                    <option class="" value="3.5">(GMT +3:30) Tehran</option>
-                                    <option class="" value="4">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
-                                    <option class="" value="4.5">(GMT +4:30) Kabul</option>
-                                    <option class="" value="5">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
-                                    <option class="" value="5.5">(GMT +5:30) Mumbai, Kolkata, Chennai, New Delhi</option>
-                                    <option class="" value="5.75">(GMT +5:45) Kathmandu</option>
-                                    <option class="" value="6">(GMT +6:00) Almaty, Dhaka, Colombo</option>
-                                    <option class="" value="6.5">(GMT +6:30) Yangon, Cocos Islands</option>
-                                    <option class="" value="7">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
-                                    <option class="" value="8">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
-                                    <option class="" value="9">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
-                                    <option class="" value="9.5">(GMT +9:30) Adelaide, Darwin</option>
-                                    <option class="" value="10">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
-                                    <option class="" value="11">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
-                                    <option class="" value="12">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
-                                </select>
-                            </div>
-							
-							 
-							
-							
-							<!-- Secret inputs  -->
-
-							<div class="clear clear_15"></div>
-							<span class="bold">Let's keep things safe</span>
-							<div class="clear"></div>
-							<div id="secret_question-wrapper">
-							<label for="secret_question">Secret Question</label>
-							    <input type="text" id="secret_question" name="secret_question"
-								    title="Secret Question" value="" />
-                            </div>
-							<div class="clear"></div>
-							<div id="secret_answer-wrapper">
-							    <label for="secret_answer">Secret Answer</label>
-							    <input type="text" name="secret_answer" id="secret_answer"
-								title="Secret Aswer" value="" />
-                            </div>
-                            
-                            <!--  Contact check boxes -->
-
-							<div class="clear clear_15"></div>
-							<span class="bold">Who can contact you?</span>
-							<div class="clear"></div>
-							<label class="checkbox"> 
-							<input type="checkbox"
-								id="receive-emails-from-administrators"
-								name="receive_emails_from_administrators"  /> 
-								Receive emails from Administrators.
-							</label>
-
-							<div class="clear"></div>
-							<label class="checkbox"> 
-							<input type="checkbox" 
-							    checked="checked"
-								id="receive-emails-from-other-members"
-								name="receive_emails_from_other_members" /> 
-								    Receive emails from other members.
-							</label>
-
-							<div class="clear clear_20"></div>
-							
-							<input type="hidden" name="use_default_image"
-							    id="use-default-image"
-							    value="true" 
-							    />
-							
-							<input id="securitytoken" name="securitytoken" value="$token" type="hidden" />
-							
-							<input  class="btn btn-primary grid_2 no-margin"
-							    id="save-account-activated" 
-							    type="submit" value="Save" />
-							</form>
-						</div>
-					</div>
+					    <!-- Thumb and description -->
+					    <div class="grid_1 no-margin pull-left">
+						    <img src="$vboptions[site_registration_checktheseout_picture3]" />
+					    </div>
+					    <div class="grid_3 text-margin pull-right">
+						    <a class="link_blue bold" 
+						        href="$vboptions[site_registration_checktheseout_link3]">
+						        $vboptions[site_registration_checktheseout_text3]
+						    </a>
+						    <div class="clear"></div>
+						    $vboptions[site_registration_checktheseout_description3]
+					    </div>
+					    <div class="clear clear_20"></div>
+				    </div>
+					<!-- /check these out -->
 				</div>
 			</div>
-			</form>
+			
 
 		</div>
 
@@ -496,20 +510,20 @@ $stylevar[htmldoctype]
 
                 <div id='container' class='container_12 background_yellow not-active'>
                     <div id='warning-container' >
-                        <div class='pull_left no-margin grid_2 alpha'>
-                            <img src='includes/site-registration/img/email-icon.png' 
+                        <div class='pull-left no-margin grid_1 alpha'>
+                            <img src='includes/site-registration/img/icon-email-medium.png' 
                                 id='email-icon' />
                         </div>
-                        <div class='prefix_1 pull_right no-margin grid_9 omega'>
-                            <h1 class='title_red no-margin'>
+                        <div class='margin_left_20 grid_9 omega'>
+                            <h1 class='not-fully-active no-margin'>
                             Your account Is Not Fully Active
                             </h1>
                             <div class='clear'></div>
-                            Please confirm your account by clicking on the email activation link
+                            <span class="please-confirm-account">Please confirm your account by clicking on the email activation link</span>
                             <div class='clear clear_15'></div>
-                            Did not receive it? 
+                            <span class="did-not-receive">Did not receive it? 
                             <a href="$php_self#resend" id="resend-email" class="small link_blue">
-				            Resend activation email</a>
+				            Resend Activation Email</a>
 				            &nbsp;&nbsp;&nbsp;
 				            <span id="ajax-loader"></span>
 				            <span id="email-sent" class="small email-sent">
@@ -722,7 +736,7 @@ $stylevar[htmldoctype]
 
 		    <div class="clear"></div>
 
-		    <div id="what-you-get" class="grid_12">
+		    <div id="what-you-get" class="grid_8">
 
 			    <h3 id="benefits-title">
 			        $vboptions[site_registration_title]
@@ -743,7 +757,7 @@ $stylevar[htmldoctype]
 
 			    </div>
 
-			    <div class="small grid_8 prefix_1 omega">
+			    <div class="small grid_3 prefix_1 omega">
 				    $vboptions[site_registration_bullets_part_2]
 			    </div>
 
@@ -1851,11 +1865,13 @@ $stylevar[htmldoctype]
 	                    //home page
 	                    
 	                    
+	                    /*
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
                                 AND type = 0"
                         );
+                        */
                         
                         
                         $birthday = preg_replace("/\-/","/", $birthday);
@@ -2146,6 +2162,7 @@ $stylevar[htmldoctype]
 			</phrase>
 			
 			<!-- Facebook options -->
+			<!--
 			<phrase name="setting_site_registration_settingsfb_showfb_desc" 
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
@@ -2207,14 +2224,17 @@ $stylevar[htmldoctype]
 			    Facebook login title			
 			    ]]>
 			</phrase>
+			-->
 			<phrase name="settinggroup_site_registration_settings_group" 
 			    date="1340664607" username="fromero" version="1.0">
 			    <![CDATA[Site Registration]]>
 			</phrase>
+			<!--
 			<phrase name="settinggroup_site_registration_settingsfb_group" 
 			    date="1340664607" username="fromero" version="1.0">
 			    <![CDATA[Site Registration - FB Login options]]>
-			</phrase> 
+			</phrase>
+			--> 
 		</phrasetype>
 	</phrases>
 	<options>
@@ -2334,7 +2354,7 @@ $stylevar[htmldoctype]
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        See the comunity's hottest pictures and vote for your favorites.
+				        Vote for your favorite pictures.
 				    ]]>
 				</defaultvalue>
 			</setting>
@@ -2366,7 +2386,7 @@ $stylevar[htmldoctype]
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        See what the community is talking about, and voice your opinion.
+				        See what the community is talking about.
 				    ]]>
 		        </defaultvalue>
 			</setting>
@@ -2398,7 +2418,7 @@ $stylevar[htmldoctype]
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        Wheter you're buying or browsing, you can't miss our marketplace.
+				        One of the largest automotive marketplaces.
 				    ]]>
 				</defaultvalue>
 			</setting>
@@ -2422,6 +2442,7 @@ $stylevar[htmldoctype]
 				</defaultvalue>
 			</setting>
 		</settinggroup>
+		<!--
         <settinggroup name="settinggroup_site_registration_settingsfb_group" displayorder="65536">
 	        <setting varname="site_registration_settingsfb_showfb" 
 			    displayorder="10">
@@ -2466,6 +2487,7 @@ $stylevar[htmldoctype]
 				</defaultvalue>
 			</setting>
 	    </settinggroup>
+	    -->
 	</options>
 	<helptopics>
 	</helptopics>
