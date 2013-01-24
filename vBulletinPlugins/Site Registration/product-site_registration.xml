@@ -894,7 +894,7 @@ $stylevar[htmldoctype]
 				<div class="clear clear_15"></div>
 				<div class="pull-left">
 				    <button class="btn btn-primary grid_3"
-                        type="button" id="log-in">Log In</button>
+                        type="button" id="log-in">Log In</button>                       
 			     </div>
 			</div>
 			
@@ -1436,7 +1436,7 @@ $stylevar[htmldoctype]
 						$fUser = explode("|", $_REQUEST["fuser"]);
 
 		        		$fbID 		= $_SESSION['site_registration']["fbID"] 	   = $fUser[0];
-		        		$fbName 	= $_SESSION['site_registration']["fbName"] 	   = utf8_encode($fUser[1]);
+		        		$fbName 	= $_SESSION['site_registration']["fbName"] 	   = utf8_decode($fUser[1]);
 		        		$fbEmail 	= $_SESSION['site_registration']["fbEmail"]    = $fUser[2];
 					    $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $fUser[3];
 					    $fbUsername = $_SESSION['site_registration']["fbUsername"] = $fUser[4];
