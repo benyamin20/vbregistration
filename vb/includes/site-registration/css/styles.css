@@ -489,3 +489,7 @@ hr{
 #footer  > :nth-child(1){
     background-color: white;
 }
+
+#container-wrapper{
+    background-color: white;
+}

@@ -669,7 +669,7 @@ case 'resend_email':
             $subject = "Please activate your account";
         }
 
-        vbmail($email, $subject, $message, false);
+        vbmail($email, $subject, $message, true);
 
         $messages = "Email sent!";
 

@@ -19,14 +19,8 @@ $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
  
- 
-    <!-- <base href="$vboptions[bburl]/" /> -->
-
     <title>Account Activated - $vboptions[bbtitle]</title>
-    <!--
-	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
-    -->
-    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
+ 
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css" />
     <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap-fileupload.min.css"> 
@@ -60,17 +54,13 @@ $stylevar[htmldoctype]
 </head>
 
 <body>
- 
+    
+    $header
+    </div></div></div> <!-- close header -->
 	<!-- main container -->
+	<div id="container-wrapper">
 	<div id="container" class="container_12">
-		<div class="clear clear_15"></div>
-		<!-- Site logo -->
-		<div id="logo" class="grid_4">
-			$header
-		</div>
-		</div></div></div><!-- close header -->
-		
-		<div class="clear clear_30"></div>
+ 
 
 		<!-- Ad units -->
 		<div id="ad-units" class="grid_12">
@@ -361,15 +351,13 @@ $stylevar[htmldoctype]
 		<div class="clear"></div>
 
 	</div>
+	</div>
 	
 	<!-- footer -->
-	<script type="text/javascript">
-	//vBulletin_init = function(){}
-	</script>
-    <div id="footer" class="container_12">
+    <div id="footer">
         <div><div><div>
         $footer
-    </div>
+    </div>    
     <!-- footer -->
 
 </body>
@@ -388,15 +376,9 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
- 
-
+  
     <title>Please Activate Your Account - $vboptions[bbtitle]</title>
  
-    <!--
-	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
-    -->
-    <link rel="stylesheet" type="text/css" media="all"
-        href="includes/site-registration/960/css/min/text.css" />
     <link rel="stylesheet" type="text/css" media="all"
         href="includes/site-registration/960/css/min/960.css" />
     <link rel="stylesheet" media="screen"
@@ -432,17 +414,12 @@ $stylevar[htmldoctype]
 
 <body>
  
+    $header
+    </div></div></div> <!-- close header -->
 	<!-- main container -->
+	<div id="container-wrapper">
 	<div id="container" class="container_12  activate-account-container">
-		<div class="clear clear_15"></div>
-		<!-- Site logo -->
-		<div id="logo" class="grid_4">
-			$header
-		</div>
-		</div></div></div><!-- close header -->
-		
-		<div class="clear clear_30"></div>
-
+  
 		<!-- Ad units -->
 		<div id="ad-units" class="grid_12">
 			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
@@ -492,15 +469,13 @@ $stylevar[htmldoctype]
 		</div>
 
 	</div>
+	</div>
 	
 	<!-- footer -->
-	<script type="text/javascript">
-	//vBulletin_init = function(){}
-	</script>
-    <div id="footer"  class="container_12">
+    <div id="footer">
         <div><div><div>
         $footer
-    </div>
+    </div>    
     <!-- footer -->
 	
 </body>
@@ -551,11 +526,7 @@ $stylevar[htmldoctype]
     $stylevar[htmldoctype]
     <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
     <head>
-    <!-- <base href="$vboptions[bburl]/" />  -->
-    <!--
-    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
-    -->
-    <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/text.css" />
+ 
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css" />
     <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap-tooltip.min.css" />
@@ -616,18 +587,12 @@ $stylevar[htmldoctype]
 		</script>
 
 
-
+        $header
+        </div></div></div> <!-- close header -->
+        
 	    <!-- main container -->
+	    <div id="container-wrapper">
 	    <div id="container" class="container_12">
-		    <div class="clear clear_15"></div>
-		    <!-- Site logo -->
-		    <div id="logo" class="grid_4">
-		        $header
-		    </div>
-		    
-		    </div></div></div> <!-- close header -->
-		    
-		    <div class="clear clear_30"></div>
 		    <!-- Site heading -->
 		    <div id="site-heading" class="grid_12">
 			    <span class="title_red">Join $vboptions[bbtitle]</span>
@@ -779,17 +744,17 @@ $stylevar[htmldoctype]
 		    </div>
 
 	    </div>
+	    </div>
 
 	    <!--  Info table for benefit comparison -->
 	    <div id="info">
 	        $vboptions[site_registration_benefits]
 	    </div>
 	    
+	    
+	    
 	<!-- footer -->
-	<script type="text/javascript">
-	//vBulletin_init = function(){}
-	</script>
-    <div id="footer"  class="container_12">
+    <div id="footer">
         <div><div><div>
         $footer
     </div>    
@@ -804,15 +769,8 @@ $stylevar[htmldoctype]
 $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
-
  
-    <!-- <base href="$vboptions[bburl]/" /> -->
     <title>Confirm You Details - $vboptions[bbtitle]</title>
-    <!--
-	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
-    -->
-    <link rel="stylesheet" type="text/css" media="all"
-        href="includes/site-registration/960/css/min/text.css" />
     <link rel="stylesheet" type="text/css" media="all"
         href="includes/site-registration/960/css/min/960.css" />
     <link rel="stylesheet" media="screen"
@@ -848,17 +806,13 @@ $stylevar[htmldoctype]
 
 <body>
  
+    $header
+    </div></div></div> <!-- close header -->
+ 
 	<!-- main container -->
+	<div id="container-wrapper">
 	<div id="container" class="container_12 activate-account-container">
-		<div class="clear clear_15"></div>
-		<!-- Site logo -->
-		<div id="logo" class="grid_4">
-			$header
-		</div>
-		</div></div></div> <!-- close header -->
-		
-		<div class="clear clear_30"></div>
-
+ 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
 			<span class="title_red"> Confirm your details </span>
@@ -983,6 +937,7 @@ $stylevar[htmldoctype]
 		<div class="clear"></div>
 
 	</div>
+	</div>
 
 	<!--  Term & Conditions Table -->
 	<div id="info">
@@ -1042,14 +997,13 @@ $stylevar[htmldoctype]
 	</div>
 	
 	
+	
+	
 	<!-- footer -->
-	<script type="text/javascript">
-	//vBulletin_init = function(){}
-	</script>
-    <div id="footer"  class="container_12">
+    <div id="footer">
         <div><div><div>
         $footer
-    </div>
+    </div>    
     <!-- footer -->
     
 </body>
@@ -1063,14 +1017,8 @@ $stylevar[htmldoctype]
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
  
-    <!-- <base href="$vboptions[bburl]/" /> -->
     <title>Step 2 - Site Account - $vboptions[bbtitle]</title>
      
-    <!--
-	<link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/reset.css" />
-    -->
-    <link rel="stylesheet" type="text/css" media="all"
-	    href="includes/site-registration/960/css/min/text.css" />
     <link rel="stylesheet" type="text/css" media="all"
 	    href="includes/site-registration/960/css/min/960.css" />
     <link rel="stylesheet" media="screen"
@@ -1102,16 +1050,13 @@ $stylevar[htmldoctype]
 
 <body>
  
+    $header
+    </div></div></div> <!-- close header -->
+	
 	<!-- main container -->
+	<div id="container-wrapper">
 	<div id="container" class="container_12">
-		<div class="clear clear_15"></div>
-		<!-- Site logo -->
-		<div id="logo" class="grid_4">
-			$header
-		</div>
-		</div></div></div><!-- close header -->
-		
-		<div class="clear clear_30"></div>
+		 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
 			<span class="title_red">
@@ -1217,6 +1162,7 @@ $stylevar[htmldoctype]
 		<div class="clear"></div>
  
 	</div>
+	</div>
 
 	<!--  Term & Conditions Table -->
 	<div id="info">
@@ -1277,14 +1223,10 @@ $stylevar[htmldoctype]
 	</div>
     
 	<!-- footer -->
-	<script type="text/javascript">
-	//vBulletin_init = function(){}
-	</script>
-	
-    <div id="footer"  class="container_12">
+    <div id="footer">
         <div><div><div>
         $footer
-    </div>
+    </div>    
     <!-- footer -->
     
 </body>
