@@ -117,8 +117,8 @@ case 'complete_your_profile':
             ->clean_array_gpc('p',
                     array('secret_question' => TYPE_STR,
                             'secret_answer' => TYPE_STR,
-                            'receive_emails_from_administrators' => TYPE_INT,
-                            'receive_emails_from_other_members' => TYPE_INT,
+                            'receive_emails_from_administrators' => TYPE_STR,
+                            'receive_emails_from_other_members' => TYPE_STR,
                             'timezone' => TYPE_STR,
                             'use_default_image' => TYPE_STR));
 
@@ -151,6 +151,19 @@ case 'complete_your_profile':
     } else {
 
     }
+    
+    if (empty($vbulletin->GPC['receive_emails_from_administrators'])) {
+        $vbulletin->GPC['receive_emails_from_administrators'] = 0;
+    }else{
+        $vbulletin->GPC['receive_emails_from_administrators'] = 1;
+    }
+    
+    if (empty($vbulletin->GPC['receive_emails_from_other_members'])) {
+        $vbulletin->GPC['receive_emails_from_other_members'] = 0;
+    }else{
+        $vbulletin->GPC['receive_emails_from_other_members'] = 1;
+    }
+    
 
     if ($_FILES['photoimg']['name'] != "") {
         //do not use default image
@@ -325,7 +338,7 @@ case 'complete_your_profile':
         $userid = $_SESSION['site_registration']['userid'];
         $question = $vbulletin->GPC['secret_question'];
         $answer = $vbulletin->GPC['secret_answer'];
-        $salt = $vbulletin->userinfo['salt'];
+        $salt = $vbulletin->db->escape_string($vbulletin->userinfo['salt']);
 
         /*insert query*/
         $vbulletin->db

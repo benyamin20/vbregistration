@@ -1857,13 +1857,13 @@ $stylevar[htmldoctype]
 	                    //home page
 	                    
 	                    
-	                    /*
+	                    
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
                                 AND type = 0"
                         );
-                        */
+                        
                         
                         
                         $birthday = preg_replace("/\-/","/", $birthday);
