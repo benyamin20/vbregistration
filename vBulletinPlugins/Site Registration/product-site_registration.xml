@@ -896,9 +896,9 @@ $stylevar[htmldoctype]
 					value="$fbEmail" autocomplete="off" type="text" 
 					 />
 
-				<span class="help-block small light_grey">Keeping it real!.</span> 
+				<span class="help-block tiny dark_grey">Keeping it real!.</span> 
 				
-				<div class="clear clear_15"></div>
+				<div class="clear "></div>
 				<label for="username">Username</label>
 				<input
 					class="" id="username" name="username" title="Username"
@@ -908,7 +908,7 @@ $stylevar[htmldoctype]
 				<span class="help-block tiny dark_grey">Maximum 25 characters.</span>
 
 
-				<div class="clear clear_15"></div>
+				<div class="clear "></div>
 
                 <label for="birthday">Birth Date</label>
 				<div class="input-prepend ">
@@ -1524,6 +1524,9 @@ $stylevar[htmldoctype]
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
 			        } else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
+			        
+			            
+			        
 			        	if(isset($_SESSION['site_registration']["fbID"])) {
 							// Process vBulletin login
 					        require_once(DIR . '/includes/functions_login.php');
@@ -1598,7 +1601,7 @@ $stylevar[htmldoctype]
 			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			                }
 			        	}						 		        			       
-			        	
+			        	 
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'activate'){
 			        	
 			        	$invalid_request = FALSE;
