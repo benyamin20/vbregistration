@@ -481,3 +481,11 @@ hr{
 #email-icon{
     padding-top:15px;
 }
+
+#container{
+    background-color: white;
+}
+
+#footer  > :nth-child(1){
+    background-color: white;
+}
