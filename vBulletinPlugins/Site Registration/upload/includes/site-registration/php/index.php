@@ -153,15 +153,15 @@ case 'complete_your_profile':
     }
     
     if (empty($vbulletin->GPC['receive_emails_from_administrators'])) {
-        $vbulletin->GPC['receive_emails_from_administrators'] = 0;
+        $adminemail = 0;
     }else{
-        $vbulletin->GPC['receive_emails_from_administrators'] = 1;
+        $adminemail = 1;
     }
     
     if (empty($vbulletin->GPC['receive_emails_from_other_members'])) {
-        $vbulletin->GPC['receive_emails_from_other_members'] = 0;
+        $showemail = 0;
     }else{
-        $vbulletin->GPC['receive_emails_from_other_members'] = 1;
+        $showemail = 1;
     }
     
 
@@ -362,26 +362,34 @@ case 'complete_your_profile':
 
     if ($valid_entries) {
         //update who can contact you
-        if (!empty($vbulletin->GPC['receive_emails_from_administrators'])) {
+            /*
             $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
-                    . $vbulletin->GPC['receive_emails_from_administrators']
+                    . $vbulletin->GPC['adminemail']
                     . " WHERE NOT (options & "
-                    . $vbulletin->GPC['receive_emails_from_administrators']
+                    . $vbulletin->GPC['adminemail']
                     . ")";
 
             $vbulletin->db->query_write($query);
-
-        }
-
-        if (!empty($vbulletin->GPC['receive_emails_from_other_members'])) {
+ 
             $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
-                    . $vbulletin->GPC['receive_emails_from_other_members']
+                    . $vbulletin->GPC['showemail']
                     . " WHERE NOT (options & "
-                    . $vbulletin->GPC['receive_emails_from_other_members']
+                    . $vbulletin->GPC['showemail']
                     . ")";
 
             $vbulletin->db->query_write($query);
-        }
+            
+            */
+            
+        $user_data =& datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
+        $vbulletin->userinfo = fetch_userinfo($userid);
+        $user_data->set_existing($vbulletin->userinfo);
+        
+        $user_data->set_bitfield( 'options', "adminemail", $adminemail );
+        $user_data->set_bitfield( 'options', "showemail",  $showemail );
+        
+        $user_data->save();
+ 
 
     }
 
