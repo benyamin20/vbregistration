@@ -579,8 +579,16 @@ $stylevar[htmldoctype]
 
 		<script>
 			function vBNexusLoginRedirect() {
-				FB.api('/me', {fields: 'name,id,location,birthday'}, function(result) {
-					console.log(result);
+				FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {
+					$.ajax({
+						type: 'POST',
+						url:   'register.php?step=confirm-facebook-details',
+						dataType: 'json',
+						data: 'fuser=' + result +'&first=1',
+						success: function(response) {	
+							window.location = "http://muucms.com/vbregistration/vb/register.php?step=confirm-facebook-details";
+						}
+					});
 				});				
 			}
 
@@ -1489,91 +1497,80 @@ $stylevar[htmldoctype]
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
 			        } else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){
-			        	$code      = $_REQUEST["code"];
-			        	$client_id = $vboptions[vbnexusconfig_facebook_appid];
-			        	
-			        	$scope          = $vboptions[vbnexus_fb_scope];
-			        	$client_secret  = $vboptions[vbnexusconfig_facebook_applicationsecret];
+			        	if(isset($_SESSION['site_registration']["fbID"])) {
+							// Process vBulletin login
+					        require_once(DIR . '/includes/functions_login.php');
+					        $vbulletin->userinfo = fetch_userinfo($data['userid']);
+					        $vbulletin->session->created = false;
+					        process_new_login('', false, '');
 
-			        	if(!$code) {
-			        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
+					        // On login, store a cookie with vbnexus params
+					        if($vbulletin->session->created) {
+					            $vBNexusInfo = array(
+					                'userid'      => $data['userid'],
+					                'service'     => 'fb',
+					                'nonvbid'     => $data["nonvbid"],
+					                'can_publish' => true,
+					            );
+					            setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
+					        }
 
-							$loginURL  = "https://www.facebook.com/dialog/oauth?";
-							$loginURL .= "client_id=$client_id&";
-							$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
-							$loginURL .= "state=". $_SESSION["state"] ."&";
-							$loginURL .= "scope=$scope&";
-							$loginURL .= "display=popup";
-						
-							echo '<script type="text/javascript">window.location = "'. $loginURL .'";</script>';							
-			        	} else {		
-							if($_SESSION["state"] and $_SESSION["state"] === $_REQUEST["state"]) {
-								$tokenURL  = "https://graph.facebook.com/oauth/access_token?";
-								$tokenURL .= "client_id=$client_id&";
-								$tokenURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] . "/register.php?step=confirm-facebook-details") ."&";
-								$tokenURL .= "client_secret=$client_secret&code=". $code;
-						     	$response = file_get_contents($tokenURL);
-						     	$params   = NULL;
-						     	
-						     	parse_str($response, $params);
+	                        $vbulletin->userinfo[securitytoken] = "guest";
+	                        
+				     		header("location: index.php");
+			        	} elseif(isset($_REQUEST["first"])) {
+			        		$fUser = json_decode($_REQUEST["fuser"]);
 
-						     	$_SESSION["access_token"] = $params["access_token"];
+			        		$fbID = $_SESSION['site_registration']["fbID"] = $fUser->id;
+						    $fbUsername = $_SESSION['site_registration']["fbUsername"] = $fUser->username;
+						    $fbName = $_SESSION['site_registration']["fbName"] = $fUser->name;
+						    $fbEmail = $_SESSION['site_registration']["fbEmail"] = $fUser->email;
+						    $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $fUser->birthday;
+						    $fbPicture = $_SESSION['site_registration']["fbPicture"] = $fUser->picture->data->url;
 
-						     	$graphURL = "https://graph.facebook.com/me?fields=id,name,email,birthday,picture,timezone,username&access_token=". $params["access_token"];
-						 
-						     	$user = json_decode(file_get_contents($graphURL));
+						    //Verify if the account already exists...						     	 
+					        $sql = "SELECT `u`.`usergroupid`,
+					                       `u`.`username`,
+					                       `u`.`email`,
+					                       `n`.*
+					                FROM " . TABLE_PREFIX . "vbnexus_user `n`
+					                LEFT JOIN " . TABLE_PREFIX . "user `u` USING (`userid`)
+					                WHERE `n`.`service` = 'fb'
+					                AND `n`.`nonvbid` = '{$fbID}'";
 
-						     	$fbID = $_SESSION['site_registration']["fbID"] = $user->id;
-						     	$fbUsername = $_SESSION['site_registration']["fbUsername"] = $user->username;
-						     	$fbName = $_SESSION['site_registration']["fbName"] = $user->name;
-						     	$fbEmail = $_SESSION['site_registration']["fbEmail"] = $user->email;
-						     	$fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $user->birthday;
-						     	$fbPicture = $_SESSION['site_registration']["fbPicture"] = $user->picture->data->url;
-						   
-						     	//Verify if the account already exists...						     	 
-						        $sql = "SELECT `u`.`usergroupid`,
-						                       `u`.`username`,
-						                       `u`.`email`,
-						                       `n`.*
-						                FROM " . TABLE_PREFIX . "vbnexus_user `n`
-						                LEFT JOIN " . TABLE_PREFIX . "user `u` USING (`userid`)
-						                WHERE `n`.`service` = 'fb'
-						                AND `n`.`nonvbid` = '{$fbID}'";
+					        $data = $vbulletin->db->query_first($sql);
+					     	
+					     	if(!$data) {
+					     		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+					     	} else {
+					     		$vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $data["userid"] ."'");
 
-						        $data = $vbulletin->db->query_first($sql);
-						     	
-						     	if(!$data) {
-						     		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
-						     	} else {
-						     		$vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $data["userid"] ."'");
+					     		// Process vBulletin login
+						        require_once(DIR . '/includes/functions_login.php');
+						        $vbulletin->userinfo = fetch_userinfo($data['userid']);
+						        $vbulletin->session->created = false;
+						        process_new_login('', false, '');
 
-						     		// Process vBulletin login
-							        require_once(DIR . '/includes/functions_login.php');
-							        $vbulletin->userinfo = fetch_userinfo($data['userid']);
-							        $vbulletin->session->created = false;
-							        process_new_login('', false, '');
+						        // On login, store a cookie with vbnexus params
+						        if($vbulletin->session->created) {
+						            $vBNexusInfo = array(
+						                'userid'      => $data['userid'],
+						                'service'     => 'fb',
+						                'nonvbid'     => $data["nonvbid"],
+						                'can_publish' => true,
+						            );
+						            setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
+						        }
 
-							        // On login, store a cookie with vbnexus params
-							        if($vbulletin->session->created) {
-							            $vBNexusInfo = array(
-							                'userid'      => $data['userid'],
-							                'service'     => 'fb',
-							                'nonvbid'     => $data["nonvbid"],
-							                'can_publish' => true,
-							            );
-							            setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
-							        }
-
-			                        $vbulletin->userinfo[securitytoken] = "guest";
-			                        
-						     		header("location: index.php");
-						     	}
-							} else {
-								if(!(int)$vbulletin->userinfo['userid']){
-			                        eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
-			                    }
-							}
-						}			        			        
+		                        $vbulletin->userinfo[securitytoken] = "guest";
+		                        
+					     		header("location: index.php");
+					     	}
+			        	} else {
+			        		if(!(int)$vbulletin->userinfo['userid']){
+			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			                }
+			        	}						 		        			       
 			        	
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'activate'){
 			        	
