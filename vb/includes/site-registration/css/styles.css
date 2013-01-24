@@ -52,7 +52,7 @@ li {
 }
 
 .background_yellow {
-	background-color: #FFFFCC;
+	background-color: #FFFFCC !important;
 }
 
 .clear_5 {
@@ -452,7 +452,7 @@ hr{
 }
 
 #what-you-get{
-    margin-top: -60px;
+    margin-top: -25px;
 }
 
 .not-fully-active{
@@ -480,4 +480,16 @@ hr{
 
 #email-icon{
     padding-top:15px;
+}
+
+#container{
+    background-color: white;
+}
+
+#footer  > :nth-child(1){
+    background-color: white;
+}
+
+#container-wrapper{
+    background-color: white;
 }
