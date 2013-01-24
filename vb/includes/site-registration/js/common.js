@@ -11,7 +11,7 @@ jQuery.fn.exists = function() {
 }
 
 
-	
+    
 
 
 
@@ -559,7 +559,7 @@ jQuery(document).ready(function(jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate,
+                data: 'from=facebook&avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate,
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
                         if(response.error_type != "datepicker") {
