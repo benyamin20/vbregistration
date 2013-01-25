@@ -931,7 +931,7 @@ $stylevar[htmldoctype]
                         type="button" id="link-account">Link Account</button>
                         
 				<div class="clear clear_15"></div>
-				<a href="/login.php?do=lostpw" class="small link_blue"
+				<a href="login.php?do=lostpw" class="small link_blue"
 					id="forgot-password">Forgot your password?</a>
 			</div>
 

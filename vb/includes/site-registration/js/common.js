@@ -552,6 +552,8 @@ jQuery(document).ready(function(jQuery) {
             var email = escape(jQuery("#email").val());
             var birthdate = escape(jQuery("#datepicker").val());
             var avatar = escape(jQuery("#avatar").val());
+            var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
+            var token = escape(jQuery('#token').val());
         
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=activate",
@@ -559,7 +561,7 @@ jQuery(document).ready(function(jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'from=facebook&avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate,
+                data: 'from=facebook&avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate+ '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions,
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
                         if(response.error_type != "datepicker") {

@@ -1021,7 +1021,15 @@ case 'activate':
     $message = "";
 
     //clean variables
-    $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR, 'username' => TYPE_STR, 'avatar' => TYPE_STR, 'from' => TYPE_STR));
+    $vbulletin->input->clean_array_gpc('p', 
+        array(  'email' => TYPE_STR, 
+                'birthdate' => TYPE_STR, 
+                'username' => TYPE_STR, 
+                'avatar' => TYPE_STR, 
+                'from' => TYPE_STR,
+                'terms_and_conditions' => TYPE_STR
+                )
+    );
 
     //check if variables are set
     if (empty($vbulletin->GPC['email'])) {
@@ -1029,6 +1037,14 @@ case 'activate':
         $userdata->error('fieldmissing');
         $message = $userdata->errors[0];
         $error_type = "email";
+    }
+    
+ 
+    if (empty($vbulletin->GPC['terms_and_conditions'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $message = $userdata->errors[0];
+        $error_type = "terms_and_conditions";
     }
 
     //$regexp = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
