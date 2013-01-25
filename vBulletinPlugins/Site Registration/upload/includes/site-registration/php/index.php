@@ -1040,11 +1040,39 @@ case 'activate':
     }
     
     
-    if (empty($vbulletin->GPC['username'])) {
+    if (!$userdata->verify_username($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
-        $messages['errors'][] = $message = $userdata->errors[0];
-        $messages['fields'][] = $error_type = "username";
+
+        $error_type = "username";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "The username you chose is not valid.";
+
+    }
+
+    if (strlen($vbulletin->GPC['username']) > 25) {
+        $valid_entries = FALSE;
+
+        $error_type = "username";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "The username you chose is not valid.";
+
+    }
+
+    //check if username already exists on DB
+    $user_exists = $db
+            ->query_first(
+                    "
+        SELECT userid, username, email, languageid
+        FROM " . TABLE_PREFIX . "user
+        WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
+                            . "'
+    ");
+
+    if (!empty($user_exists['username'])) {
+        $valid_entries = FALSE;
+        $error_type = "username";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "Sorry, this username is already taken.";
     }
     
  
