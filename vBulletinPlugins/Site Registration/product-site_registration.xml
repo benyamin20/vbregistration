@@ -854,6 +854,7 @@ $stylevar[htmldoctype]
 					    value="$fbEmail" autocomplete="off" type="text" 
 					     />
                 </div>
+                <span class="error-label small no-margin no-top" id="email-error-label"></span>
 				<span class="help-block tiny dark_grey">Keeping it real!.</span> 
 				
 				<div class="clear "></div>
@@ -867,6 +868,8 @@ $stylevar[htmldoctype]
 					    maxlength="25"  />
 				</div>
 
+                <span class="error-label small no-margin no-top" id="username-error-label"></span>
+                
 				<span class="help-block tiny dark_grey">Maximum 25 characters.</span>
 
 
@@ -885,6 +888,8 @@ $stylevar[htmldoctype]
                             title="Birthday: You must be over 13 to register." />
                     </div>
                 </div>
+                
+                <span class="error-label small no-margin no-top" id="datepicker-error-label"></span>
                 
                 <div class="clear clear_15"></div>
 
