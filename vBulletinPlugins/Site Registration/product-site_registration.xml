@@ -86,7 +86,7 @@ $stylevar[htmldoctype]
 			<!-- Create site Account -->
 			<div class="grid_8" id="create-site-account">
 			    <div id="would-you-like">
-				    <h1>Would you like yo complete your profile?</h1>
+				    <h1>Would you like to complete your profile?</h1>
 				    <div class="clear clear_20"></div>
 				
 				
@@ -1851,12 +1851,15 @@ $stylevar[htmldoctype]
                         
                         
                         $fetch_url = $prev_url;
+                        
+                        /*
                         $str = file_get_contents($fetch_url);
                         
                         if( strlen( $str ) > 0 ){
                             preg_match("/\<title\>(.*)\<\/title\>/" , $str , $title );
                             $page_title = $title[1];
                         } 
+                        */
                         
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
 	                
