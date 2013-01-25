@@ -1315,7 +1315,7 @@ case "linkaccount":
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = $userdata->errors[0];
-        $messages['fields'][] = $error_type = "username";
+        $messages['fields'][] = $error_type = "username-member";
     }
     
     
@@ -1324,7 +1324,7 @@ case "linkaccount":
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = $userdata->errors[0];
-        $messages['fields'][] = $error_type = "password";
+        $messages['fields'][] = $error_type = "password-meber";
     }
     
     
@@ -1333,7 +1333,7 @@ case "linkaccount":
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = $userdata->errors[0];
-        $messages['fields'][] = $error_type = "password";
+        $messages['fields'][] = $error_type = "password-member";
     }
     
     
