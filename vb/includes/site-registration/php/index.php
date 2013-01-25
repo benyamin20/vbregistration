@@ -1020,7 +1020,7 @@ case 'activate':
 
     //clean variables
     $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR, 'username' => TYPE_STR, 'avatar' => TYPE_STR, 'from' => TYPE_STR));
-    die(var_dump($vbulletin->GPC['from']));
+
     //check if variables are set
     if (empty($vbulletin->GPC['email'])) {
         $valid_entries = FALSE;
@@ -1227,34 +1227,12 @@ case 'activate':
         //Send Activation Email: Refer to Automated Emails
         // send new user email
 
-        if($vbulletin->GPC['from'] == "facebook") {
-            // delete activationid
-            $vbulletin->db->query_write(
-                "DELETE FROM " . TABLE_PREFIX . "useractivation 
-                    WHERE userid = '". $userid ."' 
-                    AND type = 0"
-            );
-        } else {
-            $_SESSION['site_registration']['userid'] = $userid;
-            $username = $_SESSION['site_registration']['username'] = $vbulletin
-                    ->GPC['username'];
-            $email = $_SESSION['site_registration']['email'] = $vbulletin
-                    ->GPC['email'];
-            $_SESSION['site_registration']['birthday'] = $vbulletin
-                    ->GPC['birthdate'];
-
-            $activateid = build_user_activation_id($userid,
-                    (($vbulletin->options['moderatenewmembers']
-                            OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
-
-            eval(fetch_email_phrases('activateaccount'));
-
-            if (empty($subject)) {
-                $subject = "Please activate your account";
-            }
-
-            vbmail($email, $subject, $message, false);
-        }
+        // delete activationid
+        $vbulletin->db->query_write(
+            "DELETE FROM " . TABLE_PREFIX . "useractivation 
+                WHERE userid = '". $userid ."' 
+                AND type = 0"
+        );       
     }
 
     $arr = array("valid_entries" => $valid_entries,
