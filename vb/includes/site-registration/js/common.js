@@ -599,6 +599,7 @@ jQuery(document).ready(function(jQuery) {
         jQuery("#link-account").bind('click', function() {
             var username = escape(jQuery("#username-member").val());
             var password = md5(jQuery("#password-member").val());
+            var token = escape(jQuery('#token').val());
         
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=linkaccount",
@@ -606,7 +607,7 @@ jQuery(document).ready(function(jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'username='+ username + '&password='+ password,
+                data: 'username='+ username + '&password='+ password + '&security_token='+ token,
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
                         //mark elements as invalid

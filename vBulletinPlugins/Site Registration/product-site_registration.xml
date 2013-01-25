@@ -922,18 +922,23 @@ $stylevar[htmldoctype]
                 
                 <div class="clear clear_15"></div>
                 <label for="username-member">Username</label>
-                <input class="" id="username-member" name="username-member"
-                       title="Username" value=""
-                       autocomplete="off" type="text"
-                       maxlength="25"  /> 
+                
+                <div class="grid_4 no-margin" id="username-member-wrapper">
+                    <input class="" id="username-member" name="username-member"
+                           title="Username" value=""
+                           autocomplete="off" type="text"
+                           maxlength="25"  /> 
+                </div>
                  
                 <label for="password-member">Password</label>
-                <input class=""
-                       id="password-member" name="password-member" 
-                       title="Password" 
-                       value="" autocomplete="off"
-                       type="password"  /> 
-                 
+                
+                <div class="grid_4 no-margin" id="password-member-wrapper">
+                    <input class=""
+                           id="password-member" name="password-member" 
+                           title="Password" 
+                           value="" autocomplete="off"
+                           type="password"  /> 
+                </div> 
                  <div class="clear clear_15"></div>
                  
                  <button class="btn grid_3 no-margin"
