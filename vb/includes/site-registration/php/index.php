@@ -1289,10 +1289,10 @@ case "linkaccount":
         $fbID = $_SESSION['site_registration']["fbID"];
         $avatar = $_SESSION['site_registration']["fbPicture"];
 
-        if ($dbPassword != $password) { die("1");
+        if ($dbPassword != $password) { 
             $arr = array("valid_entries" => false, "error_type" => "password",
                     "message" => "Incorrect Login", "url" => $url );
-        } else { die("2");
+        } else { 
             $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                     . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
 
@@ -1373,9 +1373,7 @@ case "linkaccount":
                 $arr = array("url" => $url);
 
                 json_headers($arr);
-            } else {
-                die("Nooo");
-            }
+            } 
         }
     }
 
