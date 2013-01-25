@@ -1236,21 +1236,24 @@ case 'activate':
     }
 
     // Process vBulletin login
+    $vbulletin->userinfo = $vbulletin->db
+                    ->query_first(
+                            "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                username, password, salt FROM " . TABLE_PREFIX
+                                    . "user 
+                WHERE userid = " . $userid);
+
+
     require_once(DIR . '/includes/functions_login.php');
-    $vbulletin->userinfo = fetch_userinfo($userid);
-    $vbulletin->session->created = false;
-    process_new_login('', false, '');
-
-    $vBNexusInfo = array(
-        'userid'      => $userid,
-        'service'     => 'fb',
-        'nonvbid'     => $fbID,
-        'can_publish' => true,
-    );
-
-    setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
     
-    $vbulletin->userinfo[securitytoken] = "guest";
+    vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
+    vbsetcookie('password', md5($vbulletin->userinfo['password'] . COOKIE_SALT), true, true, true);
+
+    process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+
+    cache_permissions($vbulletin->userinfo, true);
+
+    $vbulletin->session->save();
 
     $arr = array("valid_entries" => $valid_entries,
             "error_type" => $error_type, "message" => $message, "url" => $url );
