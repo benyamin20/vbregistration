@@ -849,18 +849,23 @@ $stylevar[htmldoctype]
 
 				<div class="clear clear_20"></div>
                 <label for="email">Email</label>
-				<input class="" id="email" name="email" title="Email"
-					value="$fbEmail" autocomplete="off" type="text" 
-					 />
-
+				<div class="grid_4 no-margin" id="email-wrapper">
+				    <input class="" id="email" name="email" title="Email"
+					    value="$fbEmail" autocomplete="off" type="text" 
+					     />
+                </div>
 				<span class="help-block tiny dark_grey">Keeping it real!.</span> 
 				
 				<div class="clear "></div>
+				
 				<label for="username">Username</label>
-				<input
-					class="" id="username" name="username" title="Username"
-					value="$fbUsername" autocomplete="off" type="text" 
-					maxlength="25"  />
+				
+				<div class="grid_4 no-margin" id="username-wrapper">
+				    <input
+					    class="" id="username" name="username" title="Username"
+					    value="$fbUsername" autocomplete="off" type="text" 
+					    maxlength="25"  />
+				</div>
 
 				<span class="help-block tiny dark_grey">Maximum 25 characters.</span>
 
@@ -868,29 +873,33 @@ $stylevar[htmldoctype]
 				<div class="clear "></div>
 
                 <label for="birthday">Birth Date</label>
-				<div class="input-prepend ">
-                    <span class="add-on"> <i class="icon-calendar"></i>
-                    </span> 
-                    <input 
-                        class="fix_input_width_facebook" id="datepicker" 
-                        type="text"
-                        value="$fbBirthday" autocomplete="off" 
-                        
-                        title="Birthday: You must be over 13 to register." />
+                <div class="grid_4 no-margin" id="datepicker-wrapper">
+				    <div class="input-prepend ">
+                        <span class="add-on"> <i class="icon-calendar"></i>
+                        </span> 
+                        <input 
+                            class="fix_input_width_facebook" id="datepicker" 
+                            type="text"
+                            value="$fbBirthday" autocomplete="off" 
+                            
+                            title="Birthday: You must be over 13 to register." />
+                    </div>
                 </div>
                 
                 <div class="clear clear_15"></div>
 
-				<label class="checkbox"> 
-				    <input type="checkbox" value=""
-					   id="terms-and-conditions" name="terms-and-conditions" 
-					    checked="checked" />
-				    <span class="small light_grey"> Yes, I agree with the
-						<a href="$php_self#info" class="link_blue" rel="facebox">Terms
-							&amp; Conditions.</a>
-				    </span>
-				</label>
-
+                <div class="grid_4 no-margin" id="terms_and_conditions-wrapper">
+				    <label class="checkbox"> 
+				        <input type="checkbox" value=""
+					       id="terms-and-conditions" name="terms-and-conditions" 
+					        checked="checked" />
+				        <span class="small light_grey span2 no-margin"> Yes, I agree with the
+						    <a href="$php_self#info" class="link_blue" rel="facebox">Terms
+							    &amp; Conditions.</a>
+				        </span>
+				    </label>
+                </div>
+                
 				<div class="clear clear_15"></div>
 				<div class="pull-left">
 				    <button class="btn btn-primary grid_3"
