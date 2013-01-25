@@ -945,6 +945,9 @@ $stylevar[htmldoctype]
                         type="button" id="link-account">Link Account</button>
                         
 				<div class="clear clear_15"></div>
+				
+				<input id="token" name="token" value="$security_token" type="hidden" />
+				
 				<a href="login.php?do=lostpw" class="small link_blue"
 					id="forgot-password">Forgot your password?</a>
 			</div>
