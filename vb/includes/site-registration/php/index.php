@@ -420,7 +420,7 @@ case 'validate_site_account_details':
 
     }
 
-    if (empty($vbulletin->GPC['password'])) {
+    if (empty($vbulletin->GPC['password']) || $vbulletin->GPC['password'] == md5("") ) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $error_type = "password";
@@ -428,7 +428,7 @@ case 'validate_site_account_details':
         $messages['errors'][] = $userdata->errors[0];
     }
 
-    if (empty($vbulletin->GPC['confirm_password'])) {
+    if (empty($vbulletin->GPC['confirm_password']) || $vbulletin->GPC['confirm_password'] == md5("") ) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $error_type = "confirm-password";
@@ -903,7 +903,9 @@ default:
 
     //check if variables are set
     if (empty($vbulletin->GPC['vb_login_username'])
-            OR empty($vbulletin->GPC['vb_login_password'])) {
+            OR empty($vbulletin->GPC['vb_login_password'])
+            OR $vbulletin->GPC['vb_login_password'] == md5("")
+            ) {
         $valid_login = FALSE;
         $userdata->error('fieldmissing');
         if (count($userdata->errors) > 1) {
