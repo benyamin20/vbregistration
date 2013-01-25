@@ -921,6 +921,10 @@ $stylevar[htmldoctype]
 				</p>
                 
                 <div class="clear clear_15"></div>
+                <span id="username-member-error-label" class="error-label no-margin  "></span>
+                <div class="clear"></div>
+                <span id="password-member-error-label" class="error-label no-margin  "></span>
+                <div class="clear"></div>
                 <label for="username-member">Username</label>
                 
                 <div class="grid_4 no-margin" id="username-member-wrapper">
