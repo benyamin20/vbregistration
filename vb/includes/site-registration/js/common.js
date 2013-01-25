@@ -608,31 +608,45 @@ jQuery(document).ready(function(jQuery) {
                 type: 'POST',
                 cache: false,
                 data: 'username='+ username + '&password='+ password + '&security_token='+ token,
-                success: function(response) {
-                    if(response.valid_entries == false) {                                                                        
-                        //mark elements as invalid
+                success: function(response, status, xhr) {
+                
+                    var ct = xhr.getResponseHeader("content-type") || "";
+                    
+                    if(ct == "application/json") {
+                        if(response.valid_entries == false) {                                                                        
+                            //mark elements as invalid
 
-                        jQuery('.error-label').empty();
-                        jQuery('.large-input-error-container').removeClass("large-input-error-container");
-                        jQuery('span.add-on').removeClass("input-error");
-                        jQuery('.input-error').removeClass("input-error");
-                        
-                        jQuery.each(response.messages.fields, function(index, value) {        
-                            jQuery('#'+value+'-wrapper').addClass("large-input-error-container");
-                            jQuery('#'+value).addClass("input-error");
-                            jQuery('#'+value+'-error-label').empty(); 
-                            jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
+                            jQuery('.error-label').empty();
+                            jQuery('.large-input-error-container').removeClass("large-input-error-container");
+                            jQuery('span.add-on').removeClass("input-error");
+                            jQuery('.input-error').removeClass("input-error");
                             
-                            if(value == 'datepicker'){
-                                jQuery('span.add-on').addClass("input-error");    
-                            }    
-                        });
-                                                 
-                    } else {
-                        //redirect user to proper url
-                        var url = response.url;    
-                        jQuery(location).attr('href', url);
-                    }                   
+                            jQuery.each(response.messages.fields, function(index, value) {        
+                                jQuery('#'+value+'-wrapper').addClass("large-input-error-container");
+                                jQuery('#'+value).addClass("input-error");
+                                jQuery('#'+value+'-error-label').empty(); 
+                                jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
+                                
+                                if(value == 'datepicker'){
+                                    jQuery('span.add-on').addClass("input-error");    
+                                }    
+                            });
+                                                     
+                        } else {
+                            //redirect user to proper url
+                            var url = response.url;    
+                            jQuery(location).attr('href', url);
+                        }
+                    }else{
+                         var error = '<b>Wrong username or password.</b> You have used up your failed login quota! <br /><br /> Please wait 15 minutes before trying again.';
+                
+                        jQuery('#password-member-error-label').empty();
+                        jQuery('#password-member-error-label').html(error); 
+                        
+                        jQuery('#username-member').addClass("input-error").wrap('<div class="large-input-error-container" />');
+                        jQuery('password-member').addClass("input-error").wrap('<div class="large-input-error-container" />');
+                    }
+                    
                 }
             }).done(function() { 
                 //nothing here
