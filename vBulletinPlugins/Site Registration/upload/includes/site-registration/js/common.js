@@ -604,7 +604,6 @@ jQuery(document).ready(function(jQuery) {
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=linkaccount",
                 context: document.body, 
-                dataType: 'json',
                 type: 'POST',
                 cache: false,
                 data: 'username='+ username + '&password='+ password + '&security_token='+ token,
