@@ -1466,6 +1466,12 @@ case "linkaccount":
                     vbsetcookie('password',
                             md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
                             true, true);
+                            
+                   
+                    if ($vbulletin->options['usestrikesystem']) {
+                        exec_unstrike_user($vbulletin->GPC['username']);
+                    }
+                   
 
                     process_new_login('', 1, $vbulletin->GPC['cssprefs']);
 
@@ -1486,6 +1492,26 @@ case "linkaccount":
                  $messages['fields'][] = $error_type = "username-member";
                  $messages['errors'][] = $message = "";
                  $messages['fields'][] = $error_type = "password-member";
+                 
+                 if ($vbulletin->options['usestrikesystem']) {
+                 
+                    $strikes = verify_strike_status($vbulletin->GPC['username']);
+                    exec_strike_user($vbulletin->GPC['username']);
+                    
+                    if($strikes >= 4){
+                        unset($messages);
+                        $message = fetch_error('badlogin_strikes',
+                                            $vbulletin->options['bburl'],
+                                            $vbulletin->session->vars['sessionurl'], 
+                                            $strikes);
+                        $messages['errors'][] = $message;
+                        $messages['fields'][] = $error_type = "username-member";
+                        $messages['errors'][] = "";
+                        $messages['fields'][] = $error_type = "password-member";
+                    }
+                    
+                    
+                 }
         
         }
     }
