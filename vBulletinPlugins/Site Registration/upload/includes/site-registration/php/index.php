@@ -151,19 +151,18 @@ case 'complete_your_profile':
     } else {
 
     }
-    
+
     if (empty($vbulletin->GPC['receive_emails_from_administrators'])) {
         $adminemail = 0;
-    }else{
+    } else {
         $adminemail = 1;
     }
-    
+
     if (empty($vbulletin->GPC['receive_emails_from_other_members'])) {
         $showemail = 0;
-    }else{
+    } else {
         $showemail = 1;
     }
-    
 
     if ($_FILES['photoimg']['name'] != "") {
         //do not use default image
@@ -362,38 +361,37 @@ case 'complete_your_profile':
 
     if ($valid_entries) {
         //update who can contact you
-            /*
-            $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
-                    . $vbulletin->GPC['adminemail']
-                    . " WHERE NOT (options & "
-                    . $vbulletin->GPC['adminemail']
-                    . ")";
+        /*
+        $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
+                . $vbulletin->GPC['adminemail']
+                . " WHERE NOT (options & "
+                . $vbulletin->GPC['adminemail']
+                . ")";
+        
+        $vbulletin->db->query_write($query);
+        
+        $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
+                . $vbulletin->GPC['showemail']
+                . " WHERE NOT (options & "
+                . $vbulletin->GPC['showemail']
+                . ")";
+        
+        $vbulletin->db->query_write($query);
+        
+         */
 
-            $vbulletin->db->query_write($query);
- 
-            $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
-                    . $vbulletin->GPC['showemail']
-                    . " WHERE NOT (options & "
-                    . $vbulletin->GPC['showemail']
-                    . ")";
-
-            $vbulletin->db->query_write($query);
-            
-            */
-            
-        $user_data =& datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
+        $user_data = &datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
         $vbulletin->userinfo = fetch_userinfo($userid);
         $user_data->set_existing($vbulletin->userinfo);
-        
-        $user_data->set_bitfield( 'options', "adminemail", $adminemail );
-        $user_data->set_bitfield( 'options', "showemail",  $showemail );
-        
+
+        $user_data->set_bitfield('options', "adminemail", $adminemail);
+        $user_data->set_bitfield('options', "showemail", $showemail);
+
         $user_data->save();
- 
 
     }
 
-    $arr = array("valid_entries" => $valid_entries, "messages" => $messages  );
+    $arr = array("valid_entries" => $valid_entries, "messages" => $messages);
 
     json_headers_ie_support($arr);
 
@@ -420,7 +418,8 @@ case 'validate_site_account_details':
 
     }
 
-    if (empty($vbulletin->GPC['password']) || $vbulletin->GPC['password'] == md5("") ) {
+    if (empty($vbulletin->GPC['password'])
+            || $vbulletin->GPC['password'] == md5("")) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $error_type = "password";
@@ -428,7 +427,8 @@ case 'validate_site_account_details':
         $messages['errors'][] = $userdata->errors[0];
     }
 
-    if (empty($vbulletin->GPC['confirm_password']) || $vbulletin->GPC['confirm_password'] == md5("") ) {
+    if (empty($vbulletin->GPC['confirm_password'])
+            || $vbulletin->GPC['confirm_password'] == md5("")) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $error_type = "confirm-password";
@@ -464,8 +464,7 @@ case 'validate_site_account_details':
     }
 
     //$regex_username = '/^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/';
-    
- 
+
     if (!$userdata->verify_username($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
 
@@ -571,11 +570,14 @@ case 'validate_site_account_details':
         // set time options
         //$userdata->set_dst($vbulletin->GPC['dst']);
         //$userdata->set('timezoneoffset', $vbulletin->GPC['timezoneoffset']);
-        
-        
-        $userdata->set_info('coppauser', $_SESSION['site_registration']['coppauser']);
+
+        $userdata
+                ->set_info('coppauser',
+                        $_SESSION['site_registration']['coppauser']);
         $userdata->set_info('coppapassword', $vbulletin->GPC['password']);
-        $userdata->set_bitfield('options', 'coppauser', $_SESSION['site_registration']['coppauser']);
+        $userdata
+                ->set_bitfield('options', 'coppauser',
+                        $_SESSION['site_registration']['coppauser']);
         //$userdata->set('parentemail', $vbulletin->GPC['parentemail']);
 
         // register IP address
@@ -630,7 +632,8 @@ case 'validate_site_account_details':
 
             $activateid = build_user_activation_id($userid,
                     (($vbulletin->options['moderatenewmembers']
-                            OR $_SESSION['site_registration']['coppauser']) ? 4 : 2), 0);
+                            OR $_SESSION['site_registration']['coppauser']) ? 4
+                            : 2), 0);
 
             eval(fetch_email_phrases('activateaccount'));
 
@@ -661,7 +664,8 @@ case 'resend_email':
 
         $activateid = build_user_activation_id($userid,
                 (($vbulletin->options['moderatenewmembers']
-                        OR $_SESSION['site_registration']['coppauser']) ? 4 : 2), 0);
+                        OR $_SESSION['site_registration']['coppauser']) ? 4 : 2),
+                0);
 
         eval(fetch_email_phrases('activateaccount'));
 
@@ -693,15 +697,13 @@ case 'create_site_account_first_step':
     $vbulletin->input
             ->clean_array_gpc('p',
                     array('email' => TYPE_STR, 'birthdate' => TYPE_STR));
-                    
-                    
-    if (!$vbulletin->options['allowregistration'])
-    {
+
+    if (!$vbulletin->options['allowregistration']) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = fetch_error('noregister');
         $messages['fields'][] = $error_type = "datepicker";
-    
+
     }
 
     //check if variables are set
@@ -724,9 +726,9 @@ case 'create_site_account_first_step':
         $year = $date_parts[2];
         $day = $date_parts[1];
 
-        if (checkdate($month, $day, $year) ) {
-        
-            if($vbulletin->options['usecoppa']){
+        if (checkdate($month, $day, $year)) {
+
+            if ($vbulletin->options['usecoppa']) {
                 if ($year > 1970
                         AND mktime(0, 0, 0, $month, $day, $year)
                                 > mktime(0, 0, 0, $current['month'],
@@ -735,14 +737,13 @@ case 'create_site_account_first_step':
                     $messages['errors'][] = $message = "You must be over 13 to register";
                     $messages['fields'][] = $error_type = "datepicker";
                     //fetch_error('under_thirteen_registration_denied');
-                    
-                    if ($vbulletin->options['checkcoppa'])
-                    {
-                        vbsetcookie('coppaage', $month . '-' . $day . '-' . $year, 1);
+
+                    if ($vbulletin->options['checkcoppa']) {
+                        vbsetcookie('coppaage',
+                                $month . '-' . $day . '-' . $year, 1);
                     }
 
-                    if ($vbulletin->options['usecoppa'] == 2)
-                    {
+                    if ($vbulletin->options['usecoppa'] == 2) {
                         $valid_entries = FALSE;
                         $messages['errors'][] = $message = "You must be over 13 to register";
                         $messages['fields'][] = $error_type = "datepicker";
@@ -750,13 +751,12 @@ case 'create_site_account_first_step':
                     }
 
                     $_SESSION['site_registration']['coppauser'] = true;
-                        
+
                 } else {
                     $_SESSION['site_registration']['coppauser'] = false;
                 }
             }
-        
-            
+
         } else {
             $valid_entries = FALSE;
             $messages['errors'][] = $message = "Invalid date.";
@@ -785,8 +785,8 @@ case 'create_site_account_first_step':
             $messages['fields'][] = $error_type = "email";
 
         } else {
-            if(!$vbulletin->options['allowmultiregs']){            
-                if($vbulletin->options['requireuniqueemail']){
+            if (!$vbulletin->options['allowmultiregs']) {
+                if ($vbulletin->options['requireuniqueemail']) {
                     //check if email already exists on DB
                     $user_exists = $db
                             ->query_read_slave(
@@ -808,7 +808,7 @@ case 'create_site_account_first_step':
                         $messages['errors'][] = $message = "The email address you entered is already in use.";
                         $messages['fields'][] = $error_type = "email";
                     }
-                }            
+                }
             }
         }
 
@@ -817,15 +817,15 @@ case 'create_site_account_first_step':
         $messages['errors'][] = $message = "Invalid email";
         $messages['fields'][] = $error_type = "email";
     }
-    
+
     require_once(DIR . '/includes/functions_user.php');
-    
-    if (is_banned_email($vbulletin->GPC['email']) ){
-        if (!$vbulletin->options['allowkeepbannedemail']){
+
+    if (is_banned_email($vbulletin->GPC['email'])) {
+        if (!$vbulletin->options['allowkeepbannedemail']) {
             $valid_entries = FALSE;
             $message = $error = fetch_error("banemail");
             $error_type = "email";
- 
+
         }
     }
 
@@ -879,7 +879,7 @@ case 'create_site_account_first_step':
     }
 
     $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-            "url" => $url );
+            "url" => $url);
 
     json_headers($arr);
 
@@ -904,8 +904,7 @@ default:
     //check if variables are set
     if (empty($vbulletin->GPC['vb_login_username'])
             OR empty($vbulletin->GPC['vb_login_password'])
-            OR $vbulletin->GPC['vb_login_password'] == md5("")
-            ) {
+            OR $vbulletin->GPC['vb_login_password'] == md5("")) {
         $valid_login = FALSE;
         $userdata->error('fieldmissing');
         if (count($userdata->errors) > 1) {
@@ -935,8 +934,8 @@ default:
         $original_userinfo = $vbulletin->userinfo;
 
         $vbulletin->GPC['vb_login_md5password'] = $vbulletin
-                ->GPC['vb_login_md5password_utf'] = (
-                $vbulletin->GPC['vb_login_password']);
+                ->GPC['vb_login_md5password_utf'] = ($vbulletin
+                ->GPC['vb_login_password']);
 
         if (!verify_authentication($vbulletin->GPC['vb_login_username'],
                 $vbulletin->GPC['vb_login_password'],
@@ -1021,15 +1020,12 @@ case 'activate':
     $message = "";
 
     //clean variables
-    $vbulletin->input->clean_array_gpc('p', 
-        array(  'email' => TYPE_STR, 
-                'birthdate' => TYPE_STR, 
-                'username' => TYPE_STR, 
-                'avatar' => TYPE_STR, 
-                'from' => TYPE_STR,
-                'terms_and_conditions' => TYPE_STR
-                )
-    );
+    $vbulletin->input
+            ->clean_array_gpc('p',
+                    array('email' => TYPE_STR, 'birthdate' => TYPE_STR,
+                            'username' => TYPE_STR, 'avatar' => TYPE_STR,
+                            'from' => TYPE_STR,
+                            'terms_and_conditions' => TYPE_STR));
 
     //check if variables are set
     if (empty($vbulletin->GPC['email'])) {
@@ -1038,8 +1034,7 @@ case 'activate':
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "email";
     }
-    
-    
+
     if (!$userdata->verify_username($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
 
@@ -1074,8 +1069,7 @@ case 'activate':
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "Sorry, this username is already taken.";
     }
-    
- 
+
     if (empty($vbulletin->GPC['terms_and_conditions'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
@@ -1096,8 +1090,8 @@ case 'activate':
             $messages['fields'][] = $error_type = "email";
 
         } else {
-            if(!$vbulletin->options['allowmultiregs']){            
-                if($vbulletin->options['requireuniqueemail']){
+            if (!$vbulletin->options['allowmultiregs']) {
+                if ($vbulletin->options['requireuniqueemail']) {
                     //check if email already exists on DB
                     $user_exists = $db
                             ->query_read_slave(
@@ -1119,7 +1113,7 @@ case 'activate':
                         $messages['errors'][] = $message = "The email address you entered is already in use.";
                         $messages['fields'][] = $error_type = "email";
                     }
-                }            
+                }
             }
         }
 
@@ -1128,19 +1122,18 @@ case 'activate':
         $messages['errors'][] = $message = "Invalid email";
         $messages['fields'][] = $error_type = "email";
     }
-    
-    
+
     require_once(DIR . '/includes/functions_user.php');
-    
-    if (is_banned_email($vbulletin->GPC['email']) ){
-        if (!$vbulletin->options['allowkeepbannedemail']){
+
+    if (is_banned_email($vbulletin->GPC['email'])) {
+        if (!$vbulletin->options['allowkeepbannedemail']) {
             $valid_entries = FALSE;
             $messages['errors'][] = $message = $error = fetch_error("banemail");
             $messages['fields'][] = $error_type = "email";
- 
+
         }
     }
-   
+
     //check if variables are set
     if (empty($vbulletin->GPC['birthdate'])) {
         $valid_entries = FALSE;
@@ -1160,9 +1153,9 @@ case 'activate':
         $year = $date_parts[2];
         $day = $date_parts[1];
 
-        if (checkdate($month, $day, $year) ) {
-        
-            if($vbulletin->options['usecoppa']){
+        if (checkdate($month, $day, $year)) {
+
+            if ($vbulletin->options['usecoppa']) {
                 if ($year > 1970
                         AND mktime(0, 0, 0, $month, $day, $year)
                                 > mktime(0, 0, 0, $current['month'],
@@ -1171,14 +1164,13 @@ case 'activate':
                     $messages['errors'][] = $message = "You must be over 13 to register";
                     $messages['fields'][] = $error_type = "datepicker";
                     //fetch_error('under_thirteen_registration_denied');
-                    
-                    if ($vbulletin->options['checkcoppa'])
-                    {
-                        vbsetcookie('coppaage', $month . '-' . $day . '-' . $year, 1);
+
+                    if ($vbulletin->options['checkcoppa']) {
+                        vbsetcookie('coppaage',
+                                $month . '-' . $day . '-' . $year, 1);
                     }
 
-                    if ($vbulletin->options['usecoppa'] == 2)
-                    {
+                    if ($vbulletin->options['usecoppa'] == 2) {
                         $valid_entries = FALSE;
                         $messages['errors'][] = $message = "You must be over 13 to register";
                         $messages['fields'][] = $error_type = "datepicker";
@@ -1186,13 +1178,12 @@ case 'activate':
                     }
 
                     $_SESSION['site_registration']['coppauser'] = true;
-                        
+
                 } else {
                     $_SESSION['site_registration']['coppauser'] = false;
                 }
             }
-        
-            
+
         } else {
             $valid_entries = FALSE;
             $messages['errors'][] = $message = "Invalid date.";
@@ -1216,7 +1207,7 @@ case 'activate':
                                         ->escape_string(
                                                 $vbulletin->GPC['birthdate'])
                                 . "',
-             '" . $vbulletin->GPC['username'] . "')");        
+             '" . $vbulletin->GPC['username'] . "')");
 
         $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();
@@ -1282,38 +1273,40 @@ case 'activate':
         // send new user email
 
         // delete activationid
-        $vbulletin->db->query_write(
-            "DELETE FROM " . TABLE_PREFIX . "useractivation 
-                WHERE userid = '". $userid ."' 
-                AND type = 0"
-        );       
+        $vbulletin->db
+                ->query_write(
+                        "DELETE FROM " . TABLE_PREFIX
+                                . "useractivation 
+                WHERE userid = '" . $userid . "' 
+                AND type = 0");
     }
 
     if ($valid_entries) {
-         // Process vBulletin login
+        // Process vBulletin login
         $vbulletin->userinfo = $vbulletin->db
-                        ->query_first(
-                                "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                ->query_first(
+                        "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
                     username, password, salt FROM " . TABLE_PREFIX
-                                        . "user 
+                                . "user 
                     WHERE userid = " . $userid);
-
 
         require_once(DIR . '/includes/functions_login.php');
 
         vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
-        vbsetcookie('password', md5($vbulletin->userinfo['password'] . COOKIE_SALT), true, true, true);
+        vbsetcookie('password',
+                md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
+                true, true);
 
         process_new_login('', 1, $vbulletin->GPC['cssprefs']);
 
         cache_permissions($vbulletin->userinfo, true);
 
-        $vbulletin->session->save();   
+        $vbulletin->session->save();
     }
 
-
     $arr = array("valid_entries" => $valid_entries,
-            "error_type" => $error_type, "messages" => $messages, "url" => $url );
+            "error_type" => $error_type, "messages" => $messages,
+            "url" => $url);
 
     json_headers($arr);
 
@@ -1324,49 +1317,42 @@ case "linkaccount":
 
     $valid_entries = TRUE;
     $message = "OK";
-   
-    
- 
+
     //clean variables
     $vbulletin->input
             ->clean_array_gpc('p',
                     array('username' => TYPE_STR, 'password' => TYPE_STR));
 
-    
-    
-     //check if variables are set
+    //check if variables are set
     if (empty($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "username-member";
- 
+
     }
-    
-    
-     //check if variables are set
+
+    //check if variables are set
     if (empty($vbulletin->GPC['password'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "password-member";
     }
-    
-    
-     //check if variables are set
-    if ($vbulletin->GPC['password'] == md5("") ) {
+
+    //check if variables are set
+    if ($vbulletin->GPC['password'] == md5("")) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "password-member";
     }
-    
-    
-    
-    if($valid_entries){
-    
-        $user       = $vbulletin->db->escape_string( $vbulletin->GPC['username'] );
-        $password   = $vbulletin->db->escape_string( $vbulletin->GPC['password'] );
+
+    if ($valid_entries) {
+
+        $user = $vbulletin->db->escape_string($vbulletin->GPC['username']);
+        $password = $vbulletin->db
+                ->escape_string($vbulletin->GPC['password']);
 
         $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX
                 . "user WHERE username = '$user' ";
@@ -1374,9 +1360,9 @@ case "linkaccount":
         $data = $vbulletin->db->query_first($sql);
 
         if (is_array($data)) {
-        
+
             $url = "register.php?step=activate";
-            
+
             $userid = $data["userid"];
             $username = $data["username"];
             $dbPassword = $data["password"];
@@ -1384,31 +1370,29 @@ case "linkaccount":
             $fbID = $_SESSION['site_registration']["fbID"];
             $avatar = $_SESSION['site_registration']["fbPicture"];
 
-            if ($dbPassword != $password) { 
-            
+            if ($dbPassword != $password) {
+
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "username-member";
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "password-member";
-            
-                $arr = array(
-                        "valid_entries" => false, 
-                        "error_type" => "password",
-                        "messages" => $messages 
-                        );
 
-            } else { 
+                $arr = array("valid_entries" => false,
+                        "error_type" => "password", "messages" => $messages);
+
+            } else {
                 $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                         . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
 
                 $data = $vbulletin->db->query_first($sql);
 
-                if (!$data and strlen($fbID) > 1) { 
+                if (!$data and strlen($fbID) > 1) {
                     $vbulletin->db
                             ->query_write(
                                     "INSERT IGNORE INTO " . TABLE_PREFIX
                                             . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
-                                            . $fbID . "', '" . $userid . "', '1')");
+                                            . $fbID . "', '" . $userid
+                                            . "', '1')");
 
                     $parts = explode(".", $avatar);
                     $extension = end($parts);
@@ -1461,17 +1445,15 @@ case "linkaccount":
 
                     require_once(DIR . '/includes/functions_login.php');
 
-                    vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
-                            true);
-                    vbsetcookie('password',
-                            md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
+                    vbsetcookie('userid', $vbulletin->userinfo['userid'], true,
                             true, true);
-                            
-                   
+                    vbsetcookie('password',
+                            md5($vbulletin->userinfo['password'] . COOKIE_SALT),
+                            true, true, true);
+
                     if ($vbulletin->options['usestrikesystem']) {
                         exec_unstrike_user($vbulletin->GPC['username']);
                     }
-                   
 
                     process_new_login('', 1, $vbulletin->GPC['cssprefs']);
 
@@ -1484,47 +1466,60 @@ case "linkaccount":
                     $arr = array("url" => $url);
 
                     json_headers($arr);
-                } 
+                }
             }
-        }else{
-                 $valid_entries        = FALSE;
-                 $messages['errors'][] = $message = "Please check your username and password.";
-                 $messages['fields'][] = $error_type = "username-member";
-                 $messages['errors'][] = $message = "";
-                 $messages['fields'][] = $error_type = "password-member";
-                 
-                 if ($vbulletin->options['usestrikesystem']) {
-                 
-                    $strikes = verify_strike_status($vbulletin->GPC['username']);
-                    exec_strike_user($vbulletin->GPC['username']);
-                    
-                    if($strikes >= 4){
-                        unset($messages);
-                        $message = fetch_error('badlogin_strikes',
-                                            $vbulletin->options['bburl'],
-                                            $vbulletin->session->vars['sessionurl'], 
-                                            $strikes);
-                        $messages['errors'][] = $message;
-                        $messages['fields'][] = $error_type = "username-member";
-                        $messages['errors'][] = "";
-                        $messages['fields'][] = $error_type = "password-member";
-                    }
-                    
-                    
-                 }
-        
+        } else {
+            $valid_entries = FALSE;
+            $messages['errors'][] = $message = "Please check your username and password.";
+            $messages['fields'][] = $error_type = "username-member";
+            $messages['errors'][] = $message = "";
+            $messages['fields'][] = $error_type = "password-member";
+
+            if ($vbulletin->options['usestrikesystem']) {
+
+                $strikes = verify_strike_status($vbulletin->GPC['username']);
+                exec_strike_user($vbulletin->GPC['username']);
+
+                if ($strikes >= 4) {
+                    unset($messages);
+                    $message = fetch_error('badlogin_strikes',
+                            $vbulletin->options['bburl'],
+                            $vbulletin->session->vars['sessionurl'], $strikes);
+
+                    $message = strip_tags($message);
+
+                    $search[0] = "/You have entered an invalid username or password./";
+                    $replace[0] = "<b>You have entered an invalid username or password.</b>";
+
+                    $search[1] = "/Please press the back button, enter the correct details and try again./";
+                    $replace[1] = "";
+
+                    $search[2] = "/Don't forget that the password is case sensitive./";
+                    $replace[2] = "Your password is case sensitive.";
+
+                    $search[3] = "/Forgotten your password\? Click here\!/";
+                    $replace[3] = "<br /><br />";
+
+                    $search[4] = "/out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes./";
+                    $replace[4] = "out of 5 login attempts, and you will be unable to log in for 15 minutes after all five have been used.";
+
+                    $message = preg_replace($search, $replace, $message);
+
+                    $messages['errors'][] = $message;
+                    $messages['fields'][] = $error_type = "username-member";
+                    $messages['errors'][] = "";
+                    $messages['fields'][] = $error_type = "password-member";
+                }
+
+            }
+
         }
     }
-    
-    
-    $arr = array(   "valid_entries" => $valid_entries, 
-                    "messages" => $messages, 
-                    "url" => $url 
-    );
+
+    $arr = array("valid_entries" => $valid_entries, "messages" => $messages,
+            "url" => $url);
 
     json_headers($arr);
-    
- 
 
     break;
 
