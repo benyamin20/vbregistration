@@ -1237,16 +1237,16 @@ case 'activate':
 
     // Process vBulletin login
     require_once(DIR . '/includes/functions_login.php');
-    $vbulletin->userinfo = fetch_userinfo($data['userid']);
+    $vbulletin->userinfo = fetch_userinfo($userid);
     $vbulletin->session->created = false;
     process_new_login('', false, '');
 
     // On login, store a cookie with vbnexus params
     if($vbulletin->session->created) {
         $vBNexusInfo = array(
-            'userid'      => $data['userid'],
+            'userid'      => $userid,
             'service'     => 'fb',
-            'nonvbid'     => $data["nonvbid"],
+            'nonvbid'     => $fbID,
             'can_publish' => true,
         );
 
