@@ -1039,6 +1039,14 @@ case 'activate':
         $error_type = "email";
     }
     
+    
+    if (empty($vbulletin->GPC['username'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $message = $userdata->errors[0];
+        $error_type = "username";
+    }
+    
  
     if (empty($vbulletin->GPC['terms_and_conditions'])) {
         $valid_entries = FALSE;
