@@ -1020,7 +1020,7 @@ case 'activate':
 
     //clean variables
     $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR, 'username' => TYPE_STR, 'avatar' => TYPE_STR, 'from' => TYPE_STR));
-
+    die(var_dump($vbulletin->GPC['from']));
     //check if variables are set
     if (empty($vbulletin->GPC['email'])) {
         $valid_entries = FALSE;
