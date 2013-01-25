@@ -643,7 +643,7 @@ jQuery(document).ready(function(jQuery) {
                         jQuery('#password-member-error-label').html(error); 
                         
                         jQuery('#username-member').addClass("input-error").wrap('<div class="large-input-error-container" />');
-                        jQuery('password-member').addClass("input-error").wrap('<div class="large-input-error-container" />');
+                        jQuery('#password-member').addClass("input-error").wrap('<div class="large-input-error-container" />');
                     }
                     
                 }
