@@ -1035,24 +1035,24 @@ case 'activate':
     if (empty($vbulletin->GPC['email'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $message = $userdata->errors[0];
-        $error_type = "email";
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "email";
     }
     
     
     if (empty($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $message = $userdata->errors[0];
-        $error_type = "username";
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "username";
     }
     
  
     if (empty($vbulletin->GPC['terms_and_conditions'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $message = $userdata->errors[0];
-        $error_type = "terms_and_conditions";
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "terms_and_conditions";
     }
 
     //$regexp = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
@@ -1107,8 +1107,8 @@ case 'activate':
     if (is_banned_email($vbulletin->GPC['email']) ){
         if (!$vbulletin->options['allowkeepbannedemail']){
             $valid_entries = FALSE;
-            $message = $error = fetch_error("banemail");
-            $error_type = "email";
+            $messages['errors'][] = $message = $error = fetch_error("banemail");
+            $messages['fields'][] = $error_type = "email";
  
         }
     }
@@ -1117,8 +1117,8 @@ case 'activate':
     if (empty($vbulletin->GPC['birthdate'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $message = $userdata->errors[0];
-        $error_type = "datepicker";
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "datepicker";
     } else {
         //validate if 13+
         $current['year'] = date('Y');
@@ -1285,7 +1285,7 @@ case 'activate':
 
 
     $arr = array("valid_entries" => $valid_entries,
-            "error_type" => $error_type, "message" => $message, "url" => $url );
+            "error_type" => $error_type, "messages" => $messages, "url" => $url );
 
     json_headers($arr);
 
