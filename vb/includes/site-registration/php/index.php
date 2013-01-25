@@ -1238,21 +1238,18 @@ case 'activate':
     // Process vBulletin login
     require_once(DIR . '/includes/functions_login.php');
     $vbulletin->userinfo = fetch_userinfo($userid);
-    $vbulletin->session->created = false;
+    $vbulletin->session->created = true;
     process_new_login('', false, '');
 
-    // On login, store a cookie with vbnexus params
-    if($vbulletin->session->created) {
-        $vBNexusInfo = array(
-            'userid'      => $userid,
-            'service'     => 'fb',
-            'nonvbid'     => $fbID,
-            'can_publish' => true,
-        );
+    $vBNexusInfo = array(
+        'userid'      => $userid,
+        'service'     => 'fb',
+        'nonvbid'     => $fbID,
+        'can_publish' => true,
+    );
 
-        setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
-    }
-
+    setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
+    
     $vbulletin->userinfo[securitytoken] = "guest";
 
     $arr = array("valid_entries" => $valid_entries,
