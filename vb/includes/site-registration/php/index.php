@@ -1168,7 +1168,7 @@ case 'activate':
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
         $message = "OK";
-        $url = "register.php?step=activate";
+        $url = "index.php";
 
         $parts = explode(".", $avatar);
         $extension = end($parts);
@@ -1234,6 +1234,26 @@ case 'activate':
                 AND type = 0"
         );       
     }
+
+    // Process vBulletin login
+    require_once(DIR . '/includes/functions_login.php');
+    $vbulletin->userinfo = fetch_userinfo($data['userid']);
+    $vbulletin->session->created = false;
+    process_new_login('', false, '');
+
+    // On login, store a cookie with vbnexus params
+    if($vbulletin->session->created) {
+        $vBNexusInfo = array(
+            'userid'      => $data['userid'],
+            'service'     => 'fb',
+            'nonvbid'     => $data["nonvbid"],
+            'can_publish' => true,
+        );
+
+        setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
+    }
+
+    $vbulletin->userinfo[securitytoken] = "guest";
 
     $arr = array("valid_entries" => $valid_entries,
             "error_type" => $error_type, "message" => $message, "url" => $url );
