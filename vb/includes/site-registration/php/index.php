@@ -1280,7 +1280,7 @@ case "linkaccount":
             . "user WHERE username = '$user'";
 
     $data = $vbulletin->db->query_first($sql);
-
+    die(var_dump($data));
     if ($data) {
         $userid = $data["userid"];
         $username = $data["username"];
