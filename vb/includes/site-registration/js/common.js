@@ -564,20 +564,24 @@ jQuery(document).ready(function(jQuery) {
                 data: 'from=facebook&avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate+ '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions,
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
-                        if(response.error_type != "datepicker") {
-                            jQuery('#'+response.error_type+'').addClass("input-error").wrap('<div class="input-error-container" />');
-                        } else {
-                            if(email == "") {
-                                jQuery('#email').addClass("input-error").wrap('<div class="input-error-container" />');
-                            }
+                        //mark elements as invalid
 
-                            if(username == "") {
-                                jQuery('#username').addClass("input-error").wrap('<div class="input-error-container" />');   
-                            }
-
-                            jQuery('#'+response.error_type+'').addClass("input-error");
-                            jQuery('span.add-on').addClass("input-error");
-                        }                         
+                        jQuery('.error-label').empty();
+                        jQuery('.input-error-container').removeClass("input-error-container");
+                        jQuery('span.add-on').removeClass("input-error");
+                        jQuery('.input-error').removeClass("input-error");
+                        
+                        jQuery.each(response.messages.fields, function(index, value) {        
+                            jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                            jQuery('#'+value).addClass("input-error");
+                            jQuery('#'+value+'-error-label').empty(); 
+                            jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
+                            
+                            if(value == 'datepicker'){
+                                jQuery('span.add-on').addClass("input-error");    
+                            }    
+                        });
+                                                 
                     } else {
                         //redirect user to proper url
                         var url = response.url;    
