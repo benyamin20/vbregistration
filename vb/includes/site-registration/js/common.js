@@ -608,9 +608,30 @@ jQuery(document).ready(function(jQuery) {
                 cache: false,
                 data: 'username='+ username + '&password='+ password,
                 success: function(response) {
-                    //redirect user to proper url
-                    var url = response.url;    
-                    jQuery(location).attr('href', url);                    
+                    if(response.valid_entries == false) {                                                                        
+                        //mark elements as invalid
+
+                        jQuery('.error-label').empty();
+                        jQuery('.large-input-error-container').removeClass("large-input-error-container");
+                        jQuery('span.add-on').removeClass("input-error");
+                        jQuery('.input-error').removeClass("input-error");
+                        
+                        jQuery.each(response.messages.fields, function(index, value) {        
+                            jQuery('#'+value+'-wrapper').addClass("large-input-error-container");
+                            jQuery('#'+value).addClass("input-error");
+                            jQuery('#'+value+'-error-label').empty(); 
+                            jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
+                            
+                            if(value == 'datepicker'){
+                                jQuery('span.add-on').addClass("input-error");    
+                            }    
+                        });
+                                                 
+                    } else {
+                        //redirect user to proper url
+                        var url = response.url;    
+                        jQuery(location).attr('href', url);
+                    }                   
                 }
             }).done(function() { 
                 //nothing here
