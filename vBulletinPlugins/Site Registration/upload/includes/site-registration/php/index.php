@@ -1326,11 +1326,7 @@ case "linkaccount":
     $message = "OK";
     $url = "register.php?step=activate";
     
-    
-    
-    
-    
-
+ 
     //clean variables
     $vbulletin->input
             ->clean_array_gpc('p',
@@ -1352,7 +1348,7 @@ case "linkaccount":
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = $userdata->errors[0];
-        $messages['fields'][] = $error_type = "password-meber";
+        $messages['fields'][] = $error_type = "password-member";
     }
     
     
@@ -1368,10 +1364,11 @@ case "linkaccount":
     
     if($valid_entries){
     
-        $user = $vbulletin->GPC['username'];
+        $user       = $vbulletin->db->escape_string( $vbulletin->GPC['username'] );
+        $password   = $vbulletin->db->escape_string( $vbulletin->GPC['password'] );
 
         $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX
-                . "user WHERE username = '$user'";
+                . "user WHERE username = '$user' AND password = '$password'";
 
         $data = $vbulletin->db->query_first($sql);
 
@@ -1469,6 +1466,12 @@ case "linkaccount":
                     json_headers($arr);
                 } 
             }
+        }else{
+                 $messages['errors'][] = $message = "Please check your username and password.";
+                 $messages['fields'][] = $error_type = "username-member";
+                 $messages['errors'][] = $message = "Please check your username and password.";
+                 $messages['fields'][] = $error_type = "password-member";
+        
         }
     }
     
