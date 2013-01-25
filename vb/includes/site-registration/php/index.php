@@ -1280,7 +1280,7 @@ case "linkaccount":
             . "user WHERE username = '$user'";
 
     $data = $vbulletin->db->query_first($sql);
-    die(var_dump($data));
+
     if ($data) {
         $userid = $data["userid"];
         $username = $data["username"];
@@ -1298,7 +1298,7 @@ case "linkaccount":
 
             $data = $vbulletin->db->query_first($sql);
 
-            if (!$data and strlen($fbID) > 1) {
+            if (!$data and strlen($fbID) > 1) { die("ssss");
                 $vbulletin->db
                         ->query_write(
                                 "INSERT IGNORE INTO " . TABLE_PREFIX
@@ -1373,6 +1373,8 @@ case "linkaccount":
                 $arr = array("url" => $url);
 
                 json_headers($arr);
+            } else {
+                die("Nooo");
             }
         }
     }
