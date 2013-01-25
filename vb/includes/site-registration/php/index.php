@@ -1297,114 +1297,162 @@ case "linkaccount":
     $valid_entries = TRUE;
     $message = "OK";
     $url = "register.php?step=activate";
+    
+    
+    
+    
+    
 
     //clean variables
     $vbulletin->input
             ->clean_array_gpc('p',
                     array('username' => TYPE_STR, 'password' => TYPE_STR));
 
-    $user = $_REQUEST["username"];
+    
+    
+     //check if variables are set
+    if (empty($vbulletin->GPC['username'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "username";
+    }
+    
+    
+     //check if variables are set
+    if (empty($vbulletin->GPC['password'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "password";
+    }
+    
+    
+     //check if variables are set
+    if ($vbulletin->GPC['password'] == md5("") ) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "password";
+    }
+    
+    
+    
+    if($valid_entries){
+    
+        $user = $vbulletin->GPC['username'];
 
-    $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX
-            . "user WHERE username = '$user'";
+        $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX
+                . "user WHERE username = '$user'";
 
-    $data = $vbulletin->db->query_first($sql);
+        $data = $vbulletin->db->query_first($sql);
 
-    if ($data) {
-        $userid = $data["userid"];
-        $username = $data["username"];
-        $dbPassword = $data["password"];
-        $password = md5($vbulletin->GPC['password'] . $data["salt"]);
-        $fbID = $_SESSION['site_registration']["fbID"];
-        $avatar = $_SESSION['site_registration']["fbPicture"];
+        if ($data) {
+            $userid = $data["userid"];
+            $username = $data["username"];
+            $dbPassword = $data["password"];
+            $password = md5($vbulletin->GPC['password'] . $data["salt"]);
+            $fbID = $_SESSION['site_registration']["fbID"];
+            $avatar = $_SESSION['site_registration']["fbPicture"];
 
-        if ($dbPassword != $password) { 
-            $arr = array("valid_entries" => false, "error_type" => "password",
-                    "message" => "Incorrect Login", "url" => $url );
-        } else { 
-            $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
-                    . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
+            if ($dbPassword != $password) { 
+                $arr = array("valid_entries" => false, "error_type" => "password",
+                        "message" => "Incorrect Login", "url" => $url );
+            } else { 
+                $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
+                        . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
 
-            $data = $vbulletin->db->query_first($sql);
+                $data = $vbulletin->db->query_first($sql);
 
-            if (!$data and strlen($fbID) > 1) { 
-                $vbulletin->db
-                        ->query_write(
-                                "INSERT IGNORE INTO " . TABLE_PREFIX
-                                        . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
-                                        . $fbID . "', '" . $userid . "', '1')");
+                if (!$data and strlen($fbID) > 1) { 
+                    $vbulletin->db
+                            ->query_write(
+                                    "INSERT IGNORE INTO " . TABLE_PREFIX
+                                            . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
+                                            . $fbID . "', '" . $userid . "', '1')");
 
-                $parts = explode(".", $avatar);
-                $extension = end($parts);
-                $filedata = file_get_contents($avatar);
-                $dateline = time();
-                $visible = 1;
-                $filesize = strlen($filedata);
-                $filename = substr(md5(time()), 0, 10) . "." . $extension;
+                    $parts = explode(".", $avatar);
+                    $extension = end($parts);
+                    $filedata = file_get_contents($avatar);
+                    $dateline = time();
+                    $visible = 1;
+                    $filesize = strlen($filedata);
+                    $filename = substr(md5(time()), 0, 10) . "." . $extension;
 
-                $sql = "
-                    REPLACE INTO " . TABLE_PREFIX
-                        . "customprofilepic
-                    (userid, filedata, dateline, filename, visible, filesize, width, height)
-                    VALUES
-                    ('" . $vbulletin->db->escape_string($userid)
-                        . "',
-                     '" . $vbulletin->db->escape_string($filedata)
-                        . "',
-                     '" . $vbulletin->db->escape_string($dateline)
-                        . "',
-                     '" . $vbulletin->db->escape_string($filename)
-                        . "',
-                     '" . $vbulletin->db->escape_string($visible)
-                        . "',
-                     '" . $vbulletin->db->escape_string($filesize)
-                        . "',
-                     '" . $vbulletin->db->escape_string("50")
-                        . "',
-                     '" . $vbulletin->db->escape_string("50")
-                        . "'
-                     )
-                ";
+                    $sql = "
+                        REPLACE INTO " . TABLE_PREFIX
+                            . "customprofilepic
+                        (userid, filedata, dateline, filename, visible, filesize, width, height)
+                        VALUES
+                        ('" . $vbulletin->db->escape_string($userid)
+                            . "',
+                         '" . $vbulletin->db->escape_string($filedata)
+                            . "',
+                         '" . $vbulletin->db->escape_string($dateline)
+                            . "',
+                         '" . $vbulletin->db->escape_string($filename)
+                            . "',
+                         '" . $vbulletin->db->escape_string($visible)
+                            . "',
+                         '" . $vbulletin->db->escape_string($filesize)
+                            . "',
+                         '" . $vbulletin->db->escape_string("50")
+                            . "',
+                         '" . $vbulletin->db->escape_string("50")
+                            . "'
+                         )
+                    ";
 
-                /*insert query*/
-                $vbulletin->db->query_write($sql);
+                    /*insert query*/
+                    $vbulletin->db->query_write($sql);
 
-                $token = md5(uniqid(microtime(), true));
-                $token_time = time();
-                $form = "site-account-details";
-                $_SESSION['site_registration'][$form . '_token'] = array(
-                        'token' => $token, 'time' => $token_time);
+                    $token = md5(uniqid(microtime(), true));
+                    $token_time = time();
+                    $form = "site-account-details";
+                    $_SESSION['site_registration'][$form . '_token'] = array(
+                            'token' => $token, 'time' => $token_time);
 
-                //start new session
-                $vbulletin->userinfo = $vbulletin->db
-                        ->query_first(
-                                "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
-                    username, password, salt FROM " . TABLE_PREFIX
-                                        . "user 
-                    WHERE userid = " . $userid);
+                    //start new session
+                    $vbulletin->userinfo = $vbulletin->db
+                            ->query_first(
+                                    "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                        username, password, salt FROM " . TABLE_PREFIX
+                                            . "user 
+                        WHERE userid = " . $userid);
 
-                require_once(DIR . '/includes/functions_login.php');
+                    require_once(DIR . '/includes/functions_login.php');
 
-                vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
-                        true);
-                vbsetcookie('password',
-                        md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
-                        true, true);
+                    vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
+                            true);
+                    vbsetcookie('password',
+                            md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
+                            true, true);
 
-                process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+                    process_new_login('', 1, $vbulletin->GPC['cssprefs']);
 
-                cache_permissions($vbulletin->userinfo, true);
+                    cache_permissions($vbulletin->userinfo, true);
 
-                $vbulletin->session->save();
+                    $vbulletin->session->save();
 
-                $url = "index.php";
+                    $url = "index.php";
 
-                $arr = array("url" => $url);
+                    $arr = array("url" => $url);
 
-                json_headers($arr);
-            } 
+                    json_headers($arr);
+                } 
+            }
         }
     }
+    
+    
+    $arr = array(   "valid_entries" => $valid_entries, 
+                    "messages" => $messages, 
+                    "url" => $url 
+    );
+
+    json_headers($arr);
+    
+ 
 
     break;
 
