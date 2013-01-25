@@ -574,9 +574,9 @@ case 'validate_site_account_details':
         
         
         $userdata->set_info('coppauser', $_SESSION['site_registration']['coppauser']);
-	    $userdata->set_info('coppapassword', $vbulletin->GPC['password']);
-	    $userdata->set_bitfield('options', 'coppauser', $_SESSION['site_registration']['coppauser']);
-	    //$userdata->set('parentemail', $vbulletin->GPC['parentemail']);
+        $userdata->set_info('coppapassword', $vbulletin->GPC['password']);
+        $userdata->set_bitfield('options', 'coppauser', $_SESSION['site_registration']['coppauser']);
+        //$userdata->set('parentemail', $vbulletin->GPC['parentemail']);
 
         // register IP address
         $userdata->set('ipaddress', IPADDRESS);
@@ -696,13 +696,13 @@ case 'create_site_account_first_step':
                     
                     
     if (!$vbulletin->options['allowregistration'])
-	{
-	    $valid_entries = FALSE;
+    {
+        $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = fetch_error('noregister');
         $messages['fields'][] = $error_type = "datepicker";
-	
-	}
+    
+    }
 
     //check if variables are set
     if (empty($vbulletin->GPC['birthdate'])) {
@@ -737,19 +737,19 @@ case 'create_site_account_first_step':
                     //fetch_error('under_thirteen_registration_denied');
                     
                     if ($vbulletin->options['checkcoppa'])
-			        {
-				        vbsetcookie('coppaage', $month . '-' . $day . '-' . $year, 1);
-			        }
+                    {
+                        vbsetcookie('coppaage', $month . '-' . $day . '-' . $year, 1);
+                    }
 
-			        if ($vbulletin->options['usecoppa'] == 2)
-			        {
-				        $valid_entries = FALSE;
+                    if ($vbulletin->options['usecoppa'] == 2)
+                    {
+                        $valid_entries = FALSE;
                         $messages['errors'][] = $message = "You must be over 13 to register";
                         $messages['fields'][] = $error_type = "datepicker";
                         //fetch_error('under_thirteen_registration_denied');
-			        }
+                    }
 
-			        $_SESSION['site_registration']['coppauser'] = true;
+                    $_SESSION['site_registration']['coppauser'] = true;
                         
                 } else {
                     $_SESSION['site_registration']['coppauser'] = false;
@@ -826,7 +826,7 @@ case 'create_site_account_first_step':
             $message = $error = fetch_error("banemail");
             $error_type = "email";
  
-	    }
+        }
     }
 
     if ($valid_entries) {
@@ -1019,10 +1019,7 @@ case 'activate':
     $message = "";
 
     //clean variables
-    $vbulletin->input
-            ->clean_array_gpc('p',
-                    array('email' => TYPE_STR, 'birthdate' => TYPE_STR,
-                            'username' => TYPE_STR, 'avatar' => TYPE_STR));
+    $vbulletin->input->clean_array_gpc('p', array('email' => TYPE_STR, 'birthdate' => TYPE_STR, 'username' => TYPE_STR, 'avatar' => TYPE_STR, 'from' => TYPE_STR));
 
     //check if variables are set
     if (empty($vbulletin->GPC['email'])) {
@@ -1087,7 +1084,7 @@ case 'activate':
             $message = $error = fetch_error("banemail");
             $error_type = "email";
  
-	    }
+        }
     }
    
     //check if variables are set
@@ -1122,19 +1119,19 @@ case 'activate':
                     //fetch_error('under_thirteen_registration_denied');
                     
                     if ($vbulletin->options['checkcoppa'])
-			        {
-				        vbsetcookie('coppaage', $month . '-' . $day . '-' . $year, 1);
-			        }
+                    {
+                        vbsetcookie('coppaage', $month . '-' . $day . '-' . $year, 1);
+                    }
 
-			        if ($vbulletin->options['usecoppa'] == 2)
-			        {
-				        $valid_entries = FALSE;
+                    if ($vbulletin->options['usecoppa'] == 2)
+                    {
+                        $valid_entries = FALSE;
                         $messages['errors'][] = $message = "You must be over 13 to register";
                         $messages['fields'][] = $error_type = "datepicker";
                         //fetch_error('under_thirteen_registration_denied');
-			        }
+                    }
 
-			        $_SESSION['site_registration']['coppauser'] = true;
+                    $_SESSION['site_registration']['coppauser'] = true;
                         
                 } else {
                     $_SESSION['site_registration']['coppauser'] = false;
@@ -1165,7 +1162,7 @@ case 'activate':
                                         ->escape_string(
                                                 $vbulletin->GPC['birthdate'])
                                 . "',
-             '" . $vbulletin->GPC['username'] . "')");
+             '" . $vbulletin->GPC['username'] . "')");        
 
         $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();
@@ -1229,25 +1226,35 @@ case 'activate':
 
         //Send Activation Email: Refer to Automated Emails
         // send new user email
-        $_SESSION['site_registration']['userid'] = $userid;
-        $username = $_SESSION['site_registration']['username'] = $vbulletin
-                ->GPC['username'];
-        $email = $_SESSION['site_registration']['email'] = $vbulletin
-                ->GPC['email'];
-        $_SESSION['site_registration']['birthday'] = $vbulletin
-                ->GPC['birthdate'];
 
-        $activateid = build_user_activation_id($userid,
-                (($vbulletin->options['moderatenewmembers']
-                        OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
+        if($vbulletin->GPC['from'] == "facebook") {
+            // delete activationid
+            $vbulletin->db->query_write(
+                "DELETE FROM " . TABLE_PREFIX . "useractivation 
+                    WHERE userid = '". $userid ."' 
+                    AND type = 0"
+            );
+        } else {
+            $_SESSION['site_registration']['userid'] = $userid;
+            $username = $_SESSION['site_registration']['username'] = $vbulletin
+                    ->GPC['username'];
+            $email = $_SESSION['site_registration']['email'] = $vbulletin
+                    ->GPC['email'];
+            $_SESSION['site_registration']['birthday'] = $vbulletin
+                    ->GPC['birthdate'];
 
-        eval(fetch_email_phrases('activateaccount'));
+            $activateid = build_user_activation_id($userid,
+                    (($vbulletin->options['moderatenewmembers']
+                            OR $vbulletin->GPC['coppauser']) ? 4 : 2), 0);
 
-        if (empty($subject)) {
-            $subject = "Please activate your account";
+            eval(fetch_email_phrases('activateaccount'));
+
+            if (empty($subject)) {
+                $subject = "Please activate your account";
+            }
+
+            vbmail($email, $subject, $message, false);
         }
-
-        vbmail($email, $subject, $message, false);
     }
 
     $arr = array("valid_entries" => $valid_entries,
