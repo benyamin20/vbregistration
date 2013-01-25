@@ -1484,8 +1484,8 @@ case "linkaccount":
                  $valid_entries        = FALSE;
                  $messages['errors'][] = $message = "Please check your username and password.";
                  $messages['fields'][] = $error_type = "username-member";
-                 $messages['errors'][] = $message = "Please check your username and password.";
-                 $messages['fields'][] = $error_type = "username-password";
+                 $messages['errors'][] = $message = "";
+                 $messages['fields'][] = $error_type = "password-member";
         
         }
     }
