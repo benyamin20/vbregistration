@@ -1482,10 +1482,10 @@ case "linkaccount":
             }
         }else{
                  $valid_entries        = FALSE;
-                 $messages['errors'][] = $message = "Please check your username and password.";
+                 //$messages['errors'][] = $message = "Please check your username and password.";
                  $messages['fields'][] = $error_type = "username-member";
                  $messages['errors'][] = $message = "Please check your username and password.";
-                 $messages['fields'][] = $error_type = "username-member";
+                 $messages['fields'][] = $error_type = "username-password";
         
         }
     }
