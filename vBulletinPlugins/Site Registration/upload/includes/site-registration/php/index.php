@@ -1324,7 +1324,7 @@ case "linkaccount":
 
     $valid_entries = TRUE;
     $message = "OK";
-    $url = "register.php?step=activate";
+   
     
  
     //clean variables
@@ -1340,6 +1340,7 @@ case "linkaccount":
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "username-member";
+ 
     }
     
     
@@ -1373,6 +1374,8 @@ case "linkaccount":
         $data = $vbulletin->db->query_first($sql);
 
         if (is_array($data)) {
+        
+            $url = "register.php?step=activate";
             
             $userid = $data["userid"];
             $username = $data["username"];
@@ -1391,8 +1394,7 @@ case "linkaccount":
                 $arr = array(
                         "valid_entries" => false, 
                         "error_type" => "password",
-                        "messages" => $messages, 
-                        "url" => $url 
+                        "messages" => $messages 
                         );
 
             } else { 
@@ -1479,10 +1481,11 @@ case "linkaccount":
                 } 
             }
         }else{
+                 $valid_entries        = FALSE;
                  $messages['errors'][] = $message = "Please check your username and password.";
                  $messages['fields'][] = $error_type = "username-member";
                  $messages['errors'][] = $message = "Please check your username and password.";
-                 $messages['fields'][] = $error_type = "password-member";
+                 $messages['fields'][] = $error_type = "username-member";
         
         }
     }
