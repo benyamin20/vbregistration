@@ -1261,25 +1261,28 @@ case 'activate':
         );       
     }
 
-    // Process vBulletin login
-    $vbulletin->userinfo = $vbulletin->db
-                    ->query_first(
-                            "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
-                username, password, salt FROM " . TABLE_PREFIX
-                                    . "user 
-                WHERE userid = " . $userid);
+    if ($valid_entries) {
+         // Process vBulletin login
+        $vbulletin->userinfo = $vbulletin->db
+                        ->query_first(
+                                "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                    username, password, salt FROM " . TABLE_PREFIX
+                                        . "user 
+                    WHERE userid = " . $userid);
 
 
-    require_once(DIR . '/includes/functions_login.php');
+        require_once(DIR . '/includes/functions_login.php');
 
-    vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
-    vbsetcookie('password', md5($vbulletin->userinfo['password'] . COOKIE_SALT), true, true, true);
+        vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
+        vbsetcookie('password', md5($vbulletin->userinfo['password'] . COOKIE_SALT), true, true, true);
 
-    process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+        process_new_login('', 1, $vbulletin->GPC['cssprefs']);
 
-    cache_permissions($vbulletin->userinfo, true);
+        cache_permissions($vbulletin->userinfo, true);
 
-    $vbulletin->session->save();
+        $vbulletin->session->save();   
+    }
+
 
     $arr = array("valid_entries" => $valid_entries,
             "error_type" => $error_type, "message" => $message, "url" => $url );
