@@ -567,12 +567,12 @@ jQuery(document).ready(function(jQuery) {
                         //mark elements as invalid
 
                         jQuery('.error-label').empty();
-                        jQuery('.input-error-container').removeClass("input-error-container");
+                        jQuery('.large-input-error-container').removeClass("large-input-error-container");
                         jQuery('span.add-on').removeClass("input-error");
                         jQuery('.input-error').removeClass("input-error");
                         
                         jQuery.each(response.messages.fields, function(index, value) {        
-                            jQuery('#'+value+'-wrapper').addClass("input-error-container");
+                            jQuery('#'+value+'-wrapper').addClass("large-input-error-container");
                             jQuery('#'+value).addClass("input-error");
                             jQuery('#'+value+'-error-label').empty(); 
                             jQuery('#'+value+'-error-label').append(response.messages.errors[index]);
