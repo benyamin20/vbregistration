@@ -1238,7 +1238,7 @@ case 'activate':
     // Process vBulletin login
     require_once(DIR . '/includes/functions_login.php');
     $vbulletin->userinfo = fetch_userinfo($userid);
-    $vbulletin->session->created = true;
+    $vbulletin->session->created = false;
     process_new_login('', false, '');
 
     $vBNexusInfo = array(
