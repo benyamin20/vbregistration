@@ -1372,7 +1372,7 @@ case "linkaccount":
 
         $data = $vbulletin->db->query_first($sql);
 
-        if ($data) {
+        if (is_array($data)) {
             
             $userid = $data["userid"];
             $username = $data["username"];

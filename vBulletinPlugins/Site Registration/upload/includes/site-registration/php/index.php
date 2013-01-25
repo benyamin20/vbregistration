@@ -1368,11 +1368,12 @@ case "linkaccount":
         $password   = $vbulletin->db->escape_string( $vbulletin->GPC['password'] );
 
         $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX
-                . "user WHERE username = '$user' AND password = '$password'";
+                . "user WHERE username = '$user' ";
 
         $data = $vbulletin->db->query_first($sql);
 
-        if ($data) {
+        if (is_array($data)) {
+            
             $userid = $data["userid"];
             $username = $data["username"];
             $dbPassword = $data["password"];
@@ -1381,8 +1382,19 @@ case "linkaccount":
             $avatar = $_SESSION['site_registration']["fbPicture"];
 
             if ($dbPassword != $password) { 
-                $arr = array("valid_entries" => false, "error_type" => "password",
-                        "message" => "Incorrect Login", "url" => $url );
+            
+                $messages['errors'][] = $message = "Please check your username and password.";
+                $messages['fields'][] = $error_type = "username-member";
+                $messages['errors'][] = $message = "Please check your username and password.";
+                $messages['fields'][] = $error_type = "password-member";
+            
+                $arr = array(
+                        "valid_entries" => false, 
+                        "error_type" => "password",
+                        "messages" => $messages, 
+                        "url" => $url 
+                        );
+
             } else { 
                 $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                         . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
