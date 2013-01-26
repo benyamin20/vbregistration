@@ -588,7 +588,21 @@ case 'validate_site_account_details':
         if (!empty($userdata->errors)) {
             //errors?
             $valid_entries = FALSE;
-            $messages = var_export( $userdata->errors, true);
+            
+            
+            if( preg_match("/username/", $userdata->errors[0]) ){
+                $error_type = "username";
+                $messages['fields'][] = $error_type;
+                $messages['errors'][] = $userdata->errors[0];
+                
+            }
+            
+            if( preg_match("/password/", $userdata->errors[0]) ){
+                $error_type = "password";
+                $messages['fields'][] = $error_type;
+                $messages['errors'][] = $userdata->errors[0];
+                
+            }
 
         } else {
             // save the data
