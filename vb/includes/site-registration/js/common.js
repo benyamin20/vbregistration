@@ -49,7 +49,7 @@ function closeTnC() {
 
 function closeTnCAccept(){
     jQuery(document).trigger('close.facebox');
-    jQuery('input[name=terms-and-conditions]').attr('checked', true);
+    jQuery('#terms-and-conditions').attr('checked', true);
 }
 
 
