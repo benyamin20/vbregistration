@@ -1241,7 +1241,7 @@ $stylevar[htmldoctype]
 							</div>
 							<div class="pull-right">
 								<a class="btn btn-primary span2 close-facebox"
-									onclick="closeTnC();" href="$php_self#accept"
+									onclick="closeTnCAccept();" href="$php_self#accept"
 									id="accept_terms_and_conditions">Accept</a>
 							</div>
 						</div>

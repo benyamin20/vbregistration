@@ -588,8 +588,7 @@ case 'validate_site_account_details':
         if (!empty($userdata->errors)) {
             //errors?
             $valid_entries = FALSE;
-            $messages = "An error ocurred please try again later.";
-            // . var_export( $userdata->errors, true);
+            $messages = var_export( $userdata->errors, true);
 
         } else {
             // save the data
