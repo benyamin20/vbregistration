@@ -47,6 +47,11 @@ function closeTnC() {
     jQuery(document).trigger('close.facebox');
 }
 
+function closeTnCAccept(){
+    jQuery(document).trigger('close.facebox');
+    jQuery('input[name=terms-and-conditions]').attr('checked', true);
+}
+
 
 function get_time_zone_offset() {
      var current_date = new Date();

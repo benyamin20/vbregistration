@@ -897,7 +897,7 @@ $stylevar[htmldoctype]
 				    <label class="checkbox"> 
 				        <input type="checkbox" value=""
 					       id="terms-and-conditions" name="terms-and-conditions" 
-					        checked="checked" />
+					         />
 				        <span class="small light_grey span2 no-margin"> Yes, I agree with the
 						    <a href="$php_self#info" class="link_blue" rel="facebox">Terms
 							    &amp; Conditions.</a>
@@ -1011,11 +1011,12 @@ $stylevar[htmldoctype]
 						<div id="action-icons-container">
 							<div class="pull-left">
 								<button class="btn close-facebox"  
-								id="cancel_terms_and_conditions">Cancel</button>
+								id="cancel_terms_and_conditions" 
+								onclick="closeTnC();">Cancel</button>
 							</div>
 							<div class="pull-right">
 								<button class="btn btn-primary span2 close-facebox"
-									onclick="closeTnC();">Accept</button>
+									onclick="closeTnCAccept();">Accept</button>
 							</div>
 						</div>
 					</td>
@@ -1165,7 +1166,7 @@ $stylevar[htmldoctype]
 				    <label class="checkbox grid_3 no-margin fix-tnc-width">
 					    <input type="checkbox" value="" id="terms-and-conditions"
 					       name="terms-and-conditions" 
-					       checked="checked" />
+					         />
 					    <span class="small light_grey">
 					       Yes, I agree with the
 					       <a href="$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
