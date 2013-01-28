@@ -1863,7 +1863,7 @@ $stylevar[htmldoctype]
                         
                         $cb_adminemail = $vbulletin->bf_misc_useroptions['adminemail'];
                         
-                        if($cb_adminemail){
+                        if( bitwise($vbulletin->bf_misc_regoptions['adminemail'], $vbulletin->options['defaultregoptions'])  ){
                             $default_email_from_administrators = " checked='checked' ";
                         }
                         
