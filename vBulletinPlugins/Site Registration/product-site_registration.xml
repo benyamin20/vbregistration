@@ -580,6 +580,10 @@ $stylevar[htmldoctype]
 				});				
 			}
 
+			$(document).ready({
+				$('.pluginSkinLight').html('Facebook');
+			});
+
 			FB.init({
 				appId : "$vboptions[vbnexusconfig_facebook_appid]",
 				status: true, // check login status
