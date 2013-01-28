@@ -686,7 +686,10 @@ $stylevar[htmldoctype]
 				                <h1>Fast Sign In</h1>
 				                <div class="clear"></div>
 
-				               	<fb:login-button size="xlarge" scope="email,user_birthday,read_stream" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
+				                <a href="#" onclick="">
+				                	<iframe src="https://www.facebook.com/plugins/login_button.php?scope=email%2Cuser_birthday%2Cread_stream&size=xlarge&login_text=Login&app_id=304416966345499&locale=en_US&sdk=joey&channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D18%23cb%3Df92fd12f067164%26origin%3Dhttp%253A%252F%252Fmuucms.com%252Ff853251bf290a4%26domain%3Dmuucms.com%26relation%3Dparent.parent&ret=perms&hash=AQBSry5qsgb2zrff"></iframe>
+				                </a>
+				               	<!--<fb:login-button size="xlarge" scope="email,user_birthday,read_stream" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>-->
 
 				                <div class="clear clear_15"></div> 
 				                <span class="small light_grey">It's secure and easy!</span>
