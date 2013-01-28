@@ -565,9 +565,9 @@ $stylevar[htmldoctype]
 
 		<script>
 			function vBNexusLoginRedirect() {
-				FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {
+				FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {					
 					var fuser = result.id+'|'+result.name+'|'+result.email+'|'+result.birthday+'|'+result.username+'|'+result.picture.data.url;
-
+					
 					$.ajax({
 						type: 'POST',
 						url:   'register.php?step=facebook-details',
@@ -579,6 +579,10 @@ $stylevar[htmldoctype]
 					});
 				});				
 			}
+
+			$(document).ready({
+				$('.pluginSkinLight').html('Facebook');
+			});
 
 			FB.init({
 				appId : "$vboptions[vbnexusconfig_facebook_appid]",
@@ -669,7 +673,7 @@ $stylevar[htmldoctype]
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
 
-				       	<fb:login-button size="xlarge" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
+				       	<fb:login-button size="xlarge" scope="email,user_birthday,read_stream" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
 
 				        <div class="clear clear_15"></div> 
 				        <span class="small light_grey">It's secure and easy!</span>

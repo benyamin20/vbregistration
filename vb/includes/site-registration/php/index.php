@@ -1213,7 +1213,7 @@ case 'activate':
         $vbulletin->db
                 ->query_write(
                         "INSERT IGNORE INTO " . TABLE_PREFIX
-                                . "user (email, birthday, username) VALUES ('"
+                                . "user (usergroupid, email, birthday, username) VALUES ('2', '"
                                 . $vbulletin->db
                                         ->escape_string(
                                                 $vbulletin->GPC['email'])
@@ -1539,4 +1539,3 @@ case "linkaccount":
     break;
 
 }
-
