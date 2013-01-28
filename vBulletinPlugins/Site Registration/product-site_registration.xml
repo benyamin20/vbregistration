@@ -505,7 +505,7 @@ $stylevar[htmldoctype]
                         </div>
                         <div class='margin_left_20 grid_9 omega'>
                             <h1 class='not-fully-active no-margin'>
-                            Your account Is Not Fully Active
+                            Your Account Is Not Fully Active
                             </h1>
                             <div class='clear'></div>
                             <span class="please-confirm-account">Please confirm your account by clicking on the email activation link</span>
