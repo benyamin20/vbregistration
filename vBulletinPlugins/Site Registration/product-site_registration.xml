@@ -566,6 +566,7 @@ $stylevar[htmldoctype]
 		<script>
 			function vBNexusLoginRedirect() {
 				FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {
+					console.log(result);
 					var fuser = result.id+'|'+result.name+'|'+result.email+'|'+result.birthday+'|'+result.username+'|'+result.picture.data.url;
 
 					$.ajax({
@@ -1460,7 +1461,7 @@ $stylevar[htmldoctype]
 
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
-
+						die(var_dump($fUser));
 		        		$fbID 		= $_SESSION['site_registration']["fbID"] 	   = $fUser[0];
 		        		$fbName 	= $_SESSION['site_registration']["fbName"] 	   = utf8_decode($fUser[1]);
 		        		$fbEmail 	= $_SESSION['site_registration']["fbEmail"]    = $fUser[2];
