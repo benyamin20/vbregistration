@@ -565,10 +565,9 @@ $stylevar[htmldoctype]
 
 		<script>
 			function vBNexusLoginRedirect() {
-				FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {
-					console.log(result);
+				FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {					
 					var fuser = result.id+'|'+result.name+'|'+result.email+'|'+result.birthday+'|'+result.username+'|'+result.picture.data.url;
-
+					
 					$.ajax({
 						type: 'POST',
 						url:   'register.php?step=facebook-details',
@@ -670,7 +669,7 @@ $stylevar[htmldoctype]
 				        <h1>Fast Sign In</h1>
 				        <div class="clear"></div>
 
-				       	<fb:login-button size="xlarge" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
+				       	<fb:login-button size="xlarge" scope="email,user_birthday,read_stream" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
 
 				        <div class="clear clear_15"></div> 
 				        <span class="small light_grey">It's secure and easy!</span>
@@ -1461,7 +1460,7 @@ $stylevar[htmldoctype]
 
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
-						die(var_dump($fUser));
+
 		        		$fbID 		= $_SESSION['site_registration']["fbID"] 	   = $fUser[0];
 		        		$fbName 	= $_SESSION['site_registration']["fbName"] 	   = utf8_decode($fUser[1]);
 		        		$fbEmail 	= $_SESSION['site_registration']["fbEmail"]    = $fUser[2];
