@@ -31,6 +31,7 @@ $stylevar[htmldoctype]
     
     <!--[if IE]>
 	    <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
 
 
@@ -392,6 +393,7 @@ $stylevar[htmldoctype]
 
     <!--[if IE]>
 	    <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
     
     
@@ -537,6 +539,7 @@ $stylevar[htmldoctype]
     
     <!--[if IE]>
 	    <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
  
  
@@ -566,32 +569,34 @@ $stylevar[htmldoctype]
 
 		    <script>
 			    function vBNexusLoginRedirect() {
-				    FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {					
-					    var fuser = result.id+'|'+result.name+'|'+result.email+'|'+result.birthday+'|'+result.username+'|'+result.picture.data.url;
-					
-					    $.ajax({
-						    type: 'POST',
-						    url:   'register.php?step=facebook-details',
-						    dataType: 'json',
-						    data: 'fuser=' + fuser +'&first=1',
-						    success: function(response) {	
-							    window.location = response.url;
-						    }
-					    });
-				    });				
-			    }
+                    FB.api('/me', {
+                        fields: 'id,name,email,birthday,picture,username'
+                    }, function (result) {
+                        var fuser = result.id + '|' + result.name + '|' + result.email + '|' + result.birthday + '|' + result.username + '|' + result.picture.data.url;
 
-			    $(document).ready({
-				    $('.pluginSkinLight').html('Facebook');
-			    });
+                        jQuery.ajax({
+                            type: 'POST',
+                            url: 'register.php?step=facebook-details',
+                            dataType: 'json',
+                            data: 'fuser=' + fuser + '&first=1&securitytoken=guest',
+                            success: function (response) {
+                                window.location = response.url;
+                            }
+                        });
+                    });
+                }
 
-			    FB.init({
-				    appId : "$vboptions[vbnexusconfig_facebook_appid]",
-				    status: true, // check login status
-				    cookie: true, // enable cookies to allow the server to access the session
-				    oauth : true, // enables OAuth 2.0
-				    scope : "email,user_birthday,read_stream"
-			    });
+                jQuery(document).ready(function(){
+                    jQuery('.pluginSkinLight').html('Facebook');
+                });
+
+                FB.init({
+                    appId: "$vboptions[vbnexusconfig_facebook_appid]",
+                    status: true, // check login status
+                    cookie: true, // enable cookies to allow the server to access the session
+                    oauth: true, // enables OAuth 2.0
+                    scope: "email,user_birthday,read_stream"
+                });
 		    </script>
         </if>
 
@@ -811,7 +816,10 @@ $stylevar[htmldoctype]
 
     <!--[if IE]>
         <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
+    
+ 
 
 
      $headinclude
@@ -1066,6 +1074,7 @@ $stylevar[htmldoctype]
     <link rel="stylesheet" href="includes/site-registration/css/styles.css" />
     <!--[if IE]>
         <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
 
 
