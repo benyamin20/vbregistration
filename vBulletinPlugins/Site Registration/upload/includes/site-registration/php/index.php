@@ -71,6 +71,8 @@ switch ($op) {
 
 //regenerate securiy token for each page
 
+
+ 
 case 'regenerate_security_token':
     $token_raw = sha1(
             $vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt'])

@@ -248,7 +248,7 @@ $stylevar[htmldoctype]
 						<label class="checkbox"> 
 						<input type="checkbox"
 							id="receive-emails-from-administrators"
-							name="receive_emails_from_administrators"  /> 
+							name="receive_emails_from_administrators" $default_email_from_administrators  /> 
 							Receive emails from Administrators.
 						</label>
 
@@ -257,7 +257,7 @@ $stylevar[htmldoctype]
 						<input type="checkbox" 
 						    checked="checked"
 							id="receive-emails-from-other-members"
-							name="receive_emails_from_other_members" /> 
+							name="receive_emails_from_other_members"  $default_email_from_members /> 
 							    Receive emails from other members.
 						</label>
 
@@ -1593,27 +1593,7 @@ $stylevar[htmldoctype]
                             eval('print_output("' . fetch_template('site_reg_exception-not-activated') . '");');
                         }
 			        }
-			        /*else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'account-activated'){
-			        	
-			        	$invalid_request = FALSE;
-			        	
-			        	//check for direct access to action
-			        	if($invalid_request){ 
-			                if(!(int)$vbulletin->userinfo['userid']){
-			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
-			                }    
-                        }else{
-                            eval('print_output("' . fetch_template('site_reg_account-activated') . '");');
-                        }
-			        }
-			        else if(isset($_REQUEST['a'])){
-			            //don't show the default template allow user to verify
-			            //account 
-			            //echo 1;
-			        }else{
-                        			        
-			        }
-			        */
+			         
 			        
 			        if(isset($_REQUEST['a'] ) && $_REQUEST['a'] == 'act' ){
 			            
@@ -1870,7 +1850,7 @@ $stylevar[htmldoctype]
                             $sql
                         );
                         
-                        if(empty($rs['initialpage'])){
+                        if(empty($rs['initialpage']) || stristr( $vbulletin->options['bburl'] , $rs['initialpage']) === FALSE ){
                             $prev_url = "index.php";
                         }else{
                             $prev_url = $rs['initialpage'];
@@ -1878,6 +1858,14 @@ $stylevar[htmldoctype]
                         
                         
                         $fetch_url = $prev_url;
+                        
+                        //check for default setting of admin email -- ACP-393
+                        
+                        $cb_adminemail = $vbulletin->bf_misc_useroptions['adminemail'];
+                        
+                        if( bitwise($vbulletin->bf_misc_regoptions['adminemail'], $vbulletin->options['defaultregoptions'])  ){
+                            $default_email_from_administrators = " checked='checked' ";
+                        }
                         
                         /*
                         $str = file_get_contents($fetch_url);
