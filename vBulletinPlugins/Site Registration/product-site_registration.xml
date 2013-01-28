@@ -980,30 +980,14 @@ $stylevar[htmldoctype]
 			</thead>
 			<tbody>
 				<tr>
-					<td>
-						<p class="bold small">Forum Rules</p>
+					<td> 
 						<p class="small">
-							Registration to this forum is free! We do insist that you abide
-							by the rules and policies detailed below. If you agree to the
-							terms, please check the 'I agree' checkbox and press the
-							'Register' button below. If you would like to cancel the
-							registration, click <a onclick="closeTnC();" href="/" 
-							class="link_blue">here</a> to
-							return to the forums index
+							<phrase 1="$vboptions[forumhome].php$session[sessionurl_q]" 2="$vboptions[bbtitle]">$vbphrase[forum_rules_registration]</phrase>
 						</p>
-						<p class="small">Although the administrators and moderators of
-							$vboptions[bbtitle] will attempt to keep all objectionable messages off
-							this forum, it is impossible for us to review all messages. All
-							messages express the views of the author, and neither the owners
-							of $vboptions[bbtitle], nor Jelsoft Enterprises Ltd. (developers of
-							vBulletin) will be held responsible for the content of any
-							message</p>
-						<p class="small">By agreeing to these rule, you warrant that
-							you will not post any messages that are obscene, vulgar,
-							sexually-oriented, hateful, threatening, or otherwise violative
-							of any laws</p>
-						<p class="small">The owners of $vboptions[bbtitle] reserve the right to
-							remove, edit, move or close any thread for any reason.</p>
+						<p class="small">
+						    <phrase 1="$vboptions[forumhome].php$session[sessionurl_q]" 2="$vboptions[bbtitle]">$vbphrase[forum_rules_description]</phrase>
+						</p>
+						 
 					</td>
 				</tr>
 				<tr>
@@ -1208,41 +1192,25 @@ $stylevar[htmldoctype]
 			<tbody>
 				<tr>
 					<td>
-						<p class="bold small">Forum Rules</p>
-						<p class="small">
-							Registration to this forum is free! We do insist that you abide
-							by the rules and policies detailed below. If you agree to the
-							terms, please check the 'I agree' checkbox and press the
-							'Register' button below. If you would like to cancel the
-							registration, click <a href="/" onclick="closeTnC();" 
-							class="link_blue">here</a> to return to the forums index
+					    <p class="small">
+							<phrase 1="$vboptions[forumhome].php$session[sessionurl_q]" 2="$vboptions[bbtitle]">$vbphrase[forum_rules_registration]</phrase>
 						</p>
-						<p class="small">Although the administrators and moderators of
-							$vboptions[bbtitle] will attempt to keep all objectionable messages off
-							this forum, it is impossible for us to review all messages. All
-							messages express the views of the author, and neither the owners
-							of $vboptions[bbtitle], nor Jelsoft Enterprises Ltd. (developers of
-							vBulletin) will be held responsible for the content of any
-							message</p>
-						<p class="small">By agreeing to these rule, you warrant that
-							you will not post any messages that are obscene, vulgar,
-							sexually-oriented, hateful, threatening, or otherwise violative
-							of any laws</p>
-						<p class="small">The owners of $vboptions[bbtitle] reserve the right to
-							remove, edit, move or close any thread for any reason.</p>
+						<p class="small">
+						    <phrase 1="$vboptions[forumhome].php$session[sessionurl_q]" 2="$vboptions[bbtitle]">$vbphrase[forum_rules_description]</phrase>
+						</p>
 					</td>
 				</tr>
 				<tr>
 					<td id="action-icons">
 						<div id="action-icons-container">
 							<div class="pull-left">
-								<a class="btn close-facebox" href="$php_self#cancel"
-									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</a>
+								<button class="btn close-facebox" href="$php_self#cancel"
+									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</button>
 							</div>
 							<div class="pull-right">
-								<a class="btn btn-primary span2 close-facebox"
+								<button class="btn btn-primary span2 close-facebox"
 									onclick="closeTnCAccept();" href="$php_self#accept"
-									id="accept_terms_and_conditions">Accept</a>
+									id="accept_terms_and_conditions">Accept</button>
 							</div>
 						</div>
 					</td>
@@ -1860,9 +1828,6 @@ $stylevar[htmldoctype]
                         $fetch_url = $prev_url;
                         
                         //check for default setting of admin email -- ACP-393
-                        
-                        $cb_adminemail = $vbulletin->bf_misc_useroptions['adminemail'];
-                        
                         if( bitwise($vbulletin->bf_misc_regoptions['adminemail'], $vbulletin->options['defaultregoptions'])  ){
                             $default_email_from_administrators = " checked='checked' ";
                         }
