@@ -586,16 +586,43 @@ $stylevar[htmldoctype]
                     });
                 }
 
-                jQuery(document).ready(function(){
-                    jQuery('.pluginSkinLight').html('Facebook');
-                });
+               	function fb_login() {
+				    FB.login(function(response) {
+				        if(response.authResponse) {				            
+				            access_token = response.authResponse.accessToken; //get access token
+				            user_id = response.authResponse.userID; 
+
+				            FB.api('/me', {
+		                        fields: 'id,name,email,birthday,picture,username'
+		                    }, function (result) {
+		                        var fuser = result.id + '|' + result.name + '|' + result.email + '|' + result.birthday + '|' + result.username + '|' + result.picture.data.url;
+
+		                        jQuery.ajax({
+		                            type: 'POST',
+		                            url: 'register.php?step=facebook-details',
+		                            dataType: 'json',
+		                            data: 'fuser=' + fuser + '&first=1&securitytoken=guest',
+		                            success: function (response) {
+		                                window.location = response.url;
+		                            }
+		                        });
+		                    });
+				        } else {
+				            //user hit cancel button
+				            console.log('User cancelled login or did not fully authorize.');
+				        }
+				    }, {
+				        scope: 'email,user_birthday,read_stream'
+				    });
+				}
 
                 FB.init({
                     appId: "$vboptions[vbnexusconfig_facebook_appid]",
                     status: true, // check login status
                     cookie: true, // enable cookies to allow the server to access the session
                     oauth: true, // enables OAuth 2.0
-                    scope: "email,user_birthday,read_stream"
+                    scope: "email,user_birthday,read_stream",
+                    xfbml   : true // parse XFBML
                 });
 		    </script>
         </if>
@@ -686,11 +713,14 @@ $stylevar[htmldoctype]
 				                <h1>Fast Sign In</h1>
 				                <div class="clear"></div>
 
-				                <a href="#" onclick="">
-				                	<iframe src="https://www.facebook.com/plugins/login_button.php?scope=email%2Cuser_birthday%2Cread_stream&size=xlarge&login_text=Login&app_id=304416966345499&locale=en_US&sdk=joey&channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D18%23cb%3Df92fd12f067164%26origin%3Dhttp%253A%252F%252Fmuucms.com%252Ff853251bf290a4%26domain%3Dmuucms.com%26relation%3Dparent.parent&ret=perms&hash=AQBSry5qsgb2zrff"></iframe>
-				                </a>
 				               	<!--<fb:login-button size="xlarge" scope="email,user_birthday,read_stream" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>-->
-
+								<div class="clear"></div>
+						        <a onclick="fb_login();" class="fb login_button" title="Login with Facebook" id="gn_fb_button" href="#">
+							        <div class="logo_wrapper">
+								        <span class="logo"></span>
+							        </div> 
+							        <span>Login with Facebook</span>
+						        </a>
 				                <div class="clear clear_15"></div> 
 				                <span class="small light_grey">It's secure and easy!</span>
                             <else />
