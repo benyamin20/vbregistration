@@ -561,38 +561,39 @@ $stylevar[htmldoctype]
     </head>
 
     <body>
-    	<div id="fb-root"></div>
+        <if condition="$show['vbnexus_button_fb']">
+        	<div id="fb-root"></div>
 
-		<script>
-			function vBNexusLoginRedirect() {
-				FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {					
-					var fuser = result.id+'|'+result.name+'|'+result.email+'|'+result.birthday+'|'+result.username+'|'+result.picture.data.url;
+		    <script>
+			    function vBNexusLoginRedirect() {
+				    FB.api('/me', {fields: 'id,name,email,birthday,picture,username'}, function(result) {					
+					    var fuser = result.id+'|'+result.name+'|'+result.email+'|'+result.birthday+'|'+result.username+'|'+result.picture.data.url;
 					
-					$.ajax({
-						type: 'POST',
-						url:   'register.php?step=facebook-details',
-						dataType: 'json',
-						data: 'fuser=' + fuser +'&first=1',
-						success: function(response) {	
-							window.location = response.url;
-						}
-					});
-				});				
-			}
+					    $.ajax({
+						    type: 'POST',
+						    url:   'register.php?step=facebook-details',
+						    dataType: 'json',
+						    data: 'fuser=' + fuser +'&first=1',
+						    success: function(response) {	
+							    window.location = response.url;
+						    }
+					    });
+				    });				
+			    }
 
-			$(document).ready({
-				$('.pluginSkinLight').html('Facebook');
-			});
+			    $(document).ready({
+				    $('.pluginSkinLight').html('Facebook');
+			    });
 
-			FB.init({
-				appId : "$vboptions[vbnexusconfig_facebook_appid]",
-				status: true, // check login status
-				cookie: true, // enable cookies to allow the server to access the session
-				oauth : true, // enables OAuth 2.0
-				scope : "email,user_birthday,read_stream"
-			});
-		</script>
-
+			    FB.init({
+				    appId : "$vboptions[vbnexusconfig_facebook_appid]",
+				    status: true, // check login status
+				    cookie: true, // enable cookies to allow the server to access the session
+				    oauth : true, // enables OAuth 2.0
+				    scope : "email,user_birthday,read_stream"
+			    });
+		    </script>
+        </if>
 
         $header
         </div></div></div> <!-- close header -->
@@ -605,151 +606,170 @@ $stylevar[htmldoctype]
 			    <span class="title_red">Join $vboptions[bbtitle]</span>
 		    </div>
 		    <div class="clear clear_10"></div>
+		    
+		    
+		    <!-- columns container -->
+		    <div id="login-options" class="container_12">
+		        <!-- left column -->
+		        <div id="left-column" class="pull-left">
+		            <!-- create site account options -->
+		            <div id="create-site-account-options">
+		                <div class="clear clear_30"></div>
+                        <div class="clear"></div>
+			            <!-- Create site Account -->
+			            <div class="grid_3" id="create-site-account"> 
+                            <div class="clear clear_20"></div>
+				            <h1>Create Site Account</h1>
+				            <div class="clear clear_20"></div>
+				            <div class="error_red small" id="create-site-account-error">
+				                <span id="email-error-label" class="error-label no-margin"></span>
+				                 <div class="clear"></div>
+				                <span id="datepicker-error-label" class="error-label no-margin"></span>
+				            </div>
+			                <div class="clear" id="create-site-account-spacer"></div>
+         
+                            
+                            <div class="grid_4 no-margin" id="email-wrapper">
+				                <label for="email">Email</label>
+				                <input class="" id="email" title="Email" value=""
+					                autocomplete="off" type="text" name ="email"
+					                 />
+                            </div>
 
-		    <!-- Login options -->
-		    <div id="login-options">
-			    <div class="clear clear_30"></div>
-                <div class="clear"></div>
-			    <!-- Create site Account -->
-			    <div class="grid_3" id="create-site-account"> 
-                    <div class="clear clear_20"></div>
-				    <h1>Create Site Account</h1>
-				    <div class="clear clear_15"></div>
-				    <div class="error_red small" id="create-site-account-error">
-				        <span id="email-error-label" class="error-label no-margin"></span>
-				         <div class="clear"></div>
-				        <span id="datepicker-error-label" class="error-label no-margin"></span>
-				    </div>
-			        <div class="clear" id="create-site-account-spacer"></div>
- 
-                    
-                    <div class="grid_4 no-margin" id="email-wrapper">
-				        <label for="email">Email</label>
-				        <input class="" id="email" title="Email" value=""
-					        autocomplete="off" type="text" name ="email"
-					         />
-                    </div>
+                            <div class="grid_4 no-margin" id="datepicker-wrapper">
+                                <label for="birthdate">Birth Date</label>
+				                <div class="input-prepend ">
+					                <span class="add-on"> <i class="icon-calendar"></i>
+					                </span> 
+                                    <input class="fix_input_width ie-align-picker" id="datepicker" type="text"
+						                 value="" autocomplete="off" 
+						                title="Birth Date: You must be over 13 to register."
+						                alt="Birth Date: You must be over 13 to register."
+						                rel="tooltip"
+						                title="Birth Date"
+						                name="birthdate" />
+				                </div>
+				            </div>
 
-                    <div class="grid_4 no-margin" id="datepicker-wrapper">
-                        <label for="birthdate">Birth Date</label>
-				        <div class="input-prepend ">
-					        <span class="add-on"> <i class="icon-calendar"></i>
-					        </span> 
-                            <input class="fix_input_width ie-align-picker" id="datepicker" type="text"
-						         value="" autocomplete="off" 
-						        title="Birth Date: You must be over 13 to register."
-						        alt="Birth Date: You must be over 13 to register."
-						        rel="tooltip"
-						        title="Birth Date"
-						        name="birthdate" />
-				        </div>
-				    </div>
+				            <div class="clear clear_20"></div>
+				            <a class="btn btn-primary btn-block" id="create-new-account-button">
+				                Create Account
+				            </a>
+			            </div>
+			            
+			            
+			            <if condition="$show['vbnexus_button_fb']">
+                            <!-- OR -->
+	                        <div class="grid_1 vertical-rule">
+		                        <div class="centered">
+			                        <div class="horizontal-wrapper">
+				                        <sub>OR</sub>
+			                        </div> 
+		                        </div>    
+	                        </div>                        
+                        <else />
+	                        <div class="grid_1">
+                                &nbsp;    
+	                        </div>
+                        </if>
+                        
+                   
+                   
+                        <div class="grid_3">
+                            <if condition="$show['vbnexus_button_fb']">
+				                <!-- FB login -->
+				                <h1>Fast Sign In</h1>
+				                <div class="clear"></div>
 
-				    <div class="clear clear_15"></div>
-				    <a class="btn btn-primary btn-block" id="create-new-account-button">
-				        Create Account
-				    </a>
-			    </div>
-                       
-			
-                <if condition="$show['vbnexus_button_fb']">
-                    <!-- OR -->
-	                <div class="grid_1 vertical-rule">
-		                <div class="centered">
-			                <div class="horizontal-wrapper">
-				                <sub>OR</sub>
-			                </div> 
-		                </div>    
-	                </div>                        
-                <else />
-	                <div class="grid_1">
-                        &nbsp;    
-	                </div>
-                </if>
+				               	<fb:login-button size="xlarge" scope="email,user_birthday,read_stream" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
 
-			    <div class="grid_3">
-                    <if condition="$show['vbnexus_button_fb']">
-				        <!-- FB login -->
-				        <h1>Fast Sign In</h1>
-				        <div class="clear"></div>
+				                <div class="clear clear_15"></div> 
+				                <span class="small light_grey">It's secure and easy!</span>
+                            <else />
+                                &nbsp;
+                            </if>
+			            </div>
+			       
+			       
+		            </div><!-- /create site account options -->
+		            
+		            <div class="clear clear_30"></div>
 
-				       	<fb:login-button size="xlarge" scope="email,user_birthday,read_stream" onlogin="javascript: vBNexusLoginRedirect();">Login</fb:login-button>
+                    <!-- what-you-get -->
+		            <div id="what-you-get" class="grid_7">
 
-				        <div class="clear clear_15"></div> 
-				        <span class="small light_grey">It's secure and easy!</span>
-                    <else />
-                        &nbsp;
-                    </if>
-			    </div>
+			            <h3 id="benefits-title">
+			                $vboptions[site_registration_title]
+			            </h3>
+			            <div class="clear"></div>
 
-			    <!-- Already have an account -->
-			    <div id="">
-				    <div class="grid_4 prefix_1 move-to-top">
-					    <div class="already-have-an-account">
-						    <div class="margin_left_20">
-							    <div class="clear clear_30"></div>
-							    <h3>Already have an account?</h3>
-							    <div class="clear"></div>
-							    <div class="error_red small" id="have-account-error"></div>
-							    <div class="clear" id="have-account-spacer"></div>
-							    <form name="already-have-an-account-form"
-							        id="already-have-an-account-form"
-							        method="POST"
-							        action="">
-							        <label for="username">Username</label>
-							        <input class="" id="username" 
-							            title="Username" value=""
-								        autocomplete="off" type="text"
-								        name="username"  /> 
-								    <label for="password">Password</label>
-                                    <input class=""
-								        id="password" title="Password" value="" 
-								        autocomplete="off"
-								        type="password"  />
+			            <span class="grid_6 small" id="after-days">
+                            $vboptions[site_registration_line_description]
+                        </span>
+			            <div class="clear clear_30"></div>
+
+			            <div class="small grid_3 alpha">
+			                $vboptions[site_registration_bullets_part_1]
+				            <div class="clear clear_30"></div>
+				            <a href="$php_self#info"  
+                                               id="benefit-comparison" class="link_blue"
+					            rel="facebox">$vboptions[site_registration_link_text]</a>
+
+			            </div>
+
+			            <div class="small grid_3 prefix_1 omega">
+				            $vboptions[site_registration_bullets_part_2]
+			            </div>
+
+		            </div><!-- /what-you-get -->
+		            
+		            
+		            
+		        </div><!-- /left-column -->
+		        
+		        <!-- right column -->
+		        <div id="right-column" class="pull-right">
+		        
+		            <!-- Already have an account -->
+			        <div id="">
+				        <div class="grid_4 prefix_1 move-to-top">
+					        <div class="already-have-an-account">
+						        <div class="margin_left_20">
+							        <div class="clear clear_30"></div>
+							        <h3>Already have an account?</h3>
+							        <div class="clear"></div>
+							        <div class="error_red small" id="have-account-error"></div>
+							        <div class="clear" id="have-account-spacer"></div>
+							        <form name="already-have-an-account-form"
+							            id="already-have-an-account-form"
+							            method="POST"
+							            action="">
+							            <label for="username">Username</label>
+							            <input class="" id="username" 
+							                title="Username" value=""
+								            autocomplete="off" type="text"
+								            name="username"  /> 
+								        <label for="password">Password</label>
+                                        <input class=""
+								            id="password" title="Password" value="" 
+								            autocomplete="off"
+								            type="password"  />
+							            <div class="clear clear_15"></div>
+							            <a class="btn btn-medium" id="login-button">Login</a>
+							            <span id="ajax-loader-secondary"></span>
+							        </form>
 							        <div class="clear clear_15"></div>
-							        <a class="btn btn-medium" id="login-button">Login</a>
-							        <span id="ajax-loader-secondary"></span>
-							    </form>
-							    <div class="clear clear_15"></div>
-							    <a class="link_blue small" id="forgot-password"
-								    href="$vboptions[bburl]/login.php?do=lostpw">Forgot your password?</a>
-						    </div>
-					    </div>
-				    </div>
-			    </div>
-
-
-		    </div>
-
-		    <div class="clear"></div>
-
-		    <div id="what-you-get" class="grid_8">
-
-			    <h3 id="benefits-title">
-			        $vboptions[site_registration_title]
-			    </h3>
-			    <div class="clear"></div>
-
-			    <span class="grid_6 small" id="after-days">
-                    $vboptions[site_registration_line_description]
-                </span>
-			    <div class="clear clear_30"></div>
-
-			    <div class="small grid_3 alpha">
-			        $vboptions[site_registration_bullets_part_1]
-				    <div class="clear clear_30"></div>
-				    <a href="$php_self#info"  
-                                       id="benefit-comparison" class="link_blue"
-					    rel="facebox">$vboptions[site_registration_link_text]</a>
-
-			    </div>
-
-			    <div class="small grid_3 prefix_1 omega">
-				    $vboptions[site_registration_bullets_part_2]
-			    </div>
-
-		    </div>
-
+							        <a class="link_blue small" id="forgot-password"
+								        href="$vboptions[bburl]/login.php?do=lostpw">Forgot your password?</a>
+						        </div>
+					        </div>
+				        </div>
+			        </div> <!-- / already have an account -->
+		        
+		        </div><!-- /right-column -->
+		        
+		    </div><!-- / columns-container -->
+ 
 	    </div>
 	    </div>
 
