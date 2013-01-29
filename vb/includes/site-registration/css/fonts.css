@@ -70,3 +70,7 @@ sub {
 .bold {
 	font-weight: bold;
 }
+
+select{
+    font-size: 14px !important;
+}
