@@ -282,7 +282,7 @@ li {
 }
 .input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 28px
-	transparent !important;
+	transparent ;
 }
 
 .large-input-error-container{
@@ -294,7 +294,7 @@ li {
     color: #800000 !important;
     margin-left: 30px;
     position: relative;
-    top: -4px;
+    top: -5px;
 }
 
 .fix-tnc-width{
@@ -483,7 +483,7 @@ hr{
 }
 
 #resend-email{
-    font-weight: normal !important !important;
+    font-weight: normal !important;
 }
 
 #email-icon{
@@ -506,4 +506,12 @@ hr{
 
 .fileupload-new{
     font-size:14px;
+}
+
+#terms-and-conditions-error-label{
+    top: 2px !important;
+}
+
+.terms-and-conditions-input-error-container{
+    background: url("../img/redx.png") no-repeat scroll 227px 3px transparent !important;
 }

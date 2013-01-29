@@ -1222,6 +1222,7 @@ $stylevar[htmldoctype]
 					       <a href="$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
 					    </span>
 				    </label>
+				    <span class="error-label" id="terms-and-conditions-error-label"></span>
 				</div>
  
 				<div class="clear clear_15"></div>
