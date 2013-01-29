@@ -450,7 +450,7 @@ case 'validate_site_account_details':
         $userdata->error('fieldmissing');
         $error_type = "terms-and-conditions";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+        $messages['errors'][] = "Please agree to the Terms & Conditions";
     }
 
     if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
