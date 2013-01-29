@@ -718,7 +718,10 @@ case 'resend_email':
 
     } else {
         $messages = "Unable to send email, please try again later.";
-    }
+    }$activateid = build_user_activation_id($userid,
+                    (($vbulletin->options['moderatenewmembers']
+                            OR $_SESSION['site_registration']['coppauser']) ? 4
+                            : 2), 0);
 
     $arr = array("message" => $messages);
 
@@ -1335,11 +1338,16 @@ case 'activate':
         $userid = $data["userid"];
         $nonvbid = $data["nonvbid"];
 
+        build_user_activation_id($userid,
+                    (($vbulletin->options['moderatenewmembers']
+                            OR $_SESSION['site_registration']['coppauser']) ? 4
+                            : 2), 0);
+
         $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
         $data = $vbulletin->db->query_first($sql);
 
         $activationid = $data["activationid"];
-
+        
         if(strlen($activationid) === 40) {
             $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
         } else {
