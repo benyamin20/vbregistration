@@ -566,7 +566,7 @@ jQuery(document).ready(function(jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'from=facebook&avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate+ '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions,
+                data: 'avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate+ '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions,
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
                         //mark elements as invalid
