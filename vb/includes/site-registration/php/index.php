@@ -1318,7 +1318,7 @@ case 'activate':
                     (($vbulletin->options['moderatenewmembers']
                             OR $_SESSION['site_registration']['coppauser']) ? 4
                             : 2), 0);
-
+        die(var_dump($activationid));
         if(strlen($activationid) === 40) {
             $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
         } else {
