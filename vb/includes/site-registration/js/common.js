@@ -4,24 +4,29 @@ AJAX_Compatible = true;
 var md5_loaded = false;
 
 
+jQuery.getScript("includes/site-registration/js/bootbox.min.js", function() {});
 
-$.ajaxSetup({
+jQuery.ajaxSetup({
     error: function(jqXHR, exception) {
         if (jqXHR.status === 0) {
-            alert('Please try again later: Not connected.\n Verify Network connectivity.');
+            msg = 'Please try again later: Not connected.\n Verify Network connectivity.';
         } else if (jqXHR.status == 404) {
-            alert('Please try again later: Requested page not found. [404]');
+            msg = 'Please try again later: Requested page not found. [404]';
         } else if (jqXHR.status == 500) {
-            alert('Please try again later: Internal Server Error [500].');
+            msg = 'Please try again later: Internal Server Error [500].';
         } else if (exception === 'parsererror') {
-            alert('Please try again later: Requested JSON parse failed.');
+            msg = 'Please try again later: Requested JSON parse failed.';
         } else if (exception === 'timeout') {
-            alert('Please try again later: Time out error.');
+            msg = 'Please try again later: Time out error.';
         } else if (exception === 'abort') {
-            alert('Please try again later: Ajax request aborted.');
+            msg = 'Please try again later: Ajax request aborted.';
         } else {
-            alert('Please try again later: Uncaught Error.\n' + jqXHR.responseText);
+            msg = 'Please try again later: Uncaught Error.\n' + jqXHR.responseText;
         }
+        
+        bootbox.alert(msg);
+       
+        
     }
 });
  
