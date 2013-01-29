@@ -210,6 +210,10 @@ li {
 	margin-top: 0px;
 }
 
+.move-to-top-inside {
+	margin-top: -30px;
+}
+
 #after-days {
 	margin-left: 0px !important;
 }

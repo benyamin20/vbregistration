@@ -295,7 +295,7 @@ $stylevar[htmldoctype]
 			
 			<div id=""> 
 			    
-				<div class="grid_4  move-to-top complete-your-profile">
+				<div class="grid_4  move-to-top-inside complete-your-profile">
 				    <div class="clear clear_10"></div>
 				    <h1 class="padding-left-check-these-out">Inside $vboptions[bbtitle]</h1>
 					<!-- check these out -->
@@ -1625,7 +1625,7 @@ $stylevar[htmldoctype]
 			    ]]>
 			</phpcode>
 		</plugin>
-		<plugin active="1" executionorder="1">
+		<plugin active="0" executionorder="1">
 			<title>Site Registration | Sign In: Step 1 - count strikes</title>
 			<hookname>login_strikes</hookname>
 			<phpcode>
@@ -1639,7 +1639,7 @@ $stylevar[htmldoctype]
 			    ]]>
 			</phpcode>
 		</plugin>
-		<plugin active="1" executionorder="1">
+		<plugin active="0" executionorder="1">
 			<title>Site Registration | Sign In: Step 1 - Log In (open while logged out)</title>
 			<hookname>newthread_start</hookname>
 			<phpcode>
@@ -1716,6 +1716,9 @@ $stylevar[htmldoctype]
 	                            break;
                             case 'picturecomment':
 	                            $reg_ref = 'reg-picture-comment';
+	                            break;
+	                        case 'calendar':
+	                            $reg_ref = 'calendar';
 	                            break;
                         }
 			        
@@ -1851,7 +1854,10 @@ $stylevar[htmldoctype]
                             $sql
                         );
                         
-                        if(empty($rs['initialpage']) || stristr( $vbulletin->options['bburl'] , $rs['initialpage']) === FALSE ){
+                        $string     = $rs['initialpage'];
+                        $search_str = $vbulletin->options['bburl'] ;
+                        
+                        if(empty($rs['initialpage']) || stristr($string, $search_str) === FALSE ){
                             $prev_url = "index.php";
                         }else{
                             $prev_url = $rs['initialpage'];

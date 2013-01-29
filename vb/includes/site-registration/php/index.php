@@ -992,7 +992,19 @@ default:
             exec_unstrike_user($vbulletin->GPC['vb_login_username']);
             process_new_login('', '', '');
 
-            $url = "login.php?do=login";
+            //$url = "login.php?do=login";
+            
+            $string     = $_SESSION['site_registration']['initial_page'];
+            $search_str = $vbulletin->options['bburl'] ;
+            
+            if( empty( $_SESSION['site_registration']['initial_page'] ) || stristr($string, $search_str) === FALSE ){
+                
+                $url = "index.php";
+                
+            }else{
+                $url = $_SESSION['site_registration']['initial_page'];
+            }
+ 
 
             $valid_login = TRUE;
             $message = "OK";
