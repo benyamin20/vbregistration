@@ -1521,44 +1521,54 @@ $stylevar[htmldoctype]
 				     		die(json_encode($url));
 				     	} else {
 				     		$userid = $data["userid"];
+				     		$nonvbid = $data["nonvbid"];
 
-				     		$vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $data["userid"] ."'");
+				     		$sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
+				     		$data = $vbulletin->db->query_first($sql);
 
-				     		//start new session
-				            $vbulletin->userinfo = $vbulletin->db
-				                    ->query_first(
-				                            "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
-				                username, password, salt FROM " . TABLE_PREFIX
-				                                    . "user 
-				                WHERE userid = " . $userid);
+				     		$activationid = $data["activationid"];
 
-				            require_once(DIR . '/includes/functions_login.php');
+				     		if(strlen($activation) === 40) {
+				     			$url = array("url" => "register.php?a=act&u=". $userid ."&i=".$activationid);
+				     		} else {
+				     			$url = array("url" => "index.php");
 
-				            vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
-				                    true);
-				            vbsetcookie('password',
-				                    md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
-				                    true, true);
+				     			//$vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $userid ."'");
 
-				            process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+					     		//start new session
+					            $vbulletin->userinfo = $vbulletin->db
+					                    ->query_first(
+					                            "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+					                username, password, salt FROM " . TABLE_PREFIX
+					                                    . "user 
+					                WHERE userid = " . $userid);
 
-				            cache_permissions($vbulletin->userinfo, true);
+					            require_once(DIR . '/includes/functions_login.php');
 
-				            $vbulletin->session->save();
+					            vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
+					                    true);
+					            vbsetcookie('password',
+					                    md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
+					                    true, true);
 
-					        // On login, store a cookie with vbnexus params
-				            $vBNexusInfo = array(
-				                'userid'      => $data['userid'],
-				                'service'     => 'fb',
-				                'nonvbid'     => $data["nonvbid"],
-				                'can_publish' => true,
-				            );
+					            process_new_login('', 1, $vbulletin->GPC['cssprefs']);
 
-				            setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
+					            cache_permissions($vbulletin->userinfo, true);
 
-	                        $vbulletin->userinfo[securitytoken] = "guest";
-	                        
-				     		$url = array("url" => "index.php");
+					            $vbulletin->session->save();
+
+						        // On login, store a cookie with vbnexus params
+					            $vBNexusInfo = array(
+					                'userid'      => $userid,
+					                'service'     => 'fb',
+					                'nonvbid'     => $nonvbid,
+					                'can_publish' => true,
+					            );
+
+					            setcookie(COOKIE_PREFIX . 'vbnexus', serialize($vBNexusInfo));
+
+		                        $vbulletin->userinfo[securitytoken] = "guest";
+				     		}
 
 				     		die(json_encode($url));
 				     	}

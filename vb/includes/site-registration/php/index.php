@@ -1241,8 +1241,7 @@ case 'activate':
         $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
-        $message = "OK";
-        $url = "index.php";
+        $message = "OK";        
 
         $parts = explode(".", $avatar);
         $extension = end($parts);
@@ -1302,35 +1301,47 @@ case 'activate':
         // send new user email
 
         // delete activationid
-        $vbulletin->db
+        /*$vbulletin->db
                 ->query_write(
                         "DELETE FROM " . TABLE_PREFIX
                                 . "useractivation 
                 WHERE userid = '" . $userid . "' 
-                AND type = 0");
-    }
+                AND type = 0");*/
 
-    if ($valid_entries) {
-        // Process vBulletin login
-        $vbulletin->userinfo = $vbulletin->db
-                ->query_first(
-                        "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
-                    username, password, salt FROM " . TABLE_PREFIX
-                                . "user 
-                    WHERE userid = " . $userid);
+        $userid = $data["userid"];
+        $nonvbid = $data["nonvbid"];
 
-        require_once(DIR . '/includes/functions_login.php');
+        $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
+        $data = $vbulletin->db->query_first($sql);
 
-        vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
-        vbsetcookie('password',
-                md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
-                true, true);
+        $activationid = $data["activationid"];
 
-        process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+        if(strlen($activationid) === 40) {
+            $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
+        } else {
+            $url = "index.php";
 
-        cache_permissions($vbulletin->userinfo, true);
+            // Process vBulletin login
+            $vbulletin->userinfo = $vbulletin->db
+                    ->query_first(
+                            "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                        username, password, salt FROM " . TABLE_PREFIX
+                                    . "user 
+                        WHERE userid = " . $userid);
 
-        $vbulletin->session->save();
+            require_once(DIR . '/includes/functions_login.php');
+
+            vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
+            vbsetcookie('password',
+                    md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
+                    true, true);
+
+            process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+
+            cache_permissions($vbulletin->userinfo, true);
+
+            $vbulletin->session->save(); 
+        }        
     }
 
     $arr = array("valid_entries" => $valid_entries,
