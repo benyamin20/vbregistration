@@ -443,6 +443,7 @@ hr{
 .move-to-top-avatar-upload{
     margin-top: -32px;
     color: #333 !important;
+    font-size: 14px;
 }
 
 .checkbox{
@@ -498,4 +499,8 @@ hr{
     background-color: white;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.fileupload-new{
+    font-size:14px;
 }
