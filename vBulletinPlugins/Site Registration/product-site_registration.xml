@@ -2416,7 +2416,7 @@ $stylevar[htmldoctype]
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        includes/site-registration/img/thumbnail.png
+				        includes/site-registration/img/pic_battles.png
 				    ]]>
 				</defaultvalue>
 			</setting>
@@ -2448,7 +2448,7 @@ $stylevar[htmldoctype]
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        includes/site-registration/img/thumbnail.png
+				        includes/site-registration/img/conversation.png
 				    ]]>
 				</defaultvalue>
 			</setting>
@@ -2480,7 +2480,7 @@ $stylevar[htmldoctype]
 				<datatype>free</datatype>
 				<defaultvalue> 
 				    <![CDATA[
-				        includes/site-registration/img/thumbnail.png
+				        includes/site-registration/img/market.png
 				    ]]>
 				</defaultvalue>
 			</setting>
