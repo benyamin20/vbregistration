@@ -390,6 +390,30 @@ case 'complete_your_profile':
         $user_data->set_bitfield('options', "showemail", $showemail);
 
         $user_data->save();
+        
+ 
+        
+        //start new session
+        $vbulletin->userinfo = $vbulletin->db
+                ->query_first(
+                        "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+            username, password, salt FROM " . TABLE_PREFIX
+                                . "user 
+            WHERE userid = " . $userid);
+
+        require_once(DIR . '/includes/functions_login.php');
+
+        vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
+                true);
+        vbsetcookie('password',
+                md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
+                true, true);
+
+        process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+
+        cache_permissions($vbulletin->userinfo, true);
+
+        $vbulletin->session->save();
 
     }
 

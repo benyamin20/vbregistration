@@ -3,6 +3,28 @@ AJAX_Compatible = true;
 
 var md5_loaded = false;
 
+
+
+$.ajaxSetup({
+    error: function(jqXHR, exception) {
+        if (jqXHR.status === 0) {
+            alert('Please try again later: Not connected.\n Verify Network connectivity.');
+        } else if (jqXHR.status == 404) {
+            alert('Please try again later: Requested page not found. [404]');
+        } else if (jqXHR.status == 500) {
+            alert('Please try again later: Internal Server Error [500].');
+        } else if (exception === 'parsererror') {
+            alert('Please try again later: Requested JSON parse failed.');
+        } else if (exception === 'timeout') {
+            alert('Please try again later: Time out error.');
+        } else if (exception === 'abort') {
+            alert('Please try again later: Ajax request aborted.');
+        } else {
+            alert('Please try again later: Uncaught Error.\n' + jqXHR.responseText);
+        }
+    }
+});
+ 
 /**
  * check if something exists
  */
@@ -182,7 +204,7 @@ jQuery(document).ready(function(jQuery) {
                     }
                      
                 }
-            });
+            }) ;
         
         });
     }
@@ -381,7 +403,7 @@ jQuery(document).ready(function(jQuery) {
               }
             }).done(function() { 
                 //nothing here
-            });
+            }) ;
         });
         
     }
@@ -458,7 +480,7 @@ jQuery(document).ready(function(jQuery) {
               }
             }).done(function() { 
                 //nothing here 
-            });
+            }) ;
             
             
         });
@@ -490,7 +512,7 @@ jQuery(document).ready(function(jQuery) {
                     jQuery('#email-sent').empty();
                     jQuery('#email-sent').append(response.message);
                 }
-            });  
+            }) ;
         });
       
     }
@@ -552,7 +574,7 @@ jQuery(document).ready(function(jQuery) {
                   }
                 }).done(function() { 
                     //nothing here
-                });
+                }) ;
          });
         
             
@@ -603,7 +625,7 @@ jQuery(document).ready(function(jQuery) {
                 }
             }).done(function() { 
                 //nothing here
-            });
+            }) ;
         });
     }
 
@@ -662,7 +684,7 @@ jQuery(document).ready(function(jQuery) {
                 }
             }).done(function() { 
                 //nothing here
-            });
+            }) ;
         });
     }
     
