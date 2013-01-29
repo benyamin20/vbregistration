@@ -1004,6 +1004,8 @@ default:
             }else{
                 $url = $_SESSION['site_registration']['initial_page'];
             }
+            
+            unset($_SESSION['site_registration']['initial_page']);
  
 
             $valid_login = TRUE;

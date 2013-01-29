@@ -1720,48 +1720,75 @@ $stylevar[htmldoctype]
                     //}
                     
 			        if(!(int)$vbulletin->userinfo['userid']){
+
+			            
+			            if( empty( $php_self ) || empty( $_SERVER['HTTP_REFERER'] ) ){
+			                $pageURL = "index.php";
+			            }else{
+			                $pageURL = 'http';
+                            
+                            if ($_SERVER["HTTPS"] == "on") {
+                                $pageURL .= "s";
+                            }
+                            
+                            $pageURL .= "://";
+                            
+                            if ($_SERVER["SERVER_PORT"] != "80") {
+                                $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+                            } else {
+                                $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+                            }
+			            }
+			            
+			            
+                         
+                        $params = $pageURL;
+			        
+			            $_SESSION['site_registration']['initial_page'] =  $params;
  
                         $reg_ref = '';
                         switch(THIS_SCRIPT)
                         {
                             case 'newthread':
 	                            $reg_ref = 'reg-new-thread';
+	                            //http://127.0.0.1:82/newthread.php?do=newthread&f=2
+	                            
 	                            break;
                             case 'newreply':
 	                            //if url contains "noquote=1", that means its not quote, else its quote
 	                           
 	                            if($vbulletin->GPC['noquote'] == 1)
 	                            {
-		                            $reg_ref = 'reg-post-reply';
+		                            $reg_ref = 'reg-post-reply'; 
 	                            }
 	                            else if($vbulletin->GPC['quoteall'] == 1)
 	                            {
-		                            $reg_ref = 'reg-reply-quote-all';
+		                            $reg_ref = 'reg-reply-quote-all'; 
 	                            }
 	                            else if(isset($vbulletin->GPC['vbulletin_multiquote'])&& !empty($vbulletin->GPC['vbulletin_multiquote']))
 	                            {
-		                            $reg_ref = 'reg-reply-multi-quote';
+		                            $reg_ref = 'reg-reply-multi-quote'; 
 	                            }
 	                            else
 	                            {
 		                            // if quote/:
-		                            $reg_ref = 'reg-reply-quote';
+		                            $reg_ref = 'reg-reply-quote'; 
 	                            }
 	                            break;
                             case 'memberlist':
-	                            $reg_ref = 'reg-member-list';
+	                            $reg_ref = 'reg-member-list'; 
 	                            break;
                             case 'garage':
-	                            $reg_ref = 'reg-garage';
+	                            $reg_ref = 'reg-garage'; 
 	                            break;
                             case 'album':
-	                            $reg_ref = 'reg-add-album';
+	                            $reg_ref = 'reg-add-album'; 
 	                            break;
                             case 'picturecomment':
-	                            $reg_ref = 'reg-picture-comment';
+	                            $reg_ref = 'reg-picture-comment'; 
 	                            break;
 	                        case 'calendar':
-	                            $reg_ref = 'calendar';
+	                            $reg_ref = 'calendar'; 
 	                            break;
                         }
 			        
