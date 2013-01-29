@@ -428,11 +428,14 @@ hr{
 }
 
 .text-margin{
-    margin-top: 0px !important;
+    /*margin-top: 0px !important;
     margin-left:5px !important;
     margin-bottom: 0px !important;
     margin-left:5px !important;
     margin-right: 5px !important;
+    */
+    margin-right: -20px;
+    padding-right: 25px;
 }
 
 .avatar-thumbnail{
