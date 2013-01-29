@@ -54,6 +54,15 @@ sub {
 	font-size: 12px;
 }
 
+#benefits-1 li {
+	font: 12px Helvetica,Arial,'sans-serif' !important;
+}
+
+#benefits-2 li {
+	font: 12px Helvetica,Arial,'sans-serif' !important;
+}
+
+
 .normal {
 	font-size: 14px;
 }
