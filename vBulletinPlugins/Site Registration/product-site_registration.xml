@@ -920,7 +920,7 @@ $stylevar[htmldoctype]
 					     />
                 </div>
                 <span class="error-label small no-margin no-top" id="email-error-label"></span>
-				<span class="help-block tiny dark_grey">&nbsp;</span> 
+				<span class="help-block tiny dark_grey"></span> 
 				
 				<div class="clear "></div>
 				
