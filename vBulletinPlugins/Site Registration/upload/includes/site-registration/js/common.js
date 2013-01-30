@@ -66,12 +66,28 @@ function get_time_zone_offset() {
      return gmt_offset;
 }
 
-function clear_errors(){
-    if(jQuery('.error-label').exists()){ jQuery('.error-label').empty(); }
-    if(jQuery('.large-input-error-container').exists()){ jQuery('.large-input-error-container').removeClass("large-input-error-container"); }
-    if(jQuery('.terms-and-conditions-input-error-container').exists()){ jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container"); 
-    if(jQuery('span.add-on').exists()){ jQuery('span.add-on').removeClass("input-error"); }
-    if(jQuery('.input-error').exists()){ jQuery('.input-error').removeClass("input-error"); }
+function clear_errors() {
+    
+    if (jQuery('.error-label').exists()) {
+        jQuery('.error-label').empty();
+    }
+    
+    if (jQuery('.large-input-error-container').exists()) {
+        jQuery('.large-input-error-container').removeClass("large-input-error-container");
+    }
+    
+    if (jQuery('.terms-and-conditions-input-error-container').exists()) {
+        jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
+    }
+    
+    if (jQuery('span.add-on').exists()) {
+        jQuery('span.add-on').removeClass("input-error");
+    }
+    
+    if (jQuery('.input-error').exists()) {
+        jQuery('.input-error').removeClass("input-error");
+    }
+    
 }
 
 
