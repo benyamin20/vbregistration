@@ -1968,6 +1968,30 @@ $stylevar[htmldoctype]
                         } 
                         */
                         
+                        
+                        //try to start a valid session
+                        //start new session
+                        $vbulletin->userinfo = $vbulletin->db
+                                ->query_first(
+                                        "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                            username, password, salt FROM " . TABLE_PREFIX
+                                                . "user 
+                            WHERE userid = " . $users_db['userid'] );
+
+                        require_once(DIR . '/includes/functions_login.php');
+
+                        vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
+                                true);
+                        vbsetcookie('password',
+                                md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
+                                true, true);
+
+                        process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+
+                        cache_permissions($vbulletin->userinfo, true);
+
+                        $vbulletin->session->save();
+                        
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
 	                
 	                }else{
