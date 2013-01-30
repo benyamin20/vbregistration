@@ -1567,7 +1567,7 @@ case "linkaccount":
 
                     ob_start();
 
-                    die(json_encode($arr2));
+                    json_headers($arr2);
                 }
             }
         } else {
