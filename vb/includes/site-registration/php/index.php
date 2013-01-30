@@ -882,13 +882,6 @@ case 'create_site_account_first_step':
             )";
 
         $vbulletin->db->query_write($temp_table_query);
-        
-        $vbulletin->db->query_write(
-            "DELETE FROM " . TABLE_PREFIX . "siteregistration_temp 
-                WHERE email = '". $vbulletin->db->escape_string($vbulletin->GPC['email']) ."' 
-                AND birthday = '". $vbulletin->db->escape_string($vbulletin->GPC['birthdate']) ."'"
-        );
-        
 
         /*insert query*/
         $vbulletin->db
@@ -1343,7 +1336,7 @@ case 'activate':
                 AND type = 0");*/
 
         $userid = $data["userid"];
-        $nonvbid = $data["nonvbid"];
+        $nonvbid = $fbID;
 
         build_user_activation_id($userid,
                     (($vbulletin->options['moderatenewmembers']
@@ -1358,10 +1351,6 @@ case 'activate':
         if(strlen($activationid) === 40) {
             $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
         } else {
-        
-        
-        
-        
             $string     = $_SESSION['site_registration']['initial_page'];
             $search_str = $vbulletin->options['bburl'] ;
             
@@ -1521,39 +1510,67 @@ case "linkaccount":
                     /*insert query*/
                     $vbulletin->db->query_write($sql);
 
-                    $token = md5(uniqid(microtime(), true));
-                    $token_time = time();
-                    $form = "site-account-details";
-                    $_SESSION['site_registration'][$form . '_token'] = array(
-                            'token' => $token, 'time' => $token_time);
+                    $vbulletin->db->query_write(
+                        "INSERT IGNORE INTO " . TABLE_PREFIX
+                                . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
+                                . $fbID . "', '" . $userid . "', '1')");
 
-                    //start new session
-                    $vbulletin->userinfo = $vbulletin->db
-                            ->query_first(
-                                    "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
-                        username, password, salt FROM " . TABLE_PREFIX
-                                            . "user 
-                        WHERE userid = " . $userid);
+                    //Send Activation Email: Refer to Automated Emails
+                    // send new user email
 
-                    require_once(DIR . '/includes/functions_login.php');
+                    // delete activationid
+                    /*$vbulletin->db
+                            ->query_write(
+                                    "DELETE FROM " . TABLE_PREFIX
+                                            . "useractivation 
+                            WHERE userid = '" . $userid . "' 
+                            AND type = 0");*/
 
-                    vbsetcookie('userid', $vbulletin->userinfo['userid'], true,
-                            true, true);
-                    vbsetcookie('password',
-                            md5($vbulletin->userinfo['password'] . COOKIE_SALT),
-                            true, true, true);
+                    $userid = $data["userid"];
+                    $nonvbid = $data["nonvbid"];                 
 
-                    if ($vbulletin->options['usestrikesystem']) {
-                        exec_unstrike_user($vbulletin->GPC['username']);
-                    }
+                    $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
+                    $data = $vbulletin->db->query_first($sql);
 
-                    process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+                    $activationid = $data["activationid"];
+                    
+                    if(strlen($activationid) === 40) {
+                        $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
+                    } else {
+                        $url = "index.php";
+                        
+                        $token = md5(uniqid(microtime(), true));
+                        $token_time = time();
+                        $form = "site-account-details";
+                        $_SESSION['site_registration'][$form . '_token'] = array(
+                                'token' => $token, 'time' => $token_time);
 
-                    cache_permissions($vbulletin->userinfo, true);
+                        //start new session
+                        $vbulletin->userinfo = $vbulletin->db
+                                ->query_first(
+                                        "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
+                            username, password, salt FROM " . TABLE_PREFIX
+                                                . "user 
+                            WHERE userid = " . $userid);
 
-                    $vbulletin->session->save();
+                        require_once(DIR . '/includes/functions_login.php');
 
-                    $url = "index.php";
+                        vbsetcookie('userid', $vbulletin->userinfo['userid'], true,
+                                true, true);
+                        vbsetcookie('password',
+                                md5($vbulletin->userinfo['password'] . COOKIE_SALT),
+                                true, true, true);
+
+                        if ($vbulletin->options['usestrikesystem']) {
+                            exec_unstrike_user($vbulletin->GPC['username']);
+                        }
+
+                        process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+
+                        cache_permissions($vbulletin->userinfo, true);
+
+                        $vbulletin->session->save();
+                    }                                    
 
                     $arr = array("url" => $url);
 
