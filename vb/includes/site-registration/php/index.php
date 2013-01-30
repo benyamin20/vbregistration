@@ -1448,7 +1448,7 @@ case "linkaccount":
             $fbID = $_SESSION['site_registration']["fbID"];
             $avatar = $_SESSION['site_registration']["fbPicture"];
 
-            if ($dbPassword != $password) {
+            if ($dbPassword != $password) { var_dump($password); echo "<br />"; die(var_dump($dbPassword));
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "username-member";
                 $messages['errors'][] = $message = "Please check your username and password.";
