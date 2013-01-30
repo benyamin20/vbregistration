@@ -2344,13 +2344,13 @@ $stylevar[htmldoctype]
 				<defaultvalue>
 				    <![CDATA[
 					    <table class="tborder" cellpadding="6" cellspacing="1" border="0" width="97%" align="center">
-                          <tr >
+                          <tr>
                             <td colspan="3"><em style="font-weight:bold;">Become a part of the  Honda-Tech Community Today!</em></td>
                           </tr>
-                          <tr  align="center">
-                            <td width="34%">MEMBERSHIP OPTIONS</td>
-                            <td width="33%">Trial User</td>
-                            <td width="33%">Registered User - Full User</td>
+                          <tr>
+                            <td width="34%" align="left">MEMBERSHIP OPTIONS</td>
+                            <td width="33%" align="center">Trial User</td>
+                            <td width="33%" align="center">Registered User - Full User</td>
                           </tr>
                           <tr class="alt1">
                             <td  align=""><strong>User Title</strong></td>
