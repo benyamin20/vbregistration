@@ -1358,7 +1358,7 @@ case 'activate':
             $string     = $_SESSION['site_registration']['initial_page'];
             $search_str = $vbulletin->options['bburl'] ;
             
-            if( empty( $_SESSION['site_registration']['initial_page'] ) || stristr($string, $search_str) === FALSE ){
+            if( empty( $string ) || stristr($string, $search_str) === FALSE ){
                 
                 $url = "index.php";
                 
