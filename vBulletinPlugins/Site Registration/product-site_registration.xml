@@ -1640,7 +1640,7 @@ $stylevar[htmldoctype]
 
 			        		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
 			        	} else {
-			        		header("location: index.php");
+			        		header("location: register.php");
 			        	}
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'activate'){
 			        	

@@ -688,7 +688,7 @@ jQuery(document).ready(function(jQuery) {
                 context: document.body, 
                 type: 'POST',
                 cache: false,
-                data: 'username='+ username + '&password='+ password + '&security_token='+ token,
+                data: 'securitytoken=guest&username='+ username + '&password='+ password + '&security_token='+ token,
                 beforeSend: function(){
                     if(jQuery('#ajax-loader').exists()){
                         jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
