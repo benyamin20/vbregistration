@@ -274,6 +274,7 @@ $stylevar[htmldoctype]
 						<input  class="btn btn-primary grid_2 no-margin"
 						    id="save-account-activated" 
 						    type="submit" value="Save" />
+						    <span id="ajax-loader"></span>
 						</form>
 					</div>
 				</div>

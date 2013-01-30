@@ -285,8 +285,16 @@ jQuery(document).ready(function(jQuery) {
             dataType: 'json',
             beforeSubmit: function(){
                 jQuery("#progress-indicator-container").addClass("progress-striped active");
+                
+                if(jQuery('#ajax-loader').exists()){
+                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                }
             },
             success:    function(response) { 
+                if(jQuery('#ajax-spinner').exists()){
+                        jQuery('#ajax-spinner').remove();
+                }
+                
                 if(response.valid_entries == false){
                         jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
                         jQuery('.error-label').empty();
@@ -495,9 +503,7 @@ jQuery(document).ready(function(jQuery) {
               
               }
             }).done(function() { 
-                if(jQuery('#ajax-spinner').exists()){
-                    jQuery('#ajax-spinner').remove();
-                } 
+ 
             }) ;
             
             
