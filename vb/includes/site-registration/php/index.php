@@ -1448,14 +1448,14 @@ case "linkaccount":
             $fbID = $_SESSION['site_registration']["fbID"];
             $avatar = $_SESSION['site_registration']["fbPicture"];
 
-            if ($dbPassword != $password) { var_dump($password); echo "<br />"; die(var_dump($dbPassword));
+            if ($dbPassword != $password) { 
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "username-member";
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "password-member";
 
-                $arr = array("valid_entries" => false, "error_type" => "password", "messages" => $messages);
-                $problem = TRUE;
+                //$arr = array("valid_entries" => false, "error_type" => "password", "messages" => $messages);
+                //$problem = TRUE;
             } else {
                 $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                         . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
@@ -1503,17 +1503,6 @@ case "linkaccount":
 
                     /*insert query*/
                     $vbulletin->db->query_write($sql);
-
-                    //Send Activation Email: Refer to Automated Emails
-                    // send new user email
-
-                    // delete activationid
-                    /*$vbulletin->db
-                            ->query_write(
-                                    "DELETE FROM " . TABLE_PREFIX
-                                            . "useractivation 
-                            WHERE userid = '" . $userid . "' 
-                            AND type = 0");*/
                     
                     $nonvbid = $fbID;                 
 
@@ -1562,11 +1551,7 @@ case "linkaccount":
 
                     ob_start();
 
-                    if(isset($problem)) {
-                        json_headers($arr);
-                    } else {
-                        json_headers(array("url" => $url));
-                    }
+                    json_headers(array("url" => $url));
                 }
             }
         } else {

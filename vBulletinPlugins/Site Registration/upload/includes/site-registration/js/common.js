@@ -716,7 +716,7 @@ jQuery(document).ready(function (jQuery) {
                 context: document.body,
                 type: 'POST',
                 cache: false,
-                data: 'securitytoken=guest&username='+ username + '&password='+ password + '&security_token='+ token,
+                data: 'securitytoken=guest&username='+ username + '&password='+ password,
                 beforeSend: function(){
                     if(jQuery('#ajax-loader-secondary').exists()){
                         jQuery('#ajax-loader-secondary').append(spinner_secondary);
