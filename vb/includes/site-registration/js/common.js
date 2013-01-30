@@ -357,8 +357,7 @@ jQuery(document).ready(function(jQuery) {
                     jQuery('#would-you-like').hide();
                     jQuery('#show-great').empty();
                     jQuery('#show-great').html("Thanks!");
-                    jQuery('#complete-your-profile-form').remove();
-                    jQuery('.complete-your-profile').css('min-height',420);
+                    jQuery('#complete-your-profile-form').remove(); 
                     jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
                     jQuery("#icon-ok").removeClass('hidden'); 
                     jQuery("#icon-ok").show(); 
