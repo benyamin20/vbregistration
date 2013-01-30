@@ -137,6 +137,7 @@ li {
 	margin-top: 7px;
 	min-height: 20px;
 	padding: 3px 12px;
+    line-height: 20px;
 }
 
 .fb:active {
