@@ -1338,16 +1338,34 @@ case 'activate':
         $userid = $data["userid"];
         $nonvbid = $data["nonvbid"];
 
-        $activateid = build_user_activation_id($userid,
+        build_user_activation_id($userid,
                     (($vbulletin->options['moderatenewmembers']
                             OR $_SESSION['site_registration']['coppauser']) ? 4
                             : 2), 0);
-        die(var_dump($activationid));
+
+        $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
+        $data = $vbulletin->db->query_first($sql);
+
+        $activationid = $data["activationid"];
+        
         if(strlen($activationid) === 40) {
             $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
         } else {
-            $url = "index.php";
-
+        
+        
+        
+        
+            $string     = $_SESSION['site_registration']['initial_page'];
+            $search_str = $vbulletin->options['bburl'] ;
+            
+            if( empty( $_SESSION['site_registration']['initial_page'] ) || stristr($string, $search_str) === FALSE ){
+                
+                $url = "index.php";
+                
+            }else{
+                $url = $_SESSION['site_registration']['initial_page'];
+            }
+        
             // Process vBulletin login
             $vbulletin->userinfo = $vbulletin->db
                     ->query_first(
