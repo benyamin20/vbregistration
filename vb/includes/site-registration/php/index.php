@@ -1448,14 +1448,14 @@ case "linkaccount":
             $fbID = $_SESSION['site_registration']["fbID"];
             $avatar = $_SESSION['site_registration']["fbPicture"];
 
-            if ($dbPassword != $password) { 
+            if ($dbPassword != $password) {
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "username-member";
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "password-member";
 
-                //$arr = array("valid_entries" => false, "error_type" => "password", "messages" => $messages);
-                //$problem = TRUE;
+                $arr = array("valid_entries" => false, "error_type" => "password", "messages" => $messages);
+                $problem = TRUE;
             } else {
                 $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                         . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
@@ -1503,6 +1503,17 @@ case "linkaccount":
 
                     /*insert query*/
                     $vbulletin->db->query_write($sql);
+
+                    //Send Activation Email: Refer to Automated Emails
+                    // send new user email
+
+                    // delete activationid
+                    /*$vbulletin->db
+                            ->query_write(
+                                    "DELETE FROM " . TABLE_PREFIX
+                                            . "useractivation 
+                            WHERE userid = '" . $userid . "' 
+                            AND type = 0");*/
                     
                     $nonvbid = $fbID;                 
 
@@ -1513,10 +1524,6 @@ case "linkaccount":
                     
                     if(strlen($activationid) == 40) {
                         $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
-
-                        ob_start();
-
-                        die(json_encode($url));
                     } else {
                         $url = "index.php";
                         
@@ -1551,11 +1558,13 @@ case "linkaccount":
                         cache_permissions($vbulletin->userinfo, true);
 
                         $vbulletin->session->save();
-                    }                                                        
+                    }                                    
+
+                    $arr["url"] = $url;
 
                     ob_start();
 
-                    json_headers(array("url" => $url));
+                    json_headers($arr);
                 }
             }
         } else {
