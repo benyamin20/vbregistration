@@ -1454,9 +1454,8 @@ case "linkaccount":
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "password-member";
 
-                $arr = array("valid_entries" => false,
-                        "error_type" => "password", "messages" => $messages);
-
+                $arr = array("valid_entries" => false, "error_type" => "password", "messages" => $messages);
+                $problem = TRUE;
             } else {
                 $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                         . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
@@ -1559,13 +1558,15 @@ case "linkaccount":
                         cache_permissions($vbulletin->userinfo, true);
 
                         $vbulletin->session->save();
-                    }                                    
-
-                    $arr = array("url" => $url);
+                    }                                                        
 
                     ob_start();
-                    
-                    json_headers($arr);
+
+                    if(isset($problem)) {
+                        json_headers($arr);
+                    } else {
+                        json_headers(array("url" => $url));
+                    }
                 }
             }
         } else {
