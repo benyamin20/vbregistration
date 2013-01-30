@@ -3,6 +3,8 @@ AJAX_Compatible = true;
 
 var md5_loaded = false;
 
+var spinner = '<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />';
+var spinner_secondary = '<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />';
 
 jQuery.getScript("includes/site-registration/js/bootbox.min.js", function() {});
 
@@ -287,7 +289,7 @@ jQuery(document).ready(function(jQuery) {
                 jQuery("#progress-indicator-container").addClass("progress-striped active");
                 
                 if(jQuery('#ajax-loader').exists()){
-                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader').append(spinner);
                 }
             },
             success:    function(response) { 
@@ -380,7 +382,7 @@ jQuery(document).ready(function(jQuery) {
               data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken='+ token,
               beforeSend: function(){
                 if(jQuery('#ajax-loader').exists()){
-                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader').append(spinner);
                 }
               },
               success: function( response ) {
@@ -527,7 +529,7 @@ jQuery(document).ready(function(jQuery) {
                 data: 'securitytoken=' + token, 
                 beforeSend: function(){
                     jQuery('#email-sent').empty();
-                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader').append(spinner);
                 },
                 success: function (response) {
                     if(jQuery('#ajax-spinner').exists()){
@@ -570,7 +572,7 @@ jQuery(document).ready(function(jQuery) {
                   data: 'email='+ email +'&birthdate='+ birthdate + '&securitytoken=guest',
                   beforeSend: function(){
                     if(jQuery('#ajax-loader').exists()){
-                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                        jQuery('#ajax-loader').append(spinner);
                     }
                   },
                   success: function( response ) {
@@ -630,7 +632,7 @@ jQuery(document).ready(function(jQuery) {
                 data: 'from=facebook&avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate+ '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions,
                 beforeSend: function(){
                     if(jQuery('#ajax-loader').exists()){
-                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                        jQuery('#ajax-loader').append(spinner);
                     }
                 },
                 success: function(response) {
@@ -690,8 +692,8 @@ jQuery(document).ready(function(jQuery) {
                 cache: false,
                 data: 'username='+ username + '&password='+ password + '&security_token='+ token,
                 beforeSend: function(){
-                    if(jQuery('#ajax-loader').exists()){
-                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    if(jQuery('#ajax-loader-secondary').exists()){
+                        jQuery('#ajax-loader-secondary').append(spinner_secondary);
                     }
                 },
                 success: function(response, status, xhr) {
@@ -735,8 +737,8 @@ jQuery(document).ready(function(jQuery) {
                     
                 }
             }).done(function() { 
-                if(jQuery('#ajax-spinner').exists()){
-                    jQuery('#ajax-spinner').remove();
+                if(jQuery('#ajax-spinner-secondary').exists()){
+                    jQuery('#ajax-spinner-secondary').remove();
                 }
             }) ;
         });

@@ -979,7 +979,8 @@ $stylevar[htmldoctype]
 				<div class="clear clear_15"></div>
 				<div class="pull-left">
 				    <button class="btn btn-primary grid_3"
-                        type="button" id="log-in">Log In</button>                       
+                        type="button" id="log-in">Log In</button>
+                    <span id="ajax-loader-secondary"></span>                       
 			     </div>
 			</div>
 			
@@ -1023,6 +1024,7 @@ $stylevar[htmldoctype]
                  
                  <button class="btn grid_3 no-margin"
                         type="button" id="link-account">Link Account</button>
+                 <span id="ajax-loader-secondary"></span>
                         
 				<div class="clear clear_15"></div>
 				
