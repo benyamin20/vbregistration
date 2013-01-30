@@ -1942,33 +1942,20 @@ $stylevar[htmldoctype]
                             $sql
                         );
                         
-                        $string     = $rs['initialpage'];
-                        $search_str = $vbulletin->options['bburl'] ;
+                        $string     = $rs['initialpage']; 
                         
-                        if(empty($rs['initialpage']) || stristr($string, $search_str) === FALSE ){
+                        if(empty($string)){
                             $prev_url = "index.php";
                         }else{
                             $prev_url = $rs['initialpage'];
                         }
-                        
-                        
-                        $fetch_url = $prev_url;
+                      
                         
                         //check for default setting of admin email -- ACP-393
                         if( bitwise($vbulletin->bf_misc_regoptions['adminemail'], $vbulletin->options['defaultregoptions'])  ){
                             $default_email_from_administrators = " checked='checked' ";
                         }
-                        
-                        /*
-                        $str = file_get_contents($fetch_url);
-                        
-                        if( strlen( $str ) > 0 ){
-                            preg_match("/\<title\>(.*)\<\/title\>/" , $str , $title );
-                            $page_title = $title[1];
-                        } 
-                        */
-                        
-                        
+                         
                         //try to start a valid session
                         //start new session
                         $vbulletin->userinfo = $vbulletin->db
