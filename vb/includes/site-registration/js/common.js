@@ -299,15 +299,15 @@ jQuery(document).ready(function(jQuery) {
                         jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
                         jQuery('.error-label').empty();
                         jQuery('.input-error-container').removeClass("input-error-container");
-                        //jQuery('.large-input-error-container').removeClass("large-input-error-container");
+                        jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
                         jQuery('.input-error').removeClass("input-error");
                         
                         jQuery.each(response.messages.fields, function(index, value) {
-                            //if(value == 'timezone'){
-                            //    jQuery('#'+value+'-wrapper').addClass("large-input-error-container");    
-                            //}else{
+                            if(value == 'photoimg'){
+                                jQuery('#'+value+'-wrapper').addClass("terms-and-conditions-input-error-container");    
+                            }else{
                                 jQuery('#'+value+'-wrapper').addClass("input-error-container");
-                            //}        
+                            }        
                             
                             jQuery('#'+value).addClass("input-error");
                             jQuery('#'+value+'-error-label').empty();
@@ -324,7 +324,7 @@ jQuery(document).ready(function(jQuery) {
                     try{
                         jQuery('.error-label').empty();
                         jQuery('.input-error-container').removeClass("input-error-container");
-                        //jQuery('.large-input-error-container').removeClass("large-input-error-container");
+                        jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
                         jQuery('.input-error').removeClass("input-error");
                     }catch(e){
                     

@@ -1600,7 +1600,7 @@ $stylevar[htmldoctype]
 			            $form = "create_site_account_first_step"; 
 			            $invalid_request = FALSE;
 			            
-			            if(!isset($_SESSION['site_registration'][$form.'_token'])) {
+			            if(empty($_SESSION['site_registration'][$form.'_token'])) {
                             $invalid_request = TRUE;
                         }
                         
