@@ -882,6 +882,13 @@ case 'create_site_account_first_step':
             )";
 
         $vbulletin->db->query_write($temp_table_query);
+        
+        $vbulletin->db->query_write(
+            "DELETE FROM " . TABLE_PREFIX . "siteregistration_temp 
+                WHERE email = '". $vbulletin->db->escape_string($vbulletin->GPC['email']) ."' 
+                AND birthday = '". $vbulletin->db->escape_string($vbulletin->GPC['birthdate']) ."'"
+        );
+        
 
         /*insert query*/
         $vbulletin->db

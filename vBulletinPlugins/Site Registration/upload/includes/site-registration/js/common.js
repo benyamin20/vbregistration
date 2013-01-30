@@ -3,6 +3,8 @@ AJAX_Compatible = true;
 
 var md5_loaded = false;
 
+var spinner = '<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />';
+var spinner_secondary = '<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />';
 
 jQuery.getScript("includes/site-registration/js/bootbox.min.js", function() {});
 
@@ -62,6 +64,30 @@ function get_time_zone_offset() {
      var current_date = new Date();
      var gmt_offset = (current_date.getTimezoneOffset() * -1) / 60;
      return gmt_offset;
+}
+
+function clear_errors() {
+    
+    if (jQuery('.error-label').exists()) {
+        jQuery('.error-label').empty();
+    }
+    
+    if (jQuery('.large-input-error-container').exists()) {
+        jQuery('.large-input-error-container').removeClass("large-input-error-container");
+    }
+    
+    if (jQuery('.terms-and-conditions-input-error-container').exists()) {
+        jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
+    }
+    
+    if (jQuery('span.add-on').exists()) {
+        jQuery('span.add-on').removeClass("input-error");
+    }
+    
+    if (jQuery('.input-error').exists()) {
+        jQuery('.input-error').removeClass("input-error");
+    }
+    
 }
 
 
@@ -287,7 +313,7 @@ jQuery(document).ready(function(jQuery) {
                 jQuery("#progress-indicator-container").addClass("progress-striped active");
                 
                 if(jQuery('#ajax-loader').exists()){
-                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader').append(spinner);
                 }
             },
             success:    function(response) { 
@@ -297,17 +323,15 @@ jQuery(document).ready(function(jQuery) {
                 
                 if(response.valid_entries == false){
                         jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
-                        jQuery('.error-label').empty();
-                        jQuery('.input-error-container').removeClass("input-error-container");
-                        //jQuery('.large-input-error-container').removeClass("large-input-error-container");
-                        jQuery('.input-error').removeClass("input-error");
+                        
+                        clear_errors();
                         
                         jQuery.each(response.messages.fields, function(index, value) {
-                            //if(value == 'timezone'){
-                            //    jQuery('#'+value+'-wrapper').addClass("large-input-error-container");    
-                            //}else{
+                            if(value == 'photoimg'){
+                                jQuery('#'+value+'-wrapper').addClass("terms-and-conditions-input-error-container");    
+                            }else{
                                 jQuery('#'+value+'-wrapper').addClass("input-error-container");
-                            //}        
+                            }        
                             
                             jQuery('#'+value).addClass("input-error");
                             jQuery('#'+value+'-error-label').empty();
@@ -324,7 +348,7 @@ jQuery(document).ready(function(jQuery) {
                     try{
                         jQuery('.error-label').empty();
                         jQuery('.input-error-container').removeClass("input-error-container");
-                        //jQuery('.large-input-error-container').removeClass("large-input-error-container");
+                        jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
                         jQuery('.input-error').removeClass("input-error");
                     }catch(e){
                     
@@ -333,8 +357,7 @@ jQuery(document).ready(function(jQuery) {
                     jQuery('#would-you-like').hide();
                     jQuery('#show-great').empty();
                     jQuery('#show-great').html("Thanks!");
-                    jQuery('#complete-your-profile-form').remove();
-                    jQuery('.complete-your-profile').css('min-height',420);
+                    jQuery('#complete-your-profile-form').remove(); 
                     jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
                     jQuery("#icon-ok").removeClass('hidden'); 
                     jQuery("#icon-ok").show(); 
@@ -380,7 +403,7 @@ jQuery(document).ready(function(jQuery) {
               data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken='+ token,
               beforeSend: function(){
                 if(jQuery('#ajax-loader').exists()){
-                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader').append(spinner);
                 }
               },
               success: function( response ) {
@@ -391,10 +414,7 @@ jQuery(document).ready(function(jQuery) {
                     
                 if(response.valid_entries == false){
                 
-                    jQuery('.error-label').empty();
-                    jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
-                    jQuery('.input-error-container').removeClass("input-error-container");
-                    jQuery('.input-error').removeClass("input-error");
+                    clear_errors();
                     
                     jQuery.each(response.messages.fields, function(index, value) {
                     
@@ -527,7 +547,7 @@ jQuery(document).ready(function(jQuery) {
                 data: 'securitytoken=' + token, 
                 beforeSend: function(){
                     jQuery('#email-sent').empty();
-                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader').append(spinner);
                 },
                 success: function (response) {
                     if(jQuery('#ajax-spinner').exists()){
@@ -570,17 +590,14 @@ jQuery(document).ready(function(jQuery) {
                   data: 'email='+ email +'&birthdate='+ birthdate + '&securitytoken=guest',
                   beforeSend: function(){
                     if(jQuery('#ajax-loader').exists()){
-                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                        jQuery('#ajax-loader').append(spinner);
                     }
                   },
                   success: function( response ) {
                     if(response.valid_entries == false){
                         //mark elements as invalid
 
-                        jQuery('.error-label').empty();
-                        jQuery('.input-error-container').removeClass("input-error-container");
-                        jQuery('span.add-on').removeClass("input-error");
-                        jQuery('.input-error').removeClass("input-error");
+                        clear_errors();
                         
                         jQuery.each(response.messages.fields, function(index, value) {        
                             jQuery('#'+value+'-wrapper').addClass("input-error-container");
@@ -630,18 +647,14 @@ jQuery(document).ready(function(jQuery) {
                 data: 'from=facebook&avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate+ '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions,
                 beforeSend: function(){
                     if(jQuery('#ajax-loader').exists()){
-                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                        jQuery('#ajax-loader').append(spinner);
                     }
                 },
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
                         //mark elements as invalid
 
-                        jQuery('.error-label').empty();
-                        jQuery('.large-input-error-container').removeClass("large-input-error-container");
-                        jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
-                        jQuery('span.add-on').removeClass("input-error");
-                        jQuery('.input-error').removeClass("input-error");
+                        clear_errors();
                         
                         jQuery.each(response.messages.fields, function(index, value) {        
                             if(value == 'terms_and_conditions'){
@@ -690,8 +703,8 @@ jQuery(document).ready(function(jQuery) {
                 cache: false,
                 data: 'securitytoken=guest&username='+ username + '&password='+ password + '&security_token='+ token,
                 beforeSend: function(){
-                    if(jQuery('#ajax-loader').exists()){
-                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    if(jQuery('#ajax-loader-secondary').exists()){
+                        jQuery('#ajax-loader-secondary').append(spinner_secondary);
                     }
                 },
                 success: function(response, status, xhr) {
@@ -702,10 +715,7 @@ jQuery(document).ready(function(jQuery) {
                         if(response.valid_entries == false) {                                                                        
                             //mark elements as invalid
 
-                            jQuery('.error-label').empty();
-                            jQuery('.large-input-error-container').removeClass("large-input-error-container");
-                            jQuery('span.add-on').removeClass("input-error");
-                            jQuery('.input-error').removeClass("input-error");
+                            clear_errors();
                             
                             jQuery.each(response.messages.fields, function(index, value) {        
                                 jQuery('#'+value+'-wrapper').addClass("large-input-error-container");
@@ -735,8 +745,8 @@ jQuery(document).ready(function(jQuery) {
                     
                 }
             }).done(function() { 
-                if(jQuery('#ajax-spinner').exists()){
-                    jQuery('#ajax-spinner').remove();
+                if(jQuery('#ajax-spinner-secondary').exists()){
+                    jQuery('#ajax-spinner-secondary').remove();
                 }
             }) ;
         });
