@@ -1494,9 +1494,9 @@ $stylevar[htmldoctype]
                         session_start();
                     }
                     
-                    if(empty($_SESSION['site_registration']['initial_page'])){
-                        $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
-                    }
+                    //if(empty($_SESSION['site_registration']['initial_page'])){
+                    //    $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
+                    //}
 
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
@@ -1536,7 +1536,20 @@ $stylevar[htmldoctype]
 				     		if(strlen($activation) === 40) {
 				     			$url = array("url" => "register.php?a=act&u=". $userid ."&i=".$activationid);
 				     		} else {
-				     			$url = array("url" => "index.php");
+				     		
+				     			$string     = $_SESSION['site_registration']['initial_page'];
+                                $search_str = $vbulletin->options['bburl'] ;
+                                
+                                if( empty( $string ) || stristr($string, $search_str) === FALSE ){
+                                    
+                                    $url = "index.php";
+                                    
+                                    $url = array("url" => $url);
+                                    
+                                }else{
+                                    $url = $_SESSION['site_registration']['initial_page'];
+                                    $url = array("url" => $url);
+                                }
 
 				     			//$vbulletin->db->query_write("DELETE FROM useractivation WHERE userid = '". $userid ."'");
 
