@@ -1563,6 +1563,8 @@ case "linkaccount":
 
                     $arr = array("url" => $url);
 
+                    ob_start();
+                    
                     json_headers($arr);
                 }
             }
