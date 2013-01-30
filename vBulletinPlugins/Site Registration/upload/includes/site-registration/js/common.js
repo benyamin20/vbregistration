@@ -6,29 +6,7 @@ var md5_loaded = false;
 
 jQuery.getScript("includes/site-registration/js/bootbox.min.js", function() {});
 
-jQuery.ajaxSetup({
-    error: function(jqXHR, exception) {
-        if (jqXHR.status === 0) {
-            msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';
-        } else if (jqXHR.status == 404) {
-            msg = 'Please try again later.\n Requested page not found. [404]';
-        } else if (jqXHR.status == 500) {
-            msg = 'Please try again later.\n Internal Server Error [500].';
-        } else if (exception === 'parsererror') {
-            msg = 'Please try again later.\n Requested JSON parse failed.';
-        } else if (exception === 'timeout') {
-            msg = 'Please try again later.\n Time out error.';
-        } else if (exception === 'abort') {
-            msg = 'Please try again later.\n Ajax request aborted.';
-        } else {
-            msg = 'Please try again later.\n Uncaught Error.\n' + jqXHR.responseText;
-        }
-        
-        bootbox.alert(msg);
-       
-        
-    }
-});
+
  
 /**
  * check if something exists
@@ -85,6 +63,37 @@ function get_time_zone_offset() {
      var gmt_offset = (current_date.getTimezoneOffset() * -1) / 60;
      return gmt_offset;
 }
+
+
+/**
+*   AJAX error handling ACP-455
+**/
+jQuery.ajaxSetup({
+    error: function(jqXHR, exception) {
+        if(jQuery('#ajax-spinner').exists()){
+            jQuery('#ajax-spinner').remove();
+        }
+        
+        if (jqXHR.status === 0) {
+            msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';
+        } else if (jqXHR.status == 404) {
+            msg = 'Please try again later.\n Requested page not found. [404]';
+        } else if (jqXHR.status == 500) {
+            msg = 'Please try again later.\n Internal Server Error [500].';
+        } else if (exception === 'parsererror') {
+            msg = 'Please try again later.\n Requested JSON parse failed.';
+        } else if (exception === 'timeout') {
+            msg = 'Please try again later.\n Time out error.';
+        } else if (exception === 'abort') {
+            msg = 'Please try again later.\n Ajax request aborted.';
+        } else {
+            msg = 'Please try again later.\n Uncaught Error.\n' + jqXHR.responseText;
+        }
+        
+        bootbox.alert(msg);
+        
+    }
+});
 
 
 (function(a){var b="placeholder"in document.createElement("input"),c=a.browser.opera&&a.browser.version<10.5;a.fn.placeholder=function(d){var d=a.extend({},a.fn.placeholder.defaults,d),e=d.placeholderCSS.left;return b?this:this.each(function(){var b=a(this),f=a.trim(b.val()),g=b.width(),h=b.height(),i=this.id?this.id:"placeholder"+ +(new Date),j=b.attr("placeholder"),k=a("<label class='placeholder' id='placeholder-"+i+"' for="+i+">"+j+"</label>");d.placeholderCSS.width=g,d.placeholderCSS.height=h,d.placeholderCSS.color=d.color,d.placeholderCSS.left=!c||this.type!="email"&&this.type!="url"?e:"11%",k.css(d.placeholderCSS),b.wrap(d.inputWrapper),b.attr("id",i).after(k),f&&k.hide(),b.focus(function(){a.trim(b.val())||k.hide()}),b.blur(function(){a.trim(b.val())||k.show()})})},a.fn.placeholder.defaults={inputWrapper:'<span style="position:relative; display:block;"></span>',placeholderCSS:{font:"14px Helvetica",color:"#999999",position:"absolute",left:"5px",top:"8px","overflow-x":"hidden",display:"block"}}})(jQuery);
@@ -362,15 +371,15 @@ jQuery(document).ready(function(jQuery) {
               cache: false,
               data: 'username='+username+'&password='+password+'&confirm_password='+confirm_password +'&security_code='+security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken='+ token,
               beforeSend: function(){
-                //if(jQuery('#ajax-loader').exists()){
-                //    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
-                //}
+                if(jQuery('#ajax-loader').exists()){
+                    jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                }
               },
               success: function( response ) {
                 
-                //if(jQuery('#ajax-spinner').exists()){
-                //        jQuery('#ajax-spinner').remove();
-                //}
+                if(jQuery('#ajax-spinner').exists()){
+                        jQuery('#ajax-spinner').remove();
+                }
                     
                 if(response.valid_entries == false){
                 
@@ -445,13 +454,13 @@ jQuery(document).ready(function(jQuery) {
               cache: false,
               data: 'vb_login_username='+ username +'&vb_login_password='+ password +'&s='+s+'&login='+login+'&securitytoken='+securitytoken,
               beforeSend: function(){ 
-                    //jQuery('#ajax-loader-secondary').append('<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader-secondary').append('<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />');
               },
               success: function( response, status, xhr ) {
               
-                  //if(jQuery('#ajax-spinner-secondary').exists()){
-                  //          jQuery('#ajax-spinner-secondary').remove();
-                  //}
+                  if(jQuery('#ajax-spinner-secondary').exists()){
+                            jQuery('#ajax-spinner-secondary').remove();
+                  }
               
                 var ct = xhr.getResponseHeader("content-type") || "";
                 
