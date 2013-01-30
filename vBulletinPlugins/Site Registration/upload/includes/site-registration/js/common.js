@@ -716,16 +716,9 @@ jQuery(document).ready(function (jQuery) {
                 context: document.body,
                 type: 'POST',
                 cache: false,
-<<<<<<< HEAD
-                data: 'username=' + username + '&password=' + password + '&security_token=' + token,
-                beforeSend: function () {
-                    if (jQuery('#ajax-loader-secondary').exists()) {
-                        jQuery('#ajax-loader-secondary').empty();
-=======
                 data: 'securitytoken=guest&username='+ username + '&password='+ password + '&security_token='+ token,
                 beforeSend: function(){
                     if(jQuery('#ajax-loader-secondary').exists()){
->>>>>>> 8504aadd671f18b10e39b7f48385144157aaf12d
                         jQuery('#ajax-loader-secondary').append(spinner_secondary);
                     }
                 },
