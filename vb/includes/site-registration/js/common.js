@@ -66,6 +66,14 @@ function get_time_zone_offset() {
      return gmt_offset;
 }
 
+function clear_errors(){
+    if(jQuery('.error-label').exists()){ jQuery('.error-label').empty(); }
+    if(jQuery('.large-input-error-container').exists()){ jQuery('.large-input-error-container').removeClass("large-input-error-container"); }
+    if(jQuery('.terms-and-conditions-input-error-container').exists()){ jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container"); 
+    if(jQuery('span.add-on').exists()){ jQuery('span.add-on').removeClass("input-error"); }
+    if(jQuery('.input-error').exists()){ jQuery('.input-error').removeClass("input-error"); }
+}
+
 
 /**
 *   AJAX error handling ACP-455
@@ -299,10 +307,8 @@ jQuery(document).ready(function(jQuery) {
                 
                 if(response.valid_entries == false){
                         jQuery("#progress-indicator-container").removeClass("progress-striped active"); 
-                        jQuery('.error-label').empty();
-                        jQuery('.input-error-container').removeClass("input-error-container");
-                        jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
-                        jQuery('.input-error').removeClass("input-error");
+                        
+                        clear_errors();
                         
                         jQuery.each(response.messages.fields, function(index, value) {
                             if(value == 'photoimg'){
@@ -393,10 +399,7 @@ jQuery(document).ready(function(jQuery) {
                     
                 if(response.valid_entries == false){
                 
-                    jQuery('.error-label').empty();
-                    jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
-                    jQuery('.input-error-container').removeClass("input-error-container");
-                    jQuery('.input-error').removeClass("input-error");
+                    clear_errors();
                     
                     jQuery.each(response.messages.fields, function(index, value) {
                     
@@ -579,10 +582,7 @@ jQuery(document).ready(function(jQuery) {
                     if(response.valid_entries == false){
                         //mark elements as invalid
 
-                        jQuery('.error-label').empty();
-                        jQuery('.input-error-container').removeClass("input-error-container");
-                        jQuery('span.add-on').removeClass("input-error");
-                        jQuery('.input-error').removeClass("input-error");
+                        clear_errors();
                         
                         jQuery.each(response.messages.fields, function(index, value) {        
                             jQuery('#'+value+'-wrapper').addClass("input-error-container");
@@ -639,11 +639,7 @@ jQuery(document).ready(function(jQuery) {
                     if(response.valid_entries == false) {                                                                        
                         //mark elements as invalid
 
-                        jQuery('.error-label').empty();
-                        jQuery('.large-input-error-container').removeClass("large-input-error-container");
-                        jQuery('.terms-and-conditions-input-error-container').removeClass("terms-and-conditions-input-error-container");
-                        jQuery('span.add-on').removeClass("input-error");
-                        jQuery('.input-error').removeClass("input-error");
+                        clear_errors();
                         
                         jQuery.each(response.messages.fields, function(index, value) {        
                             if(value == 'terms_and_conditions'){
@@ -704,10 +700,7 @@ jQuery(document).ready(function(jQuery) {
                         if(response.valid_entries == false) {                                                                        
                             //mark elements as invalid
 
-                            jQuery('.error-label').empty();
-                            jQuery('.large-input-error-container').removeClass("large-input-error-container");
-                            jQuery('span.add-on').removeClass("input-error");
-                            jQuery('.input-error').removeClass("input-error");
+                            clear_errors();
                             
                             jQuery.each(response.messages.fields, function(index, value) {        
                                 jQuery('#'+value+'-wrapper').addClass("large-input-error-container");
