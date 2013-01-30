@@ -1455,7 +1455,10 @@ case "linkaccount":
                 $messages['fields'][] = $error_type = "password-member";
 
                 $arr = array("valid_entries" => false, "error_type" => "password", "messages" => $messages);
-                $problem = TRUE;
+                
+                ob_start();
+
+                die(json_encode($arr));
             } else {
                 $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                         . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
@@ -1560,11 +1563,11 @@ case "linkaccount":
                         $vbulletin->session->save();
                     }                                    
 
-                    $arr["url"] = $url;
+                    $arr2 = array("valid_entries" => false, "error_type" => "password", "messages" => NULL, "url" => $url);                    
 
                     ob_start();
 
-                    json_headers($arr);
+                    die(json_encode($arr2));
                 }
             }
         } else {
