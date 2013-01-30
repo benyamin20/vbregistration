@@ -515,3 +515,7 @@ hr{
 .terms-and-conditions-input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 3px transparent !important;
 }
+
+div.content table.tborder{
+    border: 0px !important;
+}

@@ -2344,66 +2344,66 @@ $stylevar[htmldoctype]
 				<defaultvalue>
 				    <![CDATA[
 					    <table class="tborder" cellpadding="6" cellspacing="1" border="0" width="97%" align="center">
-                          <tr class="thead">
+                          <tr >
                             <td colspan="3"><em style="font-weight:bold;">Become a part of the  Honda-Tech Community Today!</em></td>
                           </tr>
-                          <tr class="thead" align="center">
+                          <tr  align="center">
                             <td width="34%">MEMBERSHIP OPTIONS</td>
                             <td width="33%">Trial User</td>
                             <td width="33%">Registered User - Full User</td>
                           </tr>
                           <tr class="alt1">
-                            <td class="thead" align="center"><strong>User Title</strong></td>
+                            <td  align=""><strong>User Title</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">Trial User</td>
                             <td style="color:#AD0F00; font-weight:bold;" align="center">Honda-Tech Member</td>
                           </tr>
                           <tr class="alt2">
-                            <td class="thead" align="center"><strong>Profile Picture</strong></td>
+                            <td  align=""><strong>Profile Picture</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">100x100 (No Animation)</td>
                             <td style="color:#AD0F00; font-weight:bold;" align="center">600x400</td>
                           </tr>
                           <tr class="alt1">
-                            <td class="thead" align="center"><strong>Avatar Size</strong></td>
+                            <td  align=""><strong>Avatar Size</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">80x80</td>
                             <td style="color:#AD0F00; font-weight:bold;" align="center">100x100</td>
                           </tr>
                           <tr class="alt2">
-                            <td class="thead" align="center"><strong>Signature</strong></td>
+                            <td  align=""><strong>Signature</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">Maximum 3 Lines</td>
                             <td style="color:#AD0F00; font-weight:bold;" align="center">Maximum 3 Lines</td>
                           </tr>
                           <tr class="alt1">
-                            <td class="thead" align="center"><strong>Private Message Storage</strong></td>
+                            <td  align=""><strong>Private Message Storage</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">3</td>
                             <td style="color:#AD0F00; font-weight:bold;" align="center">500<br />Send up to 20 PM's at once</td>
                           </tr>
                           <tr class="alt2">
-                            <td class="thead" align="center"><strong>Gallery Photos</strong></td>
+                            <td  align=""><strong>Gallery Photos</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">Can View Other's Albums</td>
                             <td style="color:#AD0F00; font-weight:bold;" align="center">Upload 100 pics</td>
                           </tr>
                           <tr class="alt1">
-                            <td class="thead" align="center"><strong>File Attachments</strong></td>
+                            <td  align=""><strong>File Attachments</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">Unlimited</td>
                             <td style="color:#AD0F00; font-weight:bold;" align="center">Unlimited</td>
                           </tr>
                         <tr class="alt2">
-                           <td class="thead" align="center"><strong>Social Groups</strong></td>
+                           <td  align=""><strong>Social Groups</strong></td>
                            <td style="color:#66727E; font-weight:bold;" align="center">No</td>
                            <td style="color:#AD0F00; font-weight:bold;" align="center">Join, create, edit, manage Social Groups</td>
                         </tr>
                           </tr>
                           <tr class="alt1">
-                            <td class="thead" align="center"><strong>Exclusive Forum Access</strong></td>
+                            <td  align=""><strong>Exclusive Forum Access</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">No</td>
                            <td style="color:#AD0F00; font-weight:bold;" align="center">Yes<br />Access to Honda-Tech Marketplace</td>
                           </tr>
                           <tr class="alt1">
-                            <td class="thead" align="center"><strong>Membership Fee</strong></td>
+                            <td  align=""><strong>Membership Fee</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">Free **Users are promoted to Full Users after 15 days of registration and 5 posts</td>
                             <td style="color:#AD0F00; font-weight:bold;" align="center">Free</td>
                           </tr>
-                          <tr class="thead" align="center">
+                          <tr  align="center">
                                         <td>&nbsp;</td>
                             <td></td>
                             <td><strong>15 Days & 5 Posts</strong></a></td>
