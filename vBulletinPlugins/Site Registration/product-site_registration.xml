@@ -684,9 +684,14 @@ $stylevar[htmldoctype]
 				            </div>
 
 				            <div class="clear clear_20"></div>
-				            <a class="btn btn-primary btn-block" id="create-new-account-button">
-				                Create Account
-				            </a>
+				            <div class="grid_4 no-margin">
+				                <button class="btn btn-primary btn-block grid_3 no-margin" 
+				                    id="create-new-account-button">
+				                    Create Account
+				                </button>
+				                <span id="ajax-loader">
+				                </span>
+				            </div>
 			            </div>
 			            
 			            

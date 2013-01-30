@@ -416,7 +416,9 @@ jQuery(document).ready(function(jQuery) {
                 }
               }
             }).done(function() { 
-                //nothing here
+                if(jQuery('#ajax-spinner').exists()){
+                    jQuery('#ajax-spinner').remove();
+                }
             }) ;
         });
         
@@ -493,7 +495,7 @@ jQuery(document).ready(function(jQuery) {
               
               }
             }).done(function() { 
-                //nothing here 
+ 
             }) ;
             
             
@@ -558,6 +560,11 @@ jQuery(document).ready(function(jQuery) {
                   type: 'POST',
                   cache: false,
                   data: 'email='+ email +'&birthdate='+ birthdate + '&securitytoken=guest',
+                  beforeSend: function(){
+                    if(jQuery('#ajax-loader').exists()){
+                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    }
+                  },
                   success: function( response ) {
                     if(response.valid_entries == false){
                         //mark elements as invalid
@@ -587,7 +594,9 @@ jQuery(document).ready(function(jQuery) {
                     } 
                   }
                 }).done(function() { 
-                    //nothing here
+                    if(jQuery('#ajax-spinner').exists()){
+                        jQuery('#ajax-spinner').remove();
+                    }
                 }) ;
          });
         
@@ -611,6 +620,11 @@ jQuery(document).ready(function(jQuery) {
                 type: 'POST',
                 cache: false,
                 data: 'from=facebook&avatar='+ avatar + '&username='+ username + '&email='+ email +'&birthdate='+ birthdate+ '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions,
+                beforeSend: function(){
+                    if(jQuery('#ajax-loader').exists()){
+                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    }
+                },
                 success: function(response) {
                     if(response.valid_entries == false) {                                                                        
                         //mark elements as invalid
@@ -638,7 +652,9 @@ jQuery(document).ready(function(jQuery) {
                     } 
                 }
             }).done(function() { 
-                //nothing here
+                if(jQuery('#ajax-spinner').exists()){
+                    jQuery('#ajax-spinner').remove();
+                }
             }) ;
         });
     }
@@ -656,6 +672,11 @@ jQuery(document).ready(function(jQuery) {
                 type: 'POST',
                 cache: false,
                 data: 'username='+ username + '&password='+ password + '&security_token='+ token,
+                beforeSend: function(){
+                    if(jQuery('#ajax-loader').exists()){
+                        jQuery('#ajax-loader').append('<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />');
+                    }
+                },
                 success: function(response, status, xhr) {
                 
                     var ct = xhr.getResponseHeader("content-type") || "";
@@ -697,7 +718,9 @@ jQuery(document).ready(function(jQuery) {
                     
                 }
             }).done(function() { 
-                //nothing here
+                if(jQuery('#ajax-spinner').exists()){
+                    jQuery('#ajax-spinner').remove();
+                }
             }) ;
         });
     }
