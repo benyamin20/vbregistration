@@ -1468,8 +1468,7 @@ case "linkaccount":
                 $data = $vbulletin->db->query_first($sql);
 
                 if (!$data and strlen($fbID) > 1) {
-                    $vbulletin->db
-                            ->query_write(
+                    $vbulletin->db       ->query_write(
                                     "INSERT IGNORE INTO " . TABLE_PREFIX
                                             . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
                                             . $fbID . "', '" . $userid
@@ -1510,11 +1509,6 @@ case "linkaccount":
                     /*insert query*/
                     $vbulletin->db->query_write($sql);
 
-                    $vbulletin->db->query_write(
-                        "INSERT IGNORE INTO " . TABLE_PREFIX
-                                . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
-                                . $fbID . "', '" . $userid . "', '1')");
-
                     //Send Activation Email: Refer to Automated Emails
                     // send new user email
 
@@ -1525,9 +1519,8 @@ case "linkaccount":
                                             . "useractivation 
                             WHERE userid = '" . $userid . "' 
                             AND type = 0");*/
-
-                    $userid = $data["userid"];
-                    $nonvbid = $data["nonvbid"];                 
+                    
+                    $nonvbid = $fbID;                 
 
                     $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
                     $data = $vbulletin->db->query_first($sql);
