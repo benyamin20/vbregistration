@@ -1563,7 +1563,7 @@ case "linkaccount":
                         $vbulletin->session->save();
                     }                                    
 
-                    $arr2 = array("valid_entries" => true, "error_type" => "password", "messages" => NULL, "url" => $url);                    
+                    $arr2 = array("valid_entries" => true, "url" => $url);                    
 
                     ob_start();
 
