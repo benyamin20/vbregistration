@@ -1630,14 +1630,18 @@ $stylevar[htmldoctype]
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
 			        } else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){	
-			        	$fbID = $_SESSION['site_registration']["fbID"];
-					    $fbUsername = $_SESSION['site_registration']["fbUsername"];
-					    $fbName = $_SESSION['site_registration']["fbName"];
-					    $fbEmail = $_SESSION['site_registration']["fbEmail"];
-					    $fbBirthday = $_SESSION['site_registration']["fbBirthday"];
-					    $fbPicture = $_SESSION['site_registration']["fbPicture"];
+			        	if(isset($_SESSION['site_registration']["fbID"])) {
+			        		$fbID = $_SESSION['site_registration']["fbID"];
+					    	$fbUsername = $_SESSION['site_registration']["fbUsername"];
+					    	$fbName = $_SESSION['site_registration']["fbName"];
+					    	$fbEmail = $_SESSION['site_registration']["fbEmail"];
+					    	$fbBirthday = $_SESSION['site_registration']["fbBirthday"];
+					    	$fbPicture = $_SESSION['site_registration']["fbPicture"];
 
-			        	eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+			        		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+			        	} else {
+			        		header("location: index.php");
+			        	}
 			        }else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'activate'){
 			        	
 			        	$invalid_request = FALSE;
