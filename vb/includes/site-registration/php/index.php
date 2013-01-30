@@ -1522,7 +1522,7 @@ case "linkaccount":
                     $data = $vbulletin->db->query_first($sql);
 
                     $activationid = $data["activationid"];
-                    die(var_dump($activationid));
+                    
                     if(strlen($activationid) == 40) {
                         $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
                     } else {
