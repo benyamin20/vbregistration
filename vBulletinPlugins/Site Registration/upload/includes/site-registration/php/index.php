@@ -1440,10 +1440,7 @@ case "linkaccount":
 
         $data = $vbulletin->db->query_first($sql);
 
-        if (is_array($data)) {
-
-            $url = "register.php?step=activate";
-
+        if (is_array($data)) {            
             $userid = $data["userid"];
             $username = $data["username"];
             $dbPassword = $data["password"];
@@ -1451,16 +1448,14 @@ case "linkaccount":
             $fbID = $_SESSION['site_registration']["fbID"];
             $avatar = $_SESSION['site_registration']["fbPicture"];
 
-            if ($dbPassword != $password) {
-
+            if ($dbPassword != $password) { 
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "username-member";
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "password-member";
 
-                $arr = array("valid_entries" => false,
-                        "error_type" => "password", "messages" => $messages);
-
+                //$arr = array("valid_entries" => false, "error_type" => "password", "messages" => $messages);
+                //$problem = TRUE;
             } else {
                 $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                         . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
@@ -1468,8 +1463,7 @@ case "linkaccount":
                 $data = $vbulletin->db->query_first($sql);
 
                 if (!$data and strlen($fbID) > 1) {
-                    $vbulletin->db
-                            ->query_write(
+                    $vbulletin->db       ->query_write(
                                     "INSERT IGNORE INTO " . TABLE_PREFIX
                                             . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
                                             . $fbID . "', '" . $userid
@@ -1509,33 +1503,20 @@ case "linkaccount":
 
                     /*insert query*/
                     $vbulletin->db->query_write($sql);
-
-                    $vbulletin->db->query_write(
-                        "INSERT IGNORE INTO " . TABLE_PREFIX
-                                . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
-                                . $fbID . "', '" . $userid . "', '1')");
-
-                    //Send Activation Email: Refer to Automated Emails
-                    // send new user email
-
-                    // delete activationid
-                    /*$vbulletin->db
-                            ->query_write(
-                                    "DELETE FROM " . TABLE_PREFIX
-                                            . "useractivation 
-                            WHERE userid = '" . $userid . "' 
-                            AND type = 0");*/
-
-                    $userid = $data["userid"];
-                    $nonvbid = $data["nonvbid"];                 
+                    
+                    $nonvbid = $fbID;                 
 
                     $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
                     $data = $vbulletin->db->query_first($sql);
 
                     $activationid = $data["activationid"];
                     
-                    if(strlen($activationid) === 40) {
+                    if(strlen($activationid) == 40) {
                         $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
+
+                        ob_start();
+
+                        die(json_encode($url));
                     } else {
                         $url = "index.php";
                         
@@ -1570,11 +1551,11 @@ case "linkaccount":
                         cache_permissions($vbulletin->userinfo, true);
 
                         $vbulletin->session->save();
-                    }                                    
+                    }                                                        
 
-                    $arr = array("url" => $url);
+                    ob_start();
 
-                    json_headers($arr);
+                    json_headers(array("url" => $url));
                 }
             }
         } else {

@@ -1513,6 +1513,10 @@ case "linkaccount":
                     
                     if(strlen($activationid) == 40) {
                         $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
+
+                        ob_start();
+
+                        die(json_encode($url));
                     } else {
                         $url = "index.php";
                         
