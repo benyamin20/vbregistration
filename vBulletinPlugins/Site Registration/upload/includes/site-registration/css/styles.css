@@ -380,6 +380,12 @@ li {
     margin-left: 15px !important;
 }
 
+#ajax-loader-secondary{
+    line-height: 26px;
+    margin-left: 15px !important;
+}
+
+
 .cursor-pointer{
     cursor: pointer;
 }

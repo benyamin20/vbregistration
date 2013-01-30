@@ -980,7 +980,7 @@ $stylevar[htmldoctype]
 				<div class="pull-left">
 				    <button class="btn btn-primary grid_3"
                         type="button" id="log-in">Log In</button>
-                    <span id="ajax-loader-secondary"></span>                       
+                    <span id="ajax-loader"></span>                       
 			     </div>
 			</div>
 			
