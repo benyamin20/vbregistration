@@ -1440,10 +1440,7 @@ case "linkaccount":
 
         $data = $vbulletin->db->query_first($sql);
 
-        if (is_array($data)) {
-
-            $url = "register.php?step=activate";
-
+        if (is_array($data)) {            
             $userid = $data["userid"];
             $username = $data["username"];
             $dbPassword = $data["password"];
@@ -1452,7 +1449,6 @@ case "linkaccount":
             $avatar = $_SESSION['site_registration']["fbPicture"];
 
             if ($dbPassword != $password) {
-
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "username-member";
                 $messages['errors'][] = $message = "Please check your username and password.";
@@ -1526,8 +1522,8 @@ case "linkaccount":
                     $data = $vbulletin->db->query_first($sql);
 
                     $activationid = $data["activationid"];
-                    
-                    if(strlen($activationid) === 40) {
+                    die(var_dump($activationid));
+                    if(strlen($activationid) == 40) {
                         $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
                     } else {
                         $url = "index.php";
