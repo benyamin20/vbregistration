@@ -989,7 +989,7 @@ $stylevar[htmldoctype]
 			</div>
 			
 			<!--  Vertical Separator -->
-            <div class="grid_1 prefix_2 vertical-rule"></div>
+            <div class="grid_1 prefix_2 vertical-rule-hidden"></div>
 
 			<!--  Already a member -->
 			<div class="grid_4 omega" id="already-member">

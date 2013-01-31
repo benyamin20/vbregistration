@@ -1129,7 +1129,7 @@ case 'activate':
     if (empty($vbulletin->GPC['terms_and_conditions'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['errors'][] = $message = "Please agree to the Terms & Conditions";
         $messages['fields'][] = $error_type = "terms_and_conditions";
     }
 
@@ -1194,7 +1194,7 @@ case 'activate':
     if (empty($vbulletin->GPC['birthdate'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['errors'][] = $message = "Please enter a valid date.";
         $messages['fields'][] = $error_type = "datepicker";
     } else {
         //validate if 13+
