@@ -15,11 +15,15 @@
 	<templates>
 		<template name="site_reg_account-activated" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0"><![CDATA[
-$stylevar[htmldoctype]
+<!DOCTYPE html>
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+    
  
     <title>Account Activated - $vboptions[bbtitle]</title>
+     <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" >    
+    <![endif]-->
  
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css?v=$vboptions[simpleversion]" />
     <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
@@ -31,7 +35,7 @@ $stylevar[htmldoctype]
     
     <!--[if IE]>
 	    <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 
     <![endif]-->
 
 
@@ -53,7 +57,7 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/js/jquery.form.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
     
       <!--[if lt IE 9]> 
-          <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+          <script src="includes/site-registration/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
         <![endif]-->
 
 
@@ -362,7 +366,7 @@ $stylevar[htmldoctype]
 	
 	<!-- footer -->
     <div id="footer">
-        <div><div><div>
+        <div><div><div class="inner-footer">
         $footer
     </div>    
     <!-- footer -->
@@ -380,11 +384,16 @@ $stylevar[htmldoctype]
 		<template name="site_reg_exception-not-activated" 
 		    templatetype="template" date="1352855133" 
 		    username="fromero" version="1.0"><![CDATA[
-$stylevar[htmldoctype]
+<!DOCTYPE html>
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+
+     
   
     <title>Please Activate Your Account - $vboptions[bbtitle]</title>
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" >    
+    <![endif]-->
  
     <link rel="stylesheet" type="text/css" media="all"
         href="includes/site-registration/960/css/min/960.css?v=$vboptions[simpleversion]" />
@@ -399,7 +408,7 @@ $stylevar[htmldoctype]
 
     <!--[if IE]>
 	    <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 
     <![endif]-->
     
     
@@ -417,7 +426,7 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
        <!--[if lt IE 9]> 
-          <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+          <script src="includes/site-registration/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
         <![endif]-->
 
 
@@ -484,7 +493,7 @@ $stylevar[htmldoctype]
 	
 	<!-- footer -->
     <div id="footer">
-        <div><div><div>
+        <div><div><div class="inner-footer">
         $footer
     </div>    
     <!-- footer -->
@@ -534,9 +543,16 @@ $stylevar[htmldoctype]
         </template>
 		<template name="site_reg_sign-in-step-1" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0"><![CDATA[
-    $stylevar[htmldoctype]
+<!DOCTYPE html>
     <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
     <head>
+    
+    
+    <title>Sign In - $vboptions[bbtitle]</title>
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" >    
+    <![endif]-->
+    
  
     <link rel="stylesheet" type="text/css" media="all" href="includes/site-registration/960/css/min/960.css?v=$vboptions[simpleversion]" />
     <link rel="stylesheet" media="screen" href="includes/site-registration/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]" />
@@ -548,7 +564,6 @@ $stylevar[htmldoctype]
     
     <!--[if IE]>
 	    <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
  
  
@@ -568,11 +583,11 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
     
     <!--[if lt IE 9]> 
-        <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+        <script src="includes/site-registration/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
     <![endif]-->
 
 
-    <title>Sign In - $vboptions[bbtitle]</title>
+    
     <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
 
     </head>
@@ -839,7 +854,7 @@ $stylevar[htmldoctype]
 	    
 	<!-- footer -->
     <div id="footer">
-        <div><div><div>
+        <div><div><div class="inner-footer">
         $footer
     </div>    
     <!-- footer -->
@@ -850,11 +865,17 @@ $stylevar[htmldoctype]
 		<template name="site_reg_sign-in-step-2-facebook" 
 		    templatetype="template" date="1352855133" 
 		    username="fromero" version="1.0"><![CDATA[
-$stylevar[htmldoctype]
+<!DOCTYPE html>
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
+     
+ 
  
     <title>Confirm You Details - $vboptions[bbtitle]</title>
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" >    
+    <![endif]-->
+    
     <link rel="stylesheet" type="text/css" media="all"
         href="includes/site-registration/960/css/min/960.css?v=$vboptions[simpleversion]" />
     <link rel="stylesheet" media="screen"
@@ -868,7 +889,6 @@ $stylevar[htmldoctype]
 
     <!--[if IE]>
         <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
     
  
@@ -888,7 +908,7 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
     <!--[if lt IE 9]> 
-        <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+        <script src="includes/site-registration/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
     <![endif]--> 
 
 </head>
@@ -1106,7 +1126,7 @@ $stylevar[htmldoctype]
 	
 	<!-- footer -->
     <div id="footer">
-        <div><div><div>
+        <div><div><div class="inner-footer">
         $footer
     </div>    
     <!-- footer -->
@@ -1118,11 +1138,15 @@ $stylevar[htmldoctype]
 		<template name="site_reg_sign-in-step-2-site-account" 
 		    templatetype="template" date="1352855133" 
 		    username="fromero" version="1.0"><![CDATA[
-$stylevar[htmldoctype]
+<!DOCTYPE html>
 <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
 <head>
- 
+    
+     
     <title>Step 2 - Site Account - $vboptions[bbtitle]</title>
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" >    
+    <![endif]-->
      
     <link rel="stylesheet" type="text/css" media="all"
 	    href="includes/site-registration/960/css/min/960.css?v=$vboptions[simpleversion]" />
@@ -1134,7 +1158,6 @@ $stylevar[htmldoctype]
     <link rel="stylesheet" href="includes/site-registration/css/styles.css?v=$vboptions[simpleversion]" />
     <!--[if IE]>
         <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <![endif]-->
 
 
@@ -1152,7 +1175,7 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
     <!--[if lt IE 9]> 
-        <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+        <script src="includes/site-registration/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
     <![endif]-->
 </head>
 
@@ -1317,7 +1340,7 @@ $stylevar[htmldoctype]
     
 	<!-- footer -->
     <div id="footer">
-        <div><div><div>
+        <div><div><div class="inner-footer">
         $footer
     </div>    
     <!-- footer -->
@@ -1495,7 +1518,7 @@ $stylevar[htmldoctype]
                                 AND type = 0"
                         );
                     
-                    
+                        header("X-UA-Compatible: IE=Edge");
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
 
                     }
@@ -1650,6 +1673,7 @@ $stylevar[htmldoctype]
                         if($invalid_request){ 
 			                header("Location: register.php");   
                         }else{
+                            header("X-UA-Compatible: IE=Edge");
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
 			        } else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){	
@@ -1661,6 +1685,7 @@ $stylevar[htmldoctype]
 					    	$fbBirthday = $_SESSION['site_registration']["fbBirthday"];
 					    	$fbPicture = $_SESSION['site_registration']["fbPicture"];
 
+                            header("X-UA-Compatible: IE=Edge");
 			        		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
 			        	} else {
 			        		header("location: register.php");
@@ -1677,10 +1702,13 @@ $stylevar[htmldoctype]
 			        	//check for direct access to action
 			        	if($invalid_request){ 
 			                if(!(int)$vbulletin->userinfo['userid']){
+			                    header("X-UA-Compatible: IE=Edge");
 			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			                }    
                         }else{
                             $session_email = $_SESSION['site_registration']['email'];
+                            
+                            header("X-UA-Compatible: IE=Edge");
                             eval('print_output("' . fetch_template('site_reg_exception-not-activated') . '");');
                         }
 			        }
@@ -1708,7 +1736,8 @@ $stylevar[htmldoctype]
 
 								$_SESSION["fbLoginURL"] = $loginURL;										
 				        	} 				        	
-
+                            
+                            header("X-UA-Compatible: IE=Edge");
 			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			            }
 			        }       
@@ -2006,6 +2035,7 @@ $stylevar[htmldoctype]
 
                         $vbulletin->session->save();
                         
+                        header("X-UA-Compatible: IE=Edge");
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
 	                
 	                }else{
