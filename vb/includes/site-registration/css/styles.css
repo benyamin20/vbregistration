@@ -58,6 +58,7 @@ li {
 
 .background_yellow {
 	background-color: #FFFFCC !important;
+	*width: 100% !important;
 }
 
 .clear_5 {
