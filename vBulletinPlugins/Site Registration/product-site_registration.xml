@@ -43,6 +43,7 @@ $stylevar[htmldoctype]
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+          <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
         <![endif]-->
 
     <script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
@@ -50,6 +51,10 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
     <script src="includes/site-registration/js/jquery.form.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
+    
+      <!--[if lt IE 9]> 
+          <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+        <![endif]-->
 
 
 </head>
@@ -411,7 +416,10 @@ $stylevar[htmldoctype]
     <script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
- 
+       <!--[if lt IE 9]> 
+          <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+        <![endif]-->
+
 
 </head>
 
@@ -558,6 +566,11 @@ $stylevar[htmldoctype]
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/bootstrap/js/bootstrap-tooltip.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js" type="text/javascript"></script>
+    
+    <!--[if lt IE 9]> 
+        <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+    <![endif]-->
+
 
     <title>Sign In - $vboptions[bbtitle]</title>
     <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
@@ -874,7 +887,9 @@ $stylevar[htmldoctype]
     <script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
- 
+    <!--[if lt IE 9]> 
+        <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+    <![endif]--> 
 
 </head>
 
@@ -1136,7 +1151,9 @@ $stylevar[htmldoctype]
     <script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-
+    <!--[if lt IE 9]> 
+        <script src="includes/site-registration/bootstrap/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+    <![endif]-->
 </head>
 
 <body>
