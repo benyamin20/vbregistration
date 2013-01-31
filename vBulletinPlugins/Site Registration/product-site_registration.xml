@@ -16,7 +16,12 @@
 		<template name="site_reg_account-activated" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0"><![CDATA[
 <!DOCTYPE html>
-<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+
+<!--[if lte IE 7]> <html class="ie7" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 8]>     <html class="ie8" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 9]>     <html class="ie9" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if !IE]><!--> <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]>             <!--<![endif]-->  
+ 
 <head>
     
  
@@ -385,7 +390,10 @@
 		    templatetype="template" date="1352855133" 
 		    username="fromero" version="1.0"><![CDATA[
 <!DOCTYPE html>
-<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<!--[if lte IE 7]> <html class="ie7" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 8]>     <html class="ie8" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 9]>     <html class="ie9" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if !IE]><!--> <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]>             <!--<![endif]-->  
 <head>
 
      
@@ -544,7 +552,10 @@
 		<template name="site_reg_sign-in-step-1" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0"><![CDATA[
 <!DOCTYPE html>
-    <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<!--[if lte IE 7]> <html class="ie7" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 8]>     <html class="ie8" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 9]>     <html class="ie9" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if !IE]><!--> <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]>             <!--<![endif]-->  
     <head>
     
     
@@ -866,7 +877,10 @@
 		    templatetype="template" date="1352855133" 
 		    username="fromero" version="1.0"><![CDATA[
 <!DOCTYPE html>
-<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<!--[if lte IE 7]> <html class="ie7" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 8]>     <html class="ie8" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 9]>     <html class="ie9" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if !IE]><!--> <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]>             <!--<![endif]-->  
 <head>
      
  
@@ -1139,7 +1153,10 @@
 		    templatetype="template" date="1352855133" 
 		    username="fromero" version="1.0"><![CDATA[
 <!DOCTYPE html>
-<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<!--[if lte IE 7]> <html class="ie7" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 8]>     <html class="ie8" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if IE 9]>     <html class="ie9" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]> <![endif]-->  
+<!--[if !IE]><!--> <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]>             <!--<![endif]-->  
 <head>
     
      

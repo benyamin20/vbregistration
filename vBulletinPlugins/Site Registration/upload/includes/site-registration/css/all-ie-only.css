@@ -65,3 +65,7 @@
 .inner-footer{
     background-color: white;
 }
+
+.ie7 .background-yellow {  
+    width: 100% !important; 
+}  
