@@ -474,7 +474,7 @@ case 'validate_site_account_details':
         $userdata->error('fieldmissing');
         $error_type = "terms-and-conditions";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Please agree to the Terms & Conditions";
+        $messages['errors'][] = "Please agree to the Terms & Conditions.";
     }
 
     if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
@@ -856,7 +856,7 @@ case 'create_site_account_first_step':
 
     } else {
         $valid_entries = FALSE;
-        $messages['errors'][] = $message = "Invalid email";
+        $messages['errors'][] = $message = "Invalid email.";
         $messages['fields'][] = $error_type = "email";
     }
 
@@ -1129,7 +1129,7 @@ case 'activate':
     if (empty($vbulletin->GPC['terms_and_conditions'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $messages['errors'][] = $message = "Please agree to the Terms & Conditions";
+        $messages['errors'][] = $message = "Please agree to the Terms & Conditions.";
         $messages['fields'][] = $error_type = "terms_and_conditions";
     }
 
