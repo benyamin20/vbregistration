@@ -920,26 +920,28 @@ $stylevar[htmldoctype]
 
 				<div class="clear clear_20"></div>
                 <label for="email">Email</label>
-				<div class="grid_4 no-margin" id="email-wrapper">
+				<div class="grid_6 no-margin" id="email-wrapper">
 				    <input class="" id="email" name="email" title="Email"
 					    value="$fbEmail" autocomplete="off" type="text" 
 					     />
+					<span class="error-label small" id="email-error-label"></span>
                 </div>
-                <span class="error-label small no-margin no-top" id="email-error-label"></span>
+                
 				<span class="help-block tiny dark_grey"></span> 
 				
 				<div class="clear "></div>
 				
 				<label for="username">Username</label>
 				
-				<div class="grid_4 no-margin" id="username-wrapper">
+				<div class="grid_6 no-margin" id="username-wrapper">
 				    <input
 					    class="" id="username" name="username" title="Username"
 					    value="$fbUsername" autocomplete="off" type="text" 
 					    maxlength="25"  />
+				    <span class="error-label small" id="username-error-label"></span>
 				</div>
 
-                <span class="error-label small no-margin no-top" id="username-error-label"></span>
+                
                 
 				<span class="help-block tiny dark_grey">Maximum 25 characters.</span>
 
@@ -947,8 +949,8 @@ $stylevar[htmldoctype]
 				<div class="clear "></div>
 
                 <label for="birthday">Birth Date</label>
-                <div class="grid_4 no-margin" id="datepicker-wrapper">
-				    <div class="input-prepend ">
+                <div class="grid_6 no-margin" id="datepicker-wrapper">
+				    <div class="input-prepend grid_3 no-margin">
                         <span class="add-on"> <i class="icon-calendar"></i>
                         </span> 
                         <input 
@@ -958,13 +960,14 @@ $stylevar[htmldoctype]
                             
                             title="Birthday: You must be over 13 to register." />
                     </div>
+                    <span class="error-label small" id="datepicker-error-label"></span>
                 </div>
                 
-                <span class="error-label small no-margin no-top" id="datepicker-error-label"></span>
+                
                 
                 <div class="clear clear_15"></div>
 
-                <div class="grid_4 no-margin" id="terms_and_conditions-wrapper">
+                <div class="grid_6 no-margin" id="terms_and_conditions-wrapper">
 				    <label class="checkbox"> 
 				        <input type="checkbox" value=""
 					       id="terms-and-conditions" name="terms-and-conditions" 
@@ -974,6 +977,7 @@ $stylevar[htmldoctype]
 							    &amp; Conditions.</a>
 				        </span>
 				    </label>
+				    <span class="error-label small" id="terms_and_conditions-error-label"></span>
                 </div>
                 
 				<div class="clear clear_15"></div>

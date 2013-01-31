@@ -171,7 +171,7 @@ li {
 }
 
 .fix_input_width_facebook{
-	width: 60% !important;
+	width: 82% !important;
 }
 
 .margin_left_10 {
@@ -525,4 +525,13 @@ hr{
 
 div.content table.tborder{
     border: 0px !important;
+}
+
+#datepicker-error-label{
+    top: 5px !important;
+}
+
+#terms_and_conditions-error-label{
+    left: 33px !important;
+    top: -20px !important; 
 }
