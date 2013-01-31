@@ -17,6 +17,11 @@ li {
 	height: 250px;
 }
 
+.vertical-rule-hidden {
+    
+	height: 250px;
+}
+
 .title_red {
 	color: #A40219;
 	font-size: 22px;
@@ -532,6 +537,6 @@ div.content table.tborder{
 }
 
 #terms_and_conditions-error-label{
-    left: 33px !important;
+    left: 30px !important;
     top: -20px !important; 
 }
