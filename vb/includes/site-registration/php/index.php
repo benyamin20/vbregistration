@@ -556,7 +556,7 @@ case 'validate_site_account_details':
 
     }
 
-    if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
+    if (strlen($vbulletin->GPC['username']) > 25) {
         $valid_entries = FALSE;
 
         $error_type = "username";
@@ -1167,7 +1167,7 @@ case 'activate':
 
     }
 
-    if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
+    if (strlen($vbulletin->GPC['username']) > 25) {
         $valid_entries = FALSE;
 
         $error_type = "username";
@@ -1323,6 +1323,8 @@ case 'activate':
     if ($valid_entries) {
         $fbID = $_SESSION['site_registration']["fbID"];
 
+        $birthday = str_replace("/", "-", $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
+
         /*insert query*/
         $vbulletin->db
                 ->query_write(
@@ -1332,9 +1334,7 @@ case 'activate':
                                         ->escape_string(
                                                 $vbulletin->GPC['email'])
                                 . "', '"
-                                . $vbulletin->db
-                                        ->escape_string(
-                                                $vbulletin->GPC['birthdate'])
+                                . $birthday
                                 . "',
              '" . $vbulletin->GPC['username'] . "')");
 
@@ -1696,4 +1696,3 @@ case "linkaccount":
     break;
 
 }
-
