@@ -5,10 +5,9 @@ set_include_path(
         get_include_path() . PATH_SEPARATOR . realpath('../../../')
                 . PATH_SEPARATOR . realpath('../../../includes/'));
 
-
 /**
-*   Output valid JSON headers
-*/
+ *   Output valid JSON headers
+ */
 function json_headers($arr = null)
 {
     header('Content-type: text/json');
@@ -16,10 +15,9 @@ function json_headers($arr = null)
     echo json_encode($arr);
 }
 
-
 /**
-*   Avoids getting the download dialog in IE for some JSON requests
-*/
+ *   Avoids getting the download dialog in IE for some JSON requests
+ */
 function json_headers_ie_support($arr = null)
 {
     header('Pragma: no-cache');
@@ -28,10 +26,9 @@ function json_headers_ie_support($arr = null)
     echo json_encode($arr);
 }
 
-
 /**
-*   Checks for a valid date
-*/
+ *   Checks for a valid date
+ */
 function check_date($date)
 {
     if (strlen($date) == 10) {
@@ -71,10 +68,9 @@ function check_date($date)
     }
 }
 
-
 /*
     Setup temp dir for file upload if not specified
-*/
+ */
 if (!function_exists('sys_get_temp_dir')) {
     function sys_get_temp_dir()
     {
@@ -97,9 +93,29 @@ if (!function_exists('sys_get_temp_dir')) {
 }
 
 
+/**
+* get previous URL visited 
+**/
+function prev_url(){
+    global $vbulletin;
+    
+    $string = $_SESSION['site_registration']['initial_page'];
+    $search_str = $vbulletin->options['bburl'];
+
+    if (empty($_SESSION['site_registration']['initial_page'])
+            || stristr($string, $search_str) === FALSE) {
+        $url = "index.php";
+    } else {
+        $url = $_SESSION['site_registration']['initial_page'];
+    }
+
+    return $url;
+}
+
+
 /*
     Script setup
-*/
+ */
 ini_set("display_errors", 1);
 error_reporting(E_ALL & ~E_NOTICE & ~8192);
 
@@ -150,7 +166,7 @@ case 'regenerate_security_token':
 case 'regenerate_token':
 //generate captcha value
 
-    if( fetch_require_hvcheck('register') ){
+    if (fetch_require_hvcheck('register')) {
         require_once(DIR . '/includes/class_humanverify.php');
         $verification = &vB_HumanVerify::fetch_library($vbulletin);
         $human_verify = $verification->generate_token();
@@ -162,12 +178,10 @@ case 'regenerate_token':
         $hv_token = $human_verify['hash'];
 
         $arr = array('token' => $hv_token,
-                'url' => $vbulletin->options['bburl'] . "/image.php?type=hv&hash="
-                        . $hv_token);
+                'url' => $vbulletin->options['bburl']
+                        . "/image.php?type=hv&hash=" . $hv_token);
 
     }
-
-
 
     json_headers($arr);
 
@@ -374,10 +388,10 @@ case 'complete_your_profile':
     if ($valid_entries) {
         //update timezone
 
-        $sql = "UPDATE " . TABLE_PREFIX
-                . "user SET timezoneoffset = '"
+        $sql = "UPDATE " . TABLE_PREFIX . "user SET timezoneoffset = '"
                 . $vbulletin->db->escape_string($vbulletin->GPC['timezone'])
-                . "' WHERE userid = '" . $vbulletin->db->escape_string($userid) . "' ";
+                . "' WHERE userid = '" . $vbulletin->db->escape_string($userid)
+                . "' ";
 
         /*insert query*/
         $vbulletin->db->query_write($sql);
@@ -497,8 +511,6 @@ case 'validate_site_account_details':
                             'security_code' => TYPE_STR,
                             'terms_and_conditions' => TYPE_INT));
 
-
-
     if (empty($vbulletin->GPC['password'])
             || $vbulletin->GPC['password'] == md5("")) {
 
@@ -556,23 +568,22 @@ case 'validate_site_account_details':
 
         $error_type = "username";
         $messages['fields'][] = $error_type;
-        
-        if(strlen($userdata->errors[0]) > 45){
-            $messages['errors'][] = "The username you chose is not valid.";        
-        }else{
+
+        if (strlen($userdata->errors[0]) > 45) {
+            $messages['errors'][] = "The username you chose is not valid.";
+        } else {
             $messages['errors'][] = $userdata->errors[0];
         }
-        
 
     }
 
     /*if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
         $valid_entries = FALSE;
-
+    
         $error_type = "username";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "The username you chose is not valid.";
-
+    
     }*/
 
     //check if username already exists on DB
@@ -592,11 +603,11 @@ case 'validate_site_account_details':
         $messages['errors'][] = "Sorry, this username is already taken.";
     }
 
-
-    if(fetch_require_hvcheck('register')){
+    if (fetch_require_hvcheck('register')) {
         //check if CAPTCHA value is correct
         if (strtoupper($vbulletin->GPC['security_code'])
-                != strtoupper($_SESSION['site_registration']['captcha']['answer'])) {
+                != strtoupper(
+                        $_SESSION['site_registration']['captcha']['answer'])) {
             $valid_entries = FALSE;
 
             $error_type = "security-code";
@@ -604,8 +615,6 @@ case 'validate_site_account_details':
             $messages['errors'][] = "Invalid security code.";
         }
     }
-
-    
 
     if ($valid_entries) {
         $_SESSION['site_registration']['username'] = $vbulletin
@@ -744,21 +753,45 @@ case 'validate_site_account_details':
             $username = $_SESSION['site_registration']['username'];
             $email = $_SESSION['site_registration']['email'];
 
-            $activateid = build_user_activation_id($userid,
-                    (($vbulletin->options['moderatenewmembers']
-                            OR $_SESSION['site_registration']['coppauser']) ? 4
-                            : 2), 0);
+            if ($vbulletin->options['verifyemail']) {
+                $activateid = build_user_activation_id($userid,
+                        (($vbulletin->options['moderatenewmembers']
+                                OR $_SESSION['site_registration']['coppauser']) ? 4
+                                : 2), 0);
 
-            eval(fetch_email_phrases('activateaccount'));
+                eval(fetch_email_phrases('activateaccount'));
 
-            if (empty($subject)) {
-                $subject = "Please activate your account";
+                if (empty($subject)) {
+                    $subject = "Please activate your account";
+                }
+
+                vbmail($email, $subject, $message, false);
+            }
+            
+            
+            if ($newusergroupid == 2)
+			{
+				if ($vbulletin->options['welcomemail'])
+				{
+					eval(fetch_email_phrases('welcomemail'));
+					vbmail($email, $subject, $message);
+				}
+			}
+
+
+
+            if ($vbulletin->options['verifyemail']) {
+                //Redirect user to Activation Screen
+                $url = "register.php?step=activate";
+            }else{
+                //take user back to where he started
+                
+               $url = prev_url();
+ 
             }
 
-            vbmail($email, $subject, $message, false);
 
-            //Redirect user to Activation Screen
-            $url = "register.php?step=activate";
+            
         }
 
     }
@@ -771,33 +804,31 @@ case 'validate_site_account_details':
     break;
 
 case 'resend_email':
-    if (isset($_SESSION['site_registration']['email'])) {
-        $username = $_SESSION['site_registration']['username'];
-        $email = $_SESSION['site_registration']['email'];
-        $userid = $_SESSION['site_registration']['userid'];
+    if ($vbulletin->options['verifyemail']) {
+        if (isset($_SESSION['site_registration']['email'])) {
+            $username = $_SESSION['site_registration']['username'];
+            $email = $_SESSION['site_registration']['email'];
+            $userid = $_SESSION['site_registration']['userid'];
 
-        $activateid = build_user_activation_id($userid,
-                (($vbulletin->options['moderatenewmembers']
-                        OR $_SESSION['site_registration']['coppauser']) ? 4 : 2),
-                0);
+            $activateid = build_user_activation_id($userid,
+                    (($vbulletin->options['moderatenewmembers']
+                            OR $_SESSION['site_registration']['coppauser']) ? 4
+                            : 2), 0);
 
-        eval(fetch_email_phrases('activateaccount'));
+            eval(fetch_email_phrases('activateaccount'));
 
-        if (empty($subject)) {
-            $subject = "Please activate your account";
+            if (empty($subject)) {
+                $subject = "Please activate your account";
+            }
+
+            vbmail($email, $subject, $message, true);
+
+            $messages = "Email sent!";
+
+        } else {
+            $messages = "Unable to send email, please try again later.";
         }
-
-        vbmail($email, $subject, $message, true);
-
-        $messages = "Email sent!";
-
-    } else {
-        $messages = "Unable to send email, please try again later.";
     }
-    $activateid = build_user_activation_id($userid,
-            (($vbulletin->options['moderatenewmembers']
-                    OR $_SESSION['site_registration']['coppauser']) ? 4 : 2),
-            0);
 
     $arr = array("message" => $messages);
 
@@ -901,7 +932,8 @@ case 'create_site_account_first_step':
     //validate email
     if (is_valid_email_address($vbulletin->GPC['email'])) {
 
-        list($email_name, $email_domain) = preg_split("/@/", $vbulletin->GPC['email']);
+        list($email_name, $email_domain) = preg_split("/@/",
+                $vbulletin->GPC['email']);
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
@@ -1103,17 +1135,8 @@ default:
 
             //$url = "login.php?do=login";
 
-            $string = $_SESSION['site_registration']['initial_page'];
-            $search_str = $vbulletin->options['bburl'];
 
-            if (empty($_SESSION['site_registration']['initial_page'])
-                    || stristr($string, $search_str) === FALSE) {
-
-                $url = "index.php";
-
-            } else {
-                $url = $_SESSION['site_registration']['initial_page'];
-            }
+            $url = prev_url();
 
             unset($_SESSION['site_registration']['initial_page']);
 
@@ -1172,18 +1195,16 @@ case 'activate':
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "email";
     }
-    
-
 
     if (!$userdata->verify_username($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
 
         $error_type = "username";
         $messages['fields'][] = $error_type;
-        
-        if(strlen($userdata->errors[0]) > 45){
-            $messages['errors'][] = "The username you chose is not valid.";        
-        }else{
+
+        if (strlen($userdata->errors[0]) > 45) {
+            $messages['errors'][] = "The username you chose is not valid.";
+        } else {
             $messages['errors'][] = $userdata->errors[0];
         }
 
@@ -1191,11 +1212,11 @@ case 'activate':
 
     /*if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
         $valid_entries = FALSE;
-
+    
         $error_type = "username";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "The username you chose is not valid.";
-
+    
     }*/
 
     //check if username already exists on DB
@@ -1227,7 +1248,8 @@ case 'activate':
     //validate email
     if (is_valid_email_address($vbulletin->GPC['email'])) {
 
-        list($email_name, $email_domain) = preg_split("/@/", $vbulletin->GPC['email']);
+        list($email_name, $email_domain) = preg_split("/@/",
+                $vbulletin->GPC['email']);
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
@@ -1345,10 +1367,10 @@ case 'activate':
     if ($valid_entries) {
         $fbID = $_SESSION['site_registration']["fbID"];
 
-        $birthday = preg_replace("/\//", "-", $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
+        $birthday = preg_replace("/\//", "-",
+                $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
 
-
-        if($fbID){
+        if ($fbID) {
             /*insert query*/
             $vbulletin->db
                     ->query_write(
@@ -1357,13 +1379,10 @@ case 'activate':
                                     . $vbulletin->db
                                             ->escape_string(
                                                     $vbulletin->GPC['email'])
-                                    . "', '"
-                                    . $birthday
+                                    . "', '" . $birthday
                                     . "',
                  '" . $vbulletin->GPC['username'] . "')");
         }
-
-        
 
         $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();
@@ -1438,30 +1457,25 @@ case 'activate':
         $userid = $data["userid"];
         $nonvbid = $fbID;
 
-        build_user_activation_id($userid,
-                (($vbulletin->options['moderatenewmembers']
-                        OR $_SESSION['site_registration']['coppauser']) ? 4 : 2),
-                0);
+        if ($vbulletin->options['verifyemail']) {
+            build_user_activation_id($userid,
+                    (($vbulletin->options['moderatenewmembers']
+                            OR $_SESSION['site_registration']['coppauser']) ? 4
+                            : 2), 0);
 
-        $sql = "SELECT activationid FROM useractivation WHERE userid = '"
-                . $userid . "'";
-        $data = $vbulletin->db->query_first($sql);
+            $sql = "SELECT activationid FROM useractivation WHERE userid = '"
+                    . $userid . "'";
+            $data = $vbulletin->db->query_first($sql);
 
-        $activationid = $data["activationid"];
+            $activationid = $data["activationid"];
+        }
+        
+		
 
         if (strlen($activationid) === 40) {
             $url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
         } else {
-            $string = $_SESSION['site_registration']['initial_page'];
-            $search_str = $vbulletin->options['bburl'];
-
-            if (empty($string) || stristr($string, $search_str) === FALSE) {
-
-                $url = "index.php";
-
-            } else {
-                $url = $_SESSION['site_registration']['initial_page'];
-            }
+            $url = prev_url();
 
             // Process vBulletin login
             $vbulletin->userinfo = $vbulletin->db
@@ -1484,6 +1498,11 @@ case 'activate':
             cache_permissions($vbulletin->userinfo, true);
 
             $vbulletin->session->save();
+            
+            if ($vbulletin->options['welcomemail']){
+			    eval(fetch_email_phrases('welcomemail'));
+			    vbmail($email, $subject, $message);
+		    }
         }
     }
 
@@ -1723,3 +1742,4 @@ case "linkaccount":
     break;
 
 }
+
