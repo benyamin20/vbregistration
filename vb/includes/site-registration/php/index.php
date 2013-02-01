@@ -1157,6 +1157,13 @@ case 'activate':
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "email";
     }
+    
+    if (empty($vbulletin->GPC['username'])) {
+        $valid_entries = FALSE;
+        $userdata->error('fieldmissing');
+        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['fields'][] = $error_type = "username";
+    }
 
     if (!$userdata->verify_username($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
