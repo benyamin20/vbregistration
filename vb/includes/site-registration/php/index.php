@@ -624,7 +624,7 @@ case 'validate_site_account_details':
         // $customfields = $userdata->set_userfields($vbulletin->GPC['userfield'], true, 'register');
 
         if ($vbulletin->options['reqbirthday']
-                || !empty($vbulletin->GPC['birthdate'])) {
+                || !empty($_SESSION['site_registration']['birthday'])) {
             // set birthday
             $userdata->set('showbirthday', $vbulletin->GPC['showbirthday']);
 
