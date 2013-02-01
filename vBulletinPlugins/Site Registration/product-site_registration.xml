@@ -1999,8 +1999,8 @@
                         );
                         
                         
-                        
-                        //$birthday = preg_replace("/\-/","/", $birthday);
+                        //fixes birthday to be able to search it on temporary table
+                        $birthday = preg_replace("/\-/","/", $birthday);
                         
                         $sql = "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
                             WHERE email = '". $vbulletin->db->escape_string($email) ."'
