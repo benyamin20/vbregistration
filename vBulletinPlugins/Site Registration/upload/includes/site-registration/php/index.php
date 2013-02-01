@@ -492,19 +492,16 @@ case 'validate_site_account_details':
     $messages = "";
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array('username' => TYPE_STR, 'password' => TYPE_STR,
+                    array('username' => TYPE_NOHTML, 'password' => TYPE_STR,
                             'confirm_password' => TYPE_STR,
                             'security_code' => TYPE_STR,
                             'terms_and_conditions' => TYPE_INT));
 
-    if (empty($vbulletin->GPC['username'])) {
-        $valid_entries = FALSE;
-    } else {
 
-    }
 
     if (empty($vbulletin->GPC['password'])
             || $vbulletin->GPC['password'] == md5("")) {
+
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $error_type = "password";
@@ -514,6 +511,7 @@ case 'validate_site_account_details':
 
     if (empty($vbulletin->GPC['confirm_password'])
             || $vbulletin->GPC['confirm_password'] == md5("")) {
+        unset($userdata->errors);
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $error_type = "confirm-password";
@@ -522,13 +520,16 @@ case 'validate_site_account_details':
     }
 
     if (empty($vbulletin->GPC['security_code'])) {
+        unset($userdata->errors);
         $valid_entries = FALSE;
         $error_type = "security-code";
+        $userdata->error('fieldmissing');
         $messages['fields'][] = $error_type;
         $messages['errors'][] = $userdata->errors[0];
     }
 
     if ($vbulletin->GPC['terms_and_conditions'] != 1) {
+        unset($userdata->errors);
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $error_type = "terms-and-conditions";
@@ -549,24 +550,30 @@ case 'validate_site_account_details':
     }
 
     //$regex_username = '/^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/';
-
+    unset($userdata->errors);
     if (!$userdata->verify_username($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
 
         $error_type = "username";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "The username you chose is not valid.";
+        
+        if(strlen($userdata->errors[0]) > 45){
+            $messages['errors'][] = "The username you chose is not valid.";        
+        }else{
+            $messages['errors'][] = $userdata->errors[0];
+        }
+        
 
     }
 
-    if (strlen($vbulletin->GPC['username']) > 25) {
+    /*if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
         $valid_entries = FALSE;
 
         $error_type = "username";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "The username you chose is not valid.";
 
-    }
+    }*/
 
     //check if username already exists on DB
     $user_exists = $db
@@ -894,7 +901,7 @@ case 'create_site_account_first_step':
     //validate email
     if (is_valid_email_address($vbulletin->GPC['email'])) {
 
-        list($email_name, $email_domain) = split("@", $vbulletin->GPC['email']);
+        list($email_name, $email_domain) = preg_split("/@/", $vbulletin->GPC['email']);
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
@@ -1013,7 +1020,7 @@ default:
     //clean input variables
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array('vb_login_username' => TYPE_STR,
+                    array('vb_login_username' => TYPE_NOHTML,
                             'vb_login_password' => TYPE_STR,
                             'vb_login_md5password' => TYPE_STR,
                             'vb_login_md5password_utf' => TYPE_STR));
@@ -1034,7 +1041,7 @@ default:
         //check if username and password are valid
         $vbulletin->input
                 ->clean_array_gpc('p',
-                        array('vb_login_username' => TYPE_STR,
+                        array('vb_login_username' => TYPE_NOHTML,
                                 'vb_login_password' => TYPE_STR,
                                 'vb_login_md5password' => TYPE_STR,
                                 'vb_login_md5password_utf' => TYPE_STR,
@@ -1154,7 +1161,7 @@ case 'activate':
     $vbulletin->input
             ->clean_array_gpc('p',
                     array('email' => TYPE_STR, 'birthdate' => TYPE_STR,
-                            'username' => TYPE_STR, 'avatar' => TYPE_STR,
+                            'username' => TYPE_NOHTML, 'avatar' => TYPE_STR,
                             'from' => TYPE_STR,
                             'terms_and_conditions' => TYPE_STR));
 
@@ -1166,30 +1173,30 @@ case 'activate':
         $messages['fields'][] = $error_type = "email";
     }
     
-    if (empty($vbulletin->GPC['username'])) {
-        $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
-        $messages['errors'][] = $message = $userdata->errors[0];
-        $messages['fields'][] = $error_type = "username";
-    }
+
 
     if (!$userdata->verify_username($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
 
         $error_type = "username";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "The username you chose is not valid.";
+        
+        if(strlen($userdata->errors[0]) > 45){
+            $messages['errors'][] = "The username you chose is not valid.";        
+        }else{
+            $messages['errors'][] = $userdata->errors[0];
+        }
 
     }
 
-    if (strlen($vbulletin->GPC['username']) > 25) {
+    /*if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
         $valid_entries = FALSE;
 
         $error_type = "username";
         $messages['fields'][] = $error_type;
         $messages['errors'][] = "The username you chose is not valid.";
 
-    }
+    }*/
 
     //check if username already exists on DB
     $user_exists = $db
@@ -1220,7 +1227,7 @@ case 'activate':
     //validate email
     if (is_valid_email_address($vbulletin->GPC['email'])) {
 
-        list($email_name, $email_domain) = split("@", $vbulletin->GPC['email']);
+        list($email_name, $email_domain) = preg_split("/@/", $vbulletin->GPC['email']);
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
@@ -1497,7 +1504,7 @@ case "linkaccount":
     //clean variables
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array('username' => TYPE_STR, 'password' => TYPE_STR));
+                    array('username' => TYPE_NOHTML, 'password' => TYPE_STR));
 
     //check if variables are set
     if (empty($vbulletin->GPC['username'])) {

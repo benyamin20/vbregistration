@@ -1009,7 +1009,7 @@
 
                 <div class="grid_6 no-margin" id="terms_and_conditions-wrapper">
 				    <label class="checkbox"> 
-				        <input type="checkbox" value=""
+				        <input type="checkbox" value="" checked="checked"
 					       id="terms-and-conditions" name="terms-and-conditions" 
 					         />
 				        <span class="small light_grey span2 no-margin"> Yes, I agree with the
@@ -1275,7 +1275,7 @@
 				<div class="grid_7 no-margin" id="terms-and-conditions-wrapper">
 				    <label class="checkbox grid_3 no-margin fix-tnc-width">
 					    <input type="checkbox" value="" id="terms-and-conditions"
-					       name="terms-and-conditions" 
+					       name="terms-and-conditions" checked="checked"
 					         />
 					    <span class="small light_grey">
 					       Yes, I agree with the
