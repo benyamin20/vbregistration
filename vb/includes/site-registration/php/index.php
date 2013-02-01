@@ -20,6 +20,45 @@ function json_headers_ie_support($arr = null)
     echo json_encode($arr);
 }
 
+function check_date($date)
+{
+    if (strlen($date) == 10) {
+        $pattern = '/\.|\/|-/i'; // . or / or -
+        preg_match($pattern, $date, $char);
+
+        $array = preg_split($pattern, $date, -1, PREG_SPLIT_NO_EMPTY);
+
+        if (strlen($array[2]) == 4) {
+            // dd.mm.yyyy || dd-mm-yyyy
+            if ($char[0] == "." || $char[0] == "-") {
+                $month = $array[1];
+                $day = $array[0];
+                $year = $array[2];
+            }
+            // mm/dd/yyyy    # Common U.S. writing
+            if ($char[0] == "/") {
+                $month = $array[0];
+                $day = $array[1];
+                $year = $array[2];
+            }
+        }
+        // yyyy-mm-dd    # iso 8601
+        if (strlen($array[0]) == 4 && $char[0] == "-") {
+            $month = $array[1];
+            $day = $array[2];
+            $year = $array[0];
+        }
+        if (checkdate($month, $day, $year)) { //Validate Gregorian date
+            return TRUE;
+
+        } else {
+            return FALSE;
+        }
+    } else {
+        return FALSE; // more or less 10 chars
+    }
+}
+
 if (!function_exists('sys_get_temp_dir')) {
     function sys_get_temp_dir()
     {
@@ -71,8 +110,6 @@ switch ($op) {
 
 //regenerate securiy token for each page
 
-
- 
 case 'regenerate_security_token':
     $token_raw = sha1(
             $vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt'])
@@ -390,9 +427,7 @@ case 'complete_your_profile':
         $user_data->set_bitfield('options', "showemail", $showemail);
 
         $user_data->save();
-        
- 
-        
+
         //start new session
         $vbulletin->userinfo = $vbulletin->db
                 ->query_first(
@@ -403,8 +438,7 @@ case 'complete_your_profile':
 
         require_once(DIR . '/includes/functions_login.php');
 
-        vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
-                true);
+        vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
         vbsetcookie('password',
                 md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
                 true, true);
@@ -566,13 +600,15 @@ case 'validate_site_account_details':
 
         // set profile fields
         // $customfields = $userdata->set_userfields($vbulletin->GPC['userfield'], true, 'register');
-        
-        if ($vbulletin->options['reqbirthday'] || !empty($vbulletin->GPC['birthdate'])){
+
+        if ($vbulletin->options['reqbirthday']
+                || !empty($vbulletin->GPC['birthdate'])) {
             // set birthday
             $userdata->set('showbirthday', $vbulletin->GPC['showbirthday']);
 
             //mm/dd/yyyy
-            $date_parts = explode("/", $_SESSION['site_registration']['birthday']);
+            $date_parts = explode("/",
+                    $_SESSION['site_registration']['birthday']);
 
             $month = $date_parts[0];
             $year = $date_parts[2];
@@ -580,10 +616,9 @@ case 'validate_site_account_details':
 
             $userdata
                     ->set('birthday',
-                            array('day' => $day, 'month' => $month, 'year' => $year));
+                            array('day' => $day, 'month' => $month,
+                                    'year' => $year));
         }
-
-
 
         // assign user to usergroup 3 if email needs verification
         if ($vbulletin->options['verifyemail']) {
@@ -618,20 +653,19 @@ case 'validate_site_account_details':
         if (!empty($userdata->errors)) {
             //errors?
             $valid_entries = FALSE;
-            
-            
-            if( preg_match("/username/", $userdata->errors[0]) ){
+
+            if (preg_match("/username/", $userdata->errors[0])) {
                 $error_type = "username";
                 $messages['fields'][] = $error_type;
                 $messages['errors'][] = $userdata->errors[0];
-                
+
             }
-            
-            if( preg_match("/password/", $userdata->errors[0]) ){
+
+            if (preg_match("/password/", $userdata->errors[0])) {
                 $error_type = "password";
                 $messages['fields'][] = $error_type;
                 $messages['errors'][] = $userdata->errors[0];
-                
+
             }
 
         } else {
@@ -722,10 +756,11 @@ case 'resend_email':
 
     } else {
         $messages = "Unable to send email, please try again later.";
-    }$activateid = build_user_activation_id($userid,
-                    (($vbulletin->options['moderatenewmembers']
-                            OR $_SESSION['site_registration']['coppauser']) ? 4
-                            : 2), 0);
+    }
+    $activateid = build_user_activation_id($userid,
+            (($vbulletin->options['moderatenewmembers']
+                    OR $_SESSION['site_registration']['coppauser']) ? 4 : 2),
+            0);
 
     $arr = array("message" => $messages);
 
@@ -753,8 +788,9 @@ case 'create_site_account_first_step':
     }
 
     //check if variables are set
-    if ($vbulletin->options['reqbirthday'] || !empty($vbulletin->GPC['birthdate'])){
-        if (empty($vbulletin->GPC['birthdate']) ) {
+    if ($vbulletin->options['reqbirthday']
+            || !empty($vbulletin->GPC['birthdate'])) {
+        if (empty($vbulletin->GPC['birthdate'])) {
             $valid_entries = FALSE;
             $userdata->error('fieldmissing');
             $messages['errors'][] = $message = "Invalid date.";
@@ -773,13 +809,14 @@ case 'create_site_account_first_step':
             $year = $date_parts[2];
             $day = $date_parts[1];
 
-            if (checkdate($month, $day, $year)) {
+            if (check_date($vbulletin->GPC['birthdate'])) {
 
                 if ($vbulletin->options['usecoppa']) {
                     if ($year > 1970
                             AND mktime(0, 0, 0, $month, $day, $year)
                                     > mktime(0, 0, 0, $current['month'],
-                                            $current['day'], $current['year'] - 13)) {
+                                            $current['day'],
+                                            $current['year'] - 13)) {
                         $valid_entries = FALSE;
                         $messages['errors'][] = $message = "You must be over 13 to register";
                         $messages['fields'][] = $error_type = "datepicker";
@@ -811,7 +848,7 @@ case 'create_site_account_first_step':
             }
 
         }
-    }else{
+    } else {
         $vbulletin->GPC['birthdate'] = '';
     }
 
@@ -1028,20 +1065,20 @@ default:
             process_new_login('', '', '');
 
             //$url = "login.php?do=login";
-            
-            $string     = $_SESSION['site_registration']['initial_page'];
-            $search_str = $vbulletin->options['bburl'] ;
-            
-            if( empty( $_SESSION['site_registration']['initial_page'] ) || stristr($string, $search_str) === FALSE ){
-                
+
+            $string = $_SESSION['site_registration']['initial_page'];
+            $search_str = $vbulletin->options['bburl'];
+
+            if (empty($_SESSION['site_registration']['initial_page'])
+                    || stristr($string, $search_str) === FALSE) {
+
                 $url = "index.php";
-                
-            }else{
+
+            } else {
                 $url = $_SESSION['site_registration']['initial_page'];
             }
-            
+
             unset($_SESSION['site_registration']['initial_page']);
- 
 
             $valid_login = TRUE;
             $message = "OK";
@@ -1199,7 +1236,8 @@ case 'activate':
     }
 
     //check if variables are set
-    if ($vbulletin->options['reqbirthday'] || !empty($vbulletin->GPC['birthdate'])){
+    if ($vbulletin->options['reqbirthday']
+            || !empty($vbulletin->GPC['birthdate'])) {
         if (empty($vbulletin->GPC['birthdate'])) {
             $valid_entries = FALSE;
             $userdata->error('fieldmissing');
@@ -1218,13 +1256,14 @@ case 'activate':
             $year = $date_parts[2];
             $day = $date_parts[1];
 
-            if (checkdate($month, $day, $year)) {
+            if (check_date($vbulletin->GPC['birthdate'])) {
 
                 if ($vbulletin->options['usecoppa']) {
                     if ($year > 1970
                             AND mktime(0, 0, 0, $month, $day, $year)
                                     > mktime(0, 0, 0, $current['month'],
-                                            $current['day'], $current['year'] - 13)) {
+                                            $current['day'],
+                                            $current['year'] - 13)) {
                         $valid_entries = FALSE;
                         $messages['errors'][] = $message = "You must be over 13 to register";
                         $messages['fields'][] = $error_type = "datepicker";
@@ -1255,7 +1294,7 @@ case 'activate':
                 $messages['fields'][] = $error_type = "datepicker";
             }
         }
-    }else{
+    } else {
         $vbulletin->GPC['birthdate'] = '';
     }
 
@@ -1280,7 +1319,7 @@ case 'activate':
         $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
-        $message = "OK";        
+        $message = "OK";
 
         $parts = explode(".", $avatar);
         $extension = end($parts);
@@ -1351,29 +1390,30 @@ case 'activate':
         $nonvbid = $fbID;
 
         build_user_activation_id($userid,
-                    (($vbulletin->options['moderatenewmembers']
-                            OR $_SESSION['site_registration']['coppauser']) ? 4
-                            : 2), 0);
+                (($vbulletin->options['moderatenewmembers']
+                        OR $_SESSION['site_registration']['coppauser']) ? 4 : 2),
+                0);
 
-        $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
+        $sql = "SELECT activationid FROM useractivation WHERE userid = '"
+                . $userid . "'";
         $data = $vbulletin->db->query_first($sql);
 
         $activationid = $data["activationid"];
-        
-        if(strlen($activationid) === 40) {
-            $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
+
+        if (strlen($activationid) === 40) {
+            $url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
         } else {
-            $string     = $_SESSION['site_registration']['initial_page'];
-            $search_str = $vbulletin->options['bburl'] ;
-            
-            if( empty( $string ) || stristr($string, $search_str) === FALSE ){
-                
+            $string = $_SESSION['site_registration']['initial_page'];
+            $search_str = $vbulletin->options['bburl'];
+
+            if (empty($string) || stristr($string, $search_str) === FALSE) {
+
                 $url = "index.php";
-                
-            }else{
+
+            } else {
                 $url = $_SESSION['site_registration']['initial_page'];
             }
-        
+
             // Process vBulletin login
             $vbulletin->userinfo = $vbulletin->db
                     ->query_first(
@@ -1384,7 +1424,8 @@ case 'activate':
 
             require_once(DIR . '/includes/functions_login.php');
 
-            vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
+            vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true,
+                    true);
             vbsetcookie('password',
                     md5($vbulletin->userinfo['password'] . COOKIE_SALT), true,
                     true, true);
@@ -1393,8 +1434,8 @@ case 'activate':
 
             cache_permissions($vbulletin->userinfo, true);
 
-            $vbulletin->session->save(); 
-        }        
+            $vbulletin->session->save();
+        }
     }
 
     $arr = array("valid_entries" => $valid_entries,
@@ -1444,15 +1485,14 @@ case "linkaccount":
     if ($valid_entries) {
 
         $user = $vbulletin->db->escape_string($vbulletin->GPC['username']);
-        $password = $vbulletin->db
-                ->escape_string($vbulletin->GPC['password']);
+        $password = $vbulletin->db->escape_string($vbulletin->GPC['password']);
 
         $sql = "SELECT userid, username, password, salt FROM " . TABLE_PREFIX
                 . "user WHERE username = '$user' ";
 
         $data = $vbulletin->db->query_first($sql);
 
-        if (is_array($data)) {            
+        if (is_array($data)) {
             $userid = $data["userid"];
             $username = $data["username"];
             $dbPassword = $data["password"];
@@ -1466,8 +1506,7 @@ case "linkaccount":
                 $messages['errors'][] = $message = "Please check your username and password.";
                 $messages['fields'][] = $error_type = "password-member";
                 $valid_entries = false;
-                
- 
+
             } else {
                 $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX
                         . "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
@@ -1475,7 +1514,8 @@ case "linkaccount":
                 $data = $vbulletin->db->query_first($sql);
 
                 if (!$data and strlen($fbID) > 1) {
-                    $vbulletin->db       ->query_write(
+                    $vbulletin->db
+                            ->query_write(
                                     "INSERT IGNORE INTO " . TABLE_PREFIX
                                             . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
                                             . $fbID . "', '" . $userid
@@ -1526,19 +1566,21 @@ case "linkaccount":
                                             . "useractivation 
                             WHERE userid = '" . $userid . "' 
                             AND type = 0");*/
-                    
-                    $nonvbid = $fbID;                 
 
-                    $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
+                    $nonvbid = $fbID;
+
+                    $sql = "SELECT activationid FROM useractivation WHERE userid = '"
+                            . $userid . "'";
                     $data = $vbulletin->db->query_first($sql);
 
                     $activationid = $data["activationid"];
-                    
-                    if(strlen($activationid) == 40) {
-                        $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
+
+                    if (strlen($activationid) == 40) {
+                        $url = "register.php?a=act&u=" . $userid . "&i="
+                                . $activationid;
                     } else {
                         $url = "index.php";
-                        
+
                         $token = md5(uniqid(microtime(), true));
                         $token_time = time();
                         $form = "site-account-details";
@@ -1555,11 +1597,13 @@ case "linkaccount":
 
                         require_once(DIR . '/includes/functions_login.php');
 
-                        vbsetcookie('userid', $vbulletin->userinfo['userid'], true,
-                                true, true);
-                        vbsetcookie('password',
-                                md5($vbulletin->userinfo['password'] . COOKIE_SALT),
+                        vbsetcookie('userid', $vbulletin->userinfo['userid'],
                                 true, true, true);
+                        vbsetcookie('password',
+                                md5(
+                                        $vbulletin->userinfo['password']
+                                                . COOKIE_SALT), true, true,
+                                true);
 
                         if ($vbulletin->options['usestrikesystem']) {
                             exec_unstrike_user($vbulletin->GPC['username']);
@@ -1570,9 +1614,8 @@ case "linkaccount":
                         cache_permissions($vbulletin->userinfo, true);
 
                         $vbulletin->session->save();
-                    }                                    
-                   
- 
+                    }
+
                 }
             }
         } else {
@@ -1631,3 +1674,4 @@ case "linkaccount":
     break;
 
 }
+
