@@ -1330,7 +1330,7 @@ case 'activate':
     if ($valid_entries) {
         $fbID = $_SESSION['site_registration']["fbID"];
 
-        $birthday = str_replace("/", "-", $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
+        $birthday = preg_replace("/\//", "-", $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
 
         /*insert query*/
         $vbulletin->db
@@ -1400,7 +1400,7 @@ case 'activate':
 
         $vbulletin->db
                 ->query_write(
-                        "INSERT IGNORE INTO " . TABLE_PREFIX
+                        "INSERT IGNORE INTO  " . TABLE_PREFIX
                                 . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
                                 . $fbID . "', '" . $userid . "', '1')");
 
