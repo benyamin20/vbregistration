@@ -149,19 +149,25 @@ case 'regenerate_security_token':
 //regenerate ajax token
 case 'regenerate_token':
 //generate captcha value
-    require_once(DIR . '/includes/class_humanverify.php');
-    $verification = &vB_HumanVerify::fetch_library($vbulletin);
-    $human_verify = $verification->generate_token();
 
-    $_SESSION['site_registration']['captcha']['hash'] = $human_verify['hash'];
-    $_SESSION['site_registration']['captcha']['answer'] = $human_verify['answer'];
+    if( fetch_require_hvcheck('register') ){
+        require_once(DIR . '/includes/class_humanverify.php');
+        $verification = &vB_HumanVerify::fetch_library($vbulletin);
+        $human_verify = $verification->generate_token();
 
-    //register captcha value
-    $hv_token = $human_verify['hash'];
+        $_SESSION['site_registration']['captcha']['hash'] = $human_verify['hash'];
+        $_SESSION['site_registration']['captcha']['answer'] = $human_verify['answer'];
 
-    $arr = array('token' => $hv_token,
-            'url' => $vbulletin->options['bburl'] . "/image.php?type=hv&hash="
-                    . $hv_token);
+        //register captcha value
+        $hv_token = $human_verify['hash'];
+
+        $arr = array('token' => $hv_token,
+                'url' => $vbulletin->options['bburl'] . "/image.php?type=hv&hash="
+                        . $hv_token);
+
+    }
+
+
 
     json_headers($arr);
 
@@ -368,13 +374,10 @@ case 'complete_your_profile':
     if ($valid_entries) {
         //update timezone
 
-        $sql = "REPLACE INTO " . TABLE_PREFIX
-                . "user
-                (timezoneoffset)
-                VALUES
-                ('"
+        $sql = "UPDATE " . TABLE_PREFIX
+                . "user SET timezoneoffset = '"
                 . $vbulletin->db->escape_string($vbulletin->GPC['timezone'])
-                . "')";
+                . "' WHERE userid = '" . $vbulletin->db->escape_string($userid) . "' ";
 
         /*insert query*/
         $vbulletin->db->query_write($sql);
@@ -582,15 +585,20 @@ case 'validate_site_account_details':
         $messages['errors'][] = "Sorry, this username is already taken.";
     }
 
-    //check if CAPTCHA value is correct
-    if (strtoupper($vbulletin->GPC['security_code'])
-            != strtoupper($_SESSION['site_registration']['captcha']['answer'])) {
-        $valid_entries = FALSE;
 
-        $error_type = "security-code";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Invalid security code.";
+    if(fetch_require_hvcheck('register')){
+        //check if CAPTCHA value is correct
+        if (strtoupper($vbulletin->GPC['security_code'])
+                != strtoupper($_SESSION['site_registration']['captcha']['answer'])) {
+            $valid_entries = FALSE;
+
+            $error_type = "security-code";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = "Invalid security code.";
+        }
     }
+
+    
 
     if ($valid_entries) {
         $_SESSION['site_registration']['username'] = $vbulletin
@@ -1332,18 +1340,23 @@ case 'activate':
 
         $birthday = preg_replace("/\//", "-", $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
 
-        /*insert query*/
-        $vbulletin->db
-                ->query_write(
-                        "INSERT IGNORE INTO " . TABLE_PREFIX
-                                . "user (usergroupid, email, birthday, username) VALUES ('2', '"
-                                . $vbulletin->db
-                                        ->escape_string(
-                                                $vbulletin->GPC['email'])
-                                . "', '"
-                                . $birthday
-                                . "',
-             '" . $vbulletin->GPC['username'] . "')");
+
+        if($fbID){
+            /*insert query*/
+            $vbulletin->db
+                    ->query_write(
+                            "INSERT IGNORE INTO " . TABLE_PREFIX
+                                    . "user (usergroupid, email, birthday, username) VALUES ('2', '"
+                                    . $vbulletin->db
+                                            ->escape_string(
+                                                    $vbulletin->GPC['email'])
+                                    . "', '"
+                                    . $birthday
+                                    . "',
+                 '" . $vbulletin->GPC['username'] . "')");
+        }
+
+        
 
         $avatar = $vbulletin->GPC['avatar'];
         $rows = $vbulletin->db->affected_rows();

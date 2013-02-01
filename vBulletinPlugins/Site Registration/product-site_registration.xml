@@ -1241,33 +1241,36 @@
 					
 				<div class="clear clear_10"></div>
 				
-				<div class="grid_7 no-margin" id="security-code-wrapper">
-				    <label for="security-code">Security Code</label>
-				    <input class="" id="security-code" name="security-code"
-					       title="Enter Security Code" value="" 
-					       autocomplete="off"
-					       type="text"  />
-			        <span class="error-label" id="security-code-error-label"></span>
-			    </div>
+				<if condition="$hvcheck"> <!-- require captcha -->
 				
-				<div class="clear clear_10"></div>
+				    <div class="grid_7 no-margin" id="security-code-wrapper">
+				        <label for="security-code">Security Code</label>
+				        <input class="" id="security-code" name="security-code"
+					           title="Enter Security Code" value="" 
+					           autocomplete="off"
+					           type="text"  />
+			            <span class="error-label" id="security-code-error-label"></span>
+			        </div>
+				
+				    <div class="clear clear_10"></div>
 				
 				
 				
-				<div class="" id="security-image">
-				    <img width="220" border="0" height="61" alt="" 
-				        src="$vboptions[bburl]/image.php?type=hv&hash=$hv_token" 
-				        id="imagereg" class="grid_3 no-margin"
-				        title="CAPTCHA"  />
+				    <div class="" id="security-image">
+				        <img width="220" border="0" height="61" alt="" 
+				            src="$vboptions[bburl]/image.php?type=hv&hash=$hv_token" 
+				            id="imagereg" class="grid_3 no-margin"
+				            title="CAPTCHA"  />
+				            
+				        <span class="cursor-pointer small link_blue" id="refresh-captcha">
+				            Refresh Image   <span id="ajax-loader-secondary"></span> 
+				        </span>
 				        
-				    <span class="cursor-pointer small link_blue" id="refresh-captcha">
-				        Refresh Image   <span id="ajax-loader-secondary"></span> 
-				    </span>
-				    
- 
-				</div>
+     
+				    </div>
 				
-				<div class="clear clear_15"></div>
+				    <div class="clear clear_15"></div>
+				</if>
 				
 				<div class="grid_7 no-margin" id="terms-and-conditions-wrapper">
 				    <label class="checkbox grid_3 no-margin fix-tnc-width">
@@ -1656,15 +1659,19 @@
                         }
                         
                         //generate captcha value
-                        require_once(DIR . '/includes/class_humanverify.php');
-	                    $verification =& vB_HumanVerify::fetch_library($vbulletin);
-	                    $human_verify = $verification->generate_token();
-	                    
-	                    $_SESSION['site_registration']['captcha']['hash'] = $human_verify['hash'];
-	                    $_SESSION['site_registration']['captcha']['answer'] = $human_verify['answer'];
-	                    
-	                    //register captcha value
-	                    $hv_token  = $human_verify['hash'];
+                        if(fetch_require_hvcheck('register')){
+                            require_once(DIR . '/includes/class_humanverify.php');
+	                        $verification =& vB_HumanVerify::fetch_library($vbulletin);
+	                        $human_verify = $verification->generate_token();
+	                        
+	                        $_SESSION['site_registration']['captcha']['hash'] = $human_verify['hash'];
+	                        $_SESSION['site_registration']['captcha']['answer'] = $human_verify['answer'];
+	                        
+	                        //register captcha value
+	                        $hv_token  = $human_verify['hash'];
+	                        $hvcheck = true;
+                        }
+                        
 	                    
 	                    $token_raw = sha1($vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt']) . sha1(COOKIE_SALT));
 	                    $security_token = $_SESSION['site_registration']['securitytoken'] = TIMENOW . '-' . sha1(TIMENOW . $token_raw);
@@ -2303,80 +2310,12 @@
 			    ]]>
 			</phrase>
 			
-			<!-- Facebook options -->
-			<!--
-			<phrase name="setting_site_registration_settingsfb_showfb_desc" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Show facebook login			
-			    ]]>
-			</phrase>
-			
-			<phrase name="setting_site_registration_settingsfb_showfb_title" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Show facebook login			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_fbapi_desc" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    FB API Key				
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_fbapi_title"   
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    FB API Key				
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_secretfacebook_desc" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    FB App secret code			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_secretfacebook_title"   
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    FB App secret code			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_scopefacebook_desc" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    FB App Scope			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_scopefacebook_title"   
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    FB App Scope			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_loginfacebook_desc" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Facebook login title			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_settingsfb_loginfacebook_title"   
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Facebook login title			
-			    ]]>
-			</phrase>
-			-->
+ 
 			<phrase name="settinggroup_site_registration_settings_group" 
 			    date="1340664607" username="fromero" version="1.0">
 			    <![CDATA[Site Registration]]>
 			</phrase>
-			<!--
-			<phrase name="settinggroup_site_registration_settingsfb_group" 
-			    date="1340664607" username="fromero" version="1.0">
-			    <![CDATA[Site Registration - FB Login options]]>
-			</phrase>
-			--> 
+ 
 		</phrasetype>
 	</phrases>
 	<options>
@@ -2620,52 +2559,7 @@
 				</defaultvalue>
 			</setting>
 		</settinggroup>
-		<!--
-        <settinggroup name="settinggroup_site_registration_settingsfb_group" displayorder="65536">
-	        <setting varname="site_registration_settingsfb_showfb" 
-			    displayorder="10">
-				<datatype>boolean</datatype>
-				<optioncode>yesno</optioncode>
-				<defaultvalue>1</defaultvalue>
-			</setting>
-			<setting varname="site_registration_settingsfb_fbapi" 
-			    displayorder="20">
-				<datatype>free</datatype>
-				<defaultvalue> 
-				    <![CDATA[
-				        304416966345499
-				    ]]>
-				</defaultvalue>
-			</setting>
-			<setting varname="site_registration_settingsfb_secretfacebook" 
-			    displayorder="30">
-				<datatype>free</datatype>
-				<defaultvalue> 
-				    <![CDATA[
-				        773cbd12a3706e491bc4ad3247b66386
-				    ]]>
-				</defaultvalue>
-			</setting>
-			<setting varname="site_registration_settingsfb_scopefacebook" 
-			    displayorder="40">
-				<datatype>free</datatype>
-				<defaultvalue> 
-				    <![CDATA[
-				        email,user_birthday,read_stream
-				    ]]>
-				</defaultvalue>
-			</setting>
-			<setting varname="site_registration_settingsfb_loginfacebook" 
-			    displayorder="50">
-				<datatype>free</datatype>
-				<defaultvalue> 
-				    <![CDATA[
-				        Login with Facebook
-				    ]]>
-				</defaultvalue>
-			</setting>
-	    </settinggroup>
-	    -->
+		 
 	</options>
 	<helptopics>
 	</helptopics>
