@@ -567,7 +567,7 @@ case 'validate_site_account_details':
         // set profile fields
         // $customfields = $userdata->set_userfields($vbulletin->GPC['userfield'], true, 'register');
         
-        if ($vbulletin->options['reqbirthday']){
+        if ($vbulletin->options['reqbirthday'] || !empty($vbulletin->GPC['birthdate'])){
             // set birthday
             $userdata->set('showbirthday', $vbulletin->GPC['showbirthday']);
 
@@ -753,7 +753,7 @@ case 'create_site_account_first_step':
     }
 
     //check if variables are set
-    if ($vbulletin->options['reqbirthday']){
+    if ($vbulletin->options['reqbirthday'] || !empty($vbulletin->GPC['birthdate'])){
         if (empty($vbulletin->GPC['birthdate']) ) {
             $valid_entries = FALSE;
             $userdata->error('fieldmissing');
@@ -1199,7 +1199,7 @@ case 'activate':
     }
 
     //check if variables are set
-    if ($vbulletin->options['reqbirthday']){
+    if ($vbulletin->options['reqbirthday'] || !empty($vbulletin->GPC['birthdate'])){
         if (empty($vbulletin->GPC['birthdate'])) {
             $valid_entries = FALSE;
             $userdata->error('fieldmissing');
