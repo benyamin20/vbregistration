@@ -1553,12 +1553,10 @@
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
 
-						$birthday = str_replace("/", "-", $fUser[3]);
-
 		        		$fbID 		= $_SESSION['site_registration']["fbID"] 	   = $fUser[0];
 		        		$fbName 	= $_SESSION['site_registration']["fbName"] 	   = utf8_decode($fUser[1]);
 		        		$fbEmail 	= $_SESSION['site_registration']["fbEmail"]    = $fUser[2];
-					    $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $birthday;
+					    $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $fUser[3];
 					    $fbUsername = $_SESSION['site_registration']["fbUsername"] = $fUser[4];
 					    $fbPicture  = $_SESSION['site_registration']["fbPicture"]  = $fUser[5];
 
