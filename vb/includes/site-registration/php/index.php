@@ -5,6 +5,10 @@ set_include_path(
         get_include_path() . PATH_SEPARATOR . realpath('../../../')
                 . PATH_SEPARATOR . realpath('../../../includes/'));
 
+
+/**
+*   Output valid JSON headers
+*/
 function json_headers($arr = null)
 {
     header('Content-type: text/json');
@@ -12,6 +16,10 @@ function json_headers($arr = null)
     echo json_encode($arr);
 }
 
+
+/**
+*   Avoids getting the download dialog in IE for some JSON requests
+*/
 function json_headers_ie_support($arr = null)
 {
     header('Pragma: no-cache');
@@ -20,6 +28,10 @@ function json_headers_ie_support($arr = null)
     echo json_encode($arr);
 }
 
+
+/**
+*   Checks for a valid date
+*/
 function check_date($date)
 {
     if (strlen($date) == 10) {
@@ -59,6 +71,10 @@ function check_date($date)
     }
 }
 
+
+/*
+    Setup temp dir for file upload if not specified
+*/
 if (!function_exists('sys_get_temp_dir')) {
     function sys_get_temp_dir()
     {
@@ -80,6 +96,10 @@ if (!function_exists('sys_get_temp_dir')) {
     }
 }
 
+
+/*
+    Script setup
+*/
 ini_set("display_errors", 1);
 error_reporting(E_ALL & ~E_NOTICE & ~8192);
 
@@ -146,6 +166,8 @@ case 'regenerate_token':
     json_headers($arr);
 
     break;
+
+//complete your profile step
 
 case 'complete_your_profile':
     $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
@@ -534,7 +556,7 @@ case 'validate_site_account_details':
 
     }
 
-    if (strlen($vbulletin->GPC['username']) > 25) {
+    if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
         $valid_entries = FALSE;
 
         $error_type = "username";
@@ -1145,7 +1167,7 @@ case 'activate':
 
     }
 
-    if (strlen($vbulletin->GPC['username']) > 25) {
+    if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
         $valid_entries = FALSE;
 
         $error_type = "username";
