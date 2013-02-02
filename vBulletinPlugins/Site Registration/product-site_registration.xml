@@ -1525,6 +1525,17 @@
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
                                 AND type = 0"
                         );
+                        
+                        // change user to be already registered
+                   
+                        $sql = "UPDATE " . TABLE_PREFIX . "user SET usergroupid = '"
+                                . $vbulletin->db->escape_string('2')
+                                . "' WHERE userid = '" . $vbulletin->db->escape_string($vbulletin->GPC['u'])
+                                . "' ";
+                                
+                         $vbulletin->db->query_write(
+                            $sql
+                         );
                     
                         header("X-UA-Compatible: IE=Edge");
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
@@ -1989,15 +2000,24 @@
 	                
 	                    //delete pending activation code and show activation
 	                    //home page
-	                    
-	                    
-	                    
+ 
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
                                 AND type = 0"
                         );
                         
+                        
+                        // change user to be already registered
+                   
+                        $sql = "UPDATE " . TABLE_PREFIX . "user SET usergroupid = '"
+                                . $vbulletin->db->escape_string('2')
+                                . "' WHERE userid = '" . $vbulletin->db->escape_string($vbulletin->GPC['u'])
+                                . "' ";
+                                
+                         $vbulletin->db->query_write(
+                            $sql
+                         );
                         
                         //fixes birthday to be able to search it on temporary table
                         $birthday = preg_replace("/\-/","/", $birthday);
