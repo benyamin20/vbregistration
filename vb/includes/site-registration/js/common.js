@@ -413,6 +413,11 @@ jQuery(document).ready(function (jQuery) {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
 
+        jQuery("#security-code").enterKey(function () {
+            jQuery("#site-account-deails-create-account").trigger('click');
+        });
+
+
 
         //submit and validate fields
         jQuery("#site-account-deails-create-account").bind('click', function () {
