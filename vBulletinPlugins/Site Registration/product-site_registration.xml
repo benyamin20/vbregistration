@@ -1731,7 +1731,7 @@
                             $username_alt       = $username . '1';
                             $suggested_username = "";
                             
-                            //start new session
+                            //check if username exists
 				            $username_exists = $vbulletin->db
 				                    ->query_first(
 				                            "SELECT username  FROM " . TABLE_PREFIX . "user 
