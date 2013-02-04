@@ -408,6 +408,11 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#password").enterKey(function () {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
+        
+        jQuery("#confirm-password").enterKey(function () {
+            jQuery("#site-account-deails-create-account").trigger('click');
+        });
+
 
         //submit and validate fields
         jQuery("#site-account-deails-create-account").bind('click', function () {
