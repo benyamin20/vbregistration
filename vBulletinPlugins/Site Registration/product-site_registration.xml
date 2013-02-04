@@ -509,10 +509,8 @@
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
 		    <![CDATA[ 
-                <link rel='stylesheet' href='includes/site-registration/960/css/min/960.css?v=$vboptions[simpleversion]' />
-                <link rel='stylesheet' href='includes/site-registration/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]' />
-                <link rel='stylesheet' href='includes/site-registration/css/fonts.css?v=$vboptions[simpleversion]' />
-                <link rel='stylesheet' href='includes/site-registration/css/styles.css?v=$vboptions[simpleversion]' />
+		        <link rel='stylesheet' href='includes/site-registration/960/css/min/960.css?v=$vboptions[simpleversion]' />
+		        <link rel='stylesheet' href='includes/site-registration/css/not_active.css?v=$vboptions[simpleversion]' />
                 <!--[if IE]>
 	            <link rel='stylesheet' href='includes/site-registration/css/all-ie-only.css?v=$vboptions[simpleversion]' />
                 <![endif]-->
