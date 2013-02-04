@@ -1,7 +1,7 @@
-/*
+P/*
     Global font
 */
-#container, #container-wrapper {
+#container, #container-wrapper  {
 	font-family: Helvetica, Arial, 'sans-serif';
 	font-size: 12px;
 }
@@ -10,11 +10,16 @@
 #container a{
     text-decoration:none;
 }
- 
- 
+
 #container a:hover{
     text-decoration:underline;
 }
+
+#container p  {
+	font-family: Helvetica, Arial, 'sans-serif' !important;
+
+}
+ 
  
 
 /*
