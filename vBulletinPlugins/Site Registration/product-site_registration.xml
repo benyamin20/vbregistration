@@ -837,10 +837,10 @@
 							        <div class="clear"></div>
 							        <div class="error_red small" id="have-account-error"></div>
 							        <div class="clear" id="have-account-spacer"></div>
-							        <form name="already-have-an-account-form"
+							        <!--<form name="already-have-an-account-form"
 							            id="already-have-an-account-form"
 							            method="POST"
-							            action="">
+							            action=""> -->
 							            <label for="username">Username</label>
 							            <input class="" id="username" 
 							                title="Username" value=""
@@ -854,7 +854,7 @@
 							            <div class="clear clear_15"></div>
 							            <button class="btn btn-medium" id="login-button">Login</button>
 							            <span id="ajax-loader-secondary"></span>
-							        </form>
+							        <!--</form>-->
 							        <div class="clear clear_15"></div>
 							        <a class="link_blue small" id="forgot-password"
 								        href="$vboptions[bburl]/login.php?do=lostpw">Forgot your password?</a>

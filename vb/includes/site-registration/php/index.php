@@ -1133,10 +1133,14 @@ default:
             exec_unstrike_user($vbulletin->GPC['vb_login_username']);
             process_new_login('', '', '');
 
-            //$url = "login.php?do=login";
-
+            
 
             $url = prev_url();
+
+            if(preg_match("/register/i", $url)){
+                $url = "login.php?do=login";
+            }
+
 
             unset($_SESSION['site_registration']['initial_page']);
 

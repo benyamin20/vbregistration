@@ -140,7 +140,11 @@ jQuery.ajaxSetup({
             msg = 'Please try again later.\n Uncaught Error.\n' + jqXHR.responseText;
         }
 
-        bootbox.alert(msg);
+
+        if(msg){
+            bootbox.alert(msg);
+        }
+        
 
     }
 });
