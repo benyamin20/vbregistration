@@ -852,7 +852,7 @@
 								            autocomplete="off"
 								            type="password"  />
 							            <div class="clear clear_15"></div>
-							            <a class="btn btn-medium" id="login-button">Login</a>
+							            <button class="btn btn-medium" id="login-button">Login</button>
 							            <span id="ajax-loader-secondary"></span>
 							        </form>
 							        <div class="clear clear_15"></div>
