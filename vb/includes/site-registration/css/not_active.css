@@ -1,0 +1,91 @@
+.background_yellow {
+	background-color: #FFFFCC !important;
+	*width: 100% !important;
+	*padding-bottom: 20px;
+	*padding-top: 20px;
+	
+}
+
+.not-active{
+    width: inherit;
+    padding-left:   15px;
+    padding-right:  15px;
+    padding-top:    20px;
+    padding-bottom: 20px;
+}
+
+.not-fully-active{
+    font-size: 16px;
+    font-weight: bold;
+    color: #800000 !important;
+    line-height: 25px;
+}
+
+
+#log-in, .no-margin{
+	margin: 0px !important;
+}
+
+.margin_left_20 {
+	margin-left: 20px;
+}
+
+.clear_5 {
+	min-height: 5px;
+}
+
+.clear_10 {
+	min-height: 10px;
+}
+
+.clear_20 {
+	min-height: 20px;
+}
+
+.clear_15 {
+	min-height: 15px;
+}
+
+.clear_30 {
+	min-height: 30px;
+}
+
+.did-not-receive{
+    font-size: 12px; 
+    font-weight: bold;
+    font-color: #333333;
+}
+
+.please-confirm-account{
+    font-size: 16px;
+    font-weight: normal;
+    color: #333333;
+}
+
+#resend-email{
+    font-weight: normal !important;
+}
+
+#email-icon{
+    padding-top:15px;
+}
+
+.link_blue {
+	color: #0066DD !important;
+	cursor: pointer !important;
+	text-decoration: none;
+}
+
+
+.email-sent{
+	color: #333;
+}
+
+.small {
+	font-size: 12px;
+}
+
+#container {
+	font-family: Helvetica, Arial, 'sans-serif' !important;
+	font-size: 12px;
+}
