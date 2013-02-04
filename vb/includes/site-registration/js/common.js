@@ -5,6 +5,7 @@ var md5_loaded = false;
 var spinner = '<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />';
 var spinner_secondary = '<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />';
 
+
 jQuery.getScript("includes/site-registration/js/bootbox.min.js", function () {});
 
 

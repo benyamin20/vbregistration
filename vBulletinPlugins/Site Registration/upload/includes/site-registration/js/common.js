@@ -5,6 +5,7 @@ var md5_loaded = false;
 var spinner = '<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />';
 var spinner_secondary = '<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />';
 
+
 jQuery.getScript("includes/site-registration/js/bootbox.min.js", function () {});
 
 
@@ -716,7 +717,7 @@ jQuery(document).ready(function (jQuery) {
                 context: document.body,
                 type: 'POST',
                 cache: false,
-                data: 'securitytoken=guest&username='+ username + '&password='+ password,
+                data: 'securitytoken=guest&username='+ username + '&password='+ password + '&security_token='+ token,
                 beforeSend: function(){
                     if(jQuery('#ajax-loader-secondary').exists()){
                         jQuery('#ajax-loader-secondary').append(spinner_secondary);

@@ -1,10 +1,21 @@
 /*
     Global font
 */
-*, body {
-	font-family: Helvetica, Arial, 'sans-serif' !important;
+#container, #container-wrapper  {
+	font-family: Helvetica, Arial, 'sans-serif';
 	font-size: 12px;
 }
+
+
+#container a{
+    text-decoration:none;
+}
+
+#container a:hover{
+    text-decoration:underline;
+}
+ 
+ 
 
 /*
     Fonts
@@ -72,5 +83,5 @@ sub {
 }
 
 select{
-    font-size: 14px !important;
+    font: 14px Helvetica,Arial,'sans-serif' !important;
 }

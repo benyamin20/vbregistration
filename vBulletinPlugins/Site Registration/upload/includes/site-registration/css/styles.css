@@ -257,7 +257,14 @@ li {
 
 #facebox .popup, #facebox .content {
 	min-width: 600px;
+	font-family: Helvetica, Arial, 'sans-serif' !important;
+	font-size: 12px  !important;
 }
+
+ #facebox td, #facebox th, #facebox p, #facebox li{
+ 	font-family: Helvetica, Arial, 'sans-serif' !important;
+	font-size: 12px  !important;
+ }
 
 .popup{
     width: 621px;
@@ -544,3 +551,15 @@ div.content table.tborder{
     left: 30px !important;
     top: -19px !important; 
 }
+
+#info td, #info th {
+	font-family: Helvetica, Arial, 'sans-serif' !important;
+	font-size: 12px  !important;
+}
+
+ #ui-datepicker-div td, #ui-datepicker-div th, #ui-datepicker-div p, #ui-datepicker-div li{
+ 	font-family: Helvetica, Arial, 'sans-serif' !important;
+	font-size: 12px  !important;
+ }
+
+
