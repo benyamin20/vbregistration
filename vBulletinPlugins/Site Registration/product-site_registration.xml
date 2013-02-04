@@ -7,7 +7,7 @@
 	<url />
 	<versioncheckurl />
 	<dependencies>
-		<dependency dependencytype="php" minversion="4" maxversion="" />
+		<dependency dependencytype="php" minversion="5" maxversion="" />
 		<dependency dependencytype="vbulletin" minversion="3" maxversion="" />
 	</dependencies>
 	<codes>

@@ -851,7 +851,7 @@ case 'create_site_account_first_step':
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
         $messages['errors'][] = $message = fetch_error('noregister');
-        $messages['fields'][] = $error_type = "datepicker";
+        $messages['fields'][] = $error_type = "email";
 
     }
 
@@ -941,7 +941,7 @@ case 'create_site_account_first_step':
             $messages['fields'][] = $error_type = "email";
 
         } else {
-            if (!$vbulletin->options['allowmultiregs']) {
+            //if (!$vbulletin->options['allowmultiregs']) {
                 if ($vbulletin->options['requireuniqueemail']) {
                     //check if email already exists on DB
                     $user_exists = $db
@@ -965,7 +965,7 @@ case 'create_site_account_first_step':
                         $messages['fields'][] = $error_type = "email";
                     }
                 }
-            }
+            //}
         }
 
     } else {
@@ -1261,7 +1261,7 @@ case 'activate':
             $messages['fields'][] = $error_type = "email";
 
         } else {
-            if (!$vbulletin->options['allowmultiregs']) {
+            //if (!$vbulletin->options['allowmultiregs']) {
                 if ($vbulletin->options['requireuniqueemail']) {
                     //check if email already exists on DB
                     $user_exists = $db
@@ -1285,7 +1285,7 @@ case 'activate':
                         $messages['fields'][] = $error_type = "email";
                     }
                 }
-            }
+            //}
         }
 
     } else {
