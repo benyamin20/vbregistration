@@ -19,7 +19,7 @@ li {
 	background: linear-gradient(to bottom, #1c1c1c 100%,#000000 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1c1c1c', endColorstr='#000000',GradientType=0 );
 	
-	behavior: url(includes/site-registration/css/pie/PIE.htc);
+	behavior: url(includes/site-registration/css/pie/PIE.php);
 }
 
 .vertical-rule-hidden {
