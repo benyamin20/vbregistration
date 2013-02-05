@@ -177,6 +177,7 @@ case 'complete_your_profile':
                             $messages['errors'][] = fetch_error('upload_remoteimage_toolarge', $max_width, $max_height, $width, $height);
                             @unlink($uploaded);
                             $error_w = TRUE;
+                            $error_h = TRUE;
                         }
 
  

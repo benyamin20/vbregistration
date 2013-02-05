@@ -1834,9 +1834,11 @@ $header
 				                }
                             }
                             
+                            
+                            //ACP-486
                             $userdata_validate = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
                             
-                            if (!$userdata_validate->verify_username($userdata_validate)) {
+                            if (!$userdata_validate->verify_username($suggested_username)) {
                                 $suggested_username = "";
                             }else{
                                 
