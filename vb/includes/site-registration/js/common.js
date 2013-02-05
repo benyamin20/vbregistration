@@ -131,7 +131,21 @@ jQuery.ajaxSetup({
         } else if (jqXHR.status == 500) {
             msg = 'Please try again later.\n Internal Server Error [500].';
         } else if (exception === 'parsererror') {
-            msg = 'Please try again later.\n Requested JSON parse failed.';
+        
+            var ct = jqXHR.getResponseHeader("content-type") || "";
+            
+            if (ct != "application/json") {
+                var xml = jqXHR.responseText,
+                xmlDoc = $.parseXML( xml ),
+                $xml = $( xmlDoc ),
+                $error = $xml.find( "error" );
+                
+                msg  = $error.text();
+            }else{
+                 msg = 'Please try again later.\n Requested JSON parse failed.';
+            }
+            
+  
         } else if (exception === 'timeout') {
             msg = 'Please try again later.\n Time out error.';
         } else if (exception === 'abort') {
@@ -503,8 +517,13 @@ jQuery(document).ready(function (jQuery) {
             var username = escape(jQuery("#username").val());
             var password = md5(jQuery("#password").val());
             var s = '';
-            var login = 'do';
-            var securitytoken = 'guest';
+            var login = 'do'; 
+            
+            var securitytoken = escape(jQuery('#token').val());
+            
+            if(securitytoken == ''){
+                securitytoken = 'guest';
+            }
 
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=validate_login",
@@ -610,6 +629,13 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#create-new-account-button").bind('click', function () {
             var email = escape(jQuery("#email").val());
             var birthdate = escape(jQuery("#datepicker").val());
+            
+            
+            var token = escape(jQuery('#token').val());
+            
+            if(token == ''){
+                token = 'guest';
+            }
 
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=create_site_account_first_step",
@@ -617,7 +643,7 @@ jQuery(document).ready(function (jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'email=' + email + '&birthdate=' + birthdate + '&securitytoken=guest',
+                data: 'email=' + email + '&birthdate=' + birthdate + '&securitytoken='+token,
                 beforeSend: function () {
                     if (jQuery('#ajax-loader').exists()) {
                         initialize_spinner();
@@ -725,13 +751,17 @@ jQuery(document).ready(function (jQuery) {
             var username = escape(jQuery("#username-member").val());
             var password = md5(jQuery("#password-member").val());
             var token = escape(jQuery('#token').val());
+            
+            if(token == ''){
+                token = 'guest';
+            }
 
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=linkaccount",
                 context: document.body,
                 type: 'POST',
                 cache: false,
-                data: 'securitytoken=guest&username='+ username + '&password='+ password + '&security_token='+ token,
+                data: 'securitytoken='+token+'&username='+ username + '&password='+ password + '&security_token='+ token,
                 beforeSend: function(){
                     if(jQuery('#ajax-loader-secondary').exists()){
                         jQuery('#ajax-loader-secondary').append(spinner_secondary);
