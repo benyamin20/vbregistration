@@ -740,10 +740,10 @@
 
 				            <div class="clear clear_20"></div>
 				            <div class="grid_4 no-margin">
-				                <button class="btn btn-primary btn-block grid_3 no-margin" 
+				                <a class="btn btn-primary btn-block grid_3 no-margin" 
 				                    id="create-new-account-button">
 				                    Create Account
-				                </button>
+				                </a>
 				                <span id="ajax-loader">
 				                </span>
 				            </div>
