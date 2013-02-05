@@ -182,7 +182,7 @@
                                                 thumbnail avatar-thumbnail">
                                     </div>
                                     <span class="btn btn-file move-to-top-avatar-upload" id="upload-group">
-                                        <span class="fileupload-new">Upload</span>
+                                        <span class="fileupload-new"><phrase>$vbphrase[upload]</phrase></span>
                                         
                                         <span class="fileupload-exists move-to-top-avatar-upload">Change</span>
                                         <input type="file"
@@ -205,43 +205,42 @@
 						
 						<!--  Timezone -->
 						<div id="timezone-wrapper">
-						    <label for="timezone">Your Timezone</label>
+						    <label for="timezone">Your <phrase>$vbphrase[timezone]</phrase></label>
 						    <select name="timezone" id="timezone">
-						        $time_zone_select
                                 <option value="" selected="selected"></option> 
-			                    <option class="" value="-12">(GMT -12:00) Eniwetok, Kwajalein</option>
-                                <option class="" value="-11">(GMT -11:00) Midway Island, Samoa</option>
-                                <option class="" value="-10">(GMT -10:00) Hawaii</option>
-                                <option class="" value="-9">(GMT -9:00) Alaska</option>
-                                <option class="" value="-8">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
-                                <option class="" value="-7">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
-                                <option class="" value="-6">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
-                                <option class="" value="-5">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
-                                <option class="" value="-4.5">(GMT -4:30) Caracas</option>
-                                <option class="" value="-4">(GMT -4:00) Atlantic Time (Canada), La Paz, Santiago</option>
-                                <option class="" value="-3.5">(GMT -3:30) Newfoundland</option>
-                                <option class="" value="-3">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
-                                <option class="" value="-2">(GMT -2:00) Mid-Atlantic</option>
-                                <option class="" value="-1">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
-                                <option class="" value="0">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
-                                <option class="" value="1">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
-                                <option class="" value="2">(GMT +2:00) Kaliningrad, South Africa, Cairo</option>
-                                <option class="" value="3">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
-                                <option class="" value="3.5">(GMT +3:30) Tehran</option>
-                                <option class="" value="4">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
-                                <option class="" value="4.5">(GMT +4:30) Kabul</option>
-                                <option class="" value="5">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
-                                <option class="" value="5.5">(GMT +5:30) Mumbai, Kolkata, Chennai, New Delhi</option>
-                                <option class="" value="5.75">(GMT +5:45) Kathmandu</option>
-                                <option class="" value="6">(GMT +6:00) Almaty, Dhaka, Colombo</option>
-                                <option class="" value="6.5">(GMT +6:30) Yangon, Cocos Islands</option>
-                                <option class="" value="7">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
-                                <option class="" value="8">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
-                                <option class="" value="9">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
-                                <option class="" value="9.5">(GMT +9:30) Adelaide, Darwin</option>
-                                <option class="" value="10">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
-                                <option class="" value="11">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
-                                <option class="" value="12">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+			                    <option class="" value="-12"><phrase>$vbphrase[timezone_gmt_minus_1200]</phrase></option>
+                                <option class="" value="-11"><phrase>$vbphrase[timezone_gmt_minus_1100]</phrase></option>
+                                <option class="" value="-10"><phrase>$vbphrase[timezone_gmt_minus_1000]</phrase></option>
+                                <option class="" value="-9"><phrase>$vbphrase[timezone_gmt_minus_0900]</phrase></option>
+                                <option class="" value="-8"><phrase>$vbphrase[timezone_gmt_minus_0800]</phrase></option>
+                                <option class="" value="-7"><phrase>$vbphrase[timezone_gmt_minus_0700]</phrase></option>
+                                <option class="" value="-6"><phrase>$vbphrase[timezone_gmt_minus_0600]</phrase></option>
+                                <option class="" value="-5"><phrase>$vbphrase[timezone_gmt_minus_0500]</phrase></option>
+                                <option class="" value="-4.5"><phrase>$vbphrase[timezone_gmt_minus_0430]</phrase></option>
+                                <option class="" value="-4"><phrase>$vbphrase[timezone_gmt_minus_0400]</phrase></option>
+                                <option class="" value="-3.5"><phrase>$vbphrase[timezone_gmt_minus_0330]</phrase></option>
+                                <option class="" value="-3"><phrase>$vbphrase[timezone_gmt_minus_0300]</phrase></option>
+                                <option class="" value="-2"><phrase>$vbphrase[timezone_gmt_minus_0200]</phrase></option>
+                                <option class="" value="-1"><phrase>$vbphrase[timezone_gmt_minus_0100]</phrase></option>
+                                <option class="" value="0"><phrase>$vbphrase[timezone_gmt_plus_0000]</phrase></option>
+                                <option class="" value="1"><phrase>$vbphrase[timezone_gmt_plus_0100]</phrase></option>
+                                <option class="" value="2"><phrase>$vbphrase[timezone_gmt_plus_0200]</phrase></option>
+                                <option class="" value="3"><phrase>$vbphrase[timezone_gmt_plus_0300]</phrase></option>
+                                <option class="" value="3.5"><phrase>$vbphrase[timezone_gmt_plus_0330]</phrase></option>
+                                <option class="" value="4"><phrase>$vbphrase[timezone_gmt_plus_0400]</phrase></option>
+                                <option class="" value="4.5"><phrase>$vbphrase[timezone_gmt_plus_0430]</phrase></option>
+                                <option class="" value="5"><phrase>$vbphrase[timezone_gmt_plus_0500]</phrase></option>
+                                <option class="" value="5.5"><phrase>$vbphrase[timezone_gmt_plus_0530]</phrase></option>
+                                <option class="" value="5.75"><phrase>$vbphrase[timezone_gmt_plus_0545]</phrase></option>
+                                <option class="" value="6"><phrase>$vbphrase[timezone_gmt_plus_0600]</phrase></option>
+                                <option class="" value="6.5"><phrase>$vbphrase[timezone_gmt_plus_0630]</phrase></option>
+                                <option class="" value="7"><phrase>$vbphrase[timezone_gmt_plus_0700]</phrase></option>
+                                <option class="" value="8"><phrase>$vbphrase[timezone_gmt_plus_0800]</phrase></option>
+                                <option class="" value="9"><phrase>$vbphrase[timezone_gmt_plus_0900]</phrase></option>
+                                <option class="" value="9.5"><phrase>$vbphrase[timezone_gmt_plus_0930]</phrase></option>
+                                <option class="" value="10"><phrase>$vbphrase[timezone_gmt_plus_1000]</phrase></option>
+                                <option class="" value="11"><phrase>$vbphrase[timezone_gmt_plus_1100]</phrase></option>
+                                <option class="" value="12"><phrase>$vbphrase[timezone_gmt_plus_1200]</phrase></option>
                             </select>
                         </div>
  
@@ -270,7 +269,7 @@
 						<input type="checkbox"
 							id="receive-emails-from-administrators"
 							name="receive_emails_from_administrators" $default_email_from_administrators  /> 
-							Receive emails from Administrators.
+							<phrase>$vbphrase[receive_email_from_bulletin_board_staff]</phrase>
 						</label>
 
 						<div class="clear"></div>
@@ -279,7 +278,7 @@
 						    checked="checked"
 							id="receive-emails-from-other-members"
 							name="receive_emails_from_other_members"  $default_email_from_members /> 
-							    Receive emails from other members.
+							    <phrase>$vbphrase[receive_email_from_other_members]</phrase>
 						</label>
 
 						<div class="clear clear_20"></div>
@@ -716,7 +715,7 @@
          
                             
                             <div class="grid_4 no-margin" id="email-wrapper">
-				                <label for="email">Email</label>
+				                <label for="email"><phrase>$vbphrase[email]</phrase></label>
 				                <input class="" id="email" title="Email" value=""
 					                autocomplete="off" type="text" name ="email"
 					                 />
@@ -845,12 +844,12 @@
 							            id="already-have-an-account-form"
 							            method="POST"
 							            action=""> -->
-							            <label for="username">Username</label>
+							            <label for="username"><phrase>$vbphrase[user_name]</phrase></label>
 							            <input class="" id="username" 
 							                title="Username" value=""
 								            autocomplete="off" type="text"
 								            name="username"  /> 
-								        <label for="password">Password</label>
+								        <label for="password"><phrase>$vbphrase[password]</phrase></label>
                                         <input class=""
 								            id="password" title="Password" value="" 
 								            autocomplete="off"
@@ -1071,7 +1070,7 @@ $header
 					publicly.</p>
 
 				<div class="clear clear_20"></div>
-                <label for="email">Email</label>
+                <label for="email"><phrase>$vbphrase[email]</phrase></label>
 				<div class="grid_6 no-margin" id="email-wrapper">
 				    <input class="" id="email" name="email" title="Email"
 					    value="$fbEmail" autocomplete="off" type="text" 
@@ -1083,7 +1082,7 @@ $header
 				
 				<div class="clear "></div>
 				
-				<label for="username">Username</label>
+				<label for="username"><phrase>$vbphrase[user_name]</phrase></label>
 				
 				<div class="grid_6 no-margin" id="username-wrapper">
 				    <input
@@ -1125,8 +1124,7 @@ $header
 					       id="terms-and-conditions" name="terms-and-conditions" 
 					         />
 				        <span class="small light_grey span2 no-margin"> Yes, I agree with the
-						    <a href="$php_self#info" class="link_blue" rel="facebox">Terms
-							    &amp; Conditions.</a>
+						    <a href="$php_self#info" class="link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 				        </span>
 				    </label>
 				    <span class="error-label small" id="terms_and_conditions-error-label"></span>
@@ -1158,7 +1156,7 @@ $header
                 <div class="clear"></div>
                 <span id="password-member-error-label" class="error-label no-margin  "></span>
                 <div class="clear"></div>
-                <label for="username-member">Username</label>
+                <label for="username-member"><phrase>$vbphrase[user_name]</phrase></label>
                 
                 <div class="grid_4 no-margin" id="username-member-wrapper">
                     <input class="" id="username-member" name="username-member"
@@ -1167,7 +1165,7 @@ $header
                            maxlength="$vboptions[maxuserlength]"  /> 
                 </div>
                  
-                <label for="password-member">Password</label>
+                <label for="password-member"><phrase>$vbphrase[password]</phrase></label>
                 
                 <div class="grid_4 no-margin" id="password-member-wrapper">
                     <input class=""
@@ -1203,7 +1201,7 @@ $header
 			<thead>
 				<tr>
 					<th>
-						<h1 class="terms-and-conditions">Terms &amp; Conditions</h1>
+						<h1 class="terms-and-conditions"><phrase>$vbphrase[forum_rules]</phrase></h1>
 					</th>
 				</tr>
 			</thead>
@@ -1225,11 +1223,11 @@ $header
 							<div class="pull-left">
 								<button class="btn close-facebox"  
 								id="cancel_terms_and_conditions" 
-								onclick="closeTnC();">Cancel</button>
+								onclick="closeTnC();"><phrase>$vbphrase[cancel]</phrase></button>
 							</div>
 							<div class="pull-right">
 								<button class="btn btn-primary span2 close-facebox"
-									onclick="closeTnCAccept();">Accept</button>
+									onclick="closeTnCAccept();"><phrase>$vbphrase[accept]</phrase></button>
 							</div>
 						</div>
 					</td>
@@ -1260,7 +1258,7 @@ $header
 <head>
     
      
-    <title>Step 2 - Site Account - $vboptions[bbtitle]</title>
+    <title>Choose Your Username and Password - $vboptions[bbtitle]</title>
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" >    
     <![endif]-->
@@ -1324,9 +1322,9 @@ $header
 			<div class="grid_3" id="create-site-account">
 				<div class="clear"></div>
                 <div class="grid_7 no-margin" id="username-wrapper">
-				    <label for="username">Username</label>
+				    <label for="username"><phrase>$vbphrase[user_name]</phrase></label>
 				    <input class="" id="username" name="username"
-				           title="Username" value="$suggested_username"
+				           title="<phrase>$vbphrase[user_name]</phrase>" value="$suggested_username"
 					       autocomplete="off" type="text" maxlength="$vboptions[maxuserlength]"  />
 					<span class="error-label" id="username-error-label"></span> 
 				</div>
@@ -1336,9 +1334,9 @@ $header
 				</span>
 				
 				<div class="grid_7 no-margin" id="password-wrapper">
-				    <label for="password">Password</label>	
+				    <label for="password"><phrase>$vbphrase[password]</phrase></label>	
 				    <input class=""
-					       id="password" name="password" title="Password" 
+					       id="password" name="password" title="<phrase>$vbphrase[password]</phrase>" 
 					       value="" autocomplete="off"
 					       type="password"  /> 
 					<span class="error-label" id="password-error-label"></span>
@@ -1347,9 +1345,9 @@ $header
 				<div class="clear clear_10"></div>
 				
 				<div class="grid_7 no-margin" id="confirm-password-wrapper">
-				    <label for="confirm-password">Confirm Password</label>
+				    <label for="confirm-password"><phrase>$vbphrase[confirm_password]</phrase></label>
 				    <input class="" id="confirm-password" name="confirm-password"
-					       title="Confirm Password" value="" 
+					       title="<phrase>$vbphrase[confirm_password]</phrase>" value="" 
 					       autocomplete="off"
 					       type="password"  /> 
 				    <span class="error-label" id="confirm-password-error-label"></span>    
@@ -1379,7 +1377,7 @@ $header
 				            title="CAPTCHA"  />
 				            
 				        <span class="cursor-pointer small link_blue" id="refresh-captcha">
-				            Refresh Image   <span id="ajax-loader-secondary"></span> 
+				            <phrase>$vbphrase[refresh_image]</phrase>   <span id="ajax-loader-secondary"></span> 
 				        </span>
 				        
      
@@ -1395,7 +1393,7 @@ $header
 					         />
 					    <span class="small light_grey">
 					       Yes, I agree with the
-					       <a href="$php_self#info" class="link_blue" rel="facebox">Terms &amp; Conditions.</a>
+					       <a href="$php_self#info" class="link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 					    </span>
 				    </label>
 				    <span class="error-label" id="terms-and-conditions-error-label"></span>
@@ -1427,7 +1425,7 @@ $header
 				<tr>
 					<th>
 						<h1 class="terms-and-conditions">
-							Terms &amp; Conditions
+							<phrase>$vbphrase[forum_rules]</phrase>
 							</h1>
 					</th>
 				</tr>
@@ -1448,12 +1446,12 @@ $header
 						<div id="action-icons-container">
 							<div class="pull-left">
 								<button class="btn close-facebox" href="$php_self#cancel"
-									onclick="closeTnC();" id="cancel_terms_and_conditions">Cancel</button>
+									onclick="closeTnC();" id="cancel_terms_and_conditions"><phrase>$vbphrase[cancel]</phrase></button>
 							</div>
 							<div class="pull-right">
 								<button class="btn btn-primary span2 close-facebox"
 									onclick="closeTnCAccept();" href="$php_self#accept"
-									id="accept_terms_and_conditions">Accept</button>
+									id="accept_terms_and_conditions"><phrase>$vbphrase[accept]</phrase></button>
 							</div>
 						</div>
 					</td>

@@ -5,113 +5,6 @@ set_include_path(
         get_include_path() . PATH_SEPARATOR . realpath('../../../')
                 . PATH_SEPARATOR . realpath('../../../includes/'));
 
-/**
- *   Output valid JSON headers
- */
-function json_headers($arr = null)
-{
-    header('Content-type: text/json');
-    header('Content-type: application/json');
-    echo json_encode($arr);
-}
-
-/**
- *   Avoids getting the download dialog in IE for some JSON requests
- */
-function json_headers_ie_support($arr = null)
-{
-    header('Pragma: no-cache');
-    header('Cache-Control: private, no-cache');
-    header('Content-Disposition: inline; filename="files.json"');
-    echo json_encode($arr);
-}
-
-/**
- *   Checks for a valid date
- */
-function check_date($date)
-{
-    if (strlen($date) == 10) {
-        $pattern = '/\.|\/|-/i'; // . or / or -
-        preg_match($pattern, $date, $char);
-
-        $array = preg_split($pattern, $date, -1, PREG_SPLIT_NO_EMPTY);
-
-        if (strlen($array[2]) == 4) {
-            // dd.mm.yyyy || dd-mm-yyyy
-            if ($char[0] == "." || $char[0] == "-") {
-                $month = $array[1];
-                $day = $array[0];
-                $year = $array[2];
-            }
-            // mm/dd/yyyy    # Common U.S. writing
-            if ($char[0] == "/") {
-                $month = $array[0];
-                $day = $array[1];
-                $year = $array[2];
-            }
-        }
-        // yyyy-mm-dd    # iso 8601
-        if (strlen($array[0]) == 4 && $char[0] == "-") {
-            $month = $array[1];
-            $day = $array[2];
-            $year = $array[0];
-        }
-        if (checkdate($month, $day, $year)) { //Validate Gregorian date
-            return TRUE;
-
-        } else {
-            return FALSE;
-        }
-    } else {
-        return FALSE; // more or less 10 chars
-    }
-}
-
-/*
-    Setup temp dir for file upload if not specified
- */
-if (!function_exists('sys_get_temp_dir')) {
-    function sys_get_temp_dir()
-    {
-        if (!empty($_ENV['TMP'])) {
-            return realpath($_ENV['TMP']);
-        }
-        if (!empty($_ENV['TMPDIR'])) {
-            return realpath($_ENV['TMPDIR']);
-        }
-        if (!empty($_ENV['TEMP'])) {
-            return realpath($_ENV['TEMP']);
-        }
-        $tempfile = tempnam(__FILE__, '');
-        if (file_exists($tempfile)) {
-            unlink($tempfile);
-            return realpath(dirname($tempfile));
-        }
-        return null;
-    }
-}
-
-/**
- * get previous URL visited 
- **/
-function prev_url()
-{
-    global $vbulletin;
-
-    $string = $_SESSION['site_registration']['initial_page'];
-    $search_str = $vbulletin->options['bburl'];
-
-    if (empty($_SESSION['site_registration']['initial_page'])
-            || stristr($string, $search_str) === FALSE) {
-        $url = "index.php";
-    } else {
-        $url = $_SESSION['site_registration']['initial_page'];
-    }
-
-    return $url;
-}
-
 /*
     Script setup
  */
@@ -121,10 +14,10 @@ error_reporting(E_ALL & ~E_NOTICE & ~8192);
 define('CSRF_PROTECTION', true);
 define('THIS_SCRIPT', 'site-registration');
 
+require_once("site_registration_functions.php");
 require_once("rfc822.php");
 //include required files
 chdir(realpath('../../../'));
-
 require_once('global.php');
 require_once('functions_user.php');
 require_once('functions_misc.php');
@@ -251,10 +144,17 @@ case 'complete_your_profile':
         if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
             $name = $_FILES['photoimg']['name'];
             $size = $_FILES['photoimg']['size'];
+            
+            
 
             if (strlen($name)) {
+                
                 list($txt, $ext) = explode(".", $name);
+                
+                //$maxuploadsize = fetch_max_uploadsize($ext);
+
                 if (in_array($ext, $valid_formats)) {
+                
                     if ($size < (1024 * 100)) {
                         $actual_image_name = time() . mt_rand() . "." . $ext;
 
@@ -266,24 +166,20 @@ case 'complete_your_profile':
 
                         list($width, $height, $type, $attr) = getimagesize(
                                 $uploaded);
+                                
+                       $max_width = $vbulletin->options['attachthumbssize']; 
+                       $max_height = $vbulletin->options['attachthumbssize'];
 
-                        if ($width > 100) {
+                        if ($width > $max_width || $height > $max_height) {
                             $valid_entries = FALSE;
                             $error_type = "photoimg";
                             $messages['fields'][] = $error_type;
-                            $messages['errors'][] = "Image width too large (try 100x100).";
+                            $messages['errors'][] = fetch_error('upload_remoteimage_toolarge', $max_width, $max_height, $width, $height);
                             @unlink($uploaded);
                             $error_w = TRUE;
                         }
 
-                        if ($height > 100) {
-                            $valid_entries = FALSE;
-                            $error_type = "photoimg";
-                            $messages['fields'][] = $error_type;
-                            $messages['errors'][] = "Image height too large (try 100x100).";
-                            @unlink($uploaded);
-                            $error_h = TRUE;
-                        }
+ 
 
                         if (!$error_h && !$error_w && $valid_entries) {
                             //image is valid copy to DB
@@ -326,23 +222,24 @@ case 'complete_your_profile':
                         }
 
                     } else {
-                        $valid_entries = FALSE;
+                        $valid_entries = FALSE; 
                         $error_type = "photoimg";
                         $messages['fields'][] = $error_type;
-                        $messages['errors'][] = "Image size too large (try < 100kb).";
+                        $messages['errors'][] = fetch_error('upload_remoteimage_toolarge', $max_width, $max_height, $width, $height);
+                        
                     }
                 } else {
                     $valid_entries = FALSE;
                     $error_type = "photoimg";
                     $messages['fields'][] = $error_type;
-                    $messages['errors'][] = "Invalid format: jpg, png, gif, bmp, jpeg only.";
+                    $messages['errors'][] = fetch_error('upload_invalid_image_extension', $ext);
                 }
 
             } else {
                 $valid_entries = FALSE;
                 $error_type = "photoimg";
                 $messages['fields'][] = $error_type;
-                $messages['errors'][] = "Please select an image.";
+                $messages['errors'][] = fetch_error('upload_invalid_file');
             }
         }
     } else {
@@ -527,7 +424,9 @@ case 'validate_site_account_details':
         $userdata->error('fieldmissing');
         $error_type = "terms-and-conditions";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Please agree to the Terms & Conditions.";
+        $messages['errors'][] = "Please agree to the " . fetch_phrase('forum_rules', 'register');
+        
+        
     }
 
     if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
@@ -571,7 +470,7 @@ case 'validate_site_account_details':
         $valid_entries = FALSE;
         $error_type = "username";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Sorry, this username is already taken.";
+        $messages['errors'][] = fetch_error('usernametaken', $user_exists['username'], '');
     }
 
     if (fetch_require_hvcheck('register')) {
@@ -583,7 +482,7 @@ case 'validate_site_account_details':
 
             $error_type = "security-code";
             $messages['fields'][] = $error_type;
-            $messages['errors'][] = "Invalid security code.";
+            $messages['errors'][] = fetch_error('humanverify_image_wronganswer');
         }
     }
 
@@ -733,7 +632,8 @@ case 'validate_site_account_details':
                 eval(fetch_email_phrases('activateaccount'));
 
                 if (empty($subject)) {
-                    $subject = "Please activate your account";
+                    $subject = fetch_error('activate_your_account');
+
                 }
 
                 vbmail($email, $subject, $message, false);
@@ -782,7 +682,7 @@ case 'resend_email':
             eval(fetch_email_phrases('activateaccount'));
 
             if (empty($subject)) {
-                $subject = "Please activate your account";
+                $subject = fetch_error('activate_your_account');
             }
 
             vbmail($email, $subject, $message, true);
@@ -825,7 +725,7 @@ case 'create_site_account_first_step':
         if (empty($vbulletin->GPC['birthdate'])) {
             $valid_entries = FALSE;
             $userdata->error('fieldmissing');
-            $messages['errors'][] = $message = "Invalid date.";
+            $messages['errors'][] = $message = fetch_error('birthdayfield'); 
             $messages['fields'][] = $error_type = "datepicker";
 
         } else {
@@ -858,7 +758,7 @@ case 'create_site_account_first_step':
                                     $vbulletin->GPC['birthdate'], 1);
                         }
                         $valid_entries = FALSE;
-                        $messages['errors'][] = $message = "You must be over 13 to register.";
+                        $messages['errors'][] = $message = fetch_error('under_thirteen_registration_denied');  
                         $messages['fields'][] = $error_type = "datepicker";
                     } else {
                         if ($vbulletin->options['checkcoppa']) {
@@ -875,7 +775,7 @@ case 'create_site_account_first_step':
 
             } else {
                 $valid_entries = FALSE;
-                $messages['errors'][] = $message = "Invalid date.";
+                $messages['errors'][] = $message = fetch_error('birthdayfield'); 
                 $messages['fields'][] = $error_type = "datepicker";
             }
 
@@ -901,7 +801,7 @@ case 'create_site_account_first_step':
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
-            $messages['errors'][] = $message = "Invalid email address. No MX records found for domain.";
+            $messages['errors'][] = $message =  fetch_error('bademail') .  " No MX records found for domain.";
             $messages['fields'][] = $error_type = "email";
 
         } else {
@@ -925,7 +825,7 @@ case 'create_site_account_first_step':
 
                 if ($db->num_rows($user_exists)) {
                     $valid_entries = FALSE;
-                    $messages['errors'][] = $message = "The email address you entered is already in use.";
+                    $messages['errors'][] = $message = fetch_error('emailtaken', ''); 
                     $messages['fields'][] = $error_type = "email";
                 }
             }
@@ -934,7 +834,7 @@ case 'create_site_account_first_step':
 
     } else {
         $valid_entries = FALSE;
-        $messages['errors'][] = $message = "Invalid email.";
+        $messages['errors'][] = $message = fetch_error('bademail');
         $messages['fields'][] = $error_type = "email";
     }
 
@@ -1030,7 +930,7 @@ default:
         if (count($userdata->errors) > 1) {
             $message = $userdata->errors;
         } else {
-            $message = "Sorry please check your username and password";
+            $message = "Sorry, please check your username and password.";
         }
 
     } else {
@@ -1112,26 +1012,9 @@ default:
 
     }
 
-    //rewrite message
-
-    $message = strip_tags($message);
-
-    $search[0] = "/You have entered an invalid username or password./";
-    $replace[0] = "<b>You have entered an invalid username or password.</b>";
-
-    $search[1] = "/Please press the back button, enter the correct details and try again./";
-    $replace[1] = "";
-
-    $search[2] = "/Don't forget that the password is case sensitive./";
-    $replace[2] = "Your password is case sensitive.";
-
-    $search[3] = "/Forgotten your password\? Click here\!/";
-    $replace[3] = "<br /><br />";
-
-    $search[4] = "/out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes./";
-    $replace[4] = "out of 5 login attempts, and you will be unable to log in for 15 minutes after all five have been used.";
-
-    $message = preg_replace($search, $replace, $message);
+    
+    
+    $message = rewrite_error($message);
 
     $arr = array("valid_login" => $valid_login, "message" => $message,
             "url" => $url);
@@ -1167,6 +1050,7 @@ case 'activate':
         $error_type = "username";
         $messages['fields'][] = $error_type;
 
+        //maybe error is too large and we need to cut it?
         if (strlen($userdata->errors[0]) > 45) {
             $messages['errors'][] = "The username you chose is not valid.";
         } else {
@@ -1175,14 +1059,7 @@ case 'activate':
 
     }
 
-    /*if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
-        $valid_entries = FALSE;
-    
-        $error_type = "username";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = "The username you chose is not valid.";
-    
-    }*/
+
 
     //check if username already exists on DB
     $user_exists = $db
@@ -1198,17 +1075,16 @@ case 'activate':
         $valid_entries = FALSE;
         $error_type = "username";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Sorry, this username is already taken.";
+        $messages['errors'][] = fetch_error('usernametaken', $user_exists['username'], '');
     }
 
     if (empty($vbulletin->GPC['terms_and_conditions'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $messages['errors'][] = $message = "Please agree to the Terms & Conditions.";
+        $messages['errors'][] = $message = "Please agree to the " . fetch_phrase('forum_rules', 'register');  
         $messages['fields'][] = $error_type = "terms_and_conditions";
     }
 
-    //$regexp = '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
 
     //validate email
     if (is_valid_email_address($vbulletin->GPC['email'])) {
@@ -1218,11 +1094,11 @@ case 'activate':
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
-            $messages['errors'][] = $message = "Invalid email address. No MX records found for domain.";
+            $messages['errors'][] = $message = fetch_error('bademail') .  " No MX records found for domain.";
             $messages['fields'][] = $error_type = "email";
 
         } else {
-            //if (!$vbulletin->options['allowmultiregs']) {
+            
             if ($vbulletin->options['requireuniqueemail']) {
                 //check if email already exists on DB
                 $user_exists = $db
@@ -1242,16 +1118,16 @@ case 'activate':
 
                 if ($db->num_rows($user_exists)) {
                     $valid_entries = FALSE;
-                    $messages['errors'][] = $message = "The email address you entered is already in use.";
+                    $messages['errors'][] = $message =  fetch_error('emailtaken', ''); 
                     $messages['fields'][] = $error_type = "email";
                 }
             }
-            //}
+            
         }
 
     } else {
         $valid_entries = FALSE;
-        $messages['errors'][] = $message = "Invalid email";
+        $messages['errors'][] = $message = fetch_error('bademail');
         $messages['fields'][] = $error_type = "email";
     }
 
@@ -1272,7 +1148,7 @@ case 'activate':
         if (empty($vbulletin->GPC['birthdate'])) {
             $valid_entries = FALSE;
             $userdata->error('fieldmissing');
-            $messages['errors'][] = $message = "Please enter a valid date.";
+            $messages['errors'][] = $message = fetch_error("birthdayfield");
             $messages['fields'][] = $error_type = "datepicker";
         } else {
             //validate if 13+
@@ -1304,7 +1180,7 @@ case 'activate':
                                     $vbulletin->GPC['birthdate'], 1);
                         }
                         $valid_entries = FALSE;
-                        $messages['errors'][] = $message = "You must be over 13 to register.";
+                        $messages['errors'][] = $message = fetch_error("under_thirteen_registration_denied");
                         $messages['fields'][] = $error_type = "datepicker";
                     } else {
                         if ($vbulletin->options['checkcoppa']) {
@@ -1321,7 +1197,7 @@ case 'activate':
 
             } else {
                 $valid_entries = FALSE;
-                $messages['errors'][] = $message = "Invalid date.";
+                $messages['errors'][] = $message = fetch_error("birthdayfield");
                 $messages['fields'][] = $error_type = "datepicker";
             }
         }
@@ -1435,7 +1311,7 @@ case 'activate':
             $activationid = $data["activationid"];
         }
 
-        if (strlen($activationid) === 40) {
+        if (!empty($activationid)) {
             $url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
         } else {
             $url = prev_url();
@@ -1606,7 +1482,7 @@ case "linkaccount":
 
                     $activationid = $data["activationid"];
 
-                    if (strlen($activationid) == 40) {
+                    if (!empty($activationid)) {
                         $url = "register.php?a=act&u=" . $userid . "&i="
                                 . $activationid;
                     } else {
@@ -1667,24 +1543,7 @@ case "linkaccount":
                             $vbulletin->options['bburl'],
                             $vbulletin->session->vars['sessionurl'], $strikes);
 
-                    $message = strip_tags($message);
-
-                    $search[0] = "/You have entered an invalid username or password./";
-                    $replace[0] = "<b>You have entered an invalid username or password.</b>";
-
-                    $search[1] = "/Please press the back button, enter the correct details and try again./";
-                    $replace[1] = "";
-
-                    $search[2] = "/Don't forget that the password is case sensitive./";
-                    $replace[2] = "Your password is case sensitive.";
-
-                    $search[3] = "/Forgotten your password\? Click here\!/";
-                    $replace[3] = "<br /><br />";
-
-                    $search[4] = "/out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes./";
-                    $replace[4] = "out of 5 login attempts, and you will be unable to log in for 15 minutes after all five have been used.";
-
-                    $message = preg_replace($search, $replace, $message);
+                    $message = rewrite_error($message);
 
                     $messages['errors'][] = $message;
                     $messages['fields'][] = $error_type = "username-member";

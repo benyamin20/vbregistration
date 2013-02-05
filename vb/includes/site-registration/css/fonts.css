@@ -15,6 +15,11 @@ P/*
     text-decoration:underline;
 }
 
+#container .btn a:hover{
+    text-decoration:none;
+}
+
+
 #container p  {
 	font-family: Helvetica, Arial, 'sans-serif' !important;
 
