@@ -15,8 +15,8 @@ P/*
     text-decoration:underline;
 }
 
-#container .btn a:hover{
-    text-decoration:none;
+.btn a:hover{
+    text-decoration:none !important;
 }
 
 

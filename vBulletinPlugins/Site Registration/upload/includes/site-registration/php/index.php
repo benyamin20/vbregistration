@@ -482,7 +482,7 @@ case 'validate_site_account_details':
 
             $error_type = "security-code";
             $messages['fields'][] = $error_type;
-            $messages['errors'][] = fetch_error('humanverify_image_wronganswer');
+            $messages['errors'][] = "Invalid Security Code"; //fetch_error('humanverify_image_wronganswer');
         }
     }
 
