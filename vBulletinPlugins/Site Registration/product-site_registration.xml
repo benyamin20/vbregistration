@@ -945,7 +945,23 @@
 </head>
 
 <body>
-	<p>You were not able to register</p>
+
+$header
+    </div></div></div> <!-- close header -->
+ 
+	<!-- main container -->
+	<div id="container-wrapper">
+	<div id="container" class="container_12 activate-account-container">
+ 
+		<!-- Site heading -->
+		<div id="site-heading" class="grid_12">
+			<span class="title_red"> Confirm your details </span>
+		</div>
+		<div class="clear clear_10"></div>
+		
+	    <p>Sorry, registration has been disabled by the administrator.</p>
+	</div>
+	</div>
 	
 	<!-- footer -->
     <div id="footer">
