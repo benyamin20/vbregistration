@@ -504,14 +504,16 @@ jQuery(document).ready(function (jQuery) {
         //bind enter event to already have an account fields
         jQuery("#username").enterKey(function () {
             jQuery("#login-button").trigger('click');
+ 
         });
 
         jQuery("#password").enterKey(function () {
             jQuery("#login-button").trigger('click');
+            
         });
 
         //submit and validate authentication
-        jQuery("#login-button").bind('click', function () {
+        jQuery("#login-button").bind('click', function (e) {
             jQuery('#have-account-error').empty();
             var form = jQuery('#already-have-an-account-form');
             var username = escape(jQuery("#username").val());
@@ -575,8 +577,14 @@ jQuery(document).ready(function (jQuery) {
 
             });
 
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
 
         });
+        
+        
+        
     }
 
 

@@ -851,7 +851,7 @@
 								            name="username"  /> 
 								        <label for="password"><phrase>$vbphrase[password]</phrase></label>
                                         <input class=""
-								            id="password" title="Password" value="" 
+								            id="password" title="<phrase>$vbphrase[password]</phrase>" value="" 
 								            autocomplete="off"
 								            type="password"  />
 							            <div class="clear clear_15"></div>
