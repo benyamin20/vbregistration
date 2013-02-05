@@ -897,7 +897,7 @@
 <!DOCTYPE html>
 <html> 
 <head>
-    <title>Confirm You Details - $vboptions[bbtitle]</title>
+    <title>Confirm Your Details - $vboptions[bbtitle]</title>
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" >    
     <![endif]-->
@@ -1832,6 +1832,14 @@ $header
 				                if(!$username_alt_exists){
 				                    $suggested_username  = $username_alt;
 				                }
+                            }
+                            
+                            $userdata_validate = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+                            
+                            if (!$userdata_validate->verify_username($userdata_validate)) {
+                                $suggested_username = "";
+                            }else{
+                                
                             } 
                             
                             header("X-UA-Compatible: IE=Edge");
