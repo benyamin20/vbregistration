@@ -890,6 +890,73 @@
     </body>
     </html>
 		]]></template>
+				<template name="site_reg_sign-in-step-2-facebook-stop" 
+		    templatetype="template" date="1352855133" 
+		    username="fromero" version="1.0"><![CDATA[
+<!DOCTYPE html>
+<html> 
+<head>
+    <title>Confirm You Details - $vboptions[bbtitle]</title>
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" >    
+    <![endif]-->
+    
+    <link rel="stylesheet" type="text/css" media="all"
+        href="includes/site-registration/960/css/min/960.css?v=$vboptions[simpleversion]" />
+    <link rel="stylesheet" media="screen"
+        href="includes/site-registration/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
+        
+    <!--[if lt IE 8]><link rel="stylesheet" href="includes/site-registration/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
+    <!--[if IE 8]><link rel="stylesheet" href="includes/site-registration/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
+    
+    <link rel="stylesheet" href="includes/site-registration/css/fonts.css?v=$vboptions[simpleversion]" />
+ 
+    <link media="screen" rel="stylesheet" type="text/css"
+        href="includes/site-registration/facebox/facebox.css?v=$vboptions[simpleversion]" />
+    <link rel="stylesheet" href="includes/site-registration/css/styles.css?v=$vboptions[simpleversion]" />
+    
+
+    <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="includes/site-registration/css/all-ie-only.css?v=$vboptions[simpleversion]" />
+    <![endif]-->
+    
+ 
+
+
+     $headinclude
+ 
+    <link rel="stylesheet" href="includes/site-registration/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
+ 
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    <script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+    <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
+    <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
+    <!--[if lt IE 9]> 
+        <script src="includes/site-registration/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+    <![endif]--> 
+
+</head>
+
+<body>
+	<p>You were not able to register</p>
+	
+	<!-- footer -->
+    <div id="footer">
+        <div><div><div class="inner-footer">
+        $footer
+    </div>    
+    <!-- footer -->
+    
+</body>
+</html>
+		
+		]]></template>
+
 		<template name="site_reg_sign-in-step-2-facebook" 
 		    templatetype="template" date="1352855133" 
 		    username="fromero" version="1.0"><![CDATA[
@@ -1764,7 +1831,11 @@
 					    	$fbPicture = $_SESSION['site_registration']["fbPicture"];
 
                             header("X-UA-Compatible: IE=Edge");
-			        		eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+                            if($vbulletin->options['allowregistration']) {
+			        			eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
+			        		} else {
+			        			eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook-stop') . '");');
+			        		}
 			        	} else {
 			        		header("location: register.php");
 			        	}
