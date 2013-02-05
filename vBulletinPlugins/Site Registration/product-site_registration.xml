@@ -728,7 +728,7 @@
 					                <span class="add-on"> <i class="icon-calendar"></i>
 					                </span> 
                                     <input class="fix_input_width ie-align-picker" id="datepicker" type="text"
-						                 value="" autocomplete="off" 
+						                 value="$_COOKIE['site_registration_coppaage']" autocomplete="off" 
 						                title="Birth Date: You must be over 13 to register."
 						                alt="Birth Date: You must be over 13 to register."
 						                rel="tooltip"

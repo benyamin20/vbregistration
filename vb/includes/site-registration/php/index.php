@@ -92,13 +92,13 @@ if (!function_exists('sys_get_temp_dir')) {
     }
 }
 
-
 /**
-* get previous URL visited 
-**/
-function prev_url(){
+ * get previous URL visited 
+ **/
+function prev_url()
+{
     global $vbulletin;
-    
+
     $string = $_SESSION['site_registration']['initial_page'];
     $search_str = $vbulletin->options['bburl'];
 
@@ -111,7 +111,6 @@ function prev_url(){
 
     return $url;
 }
-
 
 /*
     Script setup
@@ -439,24 +438,6 @@ case 'complete_your_profile':
 
     if ($valid_entries) {
         //update who can contact you
-        /*
-        $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
-                . $vbulletin->GPC['adminemail']
-                . " WHERE NOT (options & "
-                . $vbulletin->GPC['adminemail']
-                . ")";
-        
-        $vbulletin->db->query_write($query);
-        
-        $query = "UPDATE " . TABLE_PREFIX . "user SET options = options + "
-                . $vbulletin->GPC['showemail']
-                . " WHERE NOT (options & "
-                . $vbulletin->GPC['showemail']
-                . ")";
-        
-        $vbulletin->db->query_write($query);
-        
-         */
 
         $user_data = &datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
         $vbulletin->userinfo = fetch_userinfo($userid);
@@ -561,7 +542,6 @@ case 'validate_site_account_details':
         $messages['errors'][] = "Passwords don't match";
     }
 
-    //$regex_username = '/^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/';
     unset($userdata->errors);
     if (!$userdata->verify_username($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
@@ -576,15 +556,6 @@ case 'validate_site_account_details':
         }
 
     }
-
-    /*if (strlen($vbulletin->GPC['username']) > $vbulletin->options['maxuserlength']) {
-        $valid_entries = FALSE;
-    
-        $error_type = "username";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = "The username you chose is not valid.";
-    
-    }*/
 
     //check if username already exists on DB
     $user_exists = $db
@@ -767,31 +738,24 @@ case 'validate_site_account_details':
 
                 vbmail($email, $subject, $message, false);
             }
-            
-            
-            if ($newusergroupid == 2)
-			{
-				if ($vbulletin->options['welcomemail'])
-				{
-					eval(fetch_email_phrases('welcomemail'));
-					vbmail($email, $subject, $message);
-				}
-			}
 
-
+            if ($newusergroupid == 2) {
+                if ($vbulletin->options['welcomemail']) {
+                    eval(fetch_email_phrases('welcomemail'));
+                    vbmail($email, $subject, $message);
+                }
+            }
 
             if ($vbulletin->options['verifyemail']) {
                 //Redirect user to Activation Screen
                 $url = "register.php?step=activate";
-            }else{
+            } else {
                 //take user back to where he started
-                
-               $url = prev_url();
- 
+
+                $url = prev_url();
+
             }
 
-
-            
         }
 
     }
@@ -884,29 +848,29 @@ case 'create_site_account_first_step':
                             AND mktime(0, 0, 0, $month, $day, $year)
                                     > mktime(0, 0, 0, $current['month'],
                                             $current['day'],
-                                            $current['year'] - 13)) {
-                        $valid_entries = FALSE;
-                        $messages['errors'][] = $message = "You must be over 13 to register";
-                        $messages['fields'][] = $error_type = "datepicker";
-                        //fetch_error('under_thirteen_registration_denied');
-
+                                            $current['year'] - 13)) { // this user is >13
+                        $_SESSION['site_registration']['coppauser'] = false;
+                    } else if ($vbulletin->options['usecoppa'] == 2) {
                         if ($vbulletin->options['checkcoppa']) {
                             vbsetcookie('coppaage',
                                     $month . '-' . $day . '-' . $year, 1);
+                            vbsetcookie('site_registration_coppaage',
+                                    $vbulletin->GPC['birthdate'], 1);
                         }
-
-                        if ($vbulletin->options['usecoppa'] == 2) {
-                            $valid_entries = FALSE;
-                            $messages['errors'][] = $message = "You must be over 13 to register";
-                            $messages['fields'][] = $error_type = "datepicker";
-                            //fetch_error('under_thirteen_registration_denied');
-                        }
-
-                        $_SESSION['site_registration']['coppauser'] = true;
-
+                        $valid_entries = FALSE;
+                        $messages['errors'][] = $message = "You must be over 13 to register.";
+                        $messages['fields'][] = $error_type = "datepicker";
                     } else {
-                        $_SESSION['site_registration']['coppauser'] = false;
+                        if ($vbulletin->options['checkcoppa']) {
+                            vbsetcookie('coppaage',
+                                    $month . '-' . $day . '-' . $year, 1);
+                            vbsetcookie('site_registration_coppaage',
+                                    $vbulletin->GPC['birthdate'], 1);
+                        }
+                        $_SESSION['site_registration']['coppauser'] = true;
                     }
+                } else {
+                    $_SESSION['site_registration']['coppauser'] = false;
                 }
 
             } else {
@@ -942,29 +906,29 @@ case 'create_site_account_first_step':
 
         } else {
             //if (!$vbulletin->options['allowmultiregs']) {
-                if ($vbulletin->options['requireuniqueemail']) {
-                    //check if email already exists on DB
-                    $user_exists = $db
-                            ->query_read_slave(
-                                    "
+            if ($vbulletin->options['requireuniqueemail']) {
+                //check if email already exists on DB
+                $user_exists = $db
+                        ->query_read_slave(
+                                "
                         SELECT userid, username, email, languageid
                         FROM " . TABLE_PREFIX
-                                            . "user
+                                        . "user
                         WHERE UPPER(email) = '"
-                                            . strtoupper(
-                                                    $db
-                                                            ->escape_string(
-                                                                    $vbulletin
-                                                                            ->GPC['email']))
-                                            . "'
+                                        . strtoupper(
+                                                $db
+                                                        ->escape_string(
+                                                                $vbulletin
+                                                                        ->GPC['email']))
+                                        . "'
                     ");
 
-                    if ($db->num_rows($user_exists)) {
-                        $valid_entries = FALSE;
-                        $messages['errors'][] = $message = "The email address you entered is already in use.";
-                        $messages['fields'][] = $error_type = "email";
-                    }
+                if ($db->num_rows($user_exists)) {
+                    $valid_entries = FALSE;
+                    $messages['errors'][] = $message = "The email address you entered is already in use.";
+                    $messages['fields'][] = $error_type = "email";
                 }
+            }
             //}
         }
 
@@ -1133,14 +1097,11 @@ default:
             exec_unstrike_user($vbulletin->GPC['vb_login_username']);
             process_new_login('', '', '');
 
-            
-
             $url = prev_url();
 
-            if(preg_match("/register/i", $url)){
+            if (preg_match("/register/i", $url)) {
                 $url = "login.php?do=login";
             }
-
 
             unset($_SESSION['site_registration']['initial_page']);
 
@@ -1262,29 +1223,29 @@ case 'activate':
 
         } else {
             //if (!$vbulletin->options['allowmultiregs']) {
-                if ($vbulletin->options['requireuniqueemail']) {
-                    //check if email already exists on DB
-                    $user_exists = $db
-                            ->query_read_slave(
-                                    "
+            if ($vbulletin->options['requireuniqueemail']) {
+                //check if email already exists on DB
+                $user_exists = $db
+                        ->query_read_slave(
+                                "
                         SELECT userid, username, email, languageid
                         FROM " . TABLE_PREFIX
-                                            . "user
+                                        . "user
                         WHERE UPPER(email) = '"
-                                            . strtoupper(
-                                                    $db
-                                                            ->escape_string(
-                                                                    $vbulletin
-                                                                            ->GPC['email']))
-                                            . "'
+                                        . strtoupper(
+                                                $db
+                                                        ->escape_string(
+                                                                $vbulletin
+                                                                        ->GPC['email']))
+                                        . "'
                     ");
 
-                    if ($db->num_rows($user_exists)) {
-                        $valid_entries = FALSE;
-                        $messages['errors'][] = $message = "The email address you entered is already in use.";
-                        $messages['fields'][] = $error_type = "email";
-                    }
+                if ($db->num_rows($user_exists)) {
+                    $valid_entries = FALSE;
+                    $messages['errors'][] = $message = "The email address you entered is already in use.";
+                    $messages['fields'][] = $error_type = "email";
                 }
+            }
             //}
         }
 
@@ -1333,29 +1294,29 @@ case 'activate':
                             AND mktime(0, 0, 0, $month, $day, $year)
                                     > mktime(0, 0, 0, $current['month'],
                                             $current['day'],
-                                            $current['year'] - 13)) {
-                        $valid_entries = FALSE;
-                        $messages['errors'][] = $message = "You must be over 13 to register";
-                        $messages['fields'][] = $error_type = "datepicker";
-                        //fetch_error('under_thirteen_registration_denied');
-
+                                            $current['year'] - 13)) { // this user is >13
+                        $_SESSION['site_registration']['coppauser'] = false;
+                    } else if ($vbulletin->options['usecoppa'] == 2) {
                         if ($vbulletin->options['checkcoppa']) {
                             vbsetcookie('coppaage',
                                     $month . '-' . $day . '-' . $year, 1);
+                            vbsetcookie('site_registration_coppaage',
+                                    $vbulletin->GPC['birthdate'], 1);
                         }
-
-                        if ($vbulletin->options['usecoppa'] == 2) {
-                            $valid_entries = FALSE;
-                            $messages['errors'][] = $message = "You must be over 13 to register";
-                            $messages['fields'][] = $error_type = "datepicker";
-                            //fetch_error('under_thirteen_registration_denied');
-                        }
-
-                        $_SESSION['site_registration']['coppauser'] = true;
-
+                        $valid_entries = FALSE;
+                        $messages['errors'][] = $message = "You must be over 13 to register.";
+                        $messages['fields'][] = $error_type = "datepicker";
                     } else {
-                        $_SESSION['site_registration']['coppauser'] = false;
+                        if ($vbulletin->options['checkcoppa']) {
+                            vbsetcookie('coppaage',
+                                    $month . '-' . $day . '-' . $year, 1);
+                            vbsetcookie('site_registration_coppaage',
+                                    $vbulletin->GPC['birthdate'], 1);
+                        }
+                        $_SESSION['site_registration']['coppauser'] = true;
                     }
+                } else {
+                    $_SESSION['site_registration']['coppauser'] = false;
                 }
 
             } else {
@@ -1473,8 +1434,6 @@ case 'activate':
 
             $activationid = $data["activationid"];
         }
-        
-		
 
         if (strlen($activationid) === 40) {
             $url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
@@ -1502,11 +1461,11 @@ case 'activate':
             cache_permissions($vbulletin->userinfo, true);
 
             $vbulletin->session->save();
-            
-            if ($vbulletin->options['welcomemail']){
-			    eval(fetch_email_phrases('welcomemail'));
-			    vbmail($email, $subject, $message);
-		    }
+
+            if ($vbulletin->options['welcomemail']) {
+                eval(fetch_email_phrases('welcomemail'));
+                vbmail($email, $subject, $message);
+            }
         }
     }
 
