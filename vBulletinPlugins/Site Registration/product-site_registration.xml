@@ -1588,9 +1588,7 @@
                         session_start();
                     }
                     
-                    //if(empty($_SESSION['site_registration']['initial_page'])){
-                    //    $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
-                    //}
+                     
 
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
@@ -1795,68 +1793,22 @@
 			            
 			        }else{
 			            if(!(int)$vbulletin->userinfo['userid']){
-			            	$code      = $_REQUEST["code"];
-				        	$client_id = "304416966345499"; //$vbulletin->options['site_registration_settingsfb_fbapi'];  
-				        	
-				        	$scope          = $vbulletin->options['site_registration_settingsfb_scopefacebook'];
-				        	$client_secret  = $vbulletin->options['site_registration_settingsfb_secretfacebook'];
-
-				        	if(!$code) {
-				        		$_SESSION["state"] = md5(uniqid(rand(), TRUE)); 
-
-								$loginURL  = "https://www.facebook.com/dialog/oauth?";
-								$loginURL .= "client_id=$client_id&";
-								$loginURL .= "redirect_uri=". urlencode( $vbulletin->options['bburl'] ."/register.php?step=confirm-facebook-details") ."&";
-								$loginURL .= "state=". $_SESSION["state"] ."&";
-								$loginURL .= "scope=$scope&";
-								$loginURL .= "display=popup";			
-
-								$_SESSION["fbLoginURL"] = $loginURL;										
-				        	} 				        	
+			            				        	
                             
                             header("X-UA-Compatible: IE=Edge");
 			                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			            }else{
+			                if($vbulletin->options['allowmultiregs']){
+			                    header("X-UA-Compatible: IE=Edge");
+			                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			                }
 			            }
 			        }       
 			    ]]>
 			</phpcode>
 		</plugin>
-		<plugin active="0" executionorder="1">
-			<title>Site Registration | Sign In: Step 1 - count strikes</title>
-			<hookname>login_strikes</hookname>
-			<phpcode>
-			    <![CDATA[
-			        if (!session_id()) {
-                        session_start();
-                    }
-                    
-                    $_SESSION['site_registration']['login_strikes'] = $strikes; 
-                     
-			    ]]>
-			</phpcode>
-		</plugin>
-		<plugin active="0" executionorder="1">
-			<title>Site Registration | Sign In: Step 1 - Log In (open while logged out)</title>
-			<hookname>newthread_start</hookname>
-			<phpcode>
-			    <![CDATA[
-			        $php_self = $_SERVER['REQUEST_URI'];
-			        
-			        if (!session_id()) {
-                        session_start();
-                    }
-                    
-                    if(empty($_SESSION['site_registration']['initial_page'])){
-                        $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
-                    }
-                    
-			        if(!(int)$vbulletin->userinfo['userid']){
-			            header("Location: register.php?ref=reg-new-thread");
-			        }
-			         
-			    ]]>
-			</phpcode>
-		</plugin>
+
+
 		<plugin active="1" executionorder="1">
 			<title>Site Registration | Display Registration page when we get no permissions error.</title>
 			<hookname>error_nopermission</hookname>
@@ -1945,36 +1897,6 @@
 			        
 			            header("Location: register.php?ref=$reg_ref");
 			        } 
-			    ]]>
-			</phpcode>
-		</plugin>
-		<plugin active="1" executionorder="1">
-			<title>Site Registration | New reply</title>
-			<hookname>newreply_start</hookname>
-			<phpcode>
-			    <![CDATA[
-			        $php_self = $_SERVER['REQUEST_URI'];
-			        
-			        if (!session_id()) {
-                        session_start();
-                    }
-                    
-                    if(empty($_SESSION['site_registration']['initial_page'])){
-                        $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
-                    } 
-
-                    
-			        if(!(int)$vbulletin->userinfo['userid']){
-			            if(isset($_REQUEST['noquote']) && $_REQUEST['noquote'] == 1 ){
-			                header("Location: register.php?ref=reg-post-reply");
-			            }else if(isset($_REQUEST['multiquote']) || isset($_REQUEST['vbulletin_multiquote']) ){
-			                header("Location: register.php?ref=reg-reply-multi-quote");
-			            }else{
-			                header("Location: register.php?ref=reg-reply-quote");
-			            }
-			            
-			        }
-			         
 			    ]]>
 			</phpcode>
 		</plugin>
@@ -2139,6 +2061,9 @@
 			    ]]>
 			</phpcode>
 		</plugin>
+		
+ 
+		
 	</plugins>
 	<phrases>
 		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
