@@ -954,11 +954,11 @@ $header
  
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red"> Confirm your details </span>
+			<span class="title_red">Sorry, registration has been disabled by the administrator.</span>
 		</div>
 		<div class="clear clear_10"></div>
 		
-	    <p>Sorry, registration has been disabled by the administrator.</p>
+	    <p><a href="index.php">Return to the Forum</a></p>
 	</div>
 	</div>
 	
