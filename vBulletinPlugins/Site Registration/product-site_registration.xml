@@ -728,8 +728,8 @@
 					                </span> 
                                     <input class="fix_input_width ie-align-picker" id="datepicker" type="text"
 						                 value="$cookievalue" autocomplete="off" 
-						                title="Birth Date: You must be over 13 to register."
-						                alt="Birth Date: You must be over 13 to register."
+						                title="Birth Date"
+						                alt="Birth Date"
 						                rel="tooltip"
 						                title="Birth Date"
 						                $disabled
@@ -1109,7 +1109,7 @@ $header
                             type="text"
                             value="$fbBirthday" autocomplete="off" 
                             
-                            title="Birthday: You must be over 13 to register." />
+                            title="Birthday" />
                     </div>
                     <span class="error-label small" id="datepicker-error-label"></span>
                 </div>
