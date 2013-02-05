@@ -30,10 +30,7 @@ jQuery.fn.enterKey = function (fnc) {
         jQuery(this).keypress(function (ev) {
             var keycode = (ev.keyCode ? ev.keyCode : ev.which);
             if (keycode == '13') {
-                fnc.call(this, ev);
-                ev.preventDefault();
-                ev.stopPropagation();
-                ev.stopImmediatePropagation();
+                fnc.call(this, ev); 
             }
         })
     })
@@ -584,10 +581,7 @@ jQuery(document).ready(function (jQuery) {
             }).done(function () {
 
             });
-
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+ 
 
         });
         
