@@ -32,11 +32,9 @@ jQuery.fn.enterKey = function (fnc) {
             if (keycode == '13') {
                 fnc.call(this, ev);
                 ev.preventDefault();
-            ev.stopPropagation();
-            ev.stopImmediatePropagation();
+                ev.stopPropagation();
+                ev.stopImmediatePropagation();
             }
-        
-            
         })
     })
 }
@@ -507,14 +505,19 @@ jQuery(document).ready(function (jQuery) {
     if (jQuery("#login-button").exists()) {
 
         //bind enter event to already have an account fields
-        jQuery("#username").enterKey(function () {
+        jQuery("#username").enterKey(function (e) {
             jQuery("#login-button").trigger('click');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
  
         });
 
-        jQuery("#password").enterKey(function () {
+        jQuery("#password").enterKey(function (e) {
             jQuery("#login-button").trigger('click');
-            
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
         });
 
         //submit and validate authentication
