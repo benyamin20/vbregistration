@@ -696,6 +696,28 @@ jQuery(document).ready(function (jQuery) {
 
     //Log-in
     if (jQuery("#log-in").exists()) {
+    
+        jQuery("#username").enterKey(function (e) {
+            jQuery("#log-in").trigger('click');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        });
+        
+        jQuery("#email").enterKey(function (e) {
+            jQuery("#log-in").trigger('click');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        });
+        
+        jQuery("#datepicker").enterKey(function (e) {
+            jQuery("#log-in").trigger('click');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        });
+    
         jQuery("#log-in").bind('click', function () {
             var username = escape(jQuery("#username").val());
             var email = escape(jQuery("#email").val());
@@ -703,6 +725,8 @@ jQuery(document).ready(function (jQuery) {
             var avatar = escape(jQuery("#avatar").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
             var token = escape(jQuery('#token').val());
+            
+            
 
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=activate",
@@ -757,6 +781,22 @@ jQuery(document).ready(function (jQuery) {
 
     //Log-in
     if (jQuery("#link-account").exists()) {
+    
+        jQuery("#username-member").enterKey(function (e) {
+            jQuery("#link-account").trigger('click');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        });
+        
+        jQuery("#password-member").enterKey(function (e) {
+            jQuery("#link-account").trigger('click');
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        });
+    
+    
         jQuery("#link-account").bind('click', function () {
             var username = escape(jQuery("#username-member").val());
             var password = md5(jQuery("#password-member").val());
