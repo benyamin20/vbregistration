@@ -277,7 +277,7 @@ jQuery(document).ready(function (jQuery) {
                     jQuery('#token').val(json.token);
                 });
             }
-            setInterval(update, 30000);
+            setInterval(update, 50000);
             update();
         });
     }
