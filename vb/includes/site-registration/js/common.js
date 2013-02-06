@@ -171,6 +171,7 @@ jQuery.ajaxSetup({
 * Inline base64 image support
 */
 function fixBase64Image() {
+    /*
     var BASE64_data = /^data:.*;base64/i;
     var BASE64_Path = "includes/site-registration/php/base64transfer.php";
     
@@ -188,6 +189,7 @@ function fixBase64Image() {
             }
         });
     }
+    */
 }
  
 
