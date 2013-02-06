@@ -103,22 +103,28 @@ case 'complete_your_profile':
                             'timezone' => TYPE_STR,
                             'use_default_image' => TYPE_STR));
 
-    if (empty($vbulletin->GPC['secret_question'])) {
-        $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
-        $error_type = "secret_question";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+    if (!empty($vbulletin->GPC['secret_question'])) {
+        if (empty($vbulletin->GPC['secret_answer'])) {
+            $valid_entries = FALSE;
+            $userdata->error('fieldmissing');
+            $error_type = "secret_answer";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = $userdata->errors[0];
+        }
     } else {
 
     }
 
-    if (empty($vbulletin->GPC['secret_answer'])) {
-        $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
-        $error_type = "secret_answer";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+    if (!empty($vbulletin->GPC['secret_answer'])) {
+        
+        if (empty($vbulletin->GPC['secret_question'])) {
+            $valid_entries = FALSE;
+            $userdata->error('fieldmissing');
+            $error_type = "secret_question";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = $userdata->errors[0];
+        }
+        
     } else {
 
     }
@@ -308,40 +314,43 @@ case 'complete_your_profile':
     }
 
     if ($valid_entries) {
-        //update secret question and secret answer
-        $temp_table_query = "
-            CREATE  TABLE IF NOT EXISTS " . TABLE_PREFIX
-                . "siteregistration_security_details (
-                userid INT(128) NOT NULL,
-                question VARCHAR(255) NOT NULL,
-                answer VARCHAR(255) NOT NULL
-            )";
+    
+        if(!empty($vbulletin->GPC['secret_question']) && !empty($vbulletin->GPC['secret_answer'])){
+            //update secret question and secret answer
+            $temp_table_query = "
+                CREATE  TABLE IF NOT EXISTS " . TABLE_PREFIX
+                    . "siteregistration_security_details (
+                    userid INT(128) NOT NULL,
+                    question VARCHAR(255) NOT NULL,
+                    answer VARCHAR(255) NOT NULL
+                )";
 
-        $vbulletin->db->query_write($temp_table_query);
+            $vbulletin->db->query_write($temp_table_query);
 
-        $userid = $_SESSION['site_registration']['userid'];
-        $question = $vbulletin->GPC['secret_question'];
-        $answer = $vbulletin->GPC['secret_answer'];
-        $salt = $vbulletin->db->escape_string($vbulletin->userinfo['salt']);
+            $userid = $_SESSION['site_registration']['userid'];
+            $question = $vbulletin->GPC['secret_question'];
+            $answer = $vbulletin->GPC['secret_answer'];
+            $salt = $vbulletin->db->escape_string($vbulletin->userinfo['salt']);
 
-        /*insert query*/
-        $vbulletin->db
-                ->query_write(
-                        "
-            REPLACE INTO " . TABLE_PREFIX
-                                . "siteregistration_security_details
-            (userid,question,answer)
-            VALUES
-            (   '" . $vbulletin->db->escape_string($userid)
-                                . "',
-                AES_ENCRYPT('" . $vbulletin->db->escape_string($question)
-                                . "','" . $salt
-                                . "'),
-                AES_ENCRYPT('" . $vbulletin->db->escape_string($answer) . "','"
-                                . $salt . "')
-             )
-        ");
-
+            /*insert query*/
+            $vbulletin->db
+                    ->query_write(
+                            "
+                REPLACE INTO " . TABLE_PREFIX
+                                    . "siteregistration_security_details
+                (userid,question,answer)
+                VALUES
+                (   '" . $vbulletin->db->escape_string($userid)
+                                    . "',
+                    AES_ENCRYPT('" . $vbulletin->db->escape_string($question)
+                                    . "','" . $salt
+                                    . "'),
+                    AES_ENCRYPT('" . $vbulletin->db->escape_string($answer) . "','"
+                                    . $salt . "')
+                 )
+            ");    
+        }
+    
     }
 
     if ($valid_entries) {
