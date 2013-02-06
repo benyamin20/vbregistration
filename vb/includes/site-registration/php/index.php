@@ -784,13 +784,17 @@ case 'create_site_account_first_step':
                         OR (mktime(0, 0, 0, $month, $day, $year)
                                 <= mktime(0, 0, 0, $current['month'],
                                         $current['day'], $current['year'] - 13))) {
- 
+                    $_SESSION['site_registration']['coppauser'] = false;
                 } else {
+                    $_SESSION['site_registration']['coppauser'] = true;
+                    
                     if ($vbulletin->options['checkcoppa']
                             AND $vbulletin->options['usecoppa']) {
                         vbsetcookie('coppaage',
                                 $month . '-' . $day . '-' . $year, 1);
                     }
+                    
+                    
 
                     if ($vbulletin->options['usecoppa'] == 2) {
                         // turn away as they're under 13
@@ -1227,8 +1231,9 @@ case 'activate':
                         OR (mktime(0, 0, 0, $month, $day, $year)
                                 <= mktime(0, 0, 0, $current['month'],
                                         $current['day'], $current['year'] - 13))) {
- 
+                     $_SESSION['site_registration']['coppauser'] = false;
                 } else {
+                    $_SESSION['site_registration']['coppauser'] = true;
                     if ($vbulletin->options['checkcoppa']
                             AND $vbulletin->options['usecoppa']) {
                         vbsetcookie('coppaage',
