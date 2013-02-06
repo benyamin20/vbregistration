@@ -1679,11 +1679,29 @@ $header
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
 
+						$parts = explode(" ", $fUser[1]);
+
+						if(count($parts) > 1) {
+							$part1 = ucfirst(strtolower($parts[0]));
+							$part2 = ucfirst(strtolower($parts[1]));
+
+							$fbUsername = $part1 . $part2;
+						} else {
+							$fbUsername = $fUser[1];
+						}
+
+					  	$userdata_validate = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+                        
+                        if(!$userdata_validate->verify_username($fbUsername)) {
+                            $fbUsername = $_SESSION['site_registration']["fbUsername"] = "";
+                        }else{
+                           $fbUsername = $_SESSION['site_registration']["fbUsername"] = $fbUsername;
+                        }
+
 		        		$fbID 		= $_SESSION['site_registration']["fbID"] 	   = $fUser[0];
 		        		$fbName 	= $_SESSION['site_registration']["fbName"] 	   = utf8_decode($fUser[1]);
 		        		$fbEmail 	= $_SESSION['site_registration']["fbEmail"]    = $fUser[2];
-					    $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $fUser[3];
-					    $fbUsername = $_SESSION['site_registration']["fbUsername"] = $fUser[4];
+					    $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $fUser[3];					    
 					    $fbPicture  = $_SESSION['site_registration']["fbPicture"]  = $fUser[5];
 
 					    //Verify if the account already exists...						     	 
