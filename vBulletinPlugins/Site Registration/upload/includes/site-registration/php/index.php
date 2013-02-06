@@ -1369,7 +1369,7 @@ case "linkaccount":
     if (empty($vbulletin->GPC['username'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $messages['errors'][] = $message = $userdata->errors[0];
+        $messages['errors'][] = $message = "Please enter a valid username.";
         $messages['fields'][] = $error_type = "username-member";
 
     }
@@ -1377,7 +1377,7 @@ case "linkaccount":
     //check if variables are set
     if (empty($vbulletin->GPC['password'])) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
+        $userdata->error('enter_password_for_account');
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "password-member";
     }
@@ -1385,7 +1385,7 @@ case "linkaccount":
     //check if variables are set
     if ($vbulletin->GPC['password'] == md5("")) {
         $valid_entries = FALSE;
-        $userdata->error('fieldmissing');
+        $userdata->error('enter_password_for_account');
         $messages['errors'][] = $message = $userdata->errors[0];
         $messages['fields'][] = $error_type = "password-member";
     }
