@@ -241,27 +241,38 @@ jQuery(document).ready(function (jQuery) {
 
         var offset = current_year - year;
         var default_date = "-" + offset + "y";
-
-        jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function () {
-            jQuery(function () {
-                jQuery("#datepicker").datepicker({
-                    autoSize: true,
-                    minDate: '-120y',
-                    maxDate: '-13y',
-                    changeYear: true,
-                    changeMonth: true,
-                    constrainInput: true,
-                    hideIfNoPrevNext: false,
-                    yearRange: '1900:2100',
-                    onSelect: function (date) {
-                        if (jQuery("#placeholder-datepicker").exists()) {
-                            jQuery("#placeholder-datepicker").remove();
-                        }
-                    },
-                    defaultDate: default_date
+        
+        
+        jQuery.getJSON("includes/site-registration/php/index.php?op=regenerate_security_token", function (json) {
+            if(json.use_coppa){
+                max_date = "-13y";
+            }else{
+                max_date = "0";
+            }
+            
+            jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function () {
+                jQuery(function () {
+                    jQuery("#datepicker").datepicker({
+                        autoSize: true,
+                        minDate: '-120y',
+                        maxDate: max_date,
+                        changeYear: true,
+                        changeMonth: true,
+                        constrainInput: true,
+                        hideIfNoPrevNext: false,
+                        yearRange: '1900:2100',
+                        onSelect: function (date) {
+                            if (jQuery("#placeholder-datepicker").exists()) {
+                                jQuery("#placeholder-datepicker").remove();
+                            }
+                        },
+                        defaultDate: default_date
+                    });
                 });
             });
+            
         });
+        
 
         //check if the calendar icon exists and bind the click action
         // to show datepicker

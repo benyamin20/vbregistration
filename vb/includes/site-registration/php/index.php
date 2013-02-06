@@ -38,6 +38,17 @@ switch ($op) {
 
 //regenerate securiy token for each page
 
+
+case 'check_coppa':
+
+    $arr = array();
+    $arr['use_coppa'] = (boolean) $vbulletin->options['usecoppa'];
+    
+    json_headers($arr);
+
+break;
+
+
 case 'regenerate_security_token':
     $token_raw = sha1(
             $vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt'])
@@ -49,7 +60,7 @@ case 'regenerate_security_token':
         $security_token = $_SESSION['site_registration']['securitytoken'] = "guest";
     }
 
-    $arr = array('token' => $security_token,);
+    $arr = array('token' => $security_token);
 
     json_headers($arr);
     break;
@@ -719,6 +730,10 @@ case 'create_site_account_first_step':
         $messages['fields'][] = $error_type = "email";
 
     }
+    
+    if($vbulletin->options['usecoppa']){
+        $vbulletin->options['reqbirthday'] = true;    
+    }
 
     //check if variables are set
     if ($vbulletin->options['reqbirthday']
@@ -1142,6 +1157,11 @@ case 'activate':
 
         }
     }
+    
+    if($vbulletin->options['usecoppa']){
+        $vbulletin->options['reqbirthday'] = true;    
+    }
+
 
     //check if variables are set
     if ($vbulletin->options['reqbirthday']
