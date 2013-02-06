@@ -1,5 +1,4 @@
 AJAX_Compatible = true;
-
 var md5_loaded = false;
 
 var spinner = '<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />';
@@ -30,7 +29,7 @@ jQuery.fn.enterKey = function (fnc) {
         jQuery(this).keypress(function (ev) {
             var keycode = (ev.keyCode ? ev.keyCode : ev.which);
             if (keycode == '13') {
-                fnc.call(this, ev); 
+                fnc.call(this, ev);
             }
         })
     })
@@ -134,21 +133,21 @@ jQuery.ajaxSetup({
         } else if (jqXHR.status == 500) {
             msg = 'Please try again later.\n Internal Server Error [500].';
         } else if (exception === 'parsererror') {
-        
+
             var ct = jqXHR.getResponseHeader("content-type") || "";
-            
+
             if (ct != "application/json") {
                 var xml = jqXHR.responseText,
-                xmlDoc = $.parseXML( xml ),
-                $xml = $( xmlDoc ),
-                $error = $xml.find( "error" );
-                
-                msg  = $error.text();
-            }else{
-                 msg = 'Please try again later.\n Requested JSON parse failed.';
+                    xmlDoc = $.parseXML(xml),
+                    $xml = $(xmlDoc),
+                    $error = $xml.find("error");
+
+                msg = $error.text();
+            } else {
+                msg = 'Please try again later.\n Requested JSON parse failed.';
             }
-            
-  
+
+
         } else if (exception === 'timeout') {
             msg = 'Please try again later.\n Time out error.';
         } else if (exception === 'abort') {
@@ -158,18 +157,18 @@ jQuery.ajaxSetup({
         }
 
 
-        if(msg){
+        if (msg) {
             bootbox.alert(msg);
         }
-        
+
 
     }
 });
 
 
 /**
-* Inline base64 image support
-*/
+ * Inline base64 image support
+ */
 function fixBase64Image() {
     /*
     var BASE64_data = /^data:.*;base64/i;
@@ -191,7 +190,7 @@ function fixBase64Image() {
     }
     */
 }
- 
+
 
 
 /**
@@ -241,15 +240,17 @@ jQuery(document).ready(function (jQuery) {
 
         var offset = current_year - year;
         var default_date = "-" + offset + "y";
-        
-        
-        jQuery.getJSON("includes/site-registration/php/index.php?op=regenerate_security_token", function (json) {
-            if(json.use_coppa){
+
+
+        //check if coppa is enabled
+        jQuery.getJSON("includes/site-registration/php/index.php?op=check_coppa", function (json) {
+            if (json.use_coppa == 2) {
                 max_date = "-13y";
-            }else{
+            } else {
                 max_date = "0";
             }
-            
+
+            //initialize date picker
             jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function () {
                 jQuery(function () {
                     jQuery("#datepicker").datepicker({
@@ -270,9 +271,9 @@ jQuery(document).ready(function (jQuery) {
                     });
                 });
             });
-            
+
         });
-        
+
 
         //check if the calendar icon exists and bind the click action
         // to show datepicker
@@ -369,8 +370,8 @@ jQuery(document).ready(function (jQuery) {
             //set hidden to use default image
             jQuery("#use-default-image").val("");
             jQuery("input[name=use-default-image]").val("");
-            
-            
+
+
         });
     }
 
@@ -463,7 +464,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#password").enterKey(function () {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
-        
+
         jQuery("#confirm-password").enterKey(function () {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
@@ -548,7 +549,7 @@ jQuery(document).ready(function (jQuery) {
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
- 
+
         });
 
         jQuery("#password").enterKey(function (e) {
@@ -565,11 +566,11 @@ jQuery(document).ready(function (jQuery) {
             var username = escape(jQuery("#username").val());
             var password = md5(jQuery("#password").val());
             var s = '';
-            var login = 'do'; 
-            
+            var login = 'do';
+
             var securitytoken = escape(jQuery('#token').val());
-            
-            if(securitytoken == ''){
+
+            if (securitytoken == '') {
                 securitytoken = 'guest';
             }
 
@@ -622,12 +623,12 @@ jQuery(document).ready(function (jQuery) {
             }).done(function () {
 
             });
- 
+
 
         });
-        
-        
-        
+
+
+
     }
 
 
@@ -680,11 +681,11 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#create-new-account-button").bind('click', function () {
             var email = escape(jQuery("#email").val());
             var birthdate = escape(jQuery("#datepicker").val());
-            
-            
+
+
             var token = escape(jQuery('#token').val());
-            
-            if(token == ''){
+
+            if (token == '') {
                 token = 'guest';
             }
 
@@ -694,7 +695,7 @@ jQuery(document).ready(function (jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'email=' + email + '&birthdate=' + birthdate + '&securitytoken='+token,
+                data: 'email=' + email + '&birthdate=' + birthdate + '&securitytoken=' + token,
                 beforeSend: function () {
                     if (jQuery('#ajax-loader').exists()) {
                         initialize_spinner();
@@ -737,28 +738,28 @@ jQuery(document).ready(function (jQuery) {
 
     //Log-in
     if (jQuery("#log-in").exists()) {
-    
+
         jQuery("#username").enterKey(function (e) {
             jQuery("#log-in").trigger('click');
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
         });
-        
+
         jQuery("#email").enterKey(function (e) {
             jQuery("#log-in").trigger('click');
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
         });
-        
+
         jQuery("#datepicker").enterKey(function (e) {
             jQuery("#log-in").trigger('click');
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
         });
-    
+
         jQuery("#log-in").bind('click', function () {
             var username = escape(jQuery("#username").val());
             var email = escape(jQuery("#email").val());
@@ -766,8 +767,8 @@ jQuery(document).ready(function (jQuery) {
             var avatar = escape(jQuery("#avatar").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
             var token = escape(jQuery('#token').val());
-            
-            
+
+
 
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=activate",
@@ -822,28 +823,28 @@ jQuery(document).ready(function (jQuery) {
 
     //Log-in
     if (jQuery("#link-account").exists()) {
-    
+
         jQuery("#username-member").enterKey(function (e) {
             jQuery("#link-account").trigger('click');
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
         });
-        
+
         jQuery("#password-member").enterKey(function (e) {
             jQuery("#link-account").trigger('click');
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
         });
-    
-    
+
+
         jQuery("#link-account").bind('click', function () {
             var username = escape(jQuery("#username-member").val());
             var password = md5(jQuery("#password-member").val());
             var token = escape(jQuery('#token').val());
-            
-            if(token == ''){
+
+            if (token == '') {
                 token = 'guest';
             }
 
@@ -852,9 +853,9 @@ jQuery(document).ready(function (jQuery) {
                 context: document.body,
                 type: 'POST',
                 cache: false,
-                data: 'securitytoken='+token+'&username='+ username + '&password='+ password + '&security_token='+ token,
-                beforeSend: function(){
-                    if(jQuery('#ajax-loader-secondary').exists()){
+                data: 'securitytoken=' + token + '&username=' + username + '&password=' + password + '&security_token=' + token,
+                beforeSend: function () {
+                    if (jQuery('#ajax-loader-secondary').exists()) {
                         jQuery('#ajax-loader-secondary').append(spinner_secondary);
                     }
                 },
