@@ -716,7 +716,7 @@
                             
                             <div class="grid_4 no-margin" id="email-wrapper">
 				                <label for="email"><phrase>$vbphrase[email]</phrase></label>
-				                <input class="" id="email" title="Email" value=""
+				                <input class="" id="email" title="<phrase>$vbphrase[email]</phrase>" value=""
 					                autocomplete="off" type="text" name ="email"
 					                 />
                             </div>
@@ -855,7 +855,7 @@
 								            autocomplete="off"
 								            type="password"  />
 							            <div class="clear clear_15"></div>
-							            <button class="btn btn-medium" id="login-button">Login</button>
+							            <button class="btn btn-medium" id="login-button"><phrase>$vbphrase[log_in]</phrase></button>
 							            <span id="ajax-loader-secondary"></span>
 							        <!--</form>-->
 							        <div class="clear clear_15"></div>
@@ -954,11 +954,11 @@ $header
  
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">Sorry, registration has been disabled by the administrator.</span>
+			<span class="title_red"><phrase>$vbphrase[noregister]</phrase></span>
 		</div>
 		<div class="clear clear_10"></div>
 		
-	    <p><a href="index.php">Return to the Forum</a></p>
+	    <p><a href="$vboptions[bburl]">Return to the Forum</a></p>
 	</div>
 	</div>
 	
@@ -1094,7 +1094,7 @@ $header
 
                 
                 
-				<span class="help-block tiny dark_grey">Maximum $vboptions[maxuserlength] characters.</span>
+				<span class="help-block tiny dark_grey"><phrase>$vbphrase[maximum]</phrase> $vboptions[maxuserlength] characters.</span>
 
 
 				<div class="clear "></div>
@@ -1160,7 +1160,7 @@ $header
                 
                 <div class="grid_4 no-margin" id="username-member-wrapper">
                     <input class="" id="username-member" name="username-member"
-                           title="Username" value=""
+                           title="<phrase>$vbphrase[user_name]</phrase>" value=""
                            autocomplete="off" type="text"
                            maxlength="$vboptions[maxuserlength]"  /> 
                 </div>
@@ -1170,7 +1170,7 @@ $header
                 <div class="grid_4 no-margin" id="password-member-wrapper">
                     <input class=""
                            id="password-member" name="password-member" 
-                           title="Password" 
+                           title="<phrase>$vbphrase[password]</phrase>" 
                            value="" autocomplete="off"
                            type="password"  /> 
                 </div> 
@@ -1330,7 +1330,7 @@ $header
 				</div>
 				
 				<span class="help-block tiny dark_grey">
-				    Maximum $vboptions[maxuserlength] characters
+				    <phrase>$vbphrase[maximum]</phrase> $vboptions[maxuserlength] characters
 				</span>
 				
 				<div class="grid_7 no-margin" id="password-wrapper">
@@ -1711,7 +1711,7 @@ $header
 
 				     		$activationid = $data["activationid"];
 
-				     		if(strlen($activation) === 40) {
+				     		if(!empty($activation)) {
 				     			$url = array("url" => "register.php?a=act&u=". $userid ."&i=".$activationid);
 				     		} else {
 				     		
