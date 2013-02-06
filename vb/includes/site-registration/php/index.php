@@ -907,6 +907,11 @@ case 'create_site_account_first_step':
             )";
 
         $vbulletin->db->query_write($temp_table_query);
+        
+        $sql = "DELETE FROM " . TABLE_PREFIX . "siteregistration_temp
+                WHERE email='" . $vbulletin->db->escape_string($vbulletin->GPC['email']) . "' ";
+        
+        $vbulletin->db->query_write($sql);
 
         /*insert query*/
         $vbulletin->db
