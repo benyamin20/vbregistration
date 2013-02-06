@@ -394,20 +394,20 @@ case 'validate_site_account_details':
             || $vbulletin->GPC['password'] == md5("")) {
 
         $valid_entries = FALSE;
-        $userdata->error('enter_password_for_account');
+        //$userdata->error('enter_password_for_account');
         $error_type = "password";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+        $messages['errors'][] = fetch_phrase('enter_password_for_account', 'global');
     }
 
     if (empty($vbulletin->GPC['confirm_password'])
             || $vbulletin->GPC['confirm_password'] == md5("")) {
         unset($userdata->errors);
         $valid_entries = FALSE;
-        $userdata->error('enter_password_for_account');
+        //$userdata->error('enter_password_for_account');
         $error_type = "confirm-password";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+        $messages['errors'][] = fetch_phrase('enter_password_for_account', 'global');
     }
 
     if (empty($vbulletin->GPC['security_code'])) {
@@ -927,9 +927,9 @@ default:
             OR empty($vbulletin->GPC['vb_login_password'])
             OR $vbulletin->GPC['vb_login_password'] == md5("")) {
         $valid_login = FALSE;
-        $userdata->error('enter_password_for_account');
+        //$userdata->error('enter_password_for_account');
         if (count($userdata->errors) > 1) {
-            $message = $userdata->errors;
+            $message = fetch_phrase('enter_password_for_account', 'global');
         } else {
             $message = "Sorry, please check your username and password.";
         }
@@ -1378,15 +1378,15 @@ case "linkaccount":
     if (empty($vbulletin->GPC['password'])) {
         $valid_entries = FALSE;
         //$userdata->error('enter_password_for_account');
-        $messages['errors'][] = $message = fetch_error('enter_password_for_account');
+        $messages['errors'][] = $message = fetch_phrase('enter_password_for_account', 'global');
         $messages['fields'][] = $error_type = "password-member";
     }
 
     //check if variables are set
     if ($vbulletin->GPC['password'] == md5("")) {
         $valid_entries = FALSE;
-        $userdata->error('enter_password_for_account');
-        $messages['errors'][] = $message = fetch_error('enter_password_for_account');
+        //$userdata->error('enter_password_for_account');
+        $messages['errors'][] = $message = fetch_phrase('enter_password_for_account', 'global');
         $messages['fields'][] = $error_type = "password-member";
     }
 
