@@ -1079,6 +1079,8 @@ $header
 					     />
 					<span class="error-label small" id="email-error-label"></span>
                 </div>
+
+                $fbEmailParent
                 
 				<span class="help-block tiny dark_grey"></span> 
 				
@@ -1682,6 +1684,8 @@ $header
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
 
+						$fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $fUser[3];
+
 						$parts = explode(" ", $fUser[1]);
 
 						if(count($parts) > 1) {
@@ -1701,10 +1705,30 @@ $header
                            $fbUsername = $_SESSION['site_registration']["fbUsername"] = $fbUsername;
                         }
 
+                        if($vbulletin->options['usecoppa']) {
+                        	$parts = explode("/", $fbBirthday);
+
+                        	$year = date("Y") - 13;
+                        	$yearBirthday = $parts[2];
+
+                        	if($yearBirthday <= $year) {
+                        		$fbEmailParent = $_SESSION['site_registration']["fbEmailParent"] = '<div class="clear clear_20"></div>
+					                <label for="email"><phrase>$vbphrase[parent_email_address]</phrase></label>
+									<div class="grid_6 no-margin" id="email-wrapper">
+									    <input class="" id="parentEmail" name="parentEmail" title="Email"
+										    value="" autocomplete="off" type="text" />
+										<span class="error-label small" id="email-error-label"></span>
+					                </div>';
+                        	} else {
+                        		$fbEmailParent = $_SESSION['site_registration']["fbEmailParent"] = false;
+                        	}
+                        } else {
+                        	$fbEmailParent = $_SESSION['site_registration']["fbEmailParent"] = false;
+                        }
+
 		        		$fbID 		= $_SESSION['site_registration']["fbID"] 	   = $fUser[0];
 		        		$fbName 	= $_SESSION['site_registration']["fbName"] 	   = utf8_decode($fUser[1]);
 		        		$fbEmail 	= $_SESSION['site_registration']["fbEmail"]    = $fUser[2];
-					    $fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $fUser[3];					    
 					    $fbPicture  = $_SESSION['site_registration']["fbPicture"]  = $fUser[5];
 
 					    //Verify if the account already exists...						     	 
