@@ -346,7 +346,7 @@ jQuery(document).ready(function (jQuery) {
 
             //change image preview thumb
             jQuery("#selected-avatar").attr("src", "images/misc/unknown.gif");
-            fixBase64Image();
+            jQuery("#photoimg-error-label").empty();
         });
     }
 
@@ -357,8 +357,7 @@ jQuery(document).ready(function (jQuery) {
             //set hidden to use default image
             jQuery("#use-default-image").val("");
             jQuery("input[name=use-default-image]").val("");
-            fixBase64Image();
-
+            
         });
     }
 
