@@ -633,7 +633,7 @@ case 'validate_site_account_details':
                 eval(fetch_email_phrases('activateaccount'));
 
                 if (empty($subject)) {
-                    $subject = fetch_error('activate_your_account');
+                    $subject = fetch_phrase('activate_your_account', 'threadmanage');
 
                 }
 
@@ -683,7 +683,7 @@ case 'resend_email':
             eval(fetch_email_phrases('activateaccount'));
 
             if (empty($subject)) {
-                $subject = fetch_error('activate_your_account');
+                $subject = fetch_phrase('activate_your_account', 'threadmanage');
             }
 
             vbmail($email, $subject, $message, true);

@@ -36,6 +36,9 @@ jQuery.fn.enterKey = function (fnc) {
     })
 }
 
+/*
+    Get value from a checkbox
+*/
 $.fn.realVal = function () {
     var $obj = $(this);
     var val = $obj.val();
@@ -49,7 +52,7 @@ $.fn.realVal = function () {
     }
 };
 
-//alternative function to close a facebox thru a trigger
+//alternative function to close a facebox through a trigger
 function closeTnC() {
     jQuery(document).trigger('close.facebox');
 }
@@ -164,6 +167,24 @@ jQuery.ajaxSetup({
 });
 
 
+/**
+* Inline base64 image support
+*/
+function fixBase64Image() {
+    var BASE64_data = /^data:.*;base64/i;
+    var BASE64_Path = "includes/site-registration/php/base64transfer.php";
+    
+    if ($.browser.msie){
+        $("img").each(function(){
+            // check matched image source
+            if (BASE64_data.test($(this).attr("src"))) {
+                // pass image stream data to external php
+                var newSrc = BASE64_Path + "?" + ($(this).attr("src")).slice(5);
+                $(this).attr("src",newSrc);
+            }
+        });
+    }
+}
  
 
 
@@ -319,6 +340,7 @@ jQuery(document).ready(function (jQuery) {
 
             //change image preview thumb
             jQuery("#selected-avatar").attr("src", "images/misc/unknown.gif");
+            fixBase64Image();
         });
     }
 
@@ -329,6 +351,7 @@ jQuery(document).ready(function (jQuery) {
             //set hidden to use default image
             jQuery("#use-default-image").val("");
             jQuery("input[name=use-default-image]").val("");
+            fixBase64Image();
 
         });
     }
