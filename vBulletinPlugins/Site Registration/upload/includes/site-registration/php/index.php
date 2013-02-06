@@ -151,7 +151,7 @@ case 'complete_your_profile':
                 
                 list($txt, $ext) = explode(".", $name);
                 
-                $maxuploadsize = (int)(ini_get('upload_max_filesize'));
+                $maxuploadsize = (int) return_bytes(ini_get('upload_max_filesize'));
 
                 if (in_array($ext, $valid_formats)) {
                 
@@ -174,7 +174,7 @@ case 'complete_your_profile':
                             $valid_entries = FALSE;
                             $error_type = "photoimg";
                             $messages['fields'][] = $error_type;
-                            $messages['errors'][] = fetch_error('upload_remoteimage_toolarge', $max_width, $max_height, $width, $height);
+                            $messages['errors'][] = fetch_error('upload_exceeds_dimensions', $max_width, $max_height, $width, $height);
                             @unlink($uploaded);
                             $error_w = TRUE;
                             $error_h = TRUE;
@@ -226,7 +226,7 @@ case 'complete_your_profile':
                         $valid_entries = FALSE; 
                         $error_type = "photoimg";
                         $messages['fields'][] = $error_type;
-                        $messages['errors'][] = fetch_error('upload_remoteimage_toolarge', $max_width, $max_height, $width, $height);
+                        $messages['errors'][] = fetch_error('upload_file_exceeds_forum_limit', $size, $maxuploadsize);
                         
                     }
                 } else {

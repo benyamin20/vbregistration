@@ -192,7 +192,7 @@
                                     <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
                                     <div class="clear"></div>
                                     <!-- <a class="small link_blue" id="use-default">Use default.</a> -->
-                                    <span class="error-label small no-margin no-top" id="photoimg-error-label"></span>
+                                    <span class="error-label small no-margin no-top grid_3" id="photoimg-error-label"></span>
                             </div>
 								<div class="clear"></div>
 								
