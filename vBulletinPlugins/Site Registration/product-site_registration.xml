@@ -1895,11 +1895,7 @@ $header
 			        	    $invalid_request = TRUE;
 			        	}
 			        	
-			        	if(!empty($_COOKIE['site_registration_coppaage'])){
-			        	    $disabled       = " disabled=\"disabled\" ";
-			        	    $readonly       = " readonly=\"readonly\" ";
-			        	    $cookievalue    = $_COOKIE['site_registration_coppaage'];
-			        	}
+			        	 
 			        	
 			        	//check for direct access to action
 			        	if($invalid_request){ 
