@@ -1634,11 +1634,12 @@ $header
                     if($valid_activation_code && $valid_user){
                     
                         // delete activationid
-                        $vbulletin->db->query_write(
+                        /*$vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
                                 AND type = 0"
                         );
+                        
                         
                         // change user to be already registered
                    
@@ -1650,7 +1651,7 @@ $header
                          $vbulletin->db->query_write(
                             $sql
                          );
-                    
+                        */
                         header("X-UA-Compatible: IE=Edge");
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
 
