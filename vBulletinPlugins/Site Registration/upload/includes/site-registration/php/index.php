@@ -38,16 +38,13 @@ switch ($op) {
 
 //regenerate securiy token for each page
 
-
 case 'check_coppa':
-
     $arr = array();
-    $arr['use_coppa'] = (boolean) $vbulletin->options['usecoppa'];
-    
+    $arr['use_coppa'] = $vbulletin->options['usecoppa'];
+
     json_headers($arr);
 
-break;
-
+    break;
 
 case 'regenerate_security_token':
     $token_raw = sha1(
@@ -155,17 +152,16 @@ case 'complete_your_profile':
         if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
             $name = $_FILES['photoimg']['name'];
             $size = $_FILES['photoimg']['size'];
-            
-            
 
             if (strlen($name)) {
-                
+
                 list($txt, $ext) = explode(".", $name);
-                
-                $maxuploadsize = (int) return_bytes(ini_get('upload_max_filesize'));
+
+                $maxuploadsize = (int) return_bytes(
+                        ini_get('upload_max_filesize'));
 
                 if (in_array($ext, $valid_formats)) {
-                
+
                     if ($size < ($maxuploadsize)) {
                         $actual_image_name = time() . mt_rand() . "." . $ext;
 
@@ -177,21 +173,21 @@ case 'complete_your_profile':
 
                         list($width, $height, $type, $attr) = getimagesize(
                                 $uploaded);
-                                
-                       $max_width = $vbulletin->options['attachthumbssize']; 
-                       $max_height = $vbulletin->options['attachthumbssize'];
+
+                        $max_width = $vbulletin->options['attachthumbssize'];
+                        $max_height = $vbulletin->options['attachthumbssize'];
 
                         if ($width > $max_width || $height > $max_height) {
                             $valid_entries = FALSE;
                             $error_type = "photoimg";
                             $messages['fields'][] = $error_type;
-                            $messages['errors'][] = fetch_error('upload_exceeds_dimensions', $max_width, $max_height, $width, $height);
+                            $messages['errors'][] = fetch_error(
+                                    'upload_exceeds_dimensions', $max_width,
+                                    $max_height, $width, $height);
                             @unlink($uploaded);
                             $error_w = TRUE;
                             $error_h = TRUE;
                         }
-
- 
 
                         if (!$error_h && !$error_w && $valid_entries) {
                             //image is valid copy to DB
@@ -234,17 +230,20 @@ case 'complete_your_profile':
                         }
 
                     } else {
-                        $valid_entries = FALSE; 
+                        $valid_entries = FALSE;
                         $error_type = "photoimg";
                         $messages['fields'][] = $error_type;
-                        $messages['errors'][] = fetch_error('upload_file_exceeds_forum_limit', $size, $maxuploadsize);
-                        
+                        $messages['errors'][] = fetch_error(
+                                'upload_file_exceeds_forum_limit', $size,
+                                $maxuploadsize);
+
                     }
                 } else {
                     $valid_entries = FALSE;
                     $error_type = "photoimg";
                     $messages['fields'][] = $error_type;
-                    $messages['errors'][] = fetch_error('upload_invalid_image_extension', $ext);
+                    $messages['errors'][] = fetch_error(
+                            'upload_invalid_image_extension', $ext);
                 }
 
             } else {
@@ -436,9 +435,9 @@ case 'validate_site_account_details':
         $userdata->error('fieldmissing');
         $error_type = "terms-and-conditions";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Please agree to the " . fetch_phrase('forum_rules', 'register');
-        
-        
+        $messages['errors'][] = "Please agree to the "
+                . fetch_phrase('forum_rules', 'register');
+
     }
 
     if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
@@ -644,7 +643,8 @@ case 'validate_site_account_details':
                 eval(fetch_email_phrases('activateaccount'));
 
                 if (empty($subject)) {
-                    $subject = fetch_phrase('activate_your_account', 'threadmanage');
+                    $subject = fetch_phrase('activate_your_account',
+                            'threadmanage');
 
                 }
 
@@ -730,18 +730,19 @@ case 'create_site_account_first_step':
         $messages['fields'][] = $error_type = "email";
 
     }
-    
-    if($vbulletin->options['usecoppa']){
-        $vbulletin->options['reqbirthday'] = true;    
+
+    if ($vbulletin->options['usecoppa'] > 0) {
+        $vbulletin->options['reqbirthday'] = true;
     }
 
     //check if variables are set
     if ($vbulletin->options['reqbirthday']
             || !empty($vbulletin->GPC['birthdate'])) {
+
         if (empty($vbulletin->GPC['birthdate'])) {
             $valid_entries = FALSE;
             $userdata->error('fieldmissing');
-            $messages['errors'][] = $message = fetch_error('birthdayfield'); 
+            $messages['errors'][] = $message = fetch_error('birthdayfield');
             $messages['fields'][] = $error_type = "datepicker";
 
         } else {
@@ -753,45 +754,60 @@ case 'create_site_account_first_step':
             //mm/dd/yyyy
             $date_parts = explode("/", $vbulletin->GPC['birthdate']);
 
-            $month = $date_parts[0];
-            $year = $date_parts[2];
-            $day = $date_parts[1];
+            $month  = $date_parts[0];
+            $day    = $date_parts[1];
+            $year   = $date_parts[2];
+            
+
+            $coppaage = $vbulletin->input
+                    ->clean_gpc('c', COOKIE_PREFIX . 'coppaage', TYPE_STR);
 
             if (check_date($vbulletin->GPC['birthdate'])) {
 
-                if ($vbulletin->options['usecoppa']) {
-                    if ($year > 1970
-                            AND mktime(0, 0, 0, $month, $day, $year)
-                                    > mktime(0, 0, 0, $current['month'],
-                                            $current['day'],
-                                            $current['year'] - 13)) { // this user is >13
-                        $_SESSION['site_registration']['coppauser'] = false;
-                    } else if ($vbulletin->options['usecoppa'] == 2) {
-                        if ($vbulletin->options['checkcoppa']) {
-                            vbsetcookie('coppaage',
-                                    $month . '-' . $day . '-' . $year, 1);
-                            vbsetcookie('site_registration_coppaage',
-                                    $vbulletin->GPC['birthdate'], 1);
-                        }
-                        $valid_entries = FALSE;
-                        $messages['errors'][] = $message = fetch_error('under_thirteen_registration_denied');  
-                        $messages['fields'][] = $error_type = "datepicker";
-                    } else {
-                        if ($vbulletin->options['checkcoppa']) {
-                            vbsetcookie('coppaage',
-                                    $month . '-' . $day . '-' . $year, 1);
-                            vbsetcookie('site_registration_coppaage',
-                                    $vbulletin->GPC['birthdate'], 1);
-                        }
-                        $_SESSION['site_registration']['coppauser'] = true;
-                    }
+                if ($month == 0 OR $day == 0 OR !preg_match('#^\d{4}$#', $year)
+                        OR $year < 1901 OR $year > $current['year']) {
+                    $valid_entries = FALSE;
+                    $messages['errors'][] = $message = fetch_error(
+                            'select_valid_dob', $current['year']);
+                    $messages['fields'][] = $error_type = "datepicker";
+                }
+
+                if ($vbulletin->options['usecoppa']
+                        AND $vbulletin->options['checkcoppa'] AND $coppaage) {
+                    $dob    = explode('-', $coppaage);
+                    $month  = $dob[0];
+                    $day    = $dob[1];
+                    $year   = $dob[2];
+                }
+
+                if ($year < 1970
+                        OR (mktime(0, 0, 0, $month, $day, $year)
+                                <= mktime(0, 0, 0, $current['month'],
+                                        $current['day'], $current['year'] - 13))) {
+ 
                 } else {
-                    $_SESSION['site_registration']['coppauser'] = false;
+                    if ($vbulletin->options['checkcoppa']
+                            AND $vbulletin->options['usecoppa']) {
+                        vbsetcookie('coppaage',
+                                $month . '-' . $day . '-' . $year, 1);
+                    }
+
+                    if ($vbulletin->options['usecoppa'] == 2) {
+                        // turn away as they're under 13
+
+                        $valid_entries = FALSE;
+                        $messages['errors'][] = $message = fetch_error(
+                                'under_thirteen_registration_denied');
+                        $messages['fields'][] = $error_type = "datepicker";
+
+                    } else {
+                    
+                    }
                 }
 
             } else {
                 $valid_entries = FALSE;
-                $messages['errors'][] = $message = fetch_error('birthdayfield'); 
+                $messages['errors'][] = $message = fetch_error('birthdayfield');
                 $messages['fields'][] = $error_type = "datepicker";
             }
 
@@ -817,7 +833,8 @@ case 'create_site_account_first_step':
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
-            $messages['errors'][] = $message =  fetch_error('bademail') .  " No MX records found for domain.";
+            $messages['errors'][] = $message = fetch_error('bademail')
+                    . " No MX records found for domain.";
             $messages['fields'][] = $error_type = "email";
 
         } else {
@@ -841,7 +858,8 @@ case 'create_site_account_first_step':
 
                 if ($db->num_rows($user_exists)) {
                     $valid_entries = FALSE;
-                    $messages['errors'][] = $message = fetch_error('emailtaken', ''); 
+                    $messages['errors'][] = $message = fetch_error(
+                            'emailtaken', '');
                     $messages['fields'][] = $error_type = "email";
                 }
             }
@@ -1028,8 +1046,6 @@ default:
 
     }
 
-    
-    
     $message = rewrite_error($message);
 
     $arr = array("valid_login" => $valid_login, "message" => $message,
@@ -1075,8 +1091,6 @@ case 'activate':
 
     }
 
-
-
     //check if username already exists on DB
     $user_exists = $db
             ->query_first(
@@ -1097,10 +1111,10 @@ case 'activate':
     if (empty($vbulletin->GPC['terms_and_conditions'])) {
         $valid_entries = FALSE;
         $userdata->error('fieldmissing');
-        $messages['errors'][] = $message = "Please agree to the " . fetch_phrase('forum_rules', 'register');  
+        $messages['errors'][] = $message = "Please agree to the "
+                . fetch_phrase('forum_rules', 'register');
         $messages['fields'][] = $error_type = "terms_and_conditions";
     }
-
 
     //validate email
     if (is_valid_email_address($vbulletin->GPC['email'])) {
@@ -1110,11 +1124,12 @@ case 'activate':
 
         if (!checkdnsrr($email_domain, "MX")) {
             $valid_entries = FALSE;
-            $messages['errors'][] = $message = fetch_error('bademail') .  " No MX records found for domain.";
+            $messages['errors'][] = $message = fetch_error('bademail')
+                    . " No MX records found for domain.";
             $messages['fields'][] = $error_type = "email";
 
         } else {
-            
+
             if ($vbulletin->options['requireuniqueemail']) {
                 //check if email already exists on DB
                 $user_exists = $db
@@ -1134,11 +1149,12 @@ case 'activate':
 
                 if ($db->num_rows($user_exists)) {
                     $valid_entries = FALSE;
-                    $messages['errors'][] = $message =  fetch_error('emailtaken', ''); 
+                    $messages['errors'][] = $message = fetch_error(
+                            'emailtaken', '');
                     $messages['fields'][] = $error_type = "email";
                 }
             }
-            
+
         }
 
     } else {
@@ -1157,20 +1173,21 @@ case 'activate':
 
         }
     }
-    
-    if($vbulletin->options['usecoppa']){
-        $vbulletin->options['reqbirthday'] = true;    
-    }
 
+    if ($vbulletin->options['usecoppa'] > 0) {
+        $vbulletin->options['reqbirthday'] = true;
+    }
 
     //check if variables are set
     if ($vbulletin->options['reqbirthday']
             || !empty($vbulletin->GPC['birthdate'])) {
+
         if (empty($vbulletin->GPC['birthdate'])) {
             $valid_entries = FALSE;
             $userdata->error('fieldmissing');
-            $messages['errors'][] = $message = fetch_error("birthdayfield");
+            $messages['errors'][] = $message = fetch_error('birthdayfield');
             $messages['fields'][] = $error_type = "datepicker";
+
         } else {
             //validate if 13+
             $current['year'] = date('Y');
@@ -1180,47 +1197,63 @@ case 'activate':
             //mm/dd/yyyy
             $date_parts = explode("/", $vbulletin->GPC['birthdate']);
 
-            $month = $date_parts[0];
-            $year = $date_parts[2];
-            $day = $date_parts[1];
+            $month  = $date_parts[0];
+            $day    = $date_parts[1];
+            $year   = $date_parts[2];
+            
+
+            $coppaage = $vbulletin->input
+                    ->clean_gpc('c', COOKIE_PREFIX . 'coppaage', TYPE_STR);
 
             if (check_date($vbulletin->GPC['birthdate'])) {
 
-                if ($vbulletin->options['usecoppa']) {
-                    if ($year > 1970
-                            AND mktime(0, 0, 0, $month, $day, $year)
-                                    > mktime(0, 0, 0, $current['month'],
-                                            $current['day'],
-                                            $current['year'] - 13)) { // this user is >13
-                        $_SESSION['site_registration']['coppauser'] = false;
-                    } else if ($vbulletin->options['usecoppa'] == 2) {
-                        if ($vbulletin->options['checkcoppa']) {
-                            vbsetcookie('coppaage',
-                                    $month . '-' . $day . '-' . $year, 1);
-                            vbsetcookie('site_registration_coppaage',
-                                    $vbulletin->GPC['birthdate'], 1);
-                        }
-                        $valid_entries = FALSE;
-                        $messages['errors'][] = $message = fetch_error("under_thirteen_registration_denied");
-                        $messages['fields'][] = $error_type = "datepicker";
-                    } else {
-                        if ($vbulletin->options['checkcoppa']) {
-                            vbsetcookie('coppaage',
-                                    $month . '-' . $day . '-' . $year, 1);
-                            vbsetcookie('site_registration_coppaage',
-                                    $vbulletin->GPC['birthdate'], 1);
-                        }
-                        $_SESSION['site_registration']['coppauser'] = true;
-                    }
+                if ($month == 0 OR $day == 0 OR !preg_match('#^\d{4}$#', $year)
+                        OR $year < 1901 OR $year > $current['year']) {
+                    $valid_entries = FALSE;
+                    $messages['errors'][] = $message = fetch_error(
+                            'select_valid_dob', $current['year']);
+                    $messages['fields'][] = $error_type = "datepicker";
+                }
+
+                if ($vbulletin->options['usecoppa']
+                        AND $vbulletin->options['checkcoppa'] AND $coppaage) {
+                    $dob    = explode('-', $coppaage);
+                    $month  = $dob[0];
+                    $day    = $dob[1];
+                    $year   = $dob[2];
+                }
+
+                if ($year < 1970
+                        OR (mktime(0, 0, 0, $month, $day, $year)
+                                <= mktime(0, 0, 0, $current['month'],
+                                        $current['day'], $current['year'] - 13))) {
+ 
                 } else {
-                    $_SESSION['site_registration']['coppauser'] = false;
+                    if ($vbulletin->options['checkcoppa']
+                            AND $vbulletin->options['usecoppa']) {
+                        vbsetcookie('coppaage',
+                                $month . '-' . $day . '-' . $year, 1);
+                    }
+
+                    if ($vbulletin->options['usecoppa'] == 2) {
+                        // turn away as they're under 13
+
+                        $valid_entries = FALSE;
+                        $messages['errors'][] = $message = fetch_error(
+                                'under_thirteen_registration_denied');
+                        $messages['fields'][] = $error_type = "datepicker";
+
+                    } else {
+                    
+                    }
                 }
 
             } else {
                 $valid_entries = FALSE;
-                $messages['errors'][] = $message = fetch_error("birthdayfield");
+                $messages['errors'][] = $message = fetch_error('birthdayfield');
                 $messages['fields'][] = $error_type = "datepicker";
             }
+
         }
     } else {
         $vbulletin->GPC['birthdate'] = '';

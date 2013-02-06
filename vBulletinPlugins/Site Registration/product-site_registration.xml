@@ -726,8 +726,10 @@
 				                <div class="input-prepend ">
 					                <span class="add-on"> <i class="icon-calendar"></i>
 					                </span> 
-                                    <input class="fix_input_width ie-align-picker" id="datepicker" type="text"
-						                 value="$cookievalue" autocomplete="off" 
+                                    <input class="fix_input_width ie-align-picker" 
+                                        id="datepicker" type="text"
+						                value="$cookievalue" 
+						                autocomplete="off" 
 						                title="Birth Date"
 						                alt="Birth Date"
 						                rel="tooltip"
