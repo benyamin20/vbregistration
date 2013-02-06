@@ -175,6 +175,10 @@ function fixBase64Image() {
     var BASE64_Path = "includes/site-registration/php/base64transfer.php";
     
     if ($.browser.msie){
+    
+         preview = jQuery('.fileupload-preview')
+         preview.html('<img src="' + result + '" ' + (preview.css('max-height') != 'none' ? 'style="max-height: ' + preview.css('max-height') + ';"' : '') + ' />')
+    
         $("img").each(function(){
             // check matched image source
             if (BASE64_data.test($(this).attr("src"))) {
