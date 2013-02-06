@@ -151,11 +151,11 @@ case 'complete_your_profile':
                 
                 list($txt, $ext) = explode(".", $name);
                 
-                //$maxuploadsize = fetch_max_uploadsize($ext);
+                $maxuploadsize = (int)(ini_get('upload_max_filesize'));
 
                 if (in_array($ext, $valid_formats)) {
                 
-                    if ($size < (1024 * 100)) {
+                    if ($size < ($maxuploadsize)) {
                         $actual_image_name = time() . mt_rand() . "." . $ext;
 
                         $uploaded = sys_get_temp_dir() . DIRECTORY_SEPARATOR
@@ -385,7 +385,7 @@ case 'validate_site_account_details':
     $messages = "";
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array('username' => TYPE_NOHTML, 'password' => TYPE_STR,
+                    array('username' => TYPE_NOCLEAN, 'password' => TYPE_STR,
                             'confirm_password' => TYPE_STR,
                             'security_code' => TYPE_STR,
                             'terms_and_conditions' => TYPE_INT));
@@ -397,7 +397,7 @@ case 'validate_site_account_details':
         //$userdata->error('enter_password_for_account');
         $error_type = "password";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = fetch_phrase('enter_password_for_account', 'global');
+        $messages['errors'][] = "Please enter a password for your user account."; //fetch_phrase('enter_password_for_account', 'global');
     }
 
     if (empty($vbulletin->GPC['confirm_password'])
@@ -407,7 +407,7 @@ case 'validate_site_account_details':
         //$userdata->error('enter_password_for_account');
         $error_type = "confirm-password";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = fetch_phrase('enter_password_for_account', 'global');
+        $messages['errors'][] = "Please enter a password for your user account."; //fetch_phrase('enter_password_for_account', 'global');
     }
 
     if (empty($vbulletin->GPC['security_code'])) {
@@ -929,7 +929,7 @@ default:
         $valid_login = FALSE;
         //$userdata->error('enter_password_for_account');
         if (count($userdata->errors) > 1) {
-            $message = fetch_phrase('enter_password_for_account', 'global');
+            $message = "Please enter a password for your user account."; //fetch_phrase('enter_password_for_account', 'global');
         } else {
             $message = "Sorry, please check your username and password.";
         }
@@ -1378,7 +1378,7 @@ case "linkaccount":
     if (empty($vbulletin->GPC['password'])) {
         $valid_entries = FALSE;
         //$userdata->error('enter_password_for_account');
-        $messages['errors'][] = $message = fetch_phrase('enter_password_for_account', 'global');
+        $messages['errors'][] = $message = "Please enter a password for your user account."; //fetch_phrase('enter_password_for_account', 'global');
         $messages['fields'][] = $error_type = "password-member";
     }
 
@@ -1386,7 +1386,7 @@ case "linkaccount":
     if ($vbulletin->GPC['password'] == md5("")) {
         $valid_entries = FALSE;
         //$userdata->error('enter_password_for_account');
-        $messages['errors'][] = $message = fetch_phrase('enter_password_for_account', 'global');
+        $messages['errors'][] = $message = "Please enter a password for your user account."; //fetch_phrase('enter_password_for_account', 'global');
         $messages['fields'][] = $error_type = "password-member";
     }
 
