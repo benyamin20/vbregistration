@@ -471,7 +471,7 @@ case 'validate_site_account_details':
         $valid_entries = FALSE;
         $error_type = "username";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = fetch_error('usernametaken', $user_exists['username'], '');
+        $messages['errors'][] = "Sorry, this username is already taken.";//fetch_error('usernametaken', $user_exists['username'], '');
     }
 
     if (fetch_require_hvcheck('register')) {
@@ -1076,7 +1076,7 @@ case 'activate':
         $valid_entries = FALSE;
         $error_type = "username";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = fetch_error('usernametaken', $user_exists['username'], '');
+        $messages['errors'][] = "Sorry, this username is already taken.";//fetch_error('usernametaken', $user_exists['username'], '');
     }
 
     if (empty($vbulletin->GPC['terms_and_conditions'])) {
