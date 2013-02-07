@@ -1323,17 +1323,21 @@ case 'activate':
         }
 
         if ($fbID) {
+            $email = $vbulletin->db->escape_string($vbulletin->GPC['email']);
+            $username = $vbulletin->GPC['username'];
+            $time = time();
+
             /*insert query*/
-            $vbulletin->db
-                    ->query_write(
-                            "INSERT IGNORE INTO " . TABLE_PREFIX
-                                    . "user (usergroupid, email, birthday, username) VALUES ('".$newusergroupid."', '"
-                                    . $vbulletin->db
-                                            ->escape_string(
-                                                    $vbulletin->GPC['email'])
-                                    . "', '" . $birthday
-                                    . "',
-                 '" . $vbulletin->GPC['username'] . "')");
+            $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."user (usergroupid, email, birthday, username, reputation, joindate, ipaddress) VALUES ('$newusergroupid', '$email', '$birthday', '$username', '10', '$time', '". IPADDRESS ."')");
+                
+            $sql = "SELECT userid FROM ". TABLE_PREFIX."user WHERE email = '$email' AND username = '$username'";
+
+            $data = $vbulletin->db->query_first($sql);
+
+            $userid = $data["userid"];
+
+            $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."userfield (userid) VALUES ('$userid')");
+            $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."usertextfield (userid) VALUES ('$userid')");
         }
 
         $avatar = $vbulletin->GPC['avatar'];
@@ -1680,4 +1684,3 @@ case "linkaccount":
     break;
 
 }
-
