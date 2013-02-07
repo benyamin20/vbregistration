@@ -157,48 +157,51 @@
 		                method="post"> 
 
                         <!--  Avatar -->
-						<label>Your Avatar</label>
-						<div class="clear clear_5"></div>
-		 
-						<div id="photoimg-wrapper" class="grid_4 no-margin">
-							<!--
-							    <div class="grid_1 no-margin pull-left">
-								    <img src="images/misc/unknown.gif" 
-								        id="selected-avatar" />
-							    </div>
-							-->
-							<div>	 
-								<div class="fileupload fileupload-new" 
-								    data-provides="fileupload">
-                                    <div class="fileupload-new 
-                                                thumbnail
-                                                avatar-thumbnail">
-                                            <img 
-                                                src="images/misc/unknown.gif"
-                                                id="selected-avatar" />
-                                    </div>
-                                    <div class="fileupload-preview 
-                                                fileupload-exists 
-                                                thumbnail avatar-thumbnail">
-                                    </div>
-                                    <span class="btn btn-file move-to-top-avatar-upload" id="upload-group">
-                                        <span class="fileupload-new"><phrase>$vbphrase[upload]</phrase></span>
+                        <if condition="$vboptions[avatarenabled]">
+						    <label>Your Avatar</label>
+						    <div class="clear clear_5"></div>
+		     
+						    <div id="photoimg-wrapper" class="grid_4 no-margin">
+							    <!--
+							        <div class="grid_1 no-margin pull-left">
+								        <img src="images/misc/unknown.gif" 
+								            id="selected-avatar" />
+							        </div>
+							    -->
+							    <div>	 
+								    <div class="fileupload fileupload-new" 
+								        data-provides="fileupload">
+                                        <div class="fileupload-new 
+                                                    thumbnail
+                                                    avatar-thumbnail">
+                                                <img 
+                                                    src="images/misc/unknown.gif"
+                                                    id="selected-avatar" />
+                                        </div>
+                                        <div class="fileupload-preview 
+                                                    fileupload-exists 
+                                                    thumbnail avatar-thumbnail">
+                                        </div>
+                                        <span class="btn btn-file move-to-top-avatar-upload" id="upload-group">
+                                            <span class="fileupload-new"><phrase>$vbphrase[upload]</phrase></span>
+                                            
+                                            <span class="fileupload-exists move-to-top-avatar-upload">Change</span>
+                                            <input type="file"
+                                                name="photoimg" id="photoimg" />
+                                        </span>
                                         
-                                        <span class="fileupload-exists move-to-top-avatar-upload">Change</span>
-                                        <input type="file"
-                                            name="photoimg" id="photoimg" />
-                                    </span>
-                                    
-                                    <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
-                                    <div class="clear"></div>
-                                    <!-- <a class="small link_blue" id="use-default">Use default.</a> -->
-                                    <span class="error-label small no-margin no-top grid_3" id="photoimg-error-label"></span>
-                            </div>
-								<div class="clear"></div>
+                                        <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
+                                        <div class="clear"></div>
+                                        <!-- <a class="small link_blue" id="use-default">Use default.</a> -->
+                                        <span class="error-label small no-margin no-top grid_3" id="photoimg-error-label"></span>
+                                </div>
+								    <div class="clear"></div>
 								
-							</div>
-						</div>
-
+							    </div>
+						    </div>
+        
+                        </if><!--  /Avatar -->
+                    
 						<div class="clear"></div>
 
 						<div class="clear"></div>
@@ -242,7 +245,7 @@
                                 <option class="" value="11"><phrase>$vbphrase[timezone_gmt_plus_1100]</phrase></option>
                                 <option class="" value="12"><phrase>$vbphrase[timezone_gmt_plus_1200]</phrase></option>
                             </select>
-                        </div>
+                        </div><!--  /Timezone -->
  
 						<!-- Secret inputs  -->
 

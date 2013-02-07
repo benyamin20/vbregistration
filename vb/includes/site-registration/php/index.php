@@ -260,42 +260,47 @@ case 'complete_your_profile':
             }
         }
     } else {
-        //use default image
-        $default_image = getcwd() . "/images/misc/unknown.gif";
-        list($width, $height, $type, $attr) = getimagesize($default_image);
+        //use default image if none is supplied
+        if($vbulletin->options['avatarenabled']){
+            
+            $default_image = getcwd() . "/images/misc/unknown.gif";
+            list($width, $height, $type, $attr) = getimagesize($default_image);
 
-        $userid = $_SESSION['site_registration']['userid'];
-        $filedata = file_get_contents($default_image);
-        $dateline = time();
-        $filename = $default_image;
-        $visible = 1;
-        $filesize = filesize($default_image);
+            $userid = $_SESSION['site_registration']['userid'];
+            $filedata = file_get_contents($default_image);
+            $dateline = time();
+            $filename = $default_image;
+            $visible = 1;
+            $filesize = filesize($default_image);
 
-        $sql = "
-            REPLACE INTO " . TABLE_PREFIX
-                . "customprofilepic
-            (userid, filedata, dateline, filename, visible, filesize, width, height)
-            VALUES
-            ('" . $vbulletin->db->escape_string($userid) . "',
-             '" . $vbulletin->db->escape_string($filedata)
-                . "',
-             '" . $vbulletin->db->escape_string($dateline)
-                . "',
-             '" . $vbulletin->db->escape_string($filename)
-                . "',
-             '" . $vbulletin->db->escape_string($visible) . "',
-             '" . $vbulletin->db->escape_string($filesize)
-                . "',
-             '" . $vbulletin->db->escape_string($width) . "',
-             '" . $vbulletin->db->escape_string($height)
-                . "'
-             )
-        ";
+            $sql = "
+                REPLACE INTO " . TABLE_PREFIX
+                    . "customprofilepic
+                (userid, filedata, dateline, filename, visible, filesize, width, height)
+                VALUES
+                ('" . $vbulletin->db->escape_string($userid) . "',
+                 '" . $vbulletin->db->escape_string($filedata)
+                    . "',
+                 '" . $vbulletin->db->escape_string($dateline)
+                    . "',
+                 '" . $vbulletin->db->escape_string($filename)
+                    . "',
+                 '" . $vbulletin->db->escape_string($visible) . "',
+                 '" . $vbulletin->db->escape_string($filesize)
+                    . "',
+                 '" . $vbulletin->db->escape_string($width) . "',
+                 '" . $vbulletin->db->escape_string($height)
+                    . "'
+                 )
+            ";
 
-        /*insert query*/
-        $vbulletin->db->query_write($sql);
+            /*insert query*/
+            $vbulletin->db->query_write($sql);
 
-        $rows = $vbulletin->db->affected_rows();
+            $rows = $vbulletin->db->affected_rows();
+        }
+    
+
     }
 
     if ($valid_entries) {
@@ -1325,30 +1330,35 @@ case 'activate':
         $visible = 1;
         $filesize = strlen($filedata);
         $filename = substr(md5(time()), 0, 10) . "." . $extension;
+        
+        
+        if($vbulletin->options['avatarenabled']){
+            $sql = "
+                REPLACE INTO " . TABLE_PREFIX
+                    . "customprofilepic
+                (userid, filedata, dateline, filename, visible, filesize, width, height)
+                VALUES
+                ('" . $vbulletin->db->escape_string($userid) . "',
+                 '" . $vbulletin->db->escape_string($filedata)
+                    . "',
+                 '" . $vbulletin->db->escape_string($dateline)
+                    . "',
+                 '" . $vbulletin->db->escape_string($filename)
+                    . "',
+                 '" . $vbulletin->db->escape_string($visible) . "',
+                 '" . $vbulletin->db->escape_string($filesize)
+                    . "',
+                 '" . $vbulletin->db->escape_string("50") . "',
+                 '" . $vbulletin->db->escape_string("50")
+                    . "'
+                 )
+            ";
 
-        $sql = "
-            REPLACE INTO " . TABLE_PREFIX
-                . "customprofilepic
-            (userid, filedata, dateline, filename, visible, filesize, width, height)
-            VALUES
-            ('" . $vbulletin->db->escape_string($userid) . "',
-             '" . $vbulletin->db->escape_string($filedata)
-                . "',
-             '" . $vbulletin->db->escape_string($dateline)
-                . "',
-             '" . $vbulletin->db->escape_string($filename)
-                . "',
-             '" . $vbulletin->db->escape_string($visible) . "',
-             '" . $vbulletin->db->escape_string($filesize)
-                . "',
-             '" . $vbulletin->db->escape_string("50") . "',
-             '" . $vbulletin->db->escape_string("50")
-                . "'
-             )
-        ";
+            /*insert query*/
+            $vbulletin->db->query_write($sql); 
+        }
 
-        /*insert query*/
-        $vbulletin->db->query_write($sql);
+
 
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
