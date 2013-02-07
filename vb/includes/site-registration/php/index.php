@@ -1314,7 +1314,7 @@ case 'activate':
                 
             $sql = "SELECT userid FROM ". TABLE_PREFIX."user WHERE email = '$email' AND username = '$username'";
 
-            $data = $vbulletin->db->query_write($sql);
+            $data = $vbulletin->db->query_first($sql);
 
             $userid = $data["userid"];
 
