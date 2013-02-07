@@ -735,8 +735,7 @@
 						                autocomplete="off" 
 						                title="Birth Date"
 						                alt="Birth Date"
-						                rel="tooltip"
-						                title="Birth Date"
+						                rel="tooltip" 
 						                $disabled
 						                $readonly
 						                name="birthdate" />
@@ -1354,13 +1353,31 @@ $header
 				<div class="grid_7 no-margin" id="confirm-password-wrapper">
 				    <label for="confirm-password"><phrase>$vbphrase[confirm_password]</phrase></label>
 				    <input class="" id="confirm-password" name="confirm-password"
-					       title="<phrase>$vbphrase[confirm_password]</phrase>" value="" 
+					       title="<phrase>$vbphrase[confirm_password]</phrase>" 
+					       value="" 
 					       autocomplete="off"
 					       type="password"  /> 
 				    <span class="error-label" id="confirm-password-error-label"></span>    
 				</div>
+				
 					
 				<div class="clear clear_10"></div>
+				
+				<if condition="$_SESSION[site_registration][coppauser] === true">
+				    <!-- parent - guardian email -->
+				    <div class="grid_7 no-margin" id="parent-guardian-email-wrapper">
+				        <label for="parent-guardian-email"><phrase>$vbphrase[parent_guardian_email]</phrase></label>
+				        <input class="" id="parent-guardian-email" name="parent-guardian-email"
+					           title="<phrase>$vbphrase[if_under_13_provide_parent]</phrase>" 
+					           value="" 
+					           autocomplete="off"
+					           type="text"  /> 
+				        <span class="error-label" id="parent-guardian-email-error-label"></span>    
+				    </div>
+					
+				    <div class="clear clear_10"></div>
+				    <!-- /parent - guardian email -->   
+				</if>
 				
 				<if condition="$hvcheck"> <!-- require captcha -->
 				
@@ -1942,7 +1959,7 @@ $header
 			        }
 			         
 			        
-			        if(isset($_REQUEST['a'] ) && $_REQUEST['a'] == 'act' ){
+			        if(isset($_REQUEST['a'] ) && $_REQUEST['a'] == 'act' || $_REQUEST['do'] == 'coppaform'  ){
 			            
 			        }else{
 			            if(!(int)$vbulletin->userinfo['userid']){ 
@@ -2593,8 +2610,7 @@ $header
                            <td  align=""><strong>Social Groups</strong></td>
                            <td style="color:#66727E; font-weight:bold;" align="center">No</td>
                            <td style="color:#AD0F00; font-weight:bold;" align="center">Join, create, edit, manage Social Groups</td>
-                        </tr>
-                          </tr>
+                        </tr> 
                           <tr class="alt1">
                             <td  align=""><strong>Exclusive Forum Access</strong></td>
                             <td style="color:#66727E; font-weight:bold;" align="center">No</td>
@@ -2608,7 +2624,7 @@ $header
                           <tr  align="center">
                                         <td>&nbsp;</td>
                             <td></td>
-                            <td><strong>15 Days & 5 Posts</strong></a></td>
+                            <td><strong>15 Days & 5 Posts</strong></td>
                           </tr>
                         </table>
 					]]>

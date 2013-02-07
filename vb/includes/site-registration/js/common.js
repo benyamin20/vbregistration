@@ -484,6 +484,7 @@ jQuery(document).ready(function (jQuery) {
             var security_code = escape(jQuery("#security-code").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
             var token = escape(jQuery("#token").val());
+            var parent_guardian_email= escape(jQuery("#parent-guardian-email").val());
 
             jQuery.ajax({
                 url: "includes/site-registration/php/index.php?op=validate_site_account_details",
@@ -491,7 +492,7 @@ jQuery(document).ready(function (jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'username=' + username + '&password=' + password + '&confirm_password=' + confirm_password + '&security_code=' + security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken=' + token,
+                data: 'username=' + username + '&password=' + password + '&confirm_password=' + confirm_password + '&security_code=' + security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken=' + token + '&parent-guardian-email='+parent_guardian_email,
                 beforeSend: function () {
                     initialize_spinner();
                 },
