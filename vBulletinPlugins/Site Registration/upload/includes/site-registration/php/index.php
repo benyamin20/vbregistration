@@ -14,14 +14,24 @@ error_reporting(E_ALL & ~E_NOTICE & ~8192);
 define('CSRF_PROTECTION', true);
 define('THIS_SCRIPT', 'site-registration');
 
+
 require_once("site_registration_functions.php");
 require_once("rfc822.php");
+
+if($show['vbnexus_button_fb']) {
+    require_once('../../../includes/vbnexus4.1.5/vBNexus.php');
+}
+
 //include required files
 chdir(realpath('../../../'));
 require_once('global.php');
 require_once('functions_user.php');
 require_once('functions_misc.php');
 require_once('functions_login.php');
+
+if($show['vbnexus_button_fb']) {
+    require_once('');
+}
 
 if (!session_id()) {
     session_start();
