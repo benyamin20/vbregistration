@@ -36,8 +36,8 @@ $op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
-//regenerate securiy token for each page
 
+// ajax check for coppa options
 case 'check_coppa':
     $arr = array();
     $arr['use_coppa'] = $vbulletin->options['usecoppa'];
@@ -45,7 +45,8 @@ case 'check_coppa':
     json_headers($arr);
 
     break;
-
+    
+//regenerate securiy token for each page
 case 'regenerate_security_token':
     $token_raw = sha1(
             $vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt'])
@@ -62,9 +63,9 @@ case 'regenerate_security_token':
     json_headers($arr);
     break;
 
-//regenerate ajax token
-case 'regenerate_token':
 //generate captcha value
+case 'regenerate_token':
+
 
     if (fetch_require_hvcheck('register')) {
         require_once(DIR . '/includes/class_humanverify.php');
@@ -467,7 +468,8 @@ case 'validate_site_account_details':
     }
 
     unset($userdata->errors);
-    if (!$userdata->verify_username($vbulletin->GPC['username'])) {
+    $username = $vbulletin->GPC['username'];
+    if (!$userdata->verify_username($username)) {
         $valid_entries = FALSE;
 
         $error_type = "username";
@@ -479,6 +481,8 @@ case 'validate_site_account_details':
             $messages['errors'][] = $userdata->errors[0];
         }
 
+    }else{
+        $vbulletin->GPC['username'] = $username;
     }
 
     //check if username already exists on DB
@@ -1104,7 +1108,8 @@ case 'activate':
         $messages['fields'][] = $error_type = "email";
     }
 
-    if (!$userdata->verify_username($vbulletin->GPC['username'])) {
+    $username = $vbulletin->GPC['username'];
+    if (!$userdata->verify_username($username)) {
         $valid_entries = FALSE;
 
         $error_type = "username";
@@ -1117,6 +1122,8 @@ case 'activate':
             $messages['errors'][] = $userdata->errors[0];
         }
 
+    }else{
+        $vbulletin->GPC['username'] = $username;
     }
 
     //check if username already exists on DB
