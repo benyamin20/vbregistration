@@ -36,8 +36,8 @@ $op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
-//regenerate securiy token for each page
 
+// ajax check for coppa options
 case 'check_coppa':
     $arr = array();
     $arr['use_coppa'] = $vbulletin->options['usecoppa'];
@@ -45,7 +45,8 @@ case 'check_coppa':
     json_headers($arr);
 
     break;
-
+    
+//regenerate securiy token for each page
 case 'regenerate_security_token':
     $token_raw = sha1(
             $vbulletin->userinfo['userid'] . sha1($vbulletin->userinfo['salt'])
@@ -62,9 +63,9 @@ case 'regenerate_security_token':
     json_headers($arr);
     break;
 
-//regenerate ajax token
-case 'regenerate_token':
 //generate captcha value
+case 'regenerate_token':
+
 
     if (fetch_require_hvcheck('register')) {
         require_once(DIR . '/includes/class_humanverify.php');
@@ -466,8 +467,13 @@ case 'validate_site_account_details':
         $messages['errors'][] = "Passwords don't match";
     }
 
-    unset($userdata->errors);
-    if (!$userdata->verify_username($vbulletin->GPC['username'])) {
+    unset($userdata->errors); 
+ 
+    //ACP-494 decode js escaped unicode characters
+    $vbulletin->GPC['username'] = preg_replace( "/%u([A-Fa-f0-9]{4})/", "&#x$1;", $vbulletin->GPC['username']);
+    $vbulletin->GPC['username'] = html_entity_decode($vbulletin->GPC['username'], ENT_COMPAT, 'utf-8');
+    
+    if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
         $valid_entries = FALSE;
 
         $error_type = "username";
@@ -479,8 +485,11 @@ case 'validate_site_account_details':
             $messages['errors'][] = $userdata->errors[0];
         }
 
+    }else{ 
+    
     }
-
+    
+ 
     //check if username already exists on DB
     $user_exists = $db
             ->query_first(
@@ -525,9 +534,12 @@ case 'validate_site_account_details':
                 'token' => $token, 'time' => $token_time);
 
         //Create Site Account in database
+        
         $userdata->set('email', $_SESSION['site_registration']['email']);
-        $userdata->set('username', $_SESSION['site_registration']['username']);
+        $userdata->set('username', $vbulletin->GPC['username']);
         $userdata->set('password', $_SESSION['site_registration']['password']);
+        
+        
         //$userdata->set('referrerid', $vbulletin->GPC['referrername']);
 
         // set languageid
@@ -648,7 +660,7 @@ case 'validate_site_account_details':
 
             //Send Activation Email: Refer to Automated Emails
             // send new user email
-            $username = $_SESSION['site_registration']['username'];
+            $username = $vbulletin->GPC['username'];
             $email = $_SESSION['site_registration']['email'];
 
             if ($vbulletin->options['verifyemail']) {
@@ -1104,7 +1116,11 @@ case 'activate':
         $messages['fields'][] = $error_type = "email";
     }
 
-    if (!$userdata->verify_username($vbulletin->GPC['username'])) {
+    //ACP-494 decode js escaped unicode characters
+    $vbulletin->GPC['username'] = preg_replace( "/%u([A-Fa-f0-9]{4})/", "&#x$1;", $vbulletin->GPC['username']);
+    $vbulletin->GPC['username'] = html_entity_decode($vbulletin->GPC['username'], ENT_COMPAT, 'utf-8');
+    
+    if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
         $valid_entries = FALSE;
 
         $error_type = "username";
@@ -1117,6 +1133,8 @@ case 'activate':
             $messages['errors'][] = $userdata->errors[0];
         }
 
+    }else{
+        
     }
 
     //check if username already exists on DB
