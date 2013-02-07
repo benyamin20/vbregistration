@@ -527,6 +527,16 @@ case 'validate_site_account_details':
 
         // set languageid
         $userdata->set('languageid', $vbulletin->userinfo['languageid']);
+        
+        // assign user to usergroup 3 if email needs verification
+        if ($vbulletin->options['verifyemail']) {
+            $newusergroupid = 3;
+        } else if ($vbulletin->options['moderatenewmembers']
+                OR $_SESSION['site_registration']['coppauser']) {
+            $newusergroupid = 4;
+        } else {
+            $newusergroupid = 2;
+        }
 
         // set user title
         $userdata
@@ -556,15 +566,7 @@ case 'validate_site_account_details':
                                     'year' => $year));
         }
 
-        // assign user to usergroup 3 if email needs verification
-        if ($vbulletin->options['verifyemail']) {
-            $newusergroupid = 3;
-        } else if ($vbulletin->options['moderatenewmembers']
-                OR $_SESSION['site_registration']['coppauser']) {
-            $newusergroupid = 4;
-        } else {
-            $newusergroupid = 2;
-        }
+ 
         // set usergroupid
         $userdata->set('usergroupid', $newusergroupid);
 
@@ -579,6 +581,7 @@ case 'validate_site_account_details':
         $userdata
                 ->set_bitfield('options', 'coppauser',
                         $_SESSION['site_registration']['coppauser']);
+                        
         //$userdata->set('parentemail', $vbulletin->GPC['parentemail']);
 
         // register IP address
@@ -898,6 +901,7 @@ case 'create_site_account_first_step':
 
     if ($valid_entries) {
 
+        //create table for storing registration data
         $temp_table_query = "
             CREATE TABLE IF NOT EXISTS " . TABLE_PREFIX
                 . "siteregistration_temp (
@@ -908,6 +912,7 @@ case 'create_site_account_first_step':
 
         $vbulletin->db->query_write($temp_table_query);
         
+        //clear any previous entries if available
         $sql = "DELETE FROM " . TABLE_PREFIX . "siteregistration_temp
                 WHERE email='" . $vbulletin->db->escape_string($vbulletin->GPC['email']) . "' ";
         
@@ -1283,13 +1288,23 @@ case 'activate':
 
         $birthday = preg_replace("/\//", "-",
                 $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
+                
+        
+        if ($vbulletin->options['verifyemail']) {
+            $newusergroupid = 3;
+        } else if ($vbulletin->options['moderatenewmembers']
+                OR $_SESSION['site_registration']['coppauser']) {
+            $newusergroupid = 4;
+        } else {
+            $newusergroupid = 2;
+        }
 
         if ($fbID) {
             /*insert query*/
             $vbulletin->db
                     ->query_write(
                             "INSERT IGNORE INTO " . TABLE_PREFIX
-                                    . "user (usergroupid, email, birthday, username) VALUES ('2', '"
+                                    . "user (usergroupid, email, birthday, username) VALUES ('".$newusergroupid."', '"
                                     . $vbulletin->db
                                             ->escape_string(
                                                     $vbulletin->GPC['email'])
