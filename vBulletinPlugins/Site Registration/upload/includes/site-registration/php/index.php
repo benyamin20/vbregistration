@@ -171,7 +171,7 @@ case 'complete_your_profile':
 	    $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
 	    $userdata->set_existing($userinfo);
         
-        $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
+        $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
         
         if(empty($vbulletin->GPC['upload'])){
             $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/unknown.png";
