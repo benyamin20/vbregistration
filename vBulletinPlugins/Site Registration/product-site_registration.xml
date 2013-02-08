@@ -161,7 +161,7 @@
 						    <label>Your Avatar</label>
 						    <div class="clear clear_5"></div>
 		     
-						    <div id="photoimg-wrapper" class="grid_4 no-margin">
+						    <div id="upload-wrapper" class="grid_4 no-margin">
 							    <!--
 							        <div class="grid_1 no-margin pull-left">
 								        <img src="images/misc/unknown.gif" 
@@ -187,13 +187,13 @@
                                             
                                             <span class="fileupload-exists move-to-top-avatar-upload">Change</span>
                                             <input type="file"
-                                                name="photoimg" id="photoimg" />
+                                                name="upload" id="upload" />
                                         </span>
                                         
                                         <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
                                         <div class="clear"></div>
                                         <!-- <a class="small link_blue" id="use-default">Use default.</a> -->
-                                        <span class="error-label small no-margin no-top grid_3" id="photoimg-error-label"></span>
+                                        <span class="error-label small no-margin no-top grid_3" id="upload-error-label"></span>
                                 </div>
 								    <div class="clear"></div>
 								
