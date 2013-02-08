@@ -14,11 +14,10 @@ error_reporting(E_ALL & ~E_NOTICE & ~8192);
 define('CSRF_PROTECTION', true);
 define('THIS_SCRIPT', 'site-registration');
 
-
 require_once("site_registration_functions.php");
 require_once("rfc822.php");
 
-if($show['vbnexus_button_fb']) {
+if($show['vbnexus_button_fb']) {    
     require_once('vbnexus4.1.5/vBNexus.php');
 }
 
@@ -164,8 +163,8 @@ case 'complete_your_profile':
         $userinfo = fetch_userinfo($_SESSION['site_registration']['userid']);
         
         // init user datamanager
-	    $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
-	    $userdata->set_existing($userinfo);
+        $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
+        $userdata->set_existing($userinfo);
         
         $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
         
@@ -174,30 +173,30 @@ case 'complete_your_profile':
         }
     
         require_once(DIR . '/includes/class_upload.php');
-	    require_once(DIR . '/includes/class_image.php');
-	    
-	    $upload = new vB_Upload_Userpic($vbulletin); 
+        require_once(DIR . '/includes/class_image.php');
+        
+        $upload = new vB_Upload_Userpic($vbulletin); 
 
         $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
         $upload->image =& vB_Image::fetch_library($vbulletin);
         $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
-		$upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
+        $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
         $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
         $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
 
         if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
-			$valid_entries = FALSE;
+            $valid_entries = FALSE;
             $error_type = "upload";
             $messages['fields'][] = $error_type;
             $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
-		}
+        }
 
     }else{
-		// predefined avatar
-		$userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
-		$userpic->condition = "userid = " . $userinfo['userid'];
-		$userpic->delete();
-	}
+        // predefined avatar
+        $userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
+        $userpic->condition = "userid = " . $userinfo['userid'];
+        $userpic->delete();
+    }
     
     
     if ($valid_entries) {
@@ -1305,7 +1304,8 @@ case 'activate':
         $visible = 1;
         $filesize = strlen($filedata);
         $filename = substr(md5(time()), 0, 10) . "." . $extension;*/
-                                    
+        
+        /*                     
         if($vbulletin->options['avatarenabled']){
             $userinfo = fetch_userinfo($userid);
             
@@ -1343,7 +1343,7 @@ case 'activate':
             $userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
             $userpic->condition = "userid = " . $userinfo['userid'];
             $userpic->delete();
-        }
+        }*/
         
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
@@ -1370,7 +1370,7 @@ case 'activate':
                             : 2), 0);
 
             $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
-
+            
             $data = $vbulletin->db->query_first($sql);
 
             $activationid = $data["activationid"];
