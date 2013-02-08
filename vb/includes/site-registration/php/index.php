@@ -1252,11 +1252,12 @@ case 'activate':
         }
 
         if ($fbID) {
+            /************OLD VERSION *******************************
             $email = $vbulletin->db->escape_string($vbulletin->GPC['email']);
             $username = $vbulletin->GPC['username'];
             $time = time();
 
-            /*insert query*/
+            //insert query
             $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."user (usergroupid, email, birthday, username, reputation, joindate, ipaddress) VALUES ('$newusergroupid', '$email', '$birthday', '$username', '10', '$time', '". IPADDRESS ."')");
                 
             $sql = "SELECT userid FROM ". TABLE_PREFIX."user WHERE email = '$email' AND username = '$username'";
@@ -1267,6 +1268,32 @@ case 'activate':
 
             $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."userfield (userid) VALUES ('$userid')");
             $vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."usertextfield (userid) VALUES ('$userid')");
+            */
+
+            /**************VBNEXUS*************************/
+            $vBNexus = new vBNexus;
+
+            $vBNexus->setConfig('vbnexus_service', "fb");                    
+            $vBNexus->setConfig('vbnexus_userid', $fbID);               
+
+            $email    = $vbulletin->db->escape_string($vbulletin->GPC['email']);
+            $username = $vbulletin->GPC['username'];
+            $time     = time(); 
+            $publish  = $vbulletin->db->escape_string($vbulletin->GPC['publish']);
+
+            $vbnexus_regData = array(
+                'type'          => "new",
+                'service'       => "fb",
+                'userid'        => $fbID,
+                'username'      => $username,
+                'password'      => NULL,
+                'email'         => $email,
+                'coded_email'   => $vBNexus->codedEmail($email)),
+                'default_email' => $email,
+                'publish'       => $publish,
+            );
+            
+            $vbnexus_result = $vBNexus->register($vbnexus_regData);
         }
 
         $avatar = $vbulletin->GPC['avatar'];
