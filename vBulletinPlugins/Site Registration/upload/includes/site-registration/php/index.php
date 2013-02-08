@@ -174,7 +174,7 @@ case 'complete_your_profile':
         $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
         
         if(empty($vbulletin->GPC['upload'])){
-            $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/images/misc/unknown.gif";
+            $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/unknown.png";
         }
     
         require_once(DIR . '/includes/class_upload.php');
@@ -1062,8 +1062,6 @@ case 'activate':
             $messages['errors'][] = $userdata->errors[0];
         }
 
-    }else{
-        
     }
 
     //check if username already exists on DB
@@ -1279,7 +1277,7 @@ case 'activate':
             $email    = $vbulletin->db->escape_string($vbulletin->GPC['email']);
             $username = $vbulletin->GPC['username'];
             $time     = time(); 
-            $publish  = $vbulletin->db->escape_string($vbulletin->GPC['publish']);
+            $publish  = $vbulletin->db->escape_string($vbulletin->GPC['vbnexus_fb_publish']);
 
             $vbnexus_regData = array(
                 'type'          => "new",
