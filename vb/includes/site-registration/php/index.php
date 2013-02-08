@@ -19,6 +19,7 @@ require_once("site_registration_functions.php");
 require_once("rfc822.php");
 
 if($show['vbnexus_button_fb']) {
+    die(var_dump(DIR . '/includes/vbnexus4.1.5/vBNexus.php'));
     require_once(DIR . '/includes/vbnexus4.1.5/vBNexus.php');
 }
 
