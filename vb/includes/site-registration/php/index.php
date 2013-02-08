@@ -1,5 +1,5 @@
 <?php
-die(var_dump(DIR));
+
 //path setup
 set_include_path(
         get_include_path() . PATH_SEPARATOR . realpath('../../../')
@@ -19,7 +19,7 @@ require_once("site_registration_functions.php");
 require_once("rfc822.php");
 
 if($show['vbnexus_button_fb']) {
-    require_once('../../../includes/vbnexus4.1.5/vBNexus.php');
+    require_once(DIR . '/includes/vbnexus4.1.5/vBNexus.php');
 }
 
 //include required files
