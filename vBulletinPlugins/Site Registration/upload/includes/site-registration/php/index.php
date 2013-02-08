@@ -1,5 +1,5 @@
 <?php
-
+die(var_dump(DIR));
 //path setup
 set_include_path(
         get_include_path() . PATH_SEPARATOR . realpath('../../../')
@@ -1374,7 +1374,7 @@ case 'activate':
                             : 2), 0);
 
             $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
-            
+
             $data = $vbulletin->db->query_first($sql);
 
             $activationid = $data["activationid"];
