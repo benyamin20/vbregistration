@@ -1287,6 +1287,7 @@ case 'activate':
             );
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);
+            die(var_dump($vbnexus_result));
         }
 
         $userid = $vbulletin->userinfo['userid'];
