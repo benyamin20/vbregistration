@@ -1286,7 +1286,7 @@ case 'activate':
                 'username'      => $username,
                 'password'      => NULL,
                 'email'         => $email,
-                'coded_email'   => $vBNexus->codedEmail($email)),
+                'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
                 'publish'       => $publish,
             );
