@@ -358,8 +358,8 @@ jQuery(document).ready(function (jQuery) {
 
             //change image preview thumb
             jQuery("#selected-avatar").attr("src", "images/misc/unknown.gif");
-            jQuery("#photoimg-error-label").empty();
-            jQuery("#photoimg-wrapper").removeClass("terms-and-conditions-input-error-container");
+            jQuery("#upload-error-label").empty();
+            jQuery("#upload-wrapper").removeClass("terms-and-conditions-input-error-container");
         });
     }
 
@@ -411,7 +411,7 @@ jQuery(document).ready(function (jQuery) {
                     clear_errors();
 
                     jQuery.each(response.messages.fields, function (index, value) {
-                        if (value == 'photoimg') {
+                        if (value == 'upload') {
                             jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-input-error-container");
                         } else {
                             jQuery('#' + value + '-wrapper').addClass("input-error-container");
