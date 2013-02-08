@@ -353,7 +353,7 @@ case 'complete_your_profile':
                  )
             ";
 
-            /*insert query*/
+            //insert query
             $vbulletin->db->query_write($sql);
 
             $rows = $vbulletin->db->affected_rows();
