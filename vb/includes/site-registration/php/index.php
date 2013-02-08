@@ -1285,6 +1285,8 @@ case 'activate':
                 'default_email' => $email,
                 'publish'       => $publish,
             );
+
+            die(var_dump($vbnexus_regData));
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);
             die(var_dump($vbnexus_result));
