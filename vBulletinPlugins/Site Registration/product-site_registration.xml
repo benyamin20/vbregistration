@@ -1100,7 +1100,7 @@ $header
 
                 
                 
-				<span class="help-block tiny dark_grey"><phrase>$vbphrase[maximum]</phrase> $vboptions[maxuserlength] characters.</span>
+				<span class="help-block tiny dark_grey">Maximum $vboptions[maxuserlength] characters.</span>
 
 
 				<div class="clear "></div>
@@ -1345,7 +1345,7 @@ $header
 				</div>
 				
 				<span class="help-block tiny dark_grey">
-				    <phrase>$vbphrase[maximum]</phrase> $vboptions[maxuserlength] characters
+				    Maximum $vboptions[maxuserlength] characters
 				</span>
 				
 				<div class="grid_7 no-margin" id="password-wrapper">
