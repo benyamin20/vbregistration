@@ -542,7 +542,7 @@ div.content table.tborder{
 }
 
 #datepicker-error-label{
-    top: 5px !important;
+    /*top: 5px !important;*/
 }
 
 #terms_and_conditions-error-label{

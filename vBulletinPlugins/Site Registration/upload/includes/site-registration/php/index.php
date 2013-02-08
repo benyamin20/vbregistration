@@ -420,7 +420,9 @@ case 'validate_site_account_details':
     $messages = "";
     $vbulletin->input
             ->clean_array_gpc('p',
-                    array('username' => TYPE_NOCLEAN, 'password' => TYPE_STR,
+                    array(  'username' => TYPE_NOCLEAN,
+                            'parent-guardian-email' => TYPE_STR, 
+                            'password' => TYPE_STR,
                             'confirm_password' => TYPE_STR,
                             'security_code' => TYPE_STR,
                             'terms_and_conditions' => TYPE_INT));
@@ -445,13 +447,33 @@ case 'validate_site_account_details':
         $messages['errors'][] = "Please enter a password for your user account."; //fetch_phrase('enter_password_for_account', 'global');
     }
 
-    if (empty($vbulletin->GPC['security_code'])) {
-        unset($userdata->errors);
-        $valid_entries = FALSE;
-        $error_type = "security-code";
-        $userdata->error('fieldmissing');
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+    
+    
+    if ( $_SESSION['site_registration']['coppauser'] === true) {
+        if (empty($vbulletin->GPC['parent-guardian-email'])) {
+            $valid_entries = FALSE;
+            $error_type = "parent-guardian-email"; 
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = fetch_error('fieldmissing_parentemail');
+        }else{
+            if (is_valid_email_address($vbulletin->GPC['parent-guardian-email'])) {
+
+                list($email_name, $email_domain) = preg_split("/@/",
+                        $vbulletin->GPC['parent-guardian-email']);
+
+                if (!checkdnsrr($email_domain, "MX")) {
+                    $valid_entries = FALSE;
+                    //$messages['errors'][] = $message = fetch_error('fieldmissing_parentemail')
+                    //        . " No MX records found for domain.";
+                    $messages['errors'][] = $message = "Invalid email." . " No MX records found for domain.";
+                    $messages['fields'][] = $error_type = "parent-guardian-email";
+                }
+            }else{
+                $valid_entries = FALSE;
+                $messages['errors'][] = $message = fetch_error('fieldmissing_parentemail');
+                $messages['fields'][] = $error_type = "parent-guardian-email";
+            }
+        }
     }
 
     if ($vbulletin->GPC['terms_and_conditions'] != 1) {
@@ -519,6 +541,17 @@ case 'validate_site_account_details':
 
     if (fetch_require_hvcheck('register')) {
         //check if CAPTCHA value is correct
+        
+        
+        if (empty($vbulletin->GPC['security_code'])) {
+            unset($userdata->errors);
+            $valid_entries = FALSE;
+            $error_type = "security-code";
+            $userdata->error('fieldmissing');
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = $userdata->errors[0];
+        }
+        
         if (strtoupper($vbulletin->GPC['security_code'])
                 != strtoupper(
                         $_SESSION['site_registration']['captcha']['answer'])) {
@@ -608,8 +641,13 @@ case 'validate_site_account_details':
         $userdata
                 ->set_bitfield('options', 'coppauser',
                         $_SESSION['site_registration']['coppauser']);
-                        
-        //$userdata->set('parentemail', $vbulletin->GPC['parentemail']);
+        
+        
+        //ACP-479
+        if ($vbulletin->options['usecoppa'] > 0 && $_SESSION['site_registration']['coppauser']) {
+            $userdata->set('parentemail', $vbulletin->GPC['parent-guardian-email']);
+        }                
+        
 
         // register IP address
         $userdata->set('ipaddress', IPADDRESS);
@@ -825,7 +863,7 @@ case 'create_site_account_first_step':
                                         $current['day'], $current['year'] - 13))) {
                     $_SESSION['site_registration']['coppauser'] = false;
                 } else {
-                    $_SESSION['site_registration']['coppauser'] = true;
+                    
                     
                     if ($vbulletin->options['checkcoppa']
                             AND $vbulletin->options['usecoppa']) {
@@ -844,7 +882,7 @@ case 'create_site_account_first_step':
                         $messages['fields'][] = $error_type = "datepicker";
 
                     } else {
-                    
+                        $_SESSION['site_registration']['coppauser'] = true;
                     }
                 }
 
