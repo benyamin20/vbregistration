@@ -1,5 +1,5 @@
 <?php
-
+die(var_dump(DIR));
 //path setup
 set_include_path(
         get_include_path() . PATH_SEPARATOR . realpath('../../../')
