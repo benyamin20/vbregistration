@@ -161,7 +161,55 @@ case 'complete_your_profile':
     } else {
         $showemail = 1;
     }
+    
+    
+    //update avatar if option enabled
+    if($vbulletin->options['avatarenabled']){
+        $userinfo = fetch_userinfo($_SESSION['site_registration']['userid']);
+        
+        // init user datamanager
+	    $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
+	    $userdata->set_existing($userinfo);
+        
+        $vbulletin->input->clean_gpc('f', 'photoimg', TYPE_FILE);
+    
+        require_once(DIR . '/includes/class_upload.php');
+	    require_once(DIR . '/includes/class_image.php');
+	    
+	    $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
+		$upload->image =& vB_Image::fetch_library($vbulletin);
+		$upload->userinfo =& $userinfo;
+		
+		cache_permissions($userinfo, false);
+		
+		// user's group doesn't have permission to use custom avatars so set override
+		if (!($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['canuseavatar']))
+		{
+			$userdata->set_bitfield('adminoptions', 'adminavatar', 1);
+		}
+		
+		if ($vbulletin->GPC['resize'])
+		{
+			if ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['canuseavatar'])
+			{
+				$upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
+				$upload->maxheight = $userinfo['permissions']['avatarmaxheight']; 
+			}
+		}
+		
+		if (!$upload->process_upload($vbulletin->GPC['avatarurl']))
+		{
+			$valid_entries = FALSE;
+            $error_type = "photoimg";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
+		}
 
+    }
+    
+    
+
+    /*
     if ($_FILES['photoimg']['name'] != "") {
         //do not use default image
         $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
@@ -240,7 +288,7 @@ case 'complete_your_profile':
                                  )
                             ";
 
-                            /*insert query*/
+                            //insert query
                             $vbulletin->db->query_write($sql);
 
                             $rows = $vbulletin->db->affected_rows();
@@ -312,7 +360,7 @@ case 'complete_your_profile':
         }
     
 
-    }
+    }*/
 
     if ($valid_entries) {
         //update timezone
@@ -372,14 +420,16 @@ case 'complete_your_profile':
     if ($valid_entries) {
         //update who can contact you
 
-        $user_data = &datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
-        $vbulletin->userinfo = fetch_userinfo($userid);
-        $user_data->set_existing($vbulletin->userinfo);
+        if(!isset($userdata)){
+            $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
+            $vbulletin->userinfo = fetch_userinfo($userid);
+            $userdata->set_existing($vbulletin->userinfo);
+        }
+        
+        $userdata->set_bitfield('options', "adminemail", $adminemail);
+        $userdata->set_bitfield('options', "showemail", $showemail);
 
-        $user_data->set_bitfield('options', "adminemail", $adminemail);
-        $user_data->set_bitfield('options', "showemail", $showemail);
-
-        $user_data->save();
+        $userdata->save();
 
         //start new session
         $vbulletin->userinfo = $vbulletin->db
