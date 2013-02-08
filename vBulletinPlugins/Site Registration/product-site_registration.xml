@@ -1121,6 +1121,13 @@ $header
                     <span class="error-label small" id="datepicker-error-label"></span>
                 </div>
                 
+                <div class="grid_6 no-margin" id="datepicker-wrapper">
+				    <label for="vbnexus_fb_publish">
+                        <input type="checkbox" checked="checked" name="vbnexus_fb_publish" value="1" id="vbnexus_fb_publish" tabindex="1">
+                        <img alt="Publish this to your Facebook Stream" src="http://www.facebook.com/favicon.ico" title="Publish this to your Facebook Stream">
+                        Publish this to your Facebook Stream
+                    </label>
+                </div>
                 
                 
                 <div class="clear clear_15"></div>
