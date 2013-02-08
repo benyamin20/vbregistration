@@ -168,8 +168,8 @@ case 'complete_your_profile':
         $userinfo = fetch_userinfo($_SESSION['site_registration']['userid']);
         
         // init user datamanager
-	    $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
-	    $userdata->set_existing($userinfo);
+        $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
+        $userdata->set_existing($userinfo);
         
         $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
         
@@ -178,30 +178,30 @@ case 'complete_your_profile':
         }
     
         require_once(DIR . '/includes/class_upload.php');
-	    require_once(DIR . '/includes/class_image.php');
-	    
-	    $upload = new vB_Upload_Userpic($vbulletin); 
+        require_once(DIR . '/includes/class_image.php');
+        
+        $upload = new vB_Upload_Userpic($vbulletin); 
 
         $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
         $upload->image =& vB_Image::fetch_library($vbulletin);
         $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
-		$upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
+        $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
         $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
         $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
 
         if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
-			$valid_entries = FALSE;
+            $valid_entries = FALSE;
             $error_type = "upload";
             $messages['fields'][] = $error_type;
             $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
-		}
+        }
 
     }else{
-		// predefined avatar
-		$userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
-		$userpic->condition = "userid = " . $userinfo['userid'];
-		$userpic->delete();
-	}
+        // predefined avatar
+        $userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
+        $userpic->condition = "userid = " . $userinfo['userid'];
+        $userpic->delete();
+    }
     
     
     if ($valid_entries) {
@@ -1294,82 +1294,77 @@ case 'activate':
             $vbnexus_result = $vBNexus->register($vbnexus_regData);
         }
 
-        $avatar = $vbulletin->GPC['avatar'];
-        $rows = $vbulletin->db->affected_rows();
+        $userid = $vbulletin->userinfo['userid'];
+        $avatar = $vbulletin->GPC['avatar']
+
+
+        //$rows = $vbulletin->db->affected_rows();
         $valid_entries = TRUE;
         $message = "OK";
 
-        $parts = explode(".", $avatar);
+        /*$parts = explode(".", $avatar);
         $extension = end($parts);
         $filedata = file_get_contents($avatar);
         $dateline = time();
         $visible = 1;
         $filesize = strlen($filedata);
-        $filename = substr(md5(time()), 0, 10) . "." . $extension;
-        
-        
+        $filename = substr(md5(time()), 0, 10) . "." . $extension;*/
+                                    
         if($vbulletin->options['avatarenabled']){
-            $sql = "
-                REPLACE INTO " . TABLE_PREFIX
-                    . "customprofilepic
-                (userid, filedata, dateline, filename, visible, filesize, width, height)
-                VALUES
-                ('" . $vbulletin->db->escape_string($userid) . "',
-                 '" . $vbulletin->db->escape_string($filedata)
-                    . "',
-                 '" . $vbulletin->db->escape_string($dateline)
-                    . "',
-                 '" . $vbulletin->db->escape_string($filename)
-                    . "',
-                 '" . $vbulletin->db->escape_string($visible) . "',
-                 '" . $vbulletin->db->escape_string($filesize)
-                    . "',
-                 '" . $vbulletin->db->escape_string("50") . "',
-                 '" . $vbulletin->db->escape_string("50")
-                    . "'
-                 )
-            ";
+            $userinfo = fetch_userinfo($userid);
+            
+            // init user datamanager
+            $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
+            $userdata->set_existing($userinfo);
+            
+            $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
+            
+            if(empty($vbulletin->GPC['upload'])){
+                $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/unknown.png";
+            }
+        
+            require_once(DIR . '/includes/class_upload.php');
+            require_once(DIR . '/includes/class_image.php');
+            
+            $upload = new vB_Upload_Userpic($vbulletin); 
 
-            /*insert query*/
-            $vbulletin->db->query_write($sql); 
+            $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
+            $upload->image =& vB_Image::fetch_library($vbulletin);
+            $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
+            $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
+            $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
+            $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
+
+            if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
+                $valid_entries = FALSE;
+                $error_type = "upload";
+                $messages['fields'][] = $error_type;
+                $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
+            }
+
+        }else{
+            // predefined avatar
+            $userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
+            $userpic->condition = "userid = " . $userinfo['userid'];
+            $userpic->delete();
         }
-
-
-
+        
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
         $form = "site-account-details";
-        $_SESSION['site_registration'][$form . '_token'] = array(
-                'token' => $token, 'time' => $token_time);
-
-        $email = $vbulletin->db->escape_string($vbulletin->GPC['email']);
-
-        //Verify if the account already exists...                                
-        $sql = "SELECT userid FROM " . TABLE_PREFIX
-                . "user WHERE email = '$email'";
-
-        $data = $vbulletin->db->query_first($sql);
-
-        $userid = $data["userid"];
-
-        $vbulletin->db
-                ->query_write(
-                        "INSERT IGNORE INTO  " . TABLE_PREFIX
-                                . "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '"
-                                . $fbID . "', '" . $userid . "', '1')");
-
+        $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
+        
         //Send Activation Email: Refer to Automated Emails
         // send new user email
 
         // delete activationid
-        /*$vbulletin->db
+        $vbulletin->db
                 ->query_write(
                         "DELETE FROM " . TABLE_PREFIX
                                 . "useractivation 
                 WHERE userid = '" . $userid . "' 
                 AND type = 0");*/
-
-        $userid = $data["userid"];
+        
         $nonvbid = $fbID;
 
         if ($vbulletin->options['verifyemail']) {
@@ -1378,8 +1373,8 @@ case 'activate':
                             OR $_SESSION['site_registration']['coppauser']) ? 4
                             : 2), 0);
 
-            $sql = "SELECT activationid FROM useractivation WHERE userid = '"
-                    . $userid . "'";
+            $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
+            
             $data = $vbulletin->db->query_first($sql);
 
             $activationid = $data["activationid"];
