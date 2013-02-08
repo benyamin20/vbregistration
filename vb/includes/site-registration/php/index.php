@@ -1304,7 +1304,8 @@ case 'activate':
         $visible = 1;
         $filesize = strlen($filedata);
         $filename = substr(md5(time()), 0, 10) . "." . $extension;*/
-                                    
+        
+        /*                     
         if($vbulletin->options['avatarenabled']){
             $userinfo = fetch_userinfo($userid);
             
@@ -1342,7 +1343,7 @@ case 'activate':
             $userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
             $userpic->condition = "userid = " . $userinfo['userid'];
             $userpic->delete();
-        }
+        }*/
         
         $token = md5(uniqid(microtime(), true));
         $token_time = time();
