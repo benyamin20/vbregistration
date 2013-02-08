@@ -1363,7 +1363,7 @@ case 'activate':
                         "DELETE FROM " . TABLE_PREFIX
                                 . "useractivation 
                 WHERE userid = '" . $userid . "' 
-                AND type = 0");*/
+                AND type = 0");
         
         $nonvbid = $fbID;
 
