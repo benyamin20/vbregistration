@@ -670,14 +670,14 @@ jQuery(document).ready(function (jQuery) {
 
 
         //bind enter event to already have an account fields
-        jQuery("#email").enterKey(function () {
+        jQuery("#email").enterKey(function (e) {
             jQuery("#create-new-account-button").trigger('click');
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
         });
 
-        jQuery("#datepicker").enterKey(function () {
+        jQuery("#datepicker").enterKey(function (e) {
             jQuery("#create-new-account-button").trigger('click');
             e.preventDefault();
             e.stopPropagation();
