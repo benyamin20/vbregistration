@@ -164,7 +164,7 @@
 						    <div id="upload-wrapper" class="grid_4 no-margin">
 							    <!--
 							        <div class="grid_1 no-margin pull-left">
-								        <img src="images/misc/unknown.gif" 
+								        <img src="includes/site-registration/img/unknown.png" 
 								            id="selected-avatar" />
 							        </div>
 							    -->
@@ -175,7 +175,7 @@
                                                     thumbnail
                                                     avatar-thumbnail">
                                                 <img 
-                                                    src="images/misc/unknown.gif"
+                                                    src="includes/site-registration/img/unknown.png"
                                                     id="selected-avatar" />
                                         </div>
                                         <div class="fileupload-preview 
@@ -307,7 +307,7 @@
 
 				<div class="clear clear_20"></div>
 
-				
+				<form id="theuploadform"></form>
 
 			</div>
 

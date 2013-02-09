@@ -42,6 +42,74 @@ $op = $vbulletin->GPC['op'];
 switch ($op) {
 
 
+case 'generate_thumbnail':
+    $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
+    
+    $userinfo = fetch_userinfo($_SESSION['site_registration']['userid']);
+    
+     if ($_FILES['photoimg']['name'] != "") {
+        
+        $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
+
+        if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
+            $name = $_FILES['photoimg']['name'];
+            $size = $_FILES['photoimg']['size'];
+
+            if (strlen($name)) {
+                list($txt, $ext) = explode(".", $name);
+                if (in_array($ext, $valid_formats)) {
+                    if ($size < ($userinfo['permissions']['avatarmaxsize'])) {
+                        $actual_image_name = time() . mt_rand() . "." . $ext;
+
+                        $uploaded = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+                                . $actual_image_name;
+
+                        move_uploaded_file($_FILES["photoimg"]["tmp_name"],
+                                $uploaded);
+ 
+                        $arr['id'] = $actual_image_name;       
+                        
+                    } else {
+                        $error = true;
+                    }
+                } else {
+                    $error = true;
+                }
+
+            } else {
+                $error = true;
+            }
+        }
+    }
+    
+    if(!$error){
+        $arr['id'] = "-1";
+    }
+    
+    json_headers($arr);
+    
+break;
+
+
+case 'show_thumbnail':
+
+    $vbulletin->input->clean_array_gpc('p', array('id' => TYPE_STR));
+    
+    $uploaded = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+                                . $vbulletin->GPC['id'];
+    
+    $sImage = $uploaded;
+    
+    $info = getimagesize($uploaded);
+    $mime =  image_type_to_mime_type($info[2]);
+    header("Content-Type: $mime");
+    header("Content-Length: " .(string)(filesize($sImage)) );
+
+    echo file_get_contents($sImage);
+
+break;
+
+
 // ajax check for coppa options
 case 'check_coppa':
     $arr = array();
@@ -1285,8 +1353,11 @@ case 'activate':
                 'default_email' => $email,
                 'publish'       => $publish,
             );
+
+            die(var_dump($vbnexus_regData));
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);
+            die(var_dump($vbnexus_result));
         }
 
         $userid = $vbulletin->userinfo['userid'];
