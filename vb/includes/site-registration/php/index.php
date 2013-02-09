@@ -1285,12 +1285,9 @@ case 'activate':
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
                 'publish'       => $publish,
-            );
-
-            die(var_dump($vbnexus_regData));
+            );            
             
-            $vbnexus_result = $vBNexus->register($vbnexus_regData);
-            die(var_dump($vbnexus_result));
+            $vbnexus_result = $vBNexus->register($vbnexus_regData);            
         }
 
         $userid = $vbulletin->userinfo['userid'];
