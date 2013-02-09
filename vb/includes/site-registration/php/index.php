@@ -1280,7 +1280,7 @@ case 'activate':
                 'service'       => "fb",
                 'userid'        => $fbID,
                 'username'      => $username,
-                'password'      => NULL,
+                'password'      => md5(time()),
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
