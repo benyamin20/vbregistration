@@ -74,7 +74,7 @@ class vBNexus {
         // Quick checks to set flags in order to avoid unnecessary checks later
         $this->enabled['fb'] = !empty($this->config['fb_appId']) && !empty($this->config['fb_secret']);
         $this->enabled['gfc'] = !empty($this->config['gfc_key']);
-        die(var_dump($this->enabled));
+
         $this->importCookie();
     }
 
@@ -125,6 +125,7 @@ class vBNexus {
      * Whether a service (FB Connect | Google Friend Connect) is enabled
      */
     public function isEnabled($svc) {
+        die(var_dump($this->enabled[$svc]));
         return !empty($this->enabled[$svc]);
     }
 
