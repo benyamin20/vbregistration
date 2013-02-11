@@ -64,7 +64,7 @@ class vBNexus {
         $this->config['fb_appId'] = $this->options['facebook_appid'];
         $this->config['fb_secret'] = $this->options['facebook_applicationsecret'];
         $this->config['buttons_position'] = $this->options['buttons_position'];
-        die(var_dump($this->config));
+
         // Set the right scope for our Facebook App
         $this->config['fb_perms'] = 'email';
         if ($this->options['enable_feeds']) {
@@ -149,7 +149,7 @@ class vBNexus {
 
     public function setLinkedService($service) {
         $this->linkedService = NULL;
-        $a = $this->isEnabled($service); die(var_dump($service));
+        $a = $this->isEnabled($service); die(var_dump($a));
         if ($this->isEnabled($service)) {
             // Verify the service is valid
             $class = "vBNexus_{$service}";
