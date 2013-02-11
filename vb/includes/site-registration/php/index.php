@@ -1380,7 +1380,7 @@ case 'activate':
             );            
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);    
-            $vBNexus->login("fb")
+            $vBNexus->login("fb");
         }
 
         $userid = $vbulletin->userinfo['userid'];
