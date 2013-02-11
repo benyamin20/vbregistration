@@ -1380,7 +1380,7 @@ case 'activate':
             );            
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);    
-                  
+            $vBNexus->login("fb")
         }
 
         $userid = $vbulletin->userinfo['userid'];
@@ -1458,10 +1458,18 @@ case 'activate':
         $nonvbid = $fbID;
 
         if ($vbulletin->options['verifyemail']) {
-            build_user_activation_id($userid,
-                    (($vbulletin->options['moderatenewmembers']
-                            OR $_SESSION['site_registration']['coppauser']) ? 4
-                            : 2), 0);
+            $activateid = build_user_activation_id($userid,
+                        (($vbulletin->options['moderatenewmembers']
+                                OR $_SESSION['site_registration']['coppauser']) ? 4
+                                : 2), 0);
+
+            eval(fetch_email_phrases('activateaccount'));
+
+            if(empty($subject)) {
+                $subject = fetch_phrase('activate_your_account', 'threadmanage');
+            }
+
+            vbmail($email, $subject, $message, false);
 
             $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
             
