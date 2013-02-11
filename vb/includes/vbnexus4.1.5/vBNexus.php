@@ -125,6 +125,7 @@ class vBNexus {
      * Whether a service (FB Connect | Google Friend Connect) is enabled
      */
     public function isEnabled($svc) {
+        die(var_dump($this->enabled));
         return isset($this->enabled[$svc]) ? TRUE : FALSE;
     }
 
