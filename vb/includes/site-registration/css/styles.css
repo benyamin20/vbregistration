@@ -559,5 +559,12 @@ div.content table.tborder{
  	font-family: Helvetica, Arial, 'sans-serif' !important;
 	font-size: 12px  !important;
  }
+ 
+ 
+ #postiframe, #file_upload{
+    display: none;
+    width: 1px;
+    height: 1px;
+ }
 
 

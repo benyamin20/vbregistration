@@ -63,9 +63,9 @@
 
     <script>window.jQuery || document.write('<script src="includes/site-registration/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="includes/site-registration/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
-    <script src="includes/site-registration/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="includes/site-registration/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
     <script src="includes/site-registration/js/jquery.form.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
+    <script src="includes/site-registration/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
     
       <!--[if lt IE 9]> 
           <script src="includes/site-registration/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
@@ -245,6 +245,7 @@
                                 <option class="" value="11"><phrase>$vbphrase[timezone_gmt_plus_1100]</phrase></option>
                                 <option class="" value="12"><phrase>$vbphrase[timezone_gmt_plus_1200]</phrase></option>
                             </select>
+                            <span class="error-label" id="timezone-error-label"></span>
                         </div><!--  /Timezone -->
  
 						<!-- Secret inputs  -->
@@ -255,12 +256,14 @@
 						<label for="secret_question">Secret Question</label>
 						    <input type="text" id="secret_question" name="secret_question"
 							    title="Secret Question" value="" />
+							<span class="error-label" id="secret_question-error-label"></span>
                         </div>
 						<div class="clear"></div>
 						<div id="secret_answer-wrapper">
 						    <label for="secret_answer">Secret Answer</label>
 						    <input type="text" name="secret_answer" id="secret_answer"
 							title="Secret Aswer" value="" />
+							<span class="error-label" id="secret_answer-error-label"></span>
                         </div>
                         
                         <!--  Contact check boxes -->
@@ -306,8 +309,7 @@
 				<span class="normal  bold"></span>
 
 				<div class="clear clear_20"></div>
-
-				<form id="theuploadform"></form>
+ 
 
 			</div>
 
@@ -1630,6 +1632,7 @@ $header
                     if ($vbulletin->db->num_rows($user_exists)) {
                         //user exists
                         $valid_user = TRUE;
+                        $_SESSION['site_registration']['userid'] = $vbulletin->GPC['u'];
                     } else {
                         //user does not exists, show default verification page
                         
