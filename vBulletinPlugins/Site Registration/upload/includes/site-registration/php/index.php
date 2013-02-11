@@ -1121,6 +1121,7 @@ case 'activate':
                     array('email' => TYPE_STR, 'birthdate' => TYPE_STR,
                             'username' => TYPE_NOHTML, 'avatar' => TYPE_STR,
                             'from' => TYPE_STR,
+                            'vbnexus_fb_publish' => TYPE_STR,
                             'terms_and_conditions' => TYPE_STR));
 
     //check if variables are set
@@ -1370,17 +1371,15 @@ case 'activate':
                 'service'       => "fb",
                 'userid'        => $fbID,
                 'username'      => $username,
-                'password'      => NULL,
+                'password'      => md5(time()),
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
                 'publish'       => $publish,
-            );
-
-            die(var_dump($vbnexus_regData));
+            );            
             
-            $vbnexus_result = $vBNexus->register($vbnexus_regData);
-            die(var_dump($vbnexus_result));
+            $vbnexus_result = $vBNexus->register($vbnexus_regData);    
+            die(var_dump($vbnexus_result));        
         }
 
         $userid = $vbulletin->userinfo['userid'];
