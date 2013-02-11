@@ -64,7 +64,7 @@ class vBNexus {
         $this->config['fb_appId'] = $this->options['facebook_appid'];
         $this->config['fb_secret'] = $this->options['facebook_applicationsecret'];
         $this->config['buttons_position'] = $this->options['buttons_position'];
-        die(var_dump($this->config));
+
         // Set the right scope for our Facebook App
         $this->config['fb_perms'] = 'email';
         if ($this->options['enable_feeds']) {
@@ -74,7 +74,7 @@ class vBNexus {
         // Quick checks to set flags in order to avoid unnecessary checks later
         $this->enabled['fb'] = !empty($this->config['fb_appId']) && !empty($this->config['fb_secret']);
         $this->enabled['gfc'] = !empty($this->config['gfc_key']);
-
+        die(var_dump($this->enabled));
         $this->importCookie();
     }
 
