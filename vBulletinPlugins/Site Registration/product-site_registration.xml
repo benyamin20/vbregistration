@@ -1121,8 +1121,10 @@ $header
                     </div>
                     <span class="error-label small" id="datepicker-error-label"></span>
                 </div>
+
+                <div class="clear "></div>
                 
-                <div class="grid_6 no-margin" id="datepicker-wrapper">
+                <div class="grid_3 no-margin">
 				    <label for="vbnexus_fb_publish">
                         <p>
                         	<input type="checkbox" checked="checked" name="vbnexus_fb_publish" value="1" id="vbnexus_fb_publish" tabindex="1">
