@@ -1266,7 +1266,7 @@ case 'activate':
 
             /**************VBNEXUS*************************/
             $vBNexus = new vBNexus;
-
+            die(var_dump($vBNexus));
             $vBNexus->setConfig('vbnexus_service', "fb");                    
             $vBNexus->setConfig('vbnexus_userid', $fbID);               
 
@@ -1288,7 +1288,7 @@ case 'activate':
             );            
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);    
-            die(var_dump($vbnexus_result));        
+                  
         }
 
         $userid = $vbulletin->userinfo['userid'];
