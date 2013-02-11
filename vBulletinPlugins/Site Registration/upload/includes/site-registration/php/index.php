@@ -42,6 +42,97 @@ $op = $vbulletin->GPC['op'];
 switch ($op) {
 
 
+case 'generate_thumbnail':
+    $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
+    
+    $uid = $_SESSION['site_registration']['userid'];
+    
+    $userinfo = fetch_userinfo($uid);
+    
+    
+    if($userinfo['permissions']['avatarmaxsize']){
+        $max_upload = $userinfo['permissions']['avatarmaxsize'];
+    }else{
+        $max_upload = (int)(return_bytes(ini_get('upload_max_filesize')));
+    }
+    
+ 
+     if ($_FILES['upload']['name'] != "") {
+        
+        $valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
+
+        if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
+            $name = $_FILES['upload']['name'];
+            $size = $_FILES['upload']['size'];
+
+            if (strlen($name)) {
+                list($txt, $ext) = explode(".", $name);
+                if (in_array($ext, $valid_formats)) {
+                    if ($size < ($max_upload)) {
+                        $actual_image_name = time() . mt_rand() . "." . $ext;
+
+                        $uploaded = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+                                . $actual_image_name;
+
+                        move_uploaded_file($_FILES["upload"]["tmp_name"],
+                                $uploaded);
+ 
+                              
+                        
+                    } else {
+                        $error = true;
+                        $message = "Image size too large, Maximum ". ( $max_upload * 1024 ) . "KB.";
+                    }
+                } else {
+                    $error = true;
+                    $message = "Invalid extension.";
+                }
+
+            } else {
+                $error = true;
+                $message = "Please provide a valid file.";
+            }
+        }else{
+            $error = true;
+            $message = "Invalid method.";
+        }
+    }else{
+        $error = true;
+        $message = "An error ocurred.";
+    }
+    
+    if($error){
+        $arr['id'] = "-1";
+        $arr['msg'] = $message;
+        //$arr['debug'] = var_export($_FILES, true) . var_export($userinfo, true);
+    }else{
+        $arr['id'] = $actual_image_name; 
+    }
+    
+    json_headers($arr);
+    
+break;
+
+
+case 'show_thumbnail':
+
+    $vbulletin->input->clean_array_gpc('g', array('id' => TYPE_STR));
+    
+    $uploaded = sys_get_temp_dir() . DIRECTORY_SEPARATOR
+                                . $vbulletin->GPC['id'];
+    
+    $sImage = $uploaded;
+    
+    $info = getimagesize($uploaded);
+    $mime =  image_type_to_mime_type($info[2]);
+    header("Content-Type: $mime");
+    header("Content-Length: " . filesize($sImage) );
+
+    echo file_get_contents($sImage);
+
+break;
+
+
 // ajax check for coppa options
 case 'check_coppa':
     $arr = array();
@@ -115,7 +206,7 @@ case 'complete_your_profile':
             $user_data->error('fieldmissing');
             $error_type = "secret_answer";
             $messages['fields'][] = $error_type;
-            $messages['errors'][] = $userdata->errors[0];
+            $messages['errors'][] = "Please enter a secret answer";
         }
     } else {
 
@@ -128,7 +219,7 @@ case 'complete_your_profile':
             $user_data->error('fieldmissing');
             $error_type = "secret_question";
             $messages['fields'][] = $error_type;
-            $messages['errors'][] = $userdata->errors[0];
+            $messages['errors'][] = "Please enter a secret question.";
         }
         
     } else {
@@ -140,7 +231,7 @@ case 'complete_your_profile':
         $user_data->error('fieldmissing');
         $error_type = "timezone";
         $messages['fields'][] = $error_type;
-        $messages['errors'][] = $userdata->errors[0];
+        $messages['errors'][] = "Please enter a valid timezone.";
     } else {
 
     }
@@ -169,7 +260,7 @@ case 'complete_your_profile':
         $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
         
         if(empty($vbulletin->GPC['upload'])){
-            $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/unknown.png";
+            $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/img/unknown.png";
         }
     
         require_once(DIR . '/includes/class_upload.php');
@@ -1030,6 +1121,7 @@ case 'activate':
                     array('email' => TYPE_STR, 'birthdate' => TYPE_STR,
                             'username' => TYPE_NOHTML, 'avatar' => TYPE_STR,
                             'from' => TYPE_STR,
+                            'vbnexus_fb_publish' => TYPE_STR,
                             'terms_and_conditions' => TYPE_STR));
 
     //check if variables are set
@@ -1265,7 +1357,7 @@ case 'activate':
 
             /**************VBNEXUS*************************/
             $vBNexus = new vBNexus;
-
+            die(var_dump($vBNexus));
             $vBNexus->setConfig('vbnexus_service', "fb");                    
             $vBNexus->setConfig('vbnexus_userid', $fbID);               
 
@@ -1279,14 +1371,15 @@ case 'activate':
                 'service'       => "fb",
                 'userid'        => $fbID,
                 'username'      => $username,
-                'password'      => NULL,
+                'password'      => md5(time()),
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
                 'publish'       => $publish,
-            );
+            );            
             
-            $vbnexus_result = $vBNexus->register($vbnexus_regData);
+            $vbnexus_result = $vBNexus->register($vbnexus_regData);    
+                  
         }
 
         $userid = $vbulletin->userinfo['userid'];
