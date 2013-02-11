@@ -1122,7 +1122,7 @@ $header
                     <span class="error-label small" id="datepicker-error-label"></span>
                 </div>
 
-                <div class="clear "></div>
+                <div class="clear clear_10"></div>
                 
                 <div class="grid_3 no-margin">
 				    <label for="vbnexus_fb_publish">
