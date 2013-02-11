@@ -126,8 +126,8 @@ class vBNexus {
      */
     public function isEnabled($svc) {      
         $a = !empty($this->enabled[$svc]);
-        die(var_dump($a));  
-        return !empty($this->enabled[$svc]);
+
+        return $a;
     }
 
 
@@ -160,6 +160,8 @@ class vBNexus {
                 $this->linkedService = new $class;
                 return $this->linkedService;
             }
+        } else {
+            die(":(");
         }
     }
 
