@@ -149,7 +149,7 @@ class vBNexus {
 
     public function setLinkedService($service) {
         $this->linkedService = NULL;
-
+        $a = $this->isEnabled($service); die(var_dump($a));
         if ($this->isEnabled($service)) {
             // Verify the service is valid
             $class = "vBNexus_{$service}";
