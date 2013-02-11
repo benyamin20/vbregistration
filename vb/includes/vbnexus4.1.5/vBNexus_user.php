@@ -138,7 +138,7 @@ class vBNexus_user {
         }
 
         // Validate integrity of input
-        if (!$data['type'] || !$data['service'] || $data['service'] != $this->getServiceName()) { die(var_dump($data));
+        if (!$data['type'] || !$data['service'] || $data['service'] != $this->getServiceName()) { 
             return 'vbnexus_registration_failed';
         }
         if (!$data['username']) {

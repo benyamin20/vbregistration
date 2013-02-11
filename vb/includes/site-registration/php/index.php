@@ -1358,6 +1358,7 @@ case 'activate':
             /**************VBNEXUS*************************/
             $vBNexus = new vBNexus;
             
+            $vBNexus->init();
             $vBNexus->setConfig('vbnexus_service', "fb");                    
             $vBNexus->setConfig('vbnexus_userid', $fbID);               
 
