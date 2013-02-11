@@ -92,7 +92,7 @@ class vBNexus_user {
 
         // Validate (returns a phrase key on error, or true on success)
         $valid = $this->validateRegistration($data);
-        die(var_dump($valid));
+        
         if ($valid !== true) return $valid;
 
         // Get user id from database or create a new one, depending on registration type
