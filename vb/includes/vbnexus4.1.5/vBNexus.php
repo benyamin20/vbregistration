@@ -265,10 +265,8 @@ class vBNexus {
         return ($this->hasFeedOptions() && $checked);
     }
 
-    public function publishFeed($type) {
-        return ($this->linkedService && $this->getOption('enable_feeds'))
-            ? $this->linkedService->publishFeed($type)
-            : false;
+    public function publishFeed($type) {            
+        return $this->linkedService->publishFeed($type);
     }
 
 
