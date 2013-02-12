@@ -13,6 +13,76 @@
 	<codes>
 	</codes>
 	<templates>
+	    <template name="site_registration_benefits" templatetype="template" 
+		    date="1352855133" username="fromero" version="1.0">
+		    <![CDATA[
+            <table class='tborder' cellpadding='6' cellspacing='1' border='0' width='97%' align='center'>
+              <tr>
+                <td colspan='3'><em style='font-weight:bold;'>Become a part of the  Honda-Tech Community Today!</em></td>
+              </tr>
+              <tr>
+                <td width='34%' align='left'>MEMBERSHIP OPTIONS</td>
+                <td width='33%' align='center'>Trial User</td>
+                <td width='33%' align='center'>Registered User - Full User</td>
+              </tr>
+              <tr class='alt1'>
+                <td  align=''><strong>User Title</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Trial User</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Honda-Tech Member</td>
+              </tr>
+              <tr class='alt2'>
+                <td  align=''><strong>Profile Picture</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>100x100 (No Animation)</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>600x400</td>
+              </tr>
+              <tr class='alt1'>
+                <td  align=''><strong>Avatar Size</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>80x80</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>100x100</td>
+              </tr>
+              <tr class='alt2'>
+                <td  align=''><strong>Signature</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Maximum 3 Lines</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Maximum 3 Lines</td>
+              </tr>
+              <tr class='alt1'>
+                <td  align=''><strong>Private Message Storage</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>3</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>500<br />Send up to 20 PM's at once</td>
+              </tr>
+              <tr class='alt2'>
+                <td  align=''><strong>Gallery Photos</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Can View Other's Albums</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Upload 100 pics</td>
+              </tr>
+              <tr class='alt1'>
+                <td  align=''><strong>File Attachments</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Unlimited</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Unlimited</td>
+              </tr>
+            <tr class='alt2'>
+               <td  align=''><strong>Social Groups</strong></td>
+               <td style='color:#66727E; font-weight:bold;' align='center'>No</td>
+               <td style='color:#AD0F00; font-weight:bold;' align='center'>Join, create, edit, manage Social Groups</td>
+            </tr> 
+              <tr class='alt1'>
+                <td  align=''><strong>Exclusive Forum Access</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>No</td>
+               <td style='color:#AD0F00; font-weight:bold;' align='center'>Yes<br />Access to Honda-Tech Marketplace</td>
+              </tr>
+              <tr class='alt2'>
+                <td  align=''><strong>Membership Fee</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Free **Users are promoted to Full Users after 15 days of registration and 5 posts</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Free</td>
+              </tr>
+              <tr  align='center'>
+                            <td>&nbsp;</td>
+                <td></td>
+                <td><strong>15 Days & 5 Posts</strong></td>
+              </tr>
+            </table>        
+		    ]]>
+		</template>
 	    <template name="site_reg_includes" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0">
 		    <![CDATA[
@@ -845,7 +915,7 @@ $stylevar[htmldoctype]
 
 	    <!--  Info table for benefit comparison -->
 	    <div id="info">
-	        $vboptions[site_registration_benefits]
+	        $site_registration_benefits
 	    </div>
 	    
 	    
@@ -1883,6 +1953,7 @@ $stylevar[htmldoctype]
 			                if(!(int)$vbulletin->userinfo['userid']){
 			                    if($vbulletin->bf_ugp_forumpermissions['canview']){
 			                        
+			                        $site_registration_benefits = fetch_template('site_registration_benefits'); 
 			                        eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			                    }
 			                    
@@ -1900,13 +1971,14 @@ $stylevar[htmldoctype]
 			            
 			        }else{
 			            if(!(int)$vbulletin->userinfo['userid']){ 
-		                    
+			            
+		                    $site_registration_benefits = fetch_template('site_registration_benefits');
 		                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			            }else{
 			                if($vbulletin->options['allowmultiregs']){
 		                    $hide_on_multiple_regs = true;
 		                    
-	                        
+	                        $site_registration_benefits = fetch_template('site_registration_benefits');
 	                        eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 		                    
 			                }
@@ -2110,7 +2182,7 @@ $stylevar[htmldoctype]
                             $sql
                          );
                         
-                        //fixes birthday to be able to search it on temporary table
+                        //fixes birthday to be able to search it on  table
                         $birthday = preg_replace("/\-/","/", $birthday);
                         
                         $sql = "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
@@ -2135,8 +2207,7 @@ $stylevar[htmldoctype]
                             $default_email_from_administrators = " checked='checked' ";
                         }
                          
-                        //try to start a valid session
-                        //start new session
+                        //try to start a valid session 
                         $vbulletin->userinfo = $vbulletin->db
                                 ->query_first(
                                         "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
@@ -2252,18 +2323,6 @@ $stylevar[htmldoctype]
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
 			    Link Text			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_benefits_desc" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Site Registration Benefits			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_benefits_title"   
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Site Registration Benefits			
 			    ]]>
 			</phrase>
 			<!-- Check these out options -->
@@ -2510,79 +2569,6 @@ $stylevar[htmldoctype]
 				        See benefits comparison &#187;
 				    ]]>
 		        </defaultvalue>
-			</setting>
-			<setting varname="site_registration_benefits" displayorder="60">
-				<datatype>free</datatype>
-				<optioncode>textarea</optioncode>
-				<defaultvalue>
-				    <![CDATA[
-					    <table class="tborder" cellpadding="6" cellspacing="1" border="0" width="97%" align="center">
-                          <tr>
-                            <td colspan="3"><em style="font-weight:bold;">Become a part of the  Honda-Tech Community Today!</em></td>
-                          </tr>
-                          <tr>
-                            <td width="34%" align="left">MEMBERSHIP OPTIONS</td>
-                            <td width="33%" align="center">Trial User</td>
-                            <td width="33%" align="center">Registered User - Full User</td>
-                          </tr>
-                          <tr class="alt1">
-                            <td  align=""><strong>User Title</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Trial User</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Honda-Tech Member</td>
-                          </tr>
-                          <tr class="alt2">
-                            <td  align=""><strong>Profile Picture</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">100x100 (No Animation)</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">600x400</td>
-                          </tr>
-                          <tr class="alt1">
-                            <td  align=""><strong>Avatar Size</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">80x80</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">100x100</td>
-                          </tr>
-                          <tr class="alt2">
-                            <td  align=""><strong>Signature</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Maximum 3 Lines</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Maximum 3 Lines</td>
-                          </tr>
-                          <tr class="alt1">
-                            <td  align=""><strong>Private Message Storage</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">3</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">500<br />Send up to 20 PM's at once</td>
-                          </tr>
-                          <tr class="alt2">
-                            <td  align=""><strong>Gallery Photos</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Can View Other's Albums</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Upload 100 pics</td>
-                          </tr>
-                          <tr class="alt1">
-                            <td  align=""><strong>File Attachments</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Unlimited</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Unlimited</td>
-                          </tr>
-                        <tr class="alt2">
-                           <td  align=""><strong>Social Groups</strong></td>
-                           <td style="color:#66727E; font-weight:bold;" align="center">No</td>
-                           <td style="color:#AD0F00; font-weight:bold;" align="center">Join, create, edit, manage Social Groups</td>
-                        </tr> 
-                          <tr class="alt1">
-                            <td  align=""><strong>Exclusive Forum Access</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">No</td>
-                           <td style="color:#AD0F00; font-weight:bold;" align="center">Yes<br />Access to Honda-Tech Marketplace</td>
-                          </tr>
-                          <tr class="alt2">
-                            <td  align=""><strong>Membership Fee</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Free **Users are promoted to Full Users after 15 days of registration and 5 posts</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Free</td>
-                          </tr>
-                          <tr  align="center">
-                                        <td>&nbsp;</td>
-                            <td></td>
-                            <td><strong>15 Days & 5 Posts</strong></td>
-                          </tr>
-                        </table>
-					]]>
-				</defaultvalue>
 			</setting>
 			<setting varname="site_registration_checktheseout_picture1" displayorder="70">
 				<datatype>free</datatype>

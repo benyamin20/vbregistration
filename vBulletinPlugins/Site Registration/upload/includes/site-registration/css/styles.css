@@ -532,6 +532,7 @@ hr{
 
 #terms-and-conditions-error-label{
     top: 2px ;
+    margin-left: 10px;
 }
 
 .terms-and-conditions-sr-input-error-container{
