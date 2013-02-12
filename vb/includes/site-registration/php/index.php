@@ -1385,12 +1385,13 @@ case 'activate':
                 $token = md5(uniqid(microtime(), true));
                 $token_time = time();
                 $form = "site-account-details";
-                $_SESSION['site_registration'][$form . '_token'] = array(
-                        'token' => $token, 'time' => $token_time);
+                $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
 
                 //start new session
-                $userinfo = $vbulletin->db->query_first("SELECT userid FROM " . TABLE_PREFIX ."vbnexus_user WHERE nonvbid = ". $fbID);
-
+                $userinfo = $vbulletin->db->query_first("SELECT ". TABLE_PREFIX ."vbnexus_user.userid, ". TABLE_PREFIX ."user.password 
+                                                        INNER JOIN ". TABLE_PREFIX ."user ON ". TABLE_PREFIX ."user.userid = ". TABLE_PREFIX ."vbnexus_user.userid
+                                                        FROM ". TABLE_PREFIX ."vbnexus_user WHERE nonvbid = ". $fbID);
+                die(var_dump($userinfo));
                 require_once(DIR . '/includes/functions_login.php');
 
                 vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
