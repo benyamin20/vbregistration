@@ -1388,9 +1388,9 @@ case 'activate':
                 $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
 
                 //start new session
-                $userinfo = $vbulletin->db->query_first("SELECT ". TABLE_PREFIX ."vbnexus_user.userid, ". TABLE_PREFIX ."user.password 
+                $userinfo = $vbulletin->db->query_first("SELECT ". TABLE_PREFIX ."vbnexus_user.userid, ". TABLE_PREFIX ."user.password FROM ". TABLE_PREFIX ."vbnexus_user
                                                         INNER JOIN ". TABLE_PREFIX ."user ON ". TABLE_PREFIX ."user.userid = ". TABLE_PREFIX ."vbnexus_user.userid
-                                                        FROM ". TABLE_PREFIX ."vbnexus_user WHERE nonvbid = ". $fbID);
+                                                        WHERE nonvbid = ". $fbID);
                 die(var_dump($userinfo));
                 require_once(DIR . '/includes/functions_login.php');
 
