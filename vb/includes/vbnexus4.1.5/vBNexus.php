@@ -266,6 +266,8 @@ class vBNexus {
     }
 
     public function publishFeed($type) {
+        $a = $this->getOption('enable_feeds');
+        die(var_dump($a));
         return ($this->linkedService && $this->getOption('enable_feeds'))
             ? $this->linkedService->publishFeed($type)
             : false;
