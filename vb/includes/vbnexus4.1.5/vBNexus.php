@@ -181,7 +181,7 @@ class vBNexus {
     }
 
     public function register($data) {
-        die(var_dump($data));
+        die(var_dump($data)); 
         $this->setLinkedService($data['service']);
         if (!$this->linkedService) {
             return 'vbnexus_registration_failed';
