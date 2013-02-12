@@ -13,6 +13,33 @@
 	<codes>
 	</codes>
 	<templates>
+	    <template name="site_reg_includes" templatetype="template" 
+		    date="1352855133" username="fromero" version="1.0">
+		    <![CDATA[
+	        <link rel="stylesheet" type="text/css" media="all" href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
+            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
+            <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
+            <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
+            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
+            <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
+            <!--[if IE]>
+                <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
+            <![endif]-->
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
+         
+            <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+            <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
+            <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
+            <script src="$vboptions[site_registration_includes_path]/js/jquery.form.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
+            <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
+            
+            <!--[if lt IE 9]> 
+              <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+            <![endif]-->        
+		    ]]>
+		</template>
 		<template name="site_reg_account-activated" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0"><![CDATA[
 $stylevar[htmldoctype]
@@ -37,22 +64,16 @@ $stylevar[htmldoctype]
 	    <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
     <![endif]-->
     <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
-    
-    
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> 
-        <![endif]-->
-
+ 
     <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
     <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
     <script src="$vboptions[site_registration_includes_path]/js/jquery.form.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
     <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
     
-      <!--[if lt IE 9]> 
-          <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
-        <![endif]-->
+    <!--[if lt IE 9]> 
+      <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
+    <![endif]-->
 
 
 </head>
@@ -397,12 +418,7 @@ $stylevar[htmldoctype]
 	    <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
     <![endif]-->
     <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
-    
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+ 
 
     <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
@@ -495,25 +511,25 @@ $stylevar[htmldoctype]
                 <script src='$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js'></script>
                 <script src='$vboptions[site_registration_includes_path]/js/common.js'></script>
 
-                <div id='sr-container' class='container_12 background_yellow not-active'>
-                    <div id='warning-container' >
-                        <div class='pull-left no-margin grid_1 alpha'>
+                <div id='sr-container' class='container_12 sr-background_yellow sr-not-active'>
+                    <div id='sr-warning-container' >
+                        <div class='pull-left sr-no-margin grid_1 alpha'>
                             <img src='$vboptions[site_registration_includes_path]/img/icon-email-medium.png' 
-                                id='email-icon' />
+                                id='sr-email-icon' />
                         </div>
-                        <div class='margin_left_20 grid_9 omega'>
-                            <h1 class='not-fully-active no-margin'>
+                        <div class='sr-margin_left_20 grid_9 omega'>
+                            <h1 class='sr-not-fully-active sr-no-margin'>
                             Your Account Is Not Fully Active
                             </h1>
                             <div class='clear'></div>
-                            <span class="please-confirm-account">Please confirm your account by clicking on the email activation link</span>
-                            <div class='clear clear_15'></div>
-                            <span class="did-not-receive">Did not receive it? 
-                            <a href="$php_self#resend" id="resend-email" class="sr-small link_blue">
+                            <span class="sr-please-confirm-account">Please confirm your account by clicking on the email activation link</span>
+                            <div class='clear sr-clear_15'></div>
+                            <span class="sr-did-not-receive">Did not receive it? 
+                            <a href="$php_self#resend" id="sr-resend-email" class="sr-small sr-link_blue">
 				            Resend Activation Email</a>
 				            &nbsp;&nbsp;&nbsp;
 				            <span id="ajax-loader"></span>
-				            <span id="email-sent" class="rs-small email-sent">
+				            <span id="sr-email-sent" class="sr-small sr-email-sent">
 				            </span> 
 				            <input id="token" name="token" value="###TOKEN###" type="hidden" />
                         </div>
@@ -523,8 +539,8 @@ $stylevar[htmldoctype]
         </template>
 		<template name="site_reg_sign-in-step-1" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0"><![CDATA[
-$stylevar[htmldoctype]
-<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">        
+    $stylevar[htmldoctype]
+    <html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">        
     <head>
     
     
@@ -551,11 +567,7 @@ $stylevar[htmldoctype]
     
     <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
+ 
     <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     
@@ -879,12 +891,6 @@ $stylevar[htmldoctype]
     
     <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
  
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
     <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
@@ -959,12 +965,6 @@ $stylevar[htmldoctype]
     
     <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
  
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
     <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
@@ -1234,11 +1234,6 @@ $stylevar[htmldoctype]
         <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
     <![endif]-->
  
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-
     <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
     <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
     <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
@@ -1442,9 +1437,7 @@ $stylevar[htmldoctype]
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[				
 			    if((int)$vbulletin->userinfo['userid'] && $_REQUEST['do'] !="logout"){
-			        if (!session_id()) {
-                        session_start();
-                    }
+ 
                     
                     $userid = $vbulletin->userinfo['userid'];
 	                
@@ -1536,10 +1529,7 @@ $stylevar[htmldoctype]
                 $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
                 $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
 
-                if (!session_id()) {
-                    session_start();
-
-                }
+ 
 
                 if (isset($_REQUEST['u']) && isset($_REQUEST['i'])) {
 
@@ -1635,13 +1625,7 @@ $stylevar[htmldoctype]
 			<phpcode>
 			    <![CDATA[
 			        $php_self = $_SERVER['REQUEST_URI'];			        
-			        
-			        if (!session_id()) {
-                        session_start();
-                    }
-                    
-                     
-
+ 
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
 
@@ -1927,11 +1911,7 @@ $stylevar[htmldoctype]
 			<phpcode>
 			    <![CDATA[
 			        $php_self = $_SERVER['REQUEST_URI'];
-			        
-			        if (!session_id()) {
-                        session_start();
-                    }
-                     
+ 
                     $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
                     
  
@@ -2028,11 +2008,7 @@ $stylevar[htmldoctype]
 			<hookname>register_activate_start</hookname>
 			<phpcode>
 			    <![CDATA[
-			    
-			        if (!session_id()) {
-                        session_start();
-                    }
-			    
+ 
                     $php_self = $_SERVER['REQUEST_URI'];
 
                     $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
