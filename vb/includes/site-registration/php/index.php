@@ -1388,18 +1388,18 @@ case 'activate':
                 $_SESSION['site_registration'][$form . '_token'] = array('token' => $token, 'time' => $token_time);
 
                 //start new session
-                $userinfo = $vbulletin->db->query_first("SELECT ". TABLE_PREFIX ."vbnexus_user.userid, ". TABLE_PREFIX ."user.password FROM ". TABLE_PREFIX ."vbnexus_user
+                $vbulletin->userinfo = $vbulletin->db->query_first("SELECT ". TABLE_PREFIX ."vbnexus_user.userid, ". TABLE_PREFIX ."user.password FROM ". TABLE_PREFIX ."vbnexus_user
                                                         INNER JOIN ". TABLE_PREFIX ."user ON ". TABLE_PREFIX ."user.userid = ". TABLE_PREFIX ."vbnexus_user.userid
                                                         WHERE nonvbid = ". $fbID);
                 
                 require_once(DIR . '/includes/functions_login.php');
 
-                vbsetcookie('userid', $userinfo['userid'], true, true, true);
-                vbsetcookie('password', md5($userinfo['password'] . COOKIE_SALT), true, true, true);
+                vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
+                vbsetcookie('password', md5($vbulletin->userinfo['password'] . COOKIE_SALT), true, true, true);
 
                 process_new_login('', 1, $vbulletin->GPC['cssprefs']);
 
-                cache_permissions($userinfo, true);
+                cache_permissions($vbulletin->userinfo, true);
 
                 $vbulletin->session->save();                
             }
