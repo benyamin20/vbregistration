@@ -198,6 +198,7 @@ li {
 #site-heading {
 	border-bottom: 1.5px solid #D6D6D6;
 	padding-bottom: 8px;
+	margin-top:20px;
 }
 
 #benefits-1,#benefits-2 {
@@ -290,9 +291,9 @@ li {
 }
 
 .sr-input-error{
-    border-color: #953B39 ;
-    color: #953B39 ;
-    background-color: #FFE9EA ;
+    border-color: #953B39 !important;
+    color: #953B39 !important;
+    background-color: #FFE9EA !important;
     
 }
 .sr-input-error-container{
@@ -561,4 +562,7 @@ div.content table.tborder{
  }
 
 
+#sr-benefits-1 ul, #sr-benefits-2 ul{
+    margin: 0px;
+}
 

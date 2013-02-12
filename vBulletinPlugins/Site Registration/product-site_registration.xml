@@ -116,7 +116,7 @@ $stylevar[htmldoctype]
 				
 				
 				    <div class="clear"></div>
-				    <a class="grid_4 no-margin link_blue sr-normal sr-bold"
+				    <a class="grid_4 no-margin sr-link_blue sr-normal sr-bold"
 				        href="$prev_url"
 				        id="send-me-there">No, thanks. Take me to where I was &#187;</a>
 
@@ -147,10 +147,10 @@ $stylevar[htmldoctype]
 					    </div>
 						<div class="clear clear_15"></div>
 						<div id="user-cp" class="hidden grid_3 no-margin">
-						    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="link_blue">User CP</a>.
+						    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="sr-link_blue">User CP</a>.
 						    <div class="clear clear_20"></div>
 						    <div class="clear clear_15"></div>
-						    <a class="grid_4 no-margin link_blue sr-normal sr-bold"
+						    <a class="grid_4 no-margin sr-link_blue sr-normal sr-bold"
 				                href="$prev_url"
 				                id="send-me-there">Now, take me to where I was &#187;</a>
 						</div>
@@ -196,7 +196,7 @@ $stylevar[htmldoctype]
                                         
                                         <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
                                         <div class="clear"></div>
-                                        <!-- <a class="sr-small link_blue" id="use-default">Use default.</a> -->
+                                        <!-- <a class="sr-small sr-link_blue" id="use-default">Use default.</a> -->
                                         <span class="error-label sr-small no-margin no-top grid_3" id="upload-error-label"></span>
                                 </div>
 								    <div class="clear"></div>
@@ -334,7 +334,7 @@ $stylevar[htmldoctype]
 						    <img src="$vboptions[site_registration_checktheseout_picture1]" />
 					    </div>
 					    <div class="grid_3 text-margin pull-right">
-						    <a class="link_blue sr-bold" 
+						    <a class="sr-link_blue sr-bold" 
 						        href="$vboptions[site_registration_checktheseout_link3]">
 						        $vboptions[site_registration_checktheseout_text1]
 						    </a>
@@ -348,7 +348,7 @@ $stylevar[htmldoctype]
 						    <img src="$vboptions[site_registration_checktheseout_picture2]" />
 					    </div>
 					    <div class="grid_3 text-margin pull-right">
-						    <a class="link_blue sr-bold" 
+						    <a class="sr-link_blue sr-bold" 
 						        href="$vboptions[site_registration_checktheseout_link3]">
 						        $vboptions[site_registration_checktheseout_text2]
 						    </a>
@@ -362,7 +362,7 @@ $stylevar[htmldoctype]
 						    <img src="$vboptions[site_registration_checktheseout_picture3]" />
 					    </div>
 					    <div class="grid_3 text-margin pull-right">
-						    <a class="link_blue sr-bold" 
+						    <a class="sr-link_blue sr-bold" 
 						        href="$vboptions[site_registration_checktheseout_link3]">
 						        $vboptions[site_registration_checktheseout_text3]
 						    </a>
@@ -475,7 +475,7 @@ $stylevar[htmldoctype]
 				<div class="clear clear_20"></div>
 				<div class="clear clear_10"></div>
 				<p class="sr-bold">Did not receive it?</p>
-				<a href="$php_self#resend" id="resend-email" class="sr-small link_blue">
+				<a href="$php_self#resend" id="resend-email" class="sr-small sr-link_blue">
 				Resend Email</a>
 				&nbsp;&nbsp;&nbsp;
 				<span id="ajax-loader"></span>
@@ -780,7 +780,7 @@ $stylevar[htmldoctype]
 			                $vboptions[site_registration_bullets_part_1]
 				            <div class="clear clear_30"></div>
 				            <a href="$php_self#info"  
-                                               id="benefit-comparison" class="link_blue"
+                                               id="benefit-comparison" class="sr-link_blue"
 					            rel="facebox">$vboptions[site_registration_link_text]</a>
 
 			            </div>
@@ -828,7 +828,7 @@ $stylevar[htmldoctype]
 							            <span id="ajax-loader-secondary"></span>
 							        <!--</form>-->
 							        <div class="clear clear_15"></div>
-							        <a class="link_blue sr-small" id="forgot-password"
+							        <a class="sr-link_blue sr-small" id="forgot-password"
 								        href="$vboptions[bburl]/login.php?do=lostpw">Forgot your password?</a>
 						        </div>
 					        </div>
@@ -1082,7 +1082,7 @@ $stylevar[htmldoctype]
 					       id="terms-and-conditions" name="terms-and-conditions" 
 					         />
 				        <span class="sr-small light_grey span2 no-margin"> Yes, I agree with the
-						    <a href="$php_self#info" class="link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
+						    <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 				        </span>
 				    </label>
 				    <span class="error-label sr-small" id="terms_and_conditions-error-label"></span>
@@ -1142,7 +1142,7 @@ $stylevar[htmldoctype]
 				
 				<input id="token" name="token" value="$security_token" type="hidden" />
 				
-				<a href="login.php?do=lostpw" class="sr-small link_blue"
+				<a href="login.php?do=lostpw" class="sr-small sr-link_blue"
 					id="forgot-password">Forgot your password?</a>
 			</div>
 
@@ -1338,7 +1338,7 @@ $stylevar[htmldoctype]
 				            id="imagereg" class="grid_3 no-margin"
 				            title="CAPTCHA"  />
 				            
-				        <span class="cursor-pointer sr-small link_blue" id="refresh-captcha">
+				        <span class="cursor-pointer sr-small sr-link_blue" id="refresh-captcha">
 				            <phrase>$vbphrase[refresh_image]</phrase>   <span id="ajax-loader-secondary"></span> 
 				        </span>
 				        
@@ -1355,7 +1355,7 @@ $stylevar[htmldoctype]
 					         />
 					    <span class="sr-small light_grey">
 					       Yes, I agree with the
-					       <a href="$php_self#info" class="link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
+					       <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 					    </span>
 				    </label>
 				    <span class="error-label" id="terms-and-conditions-error-label"></span>
@@ -1437,6 +1437,10 @@ $stylevar[htmldoctype]
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[				
 			    if((int)$vbulletin->userinfo['userid'] && $_REQUEST['do'] !="logout"){
+			    
+			        if (!session_id()) {
+                        session_start();
+                    }
  
                     
                     $userid = $vbulletin->userinfo['userid'];
@@ -1528,6 +1532,10 @@ $stylevar[htmldoctype]
                 $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
                 $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
                 $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
+                
+                if (!session_id()) {
+                    session_start();
+                }
 
  
 
@@ -1624,7 +1632,11 @@ $stylevar[htmldoctype]
 			<hookname>register_start</hookname>
 			<phpcode>
 			    <![CDATA[
-			        $php_self = $_SERVER['REQUEST_URI'];			        
+			        $php_self = $_SERVER['REQUEST_URI'];
+			        
+			        if (!session_id()) {
+                        session_start();
+                    }			        
  
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
@@ -1914,7 +1926,9 @@ $stylevar[htmldoctype]
  
                     $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
                     
- 
+                    if (!session_id()) {
+                        session_start();
+                    }
                     
                      
 		            if(!(int)$vbulletin->userinfo['userid']){
@@ -2015,6 +2029,9 @@ $stylevar[htmldoctype]
                     $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
                     $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
  
+                    if (!session_id()) {
+                        session_start();
+                    }
 
                     //get username
                     $_SESSION['site_registration']['userid'] = $userid = $vbulletin->GPC['u'];
