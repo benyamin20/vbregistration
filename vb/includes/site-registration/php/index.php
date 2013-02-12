@@ -1381,7 +1381,27 @@ case 'activate':
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);    
             
-            die(var_dump($vbnexus_result));
+            if($vbnexus_result) {
+                $token = md5(uniqid(microtime(), true));
+                $token_time = time();
+                $form = "site-account-details";
+                $_SESSION['site_registration'][$form . '_token'] = array(
+                        'token' => $token, 'time' => $token_time);
+
+                //start new session
+                $userinfo = $vbulletin->db->query_first("SELECT userid FROM " . TABLE_PREFIX ."vbnexus_user WHERE nonvbid = ". $fbID);
+
+                require_once(DIR . '/includes/functions_login.php');
+
+                vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
+                vbsetcookie('password', md5($vbulletin->userinfo['password'] . COOKIE_SALT), true, true, true);
+
+                process_new_login('', 1, $vbulletin->GPC['cssprefs']);
+
+                cache_permissions($vbulletin->userinfo, true);
+
+                $vbulletin->session->save();                
+            }
         }
 
         $userid = $vbulletin->userinfo['userid'];
