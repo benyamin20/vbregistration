@@ -289,18 +289,18 @@ li {
 	color: #333;
 }
 
-.input-error{
+.sr-input-error{
     border-color: #953B39 ;
     color: #953B39 ;
     background-color: #FFE9EA ;
     
 }
-.input-error-container{
+.sr-input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 28px
 	transparent  ;
 }
 
-.large-input-error-container{
+.large-sr-input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 8px
 	transparent ;
 }
@@ -533,7 +533,7 @@ hr{
     top: 2px ;
 }
 
-.terms-and-conditions-input-error-container{
+.terms-and-conditions-sr-input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 3px transparent ;
 }
 
