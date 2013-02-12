@@ -1365,7 +1365,7 @@ case 'activate':
             $email    = $vbulletin->db->escape_string($vbulletin->GPC['email']);
             $username = $vbulletin->GPC['username'];
             $time     = time(); 
-            $publish  = $vbulletin->db->escape_string($vbulletin->GPC['vbnexus_fb_publish']);
+            $publish  = $vbulletin->GPC['vbnexus_fb_publish'];
 
             $vbnexus_regData = array(
                 'type'          => "new",
@@ -1376,7 +1376,7 @@ case 'activate':
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
-                'publish'       => $publish,
+                'publish'       => 1,
             );            
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);    
