@@ -283,7 +283,7 @@ li {
 }
 
 #log-in, .no-margin{
-	margin: 0px ;
+	margin: 0px !important;
 }
 .email-sent{
 	color: #333;
