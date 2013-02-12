@@ -101,7 +101,7 @@ $stylevar[htmldoctype]
 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">Account activated, $username_db!</span>
+			<span class="sr-title_red">Account activated, $username_db!</span>
 		</div>
 		<div class="clear clear_10"></div>
 
@@ -453,7 +453,7 @@ $stylevar[htmldoctype]
 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">Please Activate Your Account</span>
+			<span class="sr-title_red">Please Activate Your Account</span>
 		</div>
 
 		<div class="clear"></div>
@@ -656,7 +656,7 @@ $stylevar[htmldoctype]
 	    <div id="sr-container" class="container_12">
 		    <!-- Site heading -->
 		    <div id="site-heading" class="grid_12">
-			    <span class="title_red">Join $vboptions[bbtitle]</span>
+			    <span class="sr-title_red">Join $vboptions[bbtitle]</span>
 		    </div>
 		    <div class="clear clear_10"></div>
 		    
@@ -722,7 +722,7 @@ $stylevar[htmldoctype]
 			            
 			            <if condition="$show['vbnexus_button_fb']">
                             <!-- OR -->
-	                        <div class="grid_1 vertical-rule">
+	                        <div class="grid_1 sr-vertical-rule">
 		                        <div class="centered">
 			                        <div class="horizontal-wrapper">
 				                        <sub>OR</sub>
@@ -911,7 +911,7 @@ $header
  
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red"><phrase>$vbphrase[noregister]</phrase></span>
+			<span class="sr-title_red"><phrase>$vbphrase[noregister]</phrase></span>
 		</div>
 		<div class="clear clear_10"></div>
 		
@@ -985,7 +985,7 @@ $stylevar[htmldoctype]
  
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red"> Confirm your details </span>
+			<span class="sr-title_red"> Confirm your details </span>
 		</div>
 		<div class="clear clear_10"></div>
 
@@ -1097,7 +1097,7 @@ $stylevar[htmldoctype]
 			</div>
 			
 			<!--  Vertical Separator -->
-            <div class="grid_1 prefix_2 vertical-rule-hidden"></div>
+            <div class="grid_1 prefix_2 sr-vertical-rule-hidden"></div>
 
 			<!--  Already a member -->
 			<div class="grid_4 omega" id="already-member">
@@ -1253,7 +1253,7 @@ $stylevar[htmldoctype]
 		 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">
+			<span class="sr-title_red">
 			     Pick your username and password:
 			</span>
 		</div>

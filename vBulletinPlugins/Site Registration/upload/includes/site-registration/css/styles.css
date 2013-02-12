@@ -4,7 +4,7 @@ li {
 margin-left:15px;
 }
 
-.vertical-rule {
+.sr-vertical-rule {
 background:url(../img/line-separator.png);
 background-position:50%;
 background-repeat:repeat-y;
@@ -12,11 +12,11 @@ background-size:1px auto;
 height:250px;
 }
 
-.vertical-rule-hidden {
+.sr-vertical-rule-hidden {
 height:250px;
 }
 
-.title_red {
+.sr-title_red {
 color:#A40219;
 font-size:22px;
 }
