@@ -124,8 +124,10 @@ class vBNexus {
     /**
      * Whether a service (FB Connect | Google Friend Connect) is enabled
      */
-    public function isEnabled($svc) {
-        return !empty($this->enabled[$svc]);
+    public function isEnabled($svc) {      
+        $a = !empty($this->enabled[$svc]);
+
+        return $a;
     }
 
 
@@ -149,16 +151,16 @@ class vBNexus {
 
     public function setLinkedService($service) {
         $this->linkedService = NULL;
-
-        if ($this->isEnabled($service)) {
+        
+        //if ($this->isEnabled($service)) {
             // Verify the service is valid
             $class = "vBNexus_{$service}";
-            die(var_dump($class));
+              
             if (class_exists($class)) {
                 $this->linkedService = new $class;
                 return $this->linkedService;
             }
-        }
+        //} 
     }
 
     public function getLinkedService($refresh=false) {
