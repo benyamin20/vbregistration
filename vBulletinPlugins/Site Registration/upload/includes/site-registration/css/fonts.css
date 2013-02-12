@@ -1,17 +1,17 @@
-P/*
+/*
     Global font
 */
-#container, #container-wrapper  {
+#sr-container, #sr-container-wrapper  {
 	font-family: Helvetica, Arial, 'sans-serif';
 	font-size: 12px;
 }
 
 
-#container a{
+#sr-container a{
     text-decoration:none !important;
 }
 
-#container a:hover{
+#sr-container a:hover{
     text-decoration:underline;
 }
 
@@ -21,7 +21,7 @@ P/*
 }
 
 
-#container p  {
+#sr-container p  {
 	font-family: Helvetica, Arial, 'sans-serif' !important;
 
 }
@@ -64,32 +64,32 @@ sub {
 	background-color: white;
 }
 
-.label {
+.sr-label {
 	font-size: 13px;
 }
 
-.tiny {
+.sr-tiny {
 	font-size: 11px;
 }
 
-.small {
+.sr-small {
 	font-size: 12px;
 }
 
-#benefits-1 li {
+#sr-benefits-1 li {
 	font: 12px Helvetica,Arial,'sans-serif' !important;
 }
 
-#benefits-2 li {
+#sr-benefits-2 li {
 	font: 12px Helvetica,Arial,'sans-serif' !important;
 }
 
 
-.normal {
+.sr-normal {
 	font-size: 14px;
 }
 
-.bold {
+.sr-bold {
 	font-weight: bold;
 }
 
