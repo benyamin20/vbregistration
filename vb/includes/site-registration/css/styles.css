@@ -4,7 +4,7 @@ li {
 margin-left:15px;
 }
 
-.vertical-rule {
+.sr-vertical-rule {
 background:url(../img/line-separator.png);
 background-position:50%;
 background-repeat:repeat-y;
@@ -12,11 +12,11 @@ background-size:1px auto;
 height:250px;
 }
 
-.vertical-rule-hidden {
+.sr-vertical-rule-hidden {
 height:250px;
 }
 
-.title_red {
+.sr-title_red {
 color:#A40219;
 font-size:22px;
 }
@@ -78,89 +78,95 @@ min-height:30px;
 }
 
 .fb {
-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3b5998',endColorstr='#325190',GradientType=0);
-background:linear-gradient(top,#3b59980%,#3b599850%,#32519050%,#325190100%);
-box-shadow:0 3px 0 #213b6d;
--moz-box-shadow:0 3px 0 #213b6d;
--webkit-box-shadow:0 3px 0 #213b6d;
+	background: -moz-linear-gradient(center top, #3B5998 0%, #3B5998 50%, #325190 50%,
+		#325190 100%) repeat scroll 0 0 transparent;
+	box-shadow: 0 3px 0 #213B6D;
 }
 
 .login_button {
--khtml-user-select:none;
--moz-border-radius:5px;
--moz-user-select:none;
--o-user-select:none;
--webkit-border-radius:5px;
--webkit-user-select:none;
-border-radius:5px;
-display:inline-block;
-height:37px;
-min-width:200px;
-user-select:none;
+	-khtml-user-select: none;
+	-moz-border-radius: 5px;
+	-moz-user-select: none;
+	-o-user-select: none;
+	-webkit-border-radius: 5px;
+	-webkit-user-select: none;
+	border-radius: 5px;
+	display: inline-block;
+	height: 37px;
+	min-width: 200px;
+	user-select: none;
 }
 
 .fb a {
-color:#221919;
-font-weight:700;
-outline:medium none;
-text-decoration:none;
+	color: #221919;
+	font-weight: bold;
+	outline: medium none;
+	text-decoration: none;
 }
 
 .fb .logo_wrapper {
-border-right:1px solid #2f4f85;
+	border-right: 1px solid #2F4F85;
 }
 
 .fb:hover .logo_wrapper {
-border-right:1px solid #284473;
+	border-right: 1px solid #284473;
 }
 
 .login_button .logo_wrapper {
-float:left;
-margin-top:7px;
-padding:3px 12px;
+	float: left;
+	margin-top: 7px;
+	padding: 3px 12px;
 }
 
 .fb .logo {
-float:left;
-width:11px;
-height:20px;
-background:url(../img/login_icons.png) 1px 0 no-repeat;
+	background: url("../img/login_icons.png") no-repeat scroll 1px 0
+		transparent;
+	float: left;
+	height: 20px;
+	width: 11px;
 }
 
 .fb>span {
-border-left:1px solid #627BA8;
-font-weight:700;
+	border-left: 1px solid #627BA8;
+	font-weight: bold;
 }
 
 .login_button>span {
-color:#fff;
-float:left;
-font-size:14px;
-font-weight:500;
-margin-top:7px;
-min-height:20px;
-line-height:20px;
-padding:3px 12px;
+	color: #fff;
+	float: left;
+	font-size: 14px;
+	font-weight: 500;
+	margin-top: 7px;
+	min-height: 20px;
+	padding: 3px 12px;
+    line-height: 20px;
 }
 
 .fb:active {
-background-color:#243d79;
-background-image:none;
-box-shadow:inset 0 1px 0 rgba(50,50,50,0.4);
--moz-box-shadow:inset 0 1px 0 rgba(50,50,50,0.4);
--webkit-box-shadow:inset 0 1px 0 rgba(50,50,50,0.4);
+	-moz-box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
+	-webkit-box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
+	background-color: #243d79;
+	background-image: none;
+	box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
+}
+
+.fb:active>span {
+	border-left-color: #2c4b94;
+}
+
+.fb:hover>span {
+	border-left: 1px solid #51668c;
 }
 
 .login_button:active {
-height:38px;
-margin-top:2px;
+	height: 38px;
+	margin-top: 2px;
 }
 
 .login_button:hover {
-cursor:pointer;
-text-decoration:none;
+	cursor: pointer;
+	text-decoration: none;
 }
-
 .fix_input_width {
 width:60%;
 }
