@@ -957,7 +957,7 @@ $stylevar[htmldoctype]
  
 	<!-- main container -->
 	<div id="sr-container-wrapper">
-	<div id="sr-container-fb" class="container_12 activate-account-container">
+	<div id="sr-container" class="container_12 activate-account-container sr-container-fb">
  
 		<!-- Site heading -->
 		<div id="sr-site-heading" class="grid_12">
