@@ -169,19 +169,19 @@ li {
 	text-decoration: none;
 }
 
-.fix_input_width {
+.sr-fix_input_width {
 	width: 60% ;
 }
 
-.fix_input_width_facebook{
+.sr-fix_input_width_facebook{
 	width: 82% ;
 }
 
-.margin_left_10 {
+.sr-margin_left_10 {
 	margin-left: 10px;
 }
 
-.margin_left_20 {
+.sr-margin_left_20 {
 	margin-left: 20px;
 }
 
@@ -201,7 +201,7 @@ li {
 	margin: 0px ;
 }
 
-.already-have-an-account {
+.sr-already-have-an-account {
 	background-color: #F1F1F1;
 	padding-bottom: 15px;
 }
@@ -280,7 +280,7 @@ li {
 }
 
 
-.email-sent{
+.sr-email-sent{
 	color: #333;
 }
 
@@ -568,7 +568,7 @@ a.sr-link_blue {
 }
 
 
-#log-in, .no-margin{
+#log-in, .sr-no-margin{
 	margin: 0px ;
 }
 
