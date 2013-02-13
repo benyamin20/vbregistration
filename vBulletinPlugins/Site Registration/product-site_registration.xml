@@ -15,6 +15,20 @@
 	<templates>
 	    <template name="site_registration_benefits" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0">
+		</template>
+	    
+	    	require_once(DIR . '/includes/functions_misc.php');
+	$timezoneoptions = '';
+	foreach (fetch_timezone() AS $optionvalue => $timezonephrase)
+	{
+		$optiontitle = $vbphrase["$timezonephrase"];
+		$optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
+		eval('$timezoneoptions .= "' . fetch_template('option') . '";');
+	}
+	
+	
+	    <template name="site_registration_benefits" templatetype="template" 
+		    date="1352855133" username="fromero" version="1.0">
 		    <![CDATA[
             <table class='tborder' cellpadding='6' cellspacing='1' border='0' width='97%' align='center'>
               <tr>
@@ -943,7 +957,7 @@ $stylevar[htmldoctype]
  
 	<!-- main container -->
 	<div id="sr-container-wrapper">
-	<div id="sr-container" class="container_12 activate-account-container">
+	<div id="sr-container-fb" class="container_12 activate-account-container">
  
 		<!-- Site heading -->
 		<div id="sr-site-heading" class="grid_12">
