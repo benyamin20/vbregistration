@@ -121,6 +121,10 @@ function initialize_spinner() {
  *   AJAX error handling ACP-455
  **/
 jQuery.ajaxSetup({
+
+    beforeSend: function(xhr){
+    
+    },
     error: function (jqXHR, exception) {
         if (jQuery('#ajax-spinner').exists()) {
             jQuery('#ajax-spinner').remove();
@@ -549,7 +553,7 @@ jQuery(document).ready(function (jQuery) {
         //submit and validate authentication
         jQuery("#login-button").bind('click', function (e) {
             jQuery('#have-account-error').empty();
-            var form = jQuery('#already-have-an-account-form');
+            var form = jQuery('#sr-already-have-an-account-form');
             var username = escape(jQuery("#username").val());
             var password = md5(jQuery("#password").val());
             var s = '';
