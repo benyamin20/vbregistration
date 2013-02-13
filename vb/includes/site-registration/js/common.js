@@ -79,8 +79,8 @@ function get_time_zone_offset() {
  */
 function clear_errors() {
 
-    if (jQuery('.error-label').exists()) {
-        jQuery('.error-label').empty();
+    if (jQuery('.sr-error-label').exists()) {
+        jQuery('.sr-error-label').empty();
     }
 
     if (jQuery('.large-sr-input-error-container').exists()) {
@@ -339,7 +339,7 @@ jQuery(document).ready(function (jQuery) {
 
             //change image preview thumb
             jQuery("#selected-avatar").attr("src", "images/misc/unknown.gif");
-            jQuery("#upload-error-label").empty();
+            jQuery("#upload-sr-error-label").empty();
             jQuery("#upload-wrapper").removeClass("terms-and-conditions-sr-input-error-container");
         });
     }
@@ -403,8 +403,8 @@ jQuery(document).ready(function (jQuery) {
                             }
 
                             jQuery('#' + value).addClass("sr-input-error");
-                            jQuery('#' + value + '-error-label').empty();
-                            jQuery('#' + value + '-error-label').append(response.messages.errors[index]);
+                            jQuery('#' + value + '-sr-error-label').empty();
+                            jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
                         });
 
                     } else {
@@ -505,8 +505,8 @@ jQuery(document).ready(function (jQuery) {
 
                             }
                             jQuery('#' + value).addClass("sr-input-error");
-                            jQuery('#' + value + '-error-label').empty();
-                            jQuery('#' + value + '-error-label').append(response.messages.errors[index]);
+                            jQuery('#' + value + '-sr-error-label').empty();
+                            jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
                         });
 
                     } else {
@@ -553,7 +553,7 @@ jQuery(document).ready(function (jQuery) {
         //submit and validate authentication
         jQuery("#login-button").bind('click', function (e) {
             jQuery('#have-account-error').empty();
-            var form = jQuery('#already-have-an-account-form');
+            var form = jQuery('#sr-already-have-an-account-form');
             var username = escape(jQuery("#username").val());
             var password = md5(jQuery("#password").val());
             var s = '';
@@ -707,8 +707,8 @@ jQuery(document).ready(function (jQuery) {
                         jQuery.each(response.messages.fields, function (index, value) {
                             jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
                             jQuery('#' + value).addClass("sr-input-error");
-                            jQuery('#' + value + '-error-label').empty();
-                            jQuery('#' + value + '-error-label').append(response.messages.errors[index]);
+                            jQuery('#' + value + '-sr-error-label').empty();
+                            jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
 
                             if (value == 'datepicker') {
                                 jQuery('span.add-on').addClass("sr-input-error");
@@ -793,8 +793,8 @@ jQuery(document).ready(function (jQuery) {
                             }
 
                             jQuery('#' + value).addClass("sr-input-error");
-                            jQuery('#' + value + '-error-label').empty();
-                            jQuery('#' + value + '-error-label').append(response.messages.errors[index]);
+                            jQuery('#' + value + '-sr-error-label').empty();
+                            jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
 
                             if (value == 'datepicker') {
                                 jQuery('span.add-on').addClass("sr-input-error");
@@ -869,8 +869,8 @@ jQuery(document).ready(function (jQuery) {
                             jQuery.each(response.messages.fields, function (index, value) {
                                 jQuery('#' + value + '-wrapper').addClass("large-sr-input-error-container");
                                 jQuery('#' + value).addClass("sr-input-error");
-                                jQuery('#' + value + '-error-label').empty();
-                                jQuery('#' + value + '-error-label').append(response.messages.errors[index]);
+                                jQuery('#' + value + '-sr-error-label').empty();
+                                jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
 
                                 if (value == 'datepicker') {
                                     jQuery('span.add-on').addClass("sr-input-error");
@@ -885,8 +885,8 @@ jQuery(document).ready(function (jQuery) {
                     } else {
                         var error = '<b>Wrong username or password.</b> You have used up your failed login quota! <br /><br /> Please wait 15 minutes before trying again.';
 
-                        jQuery('#password-member-error-label').empty();
-                        jQuery('#password-member-error-label').html(error);
+                        jQuery('#password-member-sr-error-label').empty();
+                        jQuery('#password-member-sr-error-label').html(error);
 
                         jQuery('#username-member').addClass("sr-input-error").wrap('<div class="large-sr-input-error-container" />');
                         jQuery('#password-member').addClass("sr-input-error").wrap('<div class="large-sr-input-error-container" />');
