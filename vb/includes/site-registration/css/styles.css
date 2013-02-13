@@ -58,23 +58,23 @@ li {
 	
 }
 
-.clear_5 {
+.sr-clear_5 {
 	min-height: 5px;
 }
 
-.clear_10 {
+.sr-clear_10 {
 	min-height: 10px;
 }
 
-.clear_20 {
+.sr-clear_20 {
 	min-height: 20px;
 }
 
-.clear_15 {
+.sr-clear_15 {
 	min-height: 15px;
 }
 
-.clear_30 {
+.sr-clear_30 {
 	min-height: 30px;
 }
 
@@ -368,7 +368,7 @@ li {
     border-left-color: #2c4b94
 }
 
-.not-active{
+.sr-not-active{
     width: inherit;
     padding-left:   15px;
     padding-right:  15px;

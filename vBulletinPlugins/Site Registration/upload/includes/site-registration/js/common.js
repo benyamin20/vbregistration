@@ -575,7 +575,7 @@ jQuery(document).ready(function (jQuery) {
                         if (response.valid_login == false) {
                             //mark elements as invalid
                             jQuery('#have-account-error').html(response.message);
-                            jQuery('#have-account-spacer').addClass("clear_15");
+                            jQuery('#have-account-spacer').addClass("sr-clear_15");
 
                             jQuery('#username').addClass("sr-input-error").wrap('<div class="large-sr-input-error-container" />');
                             jQuery('#password').addClass("sr-input-error").wrap('<div class="large-sr-input-error-container" />');
@@ -590,7 +590,7 @@ jQuery(document).ready(function (jQuery) {
 
                         jQuery('#have-account-error').empty();
                         jQuery('#have-account-error').html(error);
-                        jQuery('#have-account-spacer').addClass("clear_15");
+                        jQuery('#have-account-spacer').addClass("sr-clear_15");
 
                         jQuery('#username').addClass("sr-input-error").wrap('<div class="large-sr-input-error-container" />');
                         jQuery('#password').addClass("sr-input-error").wrap('<div class="large-sr-input-error-container" />');

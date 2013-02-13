@@ -143,24 +143,24 @@ $stylevar[htmldoctype]
 			<div id="second-ad-unit" class="grid_2  centered pull-right omega">
 				$vboptions[site_registration_adunit2]
 			</div>
-			<div class="clear clear_20"></div>
-			<div class="clear clear_20"></div>
+			<div class="clear sr-clear_20"></div>
+			<div class="clear sr-clear_20"></div>
 		</div>
 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
 			<span class="sr-title_red">Account activated, $username_db!</span>
 		</div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 
 		<!-- Login options -->
 		<div id="login-options"> 
-			<div class="clear clear_30"></div>
+			<div class="clear sr-clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_8" id="create-site-account">
 			    <div id="would-you-like">
 				    <h1>Would you like to complete your profile?</h1>
-				    <div class="clear clear_20"></div>
+				    <div class="clear sr-clear_20"></div>
 				
 				
 				    <div class="clear"></div>
@@ -168,9 +168,9 @@ $stylevar[htmldoctype]
 				        href="$prev_url"
 				        id="send-me-there">No, thanks. Take me to where I was &#187;</a>
 
-				    <div class="clear clear_30"></div>
+				    <div class="clear sr-clear_30"></div>
 				    <hr class="span5 no-margin" />
-				    <div class="clear clear_10"></div>
+				    <div class="clear sr-clear_10"></div>
 				</div>
 				
 				<div class="">
@@ -179,7 +179,7 @@ $stylevar[htmldoctype]
 				-->
 					<div class="">
 					    <h1 id="show-great"></h1>
-						<div class="clear clear_10"></div> 
+						<div class="clear sr-clear_10"></div> 
 						<!--  Progress --> 
 						<span class="sr-small sr-bold fix-line-height"><span id="percentage-indicator">50</span>% profile completeness</span>
 						<div class="clear"></div>
@@ -193,11 +193,11 @@ $stylevar[htmldoctype]
 					            <i class="icon-ok-sign"></i>
 					        </span>
 					    </div>
-						<div class="clear clear_15"></div>
+						<div class="clear sr-clear_15"></div>
 						<div id="user-cp" class="hidden grid_3 no-margin">
 						    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="sr-link_blue">User CP</a>.
-						    <div class="clear clear_20"></div>
-						    <div class="clear clear_15"></div>
+						    <div class="clear sr-clear_20"></div>
+						    <div class="clear sr-clear_15"></div>
 						    <a class="grid_4 no-margin sr-link_blue sr-normal sr-bold"
 				                href="$prev_url"
 				                id="send-me-there">Now, take me to where I was &#187;</a>
@@ -211,7 +211,7 @@ $stylevar[htmldoctype]
                         <!--  Avatar -->
                         <if condition="$vboptions[avatarenabled]">
 						    <label>Your Avatar</label>
-						    <div class="clear clear_5"></div>
+						    <div class="clear sr-clear_5"></div>
 		     
 						    <div id="upload-wrapper" class="grid_4 no-margin">
 							    <!--
@@ -339,7 +339,7 @@ $stylevar[htmldoctype]
 							    <phrase>$vbphrase[receive_email_from_other_members]</phrase>
 						</label>
 
-						<div class="clear clear_20"></div>
+						<div class="clear sr-clear_20"></div>
 						
 						<input type="hidden" name="use_default_image"
 						    id="use-default-image"
@@ -360,7 +360,7 @@ $stylevar[htmldoctype]
 
 				<span class="sr-normal  sr-bold"></span>
 
-				<div class="clear clear_20"></div>
+				<div class="clear sr-clear_20"></div>
  
 
 			</div>
@@ -373,7 +373,7 @@ $stylevar[htmldoctype]
 			<div id=""> 
 			    
 				<div class="grid_4  move-to-top-inside complete-your-profile">
-				    <div class="clear clear_10"></div>
+				    <div class="clear sr-clear_10"></div>
 				    <h1 class="padding-left-check-these-out">Inside $vboptions[bbtitle]</h1>
 					<!-- check these out -->
 					<div class="grid_4 no-margin padding-left-check-these-out">
@@ -389,7 +389,7 @@ $stylevar[htmldoctype]
 						    <div class="clear"></div>
 						    $vboptions[site_registration_checktheseout_description1]
 					    </div>
-					    <div class="clear clear_20"></div>
+					    <div class="clear sr-clear_20"></div>
 
 					    <!-- Thumb and description -->
 					    <div class="grid_1 no-margin pull-left">
@@ -403,7 +403,7 @@ $stylevar[htmldoctype]
 						    <div class="clear"></div>
 						    $vboptions[site_registration_checktheseout_description2]
 					    </div>
-					    <div class="clear clear_20"></div>
+					    <div class="clear sr-clear_20"></div>
 
 					    <!-- Thumb and description -->
 					    <div class="grid_1 no-margin pull-left">
@@ -417,7 +417,7 @@ $stylevar[htmldoctype]
 						    <div class="clear"></div>
 						    $vboptions[site_registration_checktheseout_description3]
 					    </div>
-					    <div class="clear clear_20"></div>
+					    <div class="clear sr-clear_20"></div>
 				    </div>
 					<!-- /check these out -->
 				</div>
@@ -476,8 +476,8 @@ $stylevar[htmldoctype]
 				class="grid_2  centered pull-right omega">
 				$vboptions[site_registration_adunit2]
 			</div>
-			<div class="clear clear_20"></div>
-			<div class="clear clear_20"></div>
+			<div class="clear sr-clear_20"></div>
+			<div class="clear sr-clear_20"></div>
 		</div>
 
 		<!-- Site heading -->
@@ -486,12 +486,12 @@ $stylevar[htmldoctype]
 		</div>
 
 		<div class="clear"></div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 
 		<!-- Email Icon -->
 		<div id="login-options" class="grid_12">
-			<div class="clear clear_20"></div>
-			<div class="clear clear_20"></div>
+			<div class="clear sr-clear_20"></div>
+			<div class="clear sr-clear_20"></div>
 			<div class="grid_2 alpha">
 				<img src="$vboptions[site_registration_includes_path]/img/email-icon.png" id="email-icon" />
 			</div>
@@ -501,8 +501,8 @@ $stylevar[htmldoctype]
 				<div class="clear"></div>
 				<p class="sr-normal">
 				Please click on the link to activate your account.</p>
-				<div class="clear clear_20"></div>
-				<div class="clear clear_10"></div>
+				<div class="clear sr-clear_20"></div>
+				<div class="clear sr-clear_10"></div>
 				<p class="sr-bold">Did not receive it?</p>
 				<a href="$php_self#resend" id="resend-email" class="sr-small sr-link_blue">
 				Resend Email</a>
@@ -552,7 +552,7 @@ $stylevar[htmldoctype]
                             </h1>
                             <div class='clear'></div>
                             <span class="sr-please-confirm-account">Please confirm your account by clicking on the email activation link</span>
-                            <div class='clear sr-clear_15'></div>
+                            <div class='clear sr-sr-clear_15'></div>
                             <span class="sr-did-not-receive">Did not receive it? 
                             <a href="$php_self#resend" id="sr-resend-email" class="sr-small sr-link_blue">
 				            Resend Activation Email</a>
@@ -662,7 +662,7 @@ $stylevar[htmldoctype]
 		    <div id="site-heading" class="grid_12">
 			    <span class="sr-title_red">Join $vboptions[bbtitle]</span>
 		    </div>
-		    <div class="clear clear_10"></div>
+		    <div class="clear sr-clear_10"></div>
 		    
 		    
 		    <!-- columns container -->
@@ -671,13 +671,13 @@ $stylevar[htmldoctype]
 		        <div id="left-column" class="pull-left">
 		            <!-- create site account options -->
 		            <div id="create-site-account-options">
-		                <div class="clear clear_30"></div>
+		                <div class="clear sr-clear_30"></div>
                         <div class="clear"></div>
 			            <!-- Create site Account -->
 			            <div class="grid_3" id="create-site-account"> 
-                            <div class="clear clear_20"></div>
+                            <div class="clear sr-clear_20"></div>
 				            <h1>Create Site Account</h1>
-				            <div class="clear clear_20"></div>
+				            <div class="clear sr-clear_20"></div>
 				            <div class="error_red sr-small" id="create-site-account-error">
 				                <span id="email-error-label" class="error-label no-margin"></span>
 				                 <div class="clear"></div>
@@ -711,7 +711,7 @@ $stylevar[htmldoctype]
 				                </div>
 				            </div>
 
-				            <div class="clear clear_20"></div>
+				            <div class="clear sr-clear_20"></div>
 				            <div class="grid_4 no-margin">
 				                <a class="btn btn-primary btn-block grid_3 no-margin" 
 				                    id="create-new-account-button">
@@ -755,7 +755,7 @@ $stylevar[htmldoctype]
 							        </div> 
 							        <span>Login with Facebook</span>
 						        </a>
-				                <div class="clear clear_15"></div> 
+				                <div class="clear sr-clear_15"></div> 
 				                <span class="sr-small light_grey">It's secure and easy!</span>
                             <else />
                                 &nbsp;
@@ -765,7 +765,7 @@ $stylevar[htmldoctype]
 			       
 		            </div><!-- /create site account options -->
 		            
-		            <div class="clear clear_30"></div>
+		            <div class="clear sr-clear_30"></div>
 
                     <!-- what-you-get -->
 		            <div id="what-you-get" class="grid_7">
@@ -778,11 +778,11 @@ $stylevar[htmldoctype]
 			            <span class="grid_6 sr-small" id="after-days">
                             $vboptions[site_registration_line_description]
                         </span>
-			            <div class="clear clear_30"></div>
+			            <div class="clear sr-clear_30"></div>
 
 			            <div class="sr-small grid_3 alpha">
 			                $vboptions[site_registration_bullets_part_1]
-				            <div class="clear clear_30"></div>
+				            <div class="clear sr-clear_30"></div>
 				            <a href="$php_self#info"  
                                                id="benefit-comparison" class="sr-link_blue"
 					            rel="facebox">$vboptions[site_registration_link_text]</a>
@@ -808,7 +808,7 @@ $stylevar[htmldoctype]
 					        <if condition="$hide_on_multiple_regs == FALSE">
 					        <div class="already-have-an-account">
 						        <div class="margin_left_20">
-							        <div class="clear clear_30"></div>
+							        <div class="clear sr-clear_30"></div>
 							        <h3>Already have an account?</h3>
 							        <div class="clear"></div>
 							        <div class="error_red sr-small" id="have-account-error"></div>
@@ -827,11 +827,11 @@ $stylevar[htmldoctype]
 								            id="password" title="<phrase>$vbphrase[password]</phrase>" value="" 
 								            autocomplete="off"
 								            type="password"  />
-							            <div class="clear clear_15"></div>
+							            <div class="clear sr-clear_15"></div>
 							            <button class="btn btn-medium" id="login-button"><phrase>$vbphrase[log_in]</phrase></button>
 							            <span id="ajax-loader-secondary"></span>
 							        <!--</form>-->
-							        <div class="clear clear_15"></div>
+							        <div class="clear sr-clear_15"></div>
 							        <a class="sr-link_blue sr-small" id="forgot-password"
 								        href="$vboptions[bburl]/login.php?do=lostpw">Forgot your password?</a>
 						        </div>
@@ -893,7 +893,7 @@ $header
 		<div id="site-heading" class="grid_12">
 			<span class="sr-title_red"><phrase>$vbphrase[noregister]</phrase></span>
 		</div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 		
 	    <p><a href="$vboptions[bburl]">Return to the Forum</a></p>
 	</div>
@@ -943,11 +943,11 @@ $stylevar[htmldoctype]
 		<div id="site-heading" class="grid_12">
 			<span class="sr-title_red"> Confirm your details </span>
 		</div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 
 		<!-- Login options -->
 		<div id="login-options" class="grid_12">
-			<div class="clear clear_30"></div>
+			<div class="clear sr-clear_30"></div>
 
 			<!-- Thumb -->
 			<div class="grid_1 alpha">
@@ -963,14 +963,14 @@ $stylevar[htmldoctype]
 
 				<h1 class="dark_grey">Welcome $fbName!</h1>
 
-				<div class="clear clear_10"></div>
+				<div class="clear sr-clear_10"></div>
 
 				<span class="sr-small sr-bold">Please choose your public Username
 					to get started.</span>
 				<p class="sr-small">Your Facebook avatar will not be displayed
 					publicly.</p>
 
-				<div class="clear clear_20"></div>
+				<div class="clear sr-clear_20"></div>
                 <label for="email"><phrase>$vbphrase[email]</phrase></label>
 				<div class="grid_6 no-margin" id="email-wrapper">
 				    <input class="" id="email" name="email" title="Email"
@@ -1017,7 +1017,7 @@ $stylevar[htmldoctype]
                     <span class="error-label sr-small" id="datepicker-error-label"></span>
                 </div>
 
-                <div class="clear clear_10"></div>
+                <div class="clear sr-clear_10"></div>
                 
                 <div class="grid_3 no-margin">
 				    <label for="vbnexus_fb_publish">
@@ -1030,7 +1030,7 @@ $stylevar[htmldoctype]
                 </div>
                 
                 
-                <div class="clear clear_15"></div>
+                <div class="clear sr-clear_15"></div>
 
                 <div class="grid_6 no-margin" id="terms_and_conditions-wrapper">
 				    <label class="checkbox"> 
@@ -1044,7 +1044,7 @@ $stylevar[htmldoctype]
 				    <span class="error-label sr-small" id="terms_and_conditions-error-label"></span>
                 </div>
                 
-				<div class="clear clear_15"></div>
+				<div class="clear sr-clear_15"></div>
 				<div class="pull-left">
 				    <button class="btn btn-primary grid_3"
                         type="button" id="log-in">Log In</button>
@@ -1059,13 +1059,13 @@ $stylevar[htmldoctype]
 			<div class="grid_4 omega" id="already-member">
 				<h3 class="dark_grey">Already a member?</h3>
 				
-				<div class="clear clear_15"></div>
+				<div class="clear sr-clear_15"></div>
 				
 				<p class="sr-small">
 				Link your Facebook account to your forum account.
 				</p>
                 
-                <div class="clear clear_15"></div>
+                <div class="clear sr-clear_15"></div>
                 <span id="username-member-error-label" class="error-label no-margin  "></span>
                 <div class="clear"></div>
                 <span id="password-member-error-label" class="error-label no-margin  "></span>
@@ -1088,13 +1088,13 @@ $stylevar[htmldoctype]
                            value="" autocomplete="off"
                            type="password"  /> 
                 </div> 
-                 <div class="clear clear_15"></div>
+                 <div class="clear sr-clear_15"></div>
                  
                  <button class="btn grid_3 no-margin"
                         type="button" id="link-account">Link Account</button>
                  <span id="ajax-loader-secondary"></span>
                         
-				<div class="clear clear_15"></div>
+				<div class="clear sr-clear_15"></div>
 				
 				<input id="token" name="token" value="$security_token" type="hidden" />
 				
@@ -1194,11 +1194,11 @@ $stylevar[htmldoctype]
 			     Pick your username and password:
 			</span>
 		</div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 
 		<!-- Login options -->
 		<div id="login-options">
-			<div class="clear clear_30"></div>
+			<div class="clear sr-clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_3" id="create-site-account">
 				<div class="clear"></div>
@@ -1223,7 +1223,7 @@ $stylevar[htmldoctype]
 					<span class="error-label" id="password-error-label"></span>
 				</div>
 				
-				<div class="clear clear_10"></div>
+				<div class="clear sr-clear_10"></div>
 				
 				<div class="grid_7 no-margin" id="confirm-password-wrapper">
 				    <label for="confirm-password"><phrase>$vbphrase[confirm_password]</phrase></label>
@@ -1236,7 +1236,7 @@ $stylevar[htmldoctype]
 				</div>
 				
 					
-				<div class="clear clear_10"></div>
+				<div class="clear sr-clear_10"></div>
 				
 				<if condition="$_SESSION[site_registration][coppauser] === true">
 				    <!-- parent - guardian email -->
@@ -1250,7 +1250,7 @@ $stylevar[htmldoctype]
 				        <span class="error-label" id="parent-guardian-email-error-label"></span>    
 				    </div>
 					
-				    <div class="clear clear_10"></div>
+				    <div class="clear sr-clear_10"></div>
 				    <!-- /parent - guardian email -->   
 				</if>
 				
@@ -1265,7 +1265,7 @@ $stylevar[htmldoctype]
 			            <span class="error-label" id="security-code-error-label"></span>
 			        </div>
 				
-				    <div class="clear clear_10"></div>
+				    <div class="clear sr-clear_10"></div>
 				
 				
 				
@@ -1282,7 +1282,7 @@ $stylevar[htmldoctype]
      
 				    </div>
 				
-				    <div class="clear clear_15"></div>
+				    <div class="clear sr-clear_15"></div>
 				</if>
 				
 				<div class="grid_7 no-margin" id="terms-and-conditions-wrapper">
@@ -1298,7 +1298,7 @@ $stylevar[htmldoctype]
 				    <span class="error-label" id="terms-and-conditions-error-label"></span>
 				</div>
  
-				<div class="clear clear_15"></div>
+				<div class="clear sr-clear_15"></div>
 				<div class="grid_7 no-margin"> 
 				    <input id="token" name="token" value="$security_token" type="hidden" />
 				    <button class="btn btn-primary grid_3 no-margin"
@@ -1607,7 +1607,7 @@ $stylevar[htmldoctype]
                         	$yearBirthday = $parts[2];
 
                         	if($yearBirthday <= $year) {
-                        		$fbEmailParent = $_SESSION['site_registration']["fbEmailParent"] = '<div class="clear clear_20"></div>
+                        		$fbEmailParent = $_SESSION['site_registration']["fbEmailParent"] = '<div class="clear sr-clear_20"></div>
 					                <label for="email"><phrase>$vbphrase[parent_email_address]</phrase></label>
 									<div class="grid_6 no-margin" id="email-wrapper">
 									    <input class="" id="parentEmail" name="parentEmail" title="Email"
