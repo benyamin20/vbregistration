@@ -1,34 +1,34 @@
  
 #create-new-account-button{
-    margin: 0px !important;
+    margin: 0px;
 }
 
 .add-on{
-    margin-top: 0px !important;
+    margin-top: 0px;
 }
 
 .sr-not-active{
-    width: 97.3% !important;   
+    width: 97.3%;   
 }
 
 
-.vertical-rule{
+.sr-vertical-rule{
 }
 
 .placeholder { 
-    color: #999999 !important;
-    font-weight: lighter !important; 
+    color: #999999;
+    font-weight: lighter; 
 }
 
 
 #placeholder-datepicker{
-    left: 33px !important;
-    top: -22px !important;
+    left: 33px;
+    top: -22px;
 }
 
 #terms_and_conditions-error-label{
-    left: 60px !important;
-    top: -19px !important; 
+    left: 60px;
+    top: -19px; 
 }
 
 .inner-footer{
@@ -36,10 +36,12 @@
 }
 
 .ie7 .sr-background-yellow {  
-    width: 100% !important; 
+    width: 100%; 
 }  
 
 #sr-email-icon{
     *padding-left:10px;
     *margin-top:10px;
 }
+
+

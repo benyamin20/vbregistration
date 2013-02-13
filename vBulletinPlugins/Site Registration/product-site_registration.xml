@@ -13,31 +13,101 @@
 	<codes>
 	</codes>
 	<templates>
+	    <template name="site_registration_benefits" templatetype="template" 
+		    date="1352855133" username="fromero" version="1.0">
+		    <![CDATA[
+            <table class='tborder' cellpadding='6' cellspacing='1' border='0' width='97%' align='center'>
+              <tr>
+                <td colspan='3'><em style='font-weight:bold;'>Become a part of the  Honda-Tech Community Today!</em></td>
+              </tr>
+              <tr>
+                <td width='34%' align='left'>MEMBERSHIP OPTIONS</td>
+                <td width='33%' align='center'>Trial User</td>
+                <td width='33%' align='center'>Registered User - Full User</td>
+              </tr>
+              <tr class='alt1'>
+                <td  align=''><strong>User Title</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Trial User</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Honda-Tech Member</td>
+              </tr>
+              <tr class='alt2'>
+                <td  align=''><strong>Profile Picture</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>100x100 (No Animation)</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>600x400</td>
+              </tr>
+              <tr class='alt1'>
+                <td  align=''><strong>Avatar Size</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>80x80</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>100x100</td>
+              </tr>
+              <tr class='alt2'>
+                <td  align=''><strong>Signature</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Maximum 3 Lines</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Maximum 3 Lines</td>
+              </tr>
+              <tr class='alt1'>
+                <td  align=''><strong>Private Message Storage</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>3</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>500<br />Send up to 20 PM's at once</td>
+              </tr>
+              <tr class='alt2'>
+                <td  align=''><strong>Gallery Photos</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Can View Other's Albums</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Upload 100 pics</td>
+              </tr>
+              <tr class='alt1'>
+                <td  align=''><strong>File Attachments</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Unlimited</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Unlimited</td>
+              </tr>
+            <tr class='alt2'>
+               <td  align=''><strong>Social Groups</strong></td>
+               <td style='color:#66727E; font-weight:bold;' align='center'>No</td>
+               <td style='color:#AD0F00; font-weight:bold;' align='center'>Join, create, edit, manage Social Groups</td>
+            </tr> 
+              <tr class='alt1'>
+                <td  align=''><strong>Exclusive Forum Access</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>No</td>
+               <td style='color:#AD0F00; font-weight:bold;' align='center'>Yes<br />Access to Honda-Tech Marketplace</td>
+              </tr>
+              <tr class='alt2'>
+                <td  align=''><strong>Membership Fee</strong></td>
+                <td style='color:#66727E; font-weight:bold;' align='center'>Free **Users are promoted to Full Users after 15 days of registration and 5 posts</td>
+                <td style='color:#AD0F00; font-weight:bold;' align='center'>Free</td>
+              </tr>
+              <tr  align='center'>
+                            <td>&nbsp;</td>
+                <td></td>
+                <td><strong>15 Days & 5 Posts</strong></td>
+              </tr>
+            </table>        
+		    ]]>
+		</template>
 	    <template name="site_reg_includes" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0">
 		    <![CDATA[
-	        <link rel="stylesheet" type="text/css" media="all" href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
-            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
-            <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
-            <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
-            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
-            <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
-            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
+	        <link rel="stylesheet" type="text/css" media="all" href="$vboptions[site_registration_includes_path_css]/960/css/min/960.css?v=$vboptions[simpleversion]" />
+            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
+            <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
+            <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
+            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/css/fonts.css?v=$vboptions[simpleversion]" />
+            <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path_css]/facebox/facebox.css?v=$vboptions[simpleversion]" />
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/css/styles.css?v=$vboptions[simpleversion]" />
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
             <!--[if IE]>
-                <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
+                <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path_css]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
             <![endif]-->
-            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
-         
-            <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-            <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
-            <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-            <script src="$vboptions[site_registration_includes_path]/js/jquery.form.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-            <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
             
-            <!--[if lt IE 9]> 
-              <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
-            <![endif]-->        
+            <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+            <script>window.jQuery.ui || document.write('<script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-ui-1.9.2.custom.min.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+            <script> var sr_path_js  = '$vboptions[site_registration_includes_path_js]';</script>
+            <script> var sr_path_php = '$vboptions[site_registration_includes_path_php]';</script>
+            <script> var sr_path_img = '$vboptions[site_registration_includes_path_img]';</script>
+            <script> var sr_path_css = '$vboptions[site_registration_includes_path_css]';</script>
+            <script src="$vboptions[site_registration_includes_path_js]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
+            <script src="$vboptions[site_registration_includes_path_js]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>  
+                 
 		    ]]>
 		</template>
 		<template name="site_reg_account-activated" templatetype="template" 
@@ -50,31 +120,11 @@ $stylevar[htmldoctype]
     <title>Account Activated - $vboptions[bbtitle]</title>
     <!-- head include -->
     $headinclude
-    <! -- /head include -->
+    <!-- /head include -->
     
-    <link rel="stylesheet" type="text/css" media="all" href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
-    <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
-    <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
-    <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
-    <!--[if IE]>
-	    <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-    <![endif]-->
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
- 
-    <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-    <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
-    <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-    <script src="$vboptions[site_registration_includes_path]/js/jquery.form.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-    <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
-    
-    <!--[if lt IE 9]> 
-      <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
-    <![endif]-->
-
+    <!-- site registration includes -->
+    $site_reg_includes
+    <!-- /site registration includes -->
 
 </head>
 
@@ -88,41 +138,41 @@ $stylevar[htmldoctype]
  
 
 		<!-- Ad units -->
-		<div id="ad-units" class="grid_12">
-			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">	
+		<div id="sr-ad-units" class="grid_12">
+			<div id="first-ad-unit" class="grid_10 sr-centered pull-left alpha">	
 			    $vboptions[site_registration_adunit1]
 			</div>
-			<div id="second-ad-unit" class="grid_2  centered pull-right omega">
+			<div id="second-ad-unit" class="grid_2  sr-centered pull-right omega">
 				$vboptions[site_registration_adunit2]
 			</div>
-			<div class="clear clear_20"></div>
-			<div class="clear clear_20"></div>
+			<div class="clear sr-clear_20"></div>
+			<div class="clear sr-clear_20"></div>
 		</div>
 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">Account activated, $username_db!</span>
+			<span class="sr-title_red">Account activated, $username_db!</span>
 		</div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 
 		<!-- Login options -->
 		<div id="login-options"> 
-			<div class="clear clear_30"></div>
+			<div class="clear sr-clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_8" id="create-site-account">
 			    <div id="would-you-like">
 				    <h1>Would you like to complete your profile?</h1>
-				    <div class="clear clear_20"></div>
+				    <div class="clear sr-clear_20"></div>
 				
 				
 				    <div class="clear"></div>
-				    <a class="grid_4 no-margin link_blue sr-normal sr-bold"
+				    <a class="grid_4 no-margin sr-link_blue sr-normal sr-bold"
 				        href="$prev_url"
 				        id="send-me-there">No, thanks. Take me to where I was &#187;</a>
 
-				    <div class="clear clear_30"></div>
+				    <div class="clear sr-clear_30"></div>
 				    <hr class="span5 no-margin" />
-				    <div class="clear clear_10"></div>
+				    <div class="clear sr-clear_10"></div>
 				</div>
 				
 				<div class="">
@@ -131,7 +181,7 @@ $stylevar[htmldoctype]
 				-->
 					<div class="">
 					    <h1 id="show-great"></h1>
-						<div class="clear clear_10"></div> 
+						<div class="clear sr-clear_10"></div> 
 						<!--  Progress --> 
 						<span class="sr-small sr-bold fix-line-height"><span id="percentage-indicator">50</span>% profile completeness</span>
 						<div class="clear"></div>
@@ -145,30 +195,30 @@ $stylevar[htmldoctype]
 					            <i class="icon-ok-sign"></i>
 					        </span>
 					    </div>
-						<div class="clear clear_15"></div>
+						<div class="clear sr-clear_15"></div>
 						<div id="user-cp" class="hidden grid_3 no-margin">
-						    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="link_blue">User CP</a>.
-						    <div class="clear clear_20"></div>
-						    <div class="clear clear_15"></div>
-						    <a class="grid_4 no-margin link_blue sr-normal sr-bold"
+						    You can always make any changes by accessing the <a href="$vboptions[bburl]/usercp.php" class="sr-link_blue">User CP</a>.
+						    <div class="clear sr-clear_20"></div>
+						    <div class="clear sr-clear_15"></div>
+						    <a class="grid_4 no-margin sr-link_blue sr-normal sr-bold"
 				                href="$prev_url"
 				                id="send-me-there">Now, take me to where I was &#187;</a>
 						</div>
 						
 						<form id="complete-your-profile-form"
 		                name="complete_your_profile_form" 
-		                action="$vboptions[site_registration_includes_path]/php/index.php?op=complete_your_profile" 
+		                action="$vboptions[site_registration_includes_path_php]/php/index.php?op=complete_your_profile" 
 		                method="post"> 
 
                         <!--  Avatar -->
                         <if condition="$vboptions[avatarenabled]">
 						    <label>Your Avatar</label>
-						    <div class="clear clear_5"></div>
+						    <div class="clear sr-clear_5"></div>
 		     
 						    <div id="upload-wrapper" class="grid_4 no-margin">
 							    <!--
 							        <div class="grid_1 no-margin pull-left">
-								        <img src="$vboptions[site_registration_includes_path]/img/unknown.png" 
+								        <img src="$vboptions[site_registration_includes_path_img]/img/unknown.png" 
 								            id="selected-avatar" />
 							        </div>
 							    -->
@@ -179,7 +229,7 @@ $stylevar[htmldoctype]
                                                     thumbnail
                                                     avatar-thumbnail">
                                                 <img 
-                                                    src="$vboptions[site_registration_includes_path]/img/unknown.png"
+                                                    src="$vboptions[site_registration_includes_path_img]/img/unknown.png"
                                                     id="selected-avatar" />
                                         </div>
                                         <div class="fileupload-preview 
@@ -196,7 +246,7 @@ $stylevar[htmldoctype]
                                         
                                         <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
                                         <div class="clear"></div>
-                                        <!-- <a class="sr-small link_blue" id="use-default">Use default.</a> -->
+                                        <!-- <a class="sr-small sr-link_blue" id="use-default">Use default.</a> -->
                                         <span class="error-label sr-small no-margin no-top grid_3" id="upload-error-label"></span>
                                 </div>
 								    <div class="clear"></div>
@@ -291,7 +341,7 @@ $stylevar[htmldoctype]
 							    <phrase>$vbphrase[receive_email_from_other_members]</phrase>
 						</label>
 
-						<div class="clear clear_20"></div>
+						<div class="clear sr-clear_20"></div>
 						
 						<input type="hidden" name="use_default_image"
 						    id="use-default-image"
@@ -312,7 +362,7 @@ $stylevar[htmldoctype]
 
 				<span class="sr-normal  sr-bold"></span>
 
-				<div class="clear clear_20"></div>
+				<div class="clear sr-clear_20"></div>
  
 
 			</div>
@@ -325,7 +375,7 @@ $stylevar[htmldoctype]
 			<div id=""> 
 			    
 				<div class="grid_4  move-to-top-inside complete-your-profile">
-				    <div class="clear clear_10"></div>
+				    <div class="clear sr-clear_10"></div>
 				    <h1 class="padding-left-check-these-out">Inside $vboptions[bbtitle]</h1>
 					<!-- check these out -->
 					<div class="grid_4 no-margin padding-left-check-these-out">
@@ -334,42 +384,42 @@ $stylevar[htmldoctype]
 						    <img src="$vboptions[site_registration_checktheseout_picture1]" />
 					    </div>
 					    <div class="grid_3 text-margin pull-right">
-						    <a class="link_blue sr-bold" 
+						    <a class="sr-link_blue sr-bold" 
 						        href="$vboptions[site_registration_checktheseout_link3]">
 						        $vboptions[site_registration_checktheseout_text1]
 						    </a>
 						    <div class="clear"></div>
 						    $vboptions[site_registration_checktheseout_description1]
 					    </div>
-					    <div class="clear clear_20"></div>
+					    <div class="clear sr-clear_20"></div>
 
 					    <!-- Thumb and description -->
 					    <div class="grid_1 no-margin pull-left">
 						    <img src="$vboptions[site_registration_checktheseout_picture2]" />
 					    </div>
 					    <div class="grid_3 text-margin pull-right">
-						    <a class="link_blue sr-bold" 
+						    <a class="sr-link_blue sr-bold" 
 						        href="$vboptions[site_registration_checktheseout_link3]">
 						        $vboptions[site_registration_checktheseout_text2]
 						    </a>
 						    <div class="clear"></div>
 						    $vboptions[site_registration_checktheseout_description2]
 					    </div>
-					    <div class="clear clear_20"></div>
+					    <div class="clear sr-clear_20"></div>
 
 					    <!-- Thumb and description -->
 					    <div class="grid_1 no-margin pull-left">
 						    <img src="$vboptions[site_registration_checktheseout_picture3]" />
 					    </div>
 					    <div class="grid_3 text-margin pull-right">
-						    <a class="link_blue sr-bold" 
+						    <a class="sr-link_blue sr-bold" 
 						        href="$vboptions[site_registration_checktheseout_link3]">
 						        $vboptions[site_registration_checktheseout_text3]
 						    </a>
 						    <div class="clear"></div>
 						    $vboptions[site_registration_checktheseout_description3]
 					    </div>
-					    <div class="clear clear_20"></div>
+					    <div class="clear sr-clear_20"></div>
 				    </div>
 					<!-- /check these out -->
 				</div>
@@ -402,30 +452,11 @@ $stylevar[htmldoctype]
     <title>Please Activate Your Account - $vboptions[bbtitle]</title>
     <!-- head include -->
     $headinclude
-    <! -- /head include -->
+    <!-- /head include -->
  
-    <link rel="stylesheet" type="text/css" media="all"
-        href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" media="screen"
-        href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]"> 
-    <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
-    <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
-    <link media="screen" rel="stylesheet" type="text/css"
-        href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
-    <!--[if IE]>
-	    <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-    <![endif]-->
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
- 
-
-    <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-    <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
-    <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-       <!--[if lt IE 9]> 
-          <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
-        <![endif]-->
+    <!-- site registration includes -->
+    $site_reg_includes
+    <!-- /site registration includes -->
 
 
 </head>
@@ -439,32 +470,32 @@ $stylevar[htmldoctype]
 	<div id="sr-container" class="container_12  activate-account-container">
   
 		<!-- Ad units -->
-		<div id="ad-units" class="grid_12">
-			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
+		<div id="sr-ad-units" class="grid_12">
+			<div id="first-ad-unit" class="grid_10 sr-centered pull-left alpha">
 				$vboptions[site_registration_adunit1]
 			</div>
 			<div id="second-ad-unit"
-				class="grid_2  centered pull-right omega">
+				class="grid_2  sr-centered pull-right omega">
 				$vboptions[site_registration_adunit2]
 			</div>
-			<div class="clear clear_20"></div>
-			<div class="clear clear_20"></div>
+			<div class="clear sr-clear_20"></div>
+			<div class="clear sr-clear_20"></div>
 		</div>
 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">Please Activate Your Account</span>
+			<span class="sr-title_red">Please Activate Your Account</span>
 		</div>
 
 		<div class="clear"></div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 
 		<!-- Email Icon -->
 		<div id="login-options" class="grid_12">
-			<div class="clear clear_20"></div>
-			<div class="clear clear_20"></div>
+			<div class="clear sr-clear_20"></div>
+			<div class="clear sr-clear_20"></div>
 			<div class="grid_2 alpha">
-				<img src="$vboptions[site_registration_includes_path]/img/email-icon.png" id="email-icon" />
+				<img src="$vboptions[site_registration_includes_path_img]/img/email-icon.png" id="email-icon" />
 			</div>
 			<div class="grid_8 omega">
 				<h1 class="email-sent">We have dispatched a very special email to
@@ -472,14 +503,14 @@ $stylevar[htmldoctype]
 				<div class="clear"></div>
 				<p class="sr-normal">
 				Please click on the link to activate your account.</p>
-				<div class="clear clear_20"></div>
-				<div class="clear clear_10"></div>
+				<div class="clear sr-clear_20"></div>
+				<div class="clear sr-clear_10"></div>
 				<p class="sr-bold">Did not receive it?</p>
-				<a href="$php_self#resend" id="resend-email" class="sr-small link_blue">
+				<a href="$php_self#resend" id="sr-resend-email" class="sr-small sr-link_blue">
 				Resend Email</a>
 				&nbsp;&nbsp;&nbsp;
 				<span id="ajax-loader"></span>
-				<span id="email-sent" class="sr-small email-sent">
+				<span id="sr-email-sent" class="sr-small email-sent">
 				
 				</span>
 				<input type="hidden" name="token" id="token" value="" />
@@ -502,19 +533,23 @@ $stylevar[htmldoctype]
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
 		    <![CDATA[ 
-		        <link rel='stylesheet' href='$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]' />
-		        <link rel='stylesheet' href='$vboptions[site_registration_includes_path]/css/not_active.css?v=$vboptions[simpleversion]' />
+		        <link rel='stylesheet' href='$vboptions[site_registration_includes_path_css]/960/css/min/960.css?v=$vboptions[simpleversion]' />
+		        <link rel='stylesheet' href='$vboptions[site_registration_includes_path_css]/css/not_active.css?v=$vboptions[simpleversion]' />
                 <!--[if IE]>
-	            <link rel='stylesheet' href='$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]' />
+	            <link rel='stylesheet' href='$vboptions[site_registration_includes_path_css]/css/all-ie-only.css?v=$vboptions[simpleversion]' />
                 <![endif]-->
                 
-                <script src='$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js'></script>
-                <script src='$vboptions[site_registration_includes_path]/js/common.js'></script>
+                <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+                <script> var sr_path_js  = '$vboptions[site_registration_includes_path_js]';</script>
+                <script> var sr_path_php = '$vboptions[site_registration_includes_path_php]';</script>
+                <script> var sr_path_img = '$vboptions[site_registration_includes_path_img]';</script>
+                <script> var sr_path_css = '$vboptions[site_registration_includes_path_css]';</script>
+                <script src='$vboptions[site_registration_includes_path_js]/js/common.js'></script>
 
                 <div id='sr-container' class='container_12 sr-background_yellow sr-not-active'>
                     <div id='sr-warning-container' >
                         <div class='pull-left sr-no-margin grid_1 alpha'>
-                            <img src='$vboptions[site_registration_includes_path]/img/icon-email-medium.png' 
+                            <img src='$vboptions[site_registration_includes_path_img]/img/icon-email-medium.png' 
                                 id='sr-email-icon' />
                         </div>
                         <div class='sr-margin_left_20 grid_9 omega'>
@@ -547,36 +582,11 @@ $stylevar[htmldoctype]
     <title>Sign In - $vboptions[bbtitle]</title>
     <!-- head include -->
     $headinclude
-    <! -- /head include -->
+    <!-- /head include -->
  
-    <link rel="stylesheet" type="text/css" media="all" href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-tooltip.min.css?v=$vboptions[simpleversion]" />
- 
-    <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
-    <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-    
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
- 
-    <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
-    
-    <!--[if IE]>
-	    <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-    <![endif]-->
-    
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
-
- 
-    <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-    <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
-    
-    <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap-tooltip.min.js?v=$vboptions[simpleversion]"></script> 
-    <script src="$vboptions[site_registration_includes_path]/js/common.js" type="text/javascript"></script>
-    
-    <!--[if lt IE 9]> 
-        <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
-    <![endif]-->
+    <!-- site registration includes -->
+    $site_reg_includes
+    <!-- /site registration includes -->
 
 
     
@@ -656,9 +666,9 @@ $stylevar[htmldoctype]
 	    <div id="sr-container" class="container_12">
 		    <!-- Site heading -->
 		    <div id="site-heading" class="grid_12">
-			    <span class="title_red">Join $vboptions[bbtitle]</span>
+			    <span class="sr-title_red">Join $vboptions[bbtitle]</span>
 		    </div>
-		    <div class="clear clear_10"></div>
+		    <div class="clear sr-clear_10"></div>
 		    
 		    
 		    <!-- columns container -->
@@ -667,13 +677,13 @@ $stylevar[htmldoctype]
 		        <div id="left-column" class="pull-left">
 		            <!-- create site account options -->
 		            <div id="create-site-account-options">
-		                <div class="clear clear_30"></div>
+		                <div class="clear sr-clear_30"></div>
                         <div class="clear"></div>
 			            <!-- Create site Account -->
 			            <div class="grid_3" id="create-site-account"> 
-                            <div class="clear clear_20"></div>
+                            <div class="clear sr-clear_20"></div>
 				            <h1>Create Site Account</h1>
-				            <div class="clear clear_20"></div>
+				            <div class="clear sr-clear_20"></div>
 				            <div class="error_red sr-small" id="create-site-account-error">
 				                <span id="email-error-label" class="error-label no-margin"></span>
 				                 <div class="clear"></div>
@@ -707,7 +717,7 @@ $stylevar[htmldoctype]
 				                </div>
 				            </div>
 
-				            <div class="clear clear_20"></div>
+				            <div class="clear sr-clear_20"></div>
 				            <div class="grid_4 no-margin">
 				                <a class="btn btn-primary btn-block grid_3 no-margin" 
 				                    id="create-new-account-button">
@@ -722,8 +732,8 @@ $stylevar[htmldoctype]
 			            
 			            <if condition="$show['vbnexus_button_fb']">
                             <!-- OR -->
-	                        <div class="grid_1 vertical-rule">
-		                        <div class="centered">
+	                        <div class="grid_1 sr-vertical-rule">
+		                        <div class="sr-centered">
 			                        <div class="horizontal-wrapper">
 				                        <sub>OR</sub>
 			                        </div> 
@@ -751,8 +761,8 @@ $stylevar[htmldoctype]
 							        </div> 
 							        <span>Login with Facebook</span>
 						        </a>
-				                <div class="clear clear_15"></div> 
-				                <span class="sr-small light_grey">It's secure and easy!</span>
+				                <div class="clear sr-clear_15"></div> 
+				                <span class="sr-small sr-light_grey">It's secure and easy!</span>
                             <else />
                                 &nbsp;
                             </if>
@@ -761,7 +771,7 @@ $stylevar[htmldoctype]
 			       
 		            </div><!-- /create site account options -->
 		            
-		            <div class="clear clear_30"></div>
+		            <div class="clear sr-clear_30"></div>
 
                     <!-- what-you-get -->
 		            <div id="what-you-get" class="grid_7">
@@ -774,13 +784,13 @@ $stylevar[htmldoctype]
 			            <span class="grid_6 sr-small" id="after-days">
                             $vboptions[site_registration_line_description]
                         </span>
-			            <div class="clear clear_30"></div>
+			            <div class="clear sr-clear_30"></div>
 
 			            <div class="sr-small grid_3 alpha">
 			                $vboptions[site_registration_bullets_part_1]
-				            <div class="clear clear_30"></div>
+				            <div class="clear sr-clear_30"></div>
 				            <a href="$php_self#info"  
-                                               id="benefit-comparison" class="link_blue"
+                                               id="benefit-comparison" class="sr-link_blue"
 					            rel="facebox">$vboptions[site_registration_link_text]</a>
 
 			            </div>
@@ -804,7 +814,7 @@ $stylevar[htmldoctype]
 					        <if condition="$hide_on_multiple_regs == FALSE">
 					        <div class="already-have-an-account">
 						        <div class="margin_left_20">
-							        <div class="clear clear_30"></div>
+							        <div class="clear sr-clear_30"></div>
 							        <h3>Already have an account?</h3>
 							        <div class="clear"></div>
 							        <div class="error_red sr-small" id="have-account-error"></div>
@@ -823,12 +833,12 @@ $stylevar[htmldoctype]
 								            id="password" title="<phrase>$vbphrase[password]</phrase>" value="" 
 								            autocomplete="off"
 								            type="password"  />
-							            <div class="clear clear_15"></div>
+							            <div class="clear sr-clear_15"></div>
 							            <button class="btn btn-medium" id="login-button"><phrase>$vbphrase[log_in]</phrase></button>
 							            <span id="ajax-loader-secondary"></span>
 							        <!--</form>-->
-							        <div class="clear clear_15"></div>
-							        <a class="link_blue sr-small" id="forgot-password"
+							        <div class="clear sr-clear_15"></div>
+							        <a class="sr-link_blue sr-small" id="forgot-password"
 								        href="$vboptions[bburl]/login.php?do=lostpw">Forgot your password?</a>
 						        </div>
 					        </div>
@@ -845,7 +855,7 @@ $stylevar[htmldoctype]
 
 	    <!--  Info table for benefit comparison -->
 	    <div id="info">
-	        $vboptions[site_registration_benefits]
+	        $site_registration_benefits
 	    </div>
 	    
 	    
@@ -868,35 +878,11 @@ $stylevar[htmldoctype]
     
     <!-- head include -->
     $headinclude
-    <! -- /head include -->
+    <!-- /head include -->
     
-    <link rel="stylesheet" type="text/css" media="all"
-        href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" media="screen"
-        href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
-        
-    <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
-    <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-    
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
- 
-    <link media="screen" rel="stylesheet" type="text/css"
-        href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
-    
-
-    <!--[if IE]>
-        <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-    <![endif]-->
-    
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
- 
-    <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-    <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
-    <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-    <!--[if lt IE 9]> 
-        <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
-    <![endif]--> 
+    <!-- site registration includes -->
+    $site_reg_includes
+    <!-- /site registration includes -->
 
 </head>
 
@@ -911,9 +897,9 @@ $header
  
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red"><phrase>$vbphrase[noregister]</phrase></span>
+			<span class="sr-title_red"><phrase>$vbphrase[noregister]</phrase></span>
 		</div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 		
 	    <p><a href="$vboptions[bburl]">Return to the Forum</a></p>
 	</div>
@@ -942,35 +928,11 @@ $stylevar[htmldoctype]
     
     <!-- head include -->
     $headinclude
-    <! -- /head include -->
+    <!-- /head include -->
     
-    <link rel="stylesheet" type="text/css" media="all"
-        href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" media="screen"
-        href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
-        
-    <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
-    <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-    
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
- 
-    <link media="screen" rel="stylesheet" type="text/css"
-        href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
-    
-
-    <!--[if IE]>
-        <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-    <![endif]-->
-    
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
- 
-    <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-    <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
-    <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-    <!--[if lt IE 9]> 
-        <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
-    <![endif]--> 
+    <!-- site registration includes -->
+    $site_reg_includes
+    <!-- /site registration includes -->
 
 </head>
 
@@ -985,17 +947,17 @@ $stylevar[htmldoctype]
  
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red"> Confirm your details </span>
+			<span class="sr-title_red"> Confirm your details </span>
 		</div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 
 		<!-- Login options -->
 		<div id="login-options" class="grid_12">
-			<div class="clear clear_30"></div>
+			<div class="clear sr-clear_30"></div>
 
 			<!-- Thumb -->
 			<div class="grid_1 alpha">
-				<div class="centered">
+				<div class="sr-centered">
 					<img src="$fbPicture" alt="" />
 				</div>
 			</div>
@@ -1005,16 +967,16 @@ $stylevar[htmldoctype]
 			<!-- Create site Account -->
 			<div class="grid_4" id="create-site-account">
 
-				<h1 class="dark_grey">Welcome $fbName!</h1>
+				<h1 class="sr-dark_grey">Welcome $fbName!</h1>
 
-				<div class="clear clear_10"></div>
+				<div class="clear sr-clear_10"></div>
 
 				<span class="sr-small sr-bold">Please choose your public Username
 					to get started.</span>
 				<p class="sr-small">Your Facebook avatar will not be displayed
 					publicly.</p>
 
-				<div class="clear clear_20"></div>
+				<div class="clear sr-clear_20"></div>
                 <label for="email"><phrase>$vbphrase[email]</phrase></label>
 				<div class="grid_6 no-margin" id="email-wrapper">
 				    <input class="" id="email" name="email" title="Email"
@@ -1025,7 +987,7 @@ $stylevar[htmldoctype]
 
                 $fbEmailParent
                 
-				<span class="help-block sr-tiny dark_grey"></span> 
+				<span class="help-block sr-tiny sr-dark_grey"></span> 
 				
 				<div class="clear "></div>
 				
@@ -1041,7 +1003,7 @@ $stylevar[htmldoctype]
 
                 
                 
-				<span class="help-block sr-tiny dark_grey">Maximum $vboptions[maxuserlength] characters.</span>
+				<span class="help-block sr-tiny sr-dark_grey">Maximum $vboptions[maxuserlength] characters.</span>
 
 
 				<div class="clear "></div>
@@ -1061,7 +1023,7 @@ $stylevar[htmldoctype]
                     <span class="error-label sr-small" id="datepicker-error-label"></span>
                 </div>
 
-                <div class="clear clear_10"></div>
+                <div class="clear sr-clear_10"></div>
                 
                 <div class="grid_3 no-margin">
 				    <label for="vbnexus_fb_publish">
@@ -1074,21 +1036,21 @@ $stylevar[htmldoctype]
                 </div>
                 
                 
-                <div class="clear clear_15"></div>
+                <div class="clear sr-clear_15"></div>
 
                 <div class="grid_6 no-margin" id="terms_and_conditions-wrapper">
 				    <label class="checkbox"> 
 				        <input type="checkbox" value="" checked="checked"
 					       id="terms-and-conditions" name="terms-and-conditions" 
 					         />
-				        <span class="sr-small light_grey span2 no-margin"> Yes, I agree with the
-						    <a href="$php_self#info" class="link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
+				        <span class="sr-small sr-light_grey span2 no-margin"> Yes, I agree with the
+						    <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 				        </span>
 				    </label>
 				    <span class="error-label sr-small" id="terms_and_conditions-error-label"></span>
                 </div>
                 
-				<div class="clear clear_15"></div>
+				<div class="clear sr-clear_15"></div>
 				<div class="pull-left">
 				    <button class="btn btn-primary grid_3"
                         type="button" id="log-in">Log In</button>
@@ -1097,19 +1059,19 @@ $stylevar[htmldoctype]
 			</div>
 			
 			<!--  Vertical Separator -->
-            <div class="grid_1 prefix_2 vertical-rule-hidden"></div>
+            <div class="grid_1 prefix_2 sr-vertical-rule-hidden"></div>
 
 			<!--  Already a member -->
 			<div class="grid_4 omega" id="already-member">
-				<h3 class="dark_grey">Already a member?</h3>
+				<h3 class="sr-dark_grey">Already a member?</h3>
 				
-				<div class="clear clear_15"></div>
+				<div class="clear sr-clear_15"></div>
 				
 				<p class="sr-small">
 				Link your Facebook account to your forum account.
 				</p>
                 
-                <div class="clear clear_15"></div>
+                <div class="clear sr-clear_15"></div>
                 <span id="username-member-error-label" class="error-label no-margin  "></span>
                 <div class="clear"></div>
                 <span id="password-member-error-label" class="error-label no-margin  "></span>
@@ -1132,17 +1094,17 @@ $stylevar[htmldoctype]
                            value="" autocomplete="off"
                            type="password"  /> 
                 </div> 
-                 <div class="clear clear_15"></div>
+                 <div class="clear sr-clear_15"></div>
                  
                  <button class="btn grid_3 no-margin"
                         type="button" id="link-account">Link Account</button>
                  <span id="ajax-loader-secondary"></span>
                         
-				<div class="clear clear_15"></div>
+				<div class="clear sr-clear_15"></div>
 				
 				<input id="token" name="token" value="$security_token" type="hidden" />
 				
-				<a href="login.php?do=lostpw" class="sr-small link_blue"
+				<a href="login.php?do=lostpw" class="sr-small sr-link_blue"
 					id="forgot-password">Forgot your password?</a>
 			</div>
 
@@ -1216,30 +1178,11 @@ $stylevar[htmldoctype]
     <title>Choose Your Username and Password - $vboptions[bbtitle]</title>
     <!-- head include -->
     $headinclude
-    <! -- /head include -->
+    <!-- /head include -->
   
-    <link rel="stylesheet" type="text/css" media="all"
-	    href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" media="screen"
-	    href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
-	    
-	<!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
-    <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->     
-	    
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
-    <link media="screen" rel="stylesheet" type="text/css"
-	    href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
-    <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
-    <!--[if IE]>
-        <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
-    <![endif]-->
- 
-    <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-    <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script> 
-    <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-    <!--[if lt IE 9]> 
-        <script src="$vboptions[site_registration_includes_path]/js/css3-mediaqueries.js?v=$vboptions[simpleversion]"></script>
-    <![endif]-->
+    <!-- site registration includes -->
+    $site_reg_includes
+    <!-- /site registration includes -->
 </head>
 
 <body>
@@ -1253,15 +1196,15 @@ $stylevar[htmldoctype]
 		 
 		<!-- Site heading -->
 		<div id="site-heading" class="grid_12">
-			<span class="title_red">
+			<span class="sr-title_red">
 			     Pick your username and password:
 			</span>
 		</div>
-		<div class="clear clear_10"></div>
+		<div class="clear sr-clear_10"></div>
 
 		<!-- Login options -->
 		<div id="login-options">
-			<div class="clear clear_30"></div>
+			<div class="clear sr-clear_30"></div>
 			<!-- Create site Account -->
 			<div class="grid_3" id="create-site-account">
 				<div class="clear"></div>
@@ -1273,7 +1216,7 @@ $stylevar[htmldoctype]
 					<span class="error-label" id="username-error-label"></span> 
 				</div>
 				
-				<span class="help-block sr-tiny dark_grey">
+				<span class="help-block sr-tiny sr-dark_grey">
 				    Maximum $vboptions[maxuserlength] characters
 				</span>
 				
@@ -1286,7 +1229,7 @@ $stylevar[htmldoctype]
 					<span class="error-label" id="password-error-label"></span>
 				</div>
 				
-				<div class="clear clear_10"></div>
+				<div class="clear sr-clear_10"></div>
 				
 				<div class="grid_7 no-margin" id="confirm-password-wrapper">
 				    <label for="confirm-password"><phrase>$vbphrase[confirm_password]</phrase></label>
@@ -1299,7 +1242,7 @@ $stylevar[htmldoctype]
 				</div>
 				
 					
-				<div class="clear clear_10"></div>
+				<div class="clear sr-clear_10"></div>
 				
 				<if condition="$_SESSION[site_registration][coppauser] === true">
 				    <!-- parent - guardian email -->
@@ -1313,7 +1256,7 @@ $stylevar[htmldoctype]
 				        <span class="error-label" id="parent-guardian-email-error-label"></span>    
 				    </div>
 					
-				    <div class="clear clear_10"></div>
+				    <div class="clear sr-clear_10"></div>
 				    <!-- /parent - guardian email -->   
 				</if>
 				
@@ -1328,7 +1271,7 @@ $stylevar[htmldoctype]
 			            <span class="error-label" id="security-code-error-label"></span>
 			        </div>
 				
-				    <div class="clear clear_10"></div>
+				    <div class="clear sr-clear_10"></div>
 				
 				
 				
@@ -1338,14 +1281,14 @@ $stylevar[htmldoctype]
 				            id="imagereg" class="grid_3 no-margin"
 				            title="CAPTCHA"  />
 				            
-				        <span class="cursor-pointer sr-small link_blue" id="refresh-captcha">
+				        <span class="cursor-pointer sr-small sr-link_blue" id="refresh-captcha">
 				            <phrase>$vbphrase[refresh_image]</phrase>   <span id="ajax-loader-secondary"></span> 
 				        </span>
 				        
      
 				    </div>
 				
-				    <div class="clear clear_15"></div>
+				    <div class="clear sr-clear_15"></div>
 				</if>
 				
 				<div class="grid_7 no-margin" id="terms-and-conditions-wrapper">
@@ -1353,15 +1296,15 @@ $stylevar[htmldoctype]
 					    <input type="checkbox" value="" id="terms-and-conditions"
 					       name="terms-and-conditions" checked="checked"
 					         />
-					    <span class="sr-small light_grey">
+					    <span class="sr-small sr-light_grey">
 					       Yes, I agree with the
-					       <a href="$php_self#info" class="link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
+					       <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 					    </span>
 				    </label>
 				    <span class="error-label" id="terms-and-conditions-error-label"></span>
 				</div>
  
-				<div class="clear clear_15"></div>
+				<div class="clear sr-clear_15"></div>
 				<div class="grid_7 no-margin"> 
 				    <input id="token" name="token" value="$security_token" type="hidden" />
 				    <button class="btn btn-primary grid_3 no-margin"
@@ -1437,6 +1380,10 @@ $stylevar[htmldoctype]
 			<hookname>parse_templates</hookname>
 			<phpcode><![CDATA[				
 			    if((int)$vbulletin->userinfo['userid'] && $_REQUEST['do'] !="logout"){
+			    
+			        if (!session_id()) {
+                        session_start();
+                    }
  
                     
                     $userid = $vbulletin->userinfo['userid'];
@@ -1453,7 +1400,8 @@ $stylevar[htmldoctype]
 	                if (!empty($user['activationid'])){
 	                    //pending activation id
 	                    
-	                    $site_reg_not_activated_template = fetch_template('site_reg_not_activated');
+	                    eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
+	                    $site_reg_not_activated_template    = fetch_template('site_reg_not_activated');
                         
 
                         $username   = $_SESSION['site_registration']['username']        = $vbulletin->userinfo['username'];
@@ -1481,7 +1429,7 @@ $stylevar[htmldoctype]
 	                        '###TOKEN###', $security_token, 
 	                        $vbulletin->templatecache['navbar']
 	                    );
-	                    
+ 
 	                    
 	                }
 	            
@@ -1512,8 +1460,8 @@ $stylevar[htmldoctype]
                     'register.php', "register.php" . $element, 
                     $vbulletin->templatecache['navbar']
                 );
-			    
-			    
+                
+ 
             ]]>
             </phpcode>
 		</plugin>
@@ -1528,6 +1476,10 @@ $stylevar[htmldoctype]
                 $vbulletin->input->clean_gpc('r', 'a', TYPE_NOHTML);
                 $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
                 $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
+                
+                if (!session_id()) {
+                    session_start();
+                }
 
  
 
@@ -1607,7 +1559,7 @@ $stylevar[htmldoctype]
                             $sql
                          );
                         
-                        
+                        eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
 
                     }
@@ -1624,7 +1576,11 @@ $stylevar[htmldoctype]
 			<hookname>register_start</hookname>
 			<phpcode>
 			    <![CDATA[
-			        $php_self = $_SERVER['REQUEST_URI'];			        
+			        $php_self = $_SERVER['REQUEST_URI'];
+			        
+			        if (!session_id()) {
+                        session_start();
+                    }			        
  
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
 						$fUser = explode("|", $_REQUEST["fuser"]);
@@ -1657,7 +1613,7 @@ $stylevar[htmldoctype]
                         	$yearBirthday = $parts[2];
 
                         	if($yearBirthday <= $year) {
-                        		$fbEmailParent = $_SESSION['site_registration']["fbEmailParent"] = '<div class="clear clear_20"></div>
+                        		$fbEmailParent = $_SESSION['site_registration']["fbEmailParent"] = '<div class="clear sr-clear_20"></div>
 					                <label for="email"><phrase>$vbphrase[parent_email_address]</phrase></label>
 									<div class="grid_6 no-margin" id="email-wrapper">
 									    <input class="" id="parentEmail" name="parentEmail" title="Email"
@@ -1834,7 +1790,7 @@ $stylevar[htmldoctype]
                                 
                             } 
                             
-                            
+                            eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
 			        } else if (isset($_REQUEST['step']) && $_REQUEST['step'] == 'confirm-facebook-details'){	
@@ -1848,8 +1804,10 @@ $stylevar[htmldoctype]
 
                             
                             if($vbulletin->options['allowregistration']) {
+                                eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
 			        			eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook') . '");');
 			        		} else {
+			        		    eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
 			        			eval('print_output("' . fetch_template('site_reg_sign-in-step-2-facebook-stop') . '");');
 			        		}
 			        	} else {
@@ -1870,7 +1828,10 @@ $stylevar[htmldoctype]
 			        	if($invalid_request){ 
 			                if(!(int)$vbulletin->userinfo['userid']){
 			                    if($vbulletin->bf_ugp_forumpermissions['canview']){
-			                        
+			                         
+                                    eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
+                                    
+			                        $site_registration_benefits = fetch_template('site_registration_benefits'); 
 			                        eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			                    }
 			                    
@@ -1878,7 +1839,7 @@ $stylevar[htmldoctype]
                         }else{
                             $session_email = $_SESSION['site_registration']['email'];
                             
-                            
+                            eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                             eval('print_output("' . fetch_template('site_reg_exception-not-activated') . '");');
                         }
 			        }
@@ -1888,14 +1849,16 @@ $stylevar[htmldoctype]
 			            
 			        }else{
 			            if(!(int)$vbulletin->userinfo['userid']){ 
-		                    
+			                eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
+			                $site_registration_benefits = fetch_template('site_registration_benefits'); 
 		                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 			            }else{
 			                if($vbulletin->options['allowmultiregs']){
-		                    $hide_on_multiple_regs = true;
-		                    
-	                        
-	                        eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+		                        $hide_on_multiple_regs = true;
+		                        
+		                        eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
+		                        $site_registration_benefits = fetch_template('site_registration_benefits'); 
+	                            eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
 		                    
 			                }
 			            }
@@ -1912,10 +1875,12 @@ $stylevar[htmldoctype]
 			    <![CDATA[
 			        $php_self = $_SERVER['REQUEST_URI'];
  
+                    if (!session_id()) {
+                        session_start();
+                    }
+                    
+                    
                     $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
-                    
- 
-                    
                      
 		            if(!(int)$vbulletin->userinfo['userid']){
 
@@ -2015,6 +1980,9 @@ $stylevar[htmldoctype]
                     $vbulletin->input->clean_gpc('r', 'u', TYPE_NOHTML);
                     $vbulletin->input->clean_gpc('r', 'i', TYPE_NOHTML);
  
+                    if (!session_id()) {
+                        session_start();
+                    }
 
                     //get username
                     $_SESSION['site_registration']['userid'] = $userid = $vbulletin->GPC['u'];
@@ -2093,7 +2061,7 @@ $stylevar[htmldoctype]
                             $sql
                          );
                         
-                        //fixes birthday to be able to search it on temporary table
+                        //fixes birthday to be able to search it on  table
                         $birthday = preg_replace("/\-/","/", $birthday);
                         
                         $sql = "SELECT initialpage FROM " . TABLE_PREFIX . "siteregistration_temp 
@@ -2118,8 +2086,7 @@ $stylevar[htmldoctype]
                             $default_email_from_administrators = " checked='checked' ";
                         }
                          
-                        //try to start a valid session
-                        //start new session
+                        //try to start a valid session 
                         $vbulletin->userinfo = $vbulletin->db
                                 ->query_first(
                                         "SELECT userid, usergroupid, membergroupids, infractiongroupids, 
@@ -2148,8 +2115,7 @@ $stylevar[htmldoctype]
 			                vbmail($vbulletin->userinfo['email'], $subject, $message);
 		                }
                  
-                        
-                        
+                        eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
 	                
 	                }else{
@@ -2165,16 +2131,52 @@ $stylevar[htmldoctype]
 	</plugins>
 	<phrases>
 		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
-		    <phrase name="setting_site_registration_includes_path_title" 
+		    <phrase name="setting_site_registration_includes_path_js_title" 
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
-			    Product include files path			
+			    Product include js files path			
 			    ]]>
 			</phrase>
-		    <phrase name="setting_site_registration_includes_path_desc" 
+		    <phrase name="setting_site_registration_includes_path_js_desc" 
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
-			    Product include files path			
+			    Product include js files path			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_includes_path_img_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include img files path			
+			    ]]>
+			</phrase>
+		    <phrase name="setting_site_registration_includes_path_img_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include img files path			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_includes_path_css_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include css files path			
+			    ]]>
+			</phrase>
+		    <phrase name="setting_site_registration_includes_path_css_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include css files path			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_includes_path_php_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include php files path			
+			    ]]>
+			</phrase>
+		    <phrase name="setting_site_registration_includes_path_php_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include php files path			
 			    ]]>
 			</phrase>
 			<phrase name="setting_site_registration_title_desc" 
@@ -2235,18 +2237,6 @@ $stylevar[htmldoctype]
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
 			    Link Text			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_benefits_desc" 
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Site Registration Benefits			
-			    ]]>
-			</phrase>
-			<phrase name="setting_site_registration_benefits_title"   
-			    date="1340664696" username="fromero" version="1.0">
-			    <![CDATA[
-			    Site Registration Benefits			
 			    ]]>
 			</phrase>
 			<!-- Check these out options -->
@@ -2438,7 +2428,31 @@ $stylevar[htmldoctype]
 	<options>
 	    
 		<settinggroup name="site_registration_settings_group" displayorder="65535">
-		    <setting varname="site_registration_includes_path" displayorder="5">
+		    <setting varname="site_registration_includes_path_js" displayorder="6">
+				<datatype>free</datatype>
+				<defaultvalue>
+				<![CDATA[
+				    includes/site-registration
+				]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_includes_path_img" displayorder="7">
+				<datatype>free</datatype>
+				<defaultvalue>
+				<![CDATA[
+				    includes/site-registration
+				]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_includes_path_css" displayorder="8">
+				<datatype>free</datatype>
+				<defaultvalue>
+				<![CDATA[
+				    includes/site-registration
+				]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_includes_path_php" displayorder="9">
 				<datatype>free</datatype>
 				<defaultvalue>
 				<![CDATA[
@@ -2493,79 +2507,6 @@ $stylevar[htmldoctype]
 				        See benefits comparison &#187;
 				    ]]>
 		        </defaultvalue>
-			</setting>
-			<setting varname="site_registration_benefits" displayorder="60">
-				<datatype>free</datatype>
-				<optioncode>textarea</optioncode>
-				<defaultvalue>
-				    <![CDATA[
-					    <table class="tborder" cellpadding="6" cellspacing="1" border="0" width="97%" align="center">
-                          <tr>
-                            <td colspan="3"><em style="font-weight:bold;">Become a part of the  Honda-Tech Community Today!</em></td>
-                          </tr>
-                          <tr>
-                            <td width="34%" align="left">MEMBERSHIP OPTIONS</td>
-                            <td width="33%" align="center">Trial User</td>
-                            <td width="33%" align="center">Registered User - Full User</td>
-                          </tr>
-                          <tr class="alt1">
-                            <td  align=""><strong>User Title</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Trial User</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Honda-Tech Member</td>
-                          </tr>
-                          <tr class="alt2">
-                            <td  align=""><strong>Profile Picture</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">100x100 (No Animation)</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">600x400</td>
-                          </tr>
-                          <tr class="alt1">
-                            <td  align=""><strong>Avatar Size</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">80x80</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">100x100</td>
-                          </tr>
-                          <tr class="alt2">
-                            <td  align=""><strong>Signature</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Maximum 3 Lines</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Maximum 3 Lines</td>
-                          </tr>
-                          <tr class="alt1">
-                            <td  align=""><strong>Private Message Storage</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">3</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">500<br />Send up to 20 PM's at once</td>
-                          </tr>
-                          <tr class="alt2">
-                            <td  align=""><strong>Gallery Photos</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Can View Other's Albums</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Upload 100 pics</td>
-                          </tr>
-                          <tr class="alt1">
-                            <td  align=""><strong>File Attachments</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Unlimited</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Unlimited</td>
-                          </tr>
-                        <tr class="alt2">
-                           <td  align=""><strong>Social Groups</strong></td>
-                           <td style="color:#66727E; font-weight:bold;" align="center">No</td>
-                           <td style="color:#AD0F00; font-weight:bold;" align="center">Join, create, edit, manage Social Groups</td>
-                        </tr> 
-                          <tr class="alt1">
-                            <td  align=""><strong>Exclusive Forum Access</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">No</td>
-                           <td style="color:#AD0F00; font-weight:bold;" align="center">Yes<br />Access to Honda-Tech Marketplace</td>
-                          </tr>
-                          <tr class="alt2">
-                            <td  align=""><strong>Membership Fee</strong></td>
-                            <td style="color:#66727E; font-weight:bold;" align="center">Free **Users are promoted to Full Users after 15 days of registration and 5 posts</td>
-                            <td style="color:#AD0F00; font-weight:bold;" align="center">Free</td>
-                          </tr>
-                          <tr  align="center">
-                                        <td>&nbsp;</td>
-                            <td></td>
-                            <td><strong>15 Days & 5 Posts</strong></td>
-                          </tr>
-                        </table>
-					]]>
-				</defaultvalue>
 			</setting>
 			<setting varname="site_registration_checktheseout_picture1" displayorder="70">
 				<datatype>free</datatype>

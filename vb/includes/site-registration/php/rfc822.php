@@ -1,5 +1,10 @@
 <?php
 
+if (THIS_SCRIPT != 'site-registration')
+{
+    exit;
+}
+
 	#
 	# RFC 822/2822/5322 Email Parser
 	#
