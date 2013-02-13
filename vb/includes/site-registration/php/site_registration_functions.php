@@ -1,5 +1,11 @@
 <?php
 
+
+if (THIS_SCRIPT != 'site-registration')
+{
+    exit;
+}
+
 /**
  *   Output valid JSON headers
  */

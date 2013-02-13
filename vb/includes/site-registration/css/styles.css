@@ -29,10 +29,6 @@ li {
 	color: #800000;
 }
 
-.sr-link_blue {
-	color: #0066DD !important;
-	cursor: pointer !important;
-}
 
 .dark_grey {
 	color: #666666;
@@ -283,19 +279,12 @@ li {
     margin-bottom: 0px ;	
 }
 
-#log-in, .no-margin{
-	margin: 0px !important;
-}
+
 .email-sent{
 	color: #333;
 }
 
-.sr-input-error{
-    border-color: #953B39 !important;
-    color: #953B39 !important;
-    background-color: #FFE9EA !important;
-    
-}
+
 .sr-input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 28px
 	transparent  ;
@@ -567,3 +556,20 @@ div.content table.tborder{
     margin: 0px;
 }
 
+
+a.sr-link_blue {
+	color: #0066DD;
+	cursor: pointer;
+}
+
+
+#log-in, .no-margin{
+	margin: 0px ;
+}
+
+.sr-input-error{
+    border-color: #953B39 !important;
+    color: #953B39 !important;
+    background-color: #FFE9EA !important;
+    
+}
