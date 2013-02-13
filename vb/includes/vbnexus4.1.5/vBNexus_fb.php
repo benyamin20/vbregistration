@@ -192,7 +192,7 @@ class vBNexus_fb extends vBNexus_user {
                 break;
             case 'newphoto':            // album_picture_upload_complete
                 $message = "I uploaded a photo in {$forumtitle}";
-                $query_string = "albumid={$albuminfo['albumid']}&pictureid={$pictureids["{$uploadid}"]}";
+                $query_string = 'albumid={$albuminfo['albumid']}&pictureid={$pictureids["{$uploadid}"]}';
                 $picture = $link = "{$forumurl}/album.php?{$query_string}";
                 $name = $albuminfo['title'];
                 break;
