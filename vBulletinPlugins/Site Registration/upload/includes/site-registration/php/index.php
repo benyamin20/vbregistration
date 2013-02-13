@@ -698,6 +698,7 @@ case 'validate_site_account_details':
             if ($newusergroupid == 2) {
                 if ($vbulletin->options['welcomemail']) {
                     $username = $vbulletin->GPC['username'];
+                
                     eval(fetch_email_phrases('welcomemail'));
                     vbmail($email, $subject, $message);
                 }
@@ -1366,7 +1367,7 @@ case 'activate':
             $email    = $vbulletin->db->escape_string($vbulletin->GPC['email']);
             $username = $vbulletin->GPC['username'];
             $time     = time(); 
-            $publish  = $vbulletin->db->escape_string($vbulletin->GPC['vbnexus_fb_publish']);
+            $publish  = $vbulletin->GPC['vbnexus_fb_publish'];
 
             $vbnexus_regData = array(
                 'type'          => "new",
@@ -1377,7 +1378,7 @@ case 'activate':
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
-                'publish'       => $publish,
+                'publish'       => 1,
             );            
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);    
@@ -1618,7 +1619,44 @@ case "linkaccount":
                                             . $fbID . "', '" . $userid
                                             . "', '1')");
 
-                    $parts = explode(".", $avatar);
+                    //update avatar if option enabled
+                    if($vbulletin->options['avatarenabled']){
+                        $userinfo = fetch_userinfo($userid);
+                        
+                        // init user datamanager
+                        $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
+                        $userdata->set_existing($userinfo);
+                        
+                        $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
+                                            
+                        $vbulletin->GPC['avatarurl'] = $avatar;
+                        
+                        require_once(DIR . '/includes/class_upload.php');
+                        require_once(DIR . '/includes/class_image.php');
+                        
+                        $upload = new vB_Upload_Userpic($vbulletin); 
+
+                        $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
+                        $upload->image =& vB_Image::fetch_library($vbulletin);
+                        $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
+                        $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
+                        $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
+                        $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
+
+                        if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
+                            $valid_entries = FALSE;
+                            $error_type = "upload";
+                            $messages['fields'][] = $error_type;
+                            $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
+                        }
+                    } else {
+                        // predefined avatar
+                        $userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
+                        $userpic->condition = "userid = " . $userinfo['userid'];
+                        $userpic->delete();
+                    }
+
+                    /*$parts = explode(".", $avatar);
                     $extension = end($parts);
                     $filedata = file_get_contents($avatar);
                     $dateline = time();
@@ -1648,10 +1686,10 @@ case "linkaccount":
                          '" . $vbulletin->db->escape_string("50")
                             . "'
                          )
-                    ";
+                    ";*/
 
                     /*insert query*/
-                    $vbulletin->db->query_write($sql);
+                    //$vbulletin->db->query_write($sql);
 
                     //Send Activation Email: Refer to Automated Emails
                     // send new user email
@@ -1666,15 +1704,13 @@ case "linkaccount":
 
                     $nonvbid = $fbID;
 
-                    $sql = "SELECT activationid FROM useractivation WHERE userid = '"
-                            . $userid . "'";
+                    $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid . "'";
                     $data = $vbulletin->db->query_first($sql);
 
                     $activationid = $data["activationid"];
 
                     if (!empty($activationid)) {
-                        $url = "register.php?a=act&u=" . $userid . "&i="
-                                . $activationid;
+                        $url = "register.php?a=act&u=" . $userid . "&i=". $activationid;
                     } else {
                         $url = "index.php";
 
