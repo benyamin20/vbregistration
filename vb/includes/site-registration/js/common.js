@@ -1,11 +1,11 @@
 AJAX_Compatible = true;
 var md5_loaded = false;
 
-var spinner = '<img id="ajax-spinner" src="includes/site-registration/img/ajax-loader.gif" />';
-var spinner_secondary = '<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />';
+var spinner = '<img id="ajax-spinner" src="' + sr_path + '/img/ajax-loader.gif" />';
+var spinner_secondary = '<img id="ajax-spinner-secondary" src="' + sr_path +'/img/ajax-loader.gif" />';
 
 
-jQuery.getScript("includes/site-registration/js/bootbox.min.js", function () {});
+jQuery.getScript(sr_path + "/js/bootbox.min.js", function () {});
 
 
 
@@ -187,17 +187,17 @@ jQuery(document).ready(function (jQuery) {
     }
 
     if (jQuery('input[id*="password"]').exists() && !md5_loaded) {
-        jQuery.getScript("includes/site-registration/js/md5.js", function () {
+        jQuery.getScript(sr_path + "/js/md5.js", function () {
             md5_loaded = true;
         });
     }
 
     //initialize any facebox
     if (jQuery('a[rel*=facebox]').exists()) {
-        jQuery.getScript("includes/site-registration/facebox/facebox.js", function () {
+        jQuery.getScript(sr_path + "/facebox/facebox.js", function () {
             jQuery('a[rel*=facebox]').facebox({
-                loadingImage: 'includes/site-registration/facebox/loading.gif',
-                closeImage: 'includes/site-registration/facebox/closelabel.png'
+                loadingImage: sr_path +  '/facebox/loading.gif',
+                closeImage: sr_path + '/facebox/closelabel.png'
             });
         });
 
@@ -220,7 +220,7 @@ jQuery(document).ready(function (jQuery) {
 
 
         //check if coppa is enabled
-        jQuery.getJSON("includes/site-registration/php/index.php?op=check_coppa", function (json) {
+        jQuery.getJSON(sr_path + "/php/index.php?op=check_coppa", function (json) {
             if (json.use_coppa == 2) {
                 max_date = "-13y";
             } else {
@@ -228,7 +228,7 @@ jQuery(document).ready(function (jQuery) {
             }
 
             //initialize date picker
-            jQuery.getScript("includes/site-registration/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function () {
+            jQuery.getScript(sr_path + "/jquery-ui/js/jquery-ui-1.9.2.custom.min.js", function () {
                 jQuery(function () {
                     jQuery("#datepicker").datepicker({
                         autoSize: true,
@@ -266,7 +266,7 @@ jQuery(document).ready(function (jQuery) {
     if (jQuery('#token').exists()) {
         jQuery(function () {
             function update() {
-                jQuery.getJSON("includes/site-registration/php/index.php?op=regenerate_security_token",
+                jQuery.getJSON(sr_path + "/php/index.php?op=regenerate_security_token",
 
                 function (json) {
                     jQuery('#token').val(json.token);
@@ -282,7 +282,7 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#refresh-captcha").bind('click', function () {
             var token = escape(jQuery("#token").val());
             jQuery.ajax({
-                url: "includes/site-registration/php/index.php?op=regenerate_token",
+                url: sr_path + "/php/index.php?op=regenerate_token",
                 context: document.body,
                 dataType: 'json',
                 type: 'POST',
@@ -290,7 +290,7 @@ jQuery(document).ready(function (jQuery) {
                 data: 'securitytoken=' + token,
                 beforeSend: function () {
                     jQuery('#ajax-loader-secondary').empty();
-                    jQuery('#ajax-loader-secondary').append('<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader-secondary').append(spinner_secondary);
 
                 },
                 success: function (response) {
@@ -465,7 +465,7 @@ jQuery(document).ready(function (jQuery) {
             var parent_guardian_email= escape(jQuery("#parent-guardian-email").val());
 
             jQuery.ajax({
-                url: "includes/site-registration/php/index.php?op=validate_site_account_details",
+                url: sr_path + "/php/index.php?op=validate_site_account_details",
                 context: document.body,
                 dataType: 'json',
                 type: 'POST',
@@ -554,14 +554,14 @@ jQuery(document).ready(function (jQuery) {
             }
 
             jQuery.ajax({
-                url: "includes/site-registration/php/index.php?op=validate_login",
+                url: sr_path + "/php/index.php?op=validate_login",
                 context: document.body,
                 type: 'POST',
                 cache: false,
                 data: 'vb_login_username=' + username + '&vb_login_password=' + password + '&s=' + s + '&login=' + login + '&securitytoken=' + securitytoken,
                 beforeSend: function () {
                     jQuery('#ajax-loader-secondary').empty();
-                    jQuery('#ajax-loader-secondary').append('<img id="ajax-spinner-secondary" src="includes/site-registration/img/ajax-loader.gif" />');
+                    jQuery('#ajax-loader-secondary').append(spinner_secondary);
                 },
                 success: function (response, status, xhr) {
 
@@ -619,7 +619,7 @@ jQuery(document).ready(function (jQuery) {
             var token = escape(jQuery('#token').val());
 
             jQuery.ajax({
-                url: "includes/site-registration/php/index.php?op=resend_email",
+                url: sr_path + "/php/index.php?op=resend_email",
                 context: document.body,
                 dataType: 'json',
                 type: 'POST',
@@ -675,7 +675,7 @@ jQuery(document).ready(function (jQuery) {
             }
 
             jQuery.ajax({
-                url: "includes/site-registration/php/index.php?op=create_site_account_first_step",
+                url: sr_path + "/php/index.php?op=create_site_account_first_step",
                 context: document.body,
                 dataType: 'json',
                 type: 'POST',
@@ -756,7 +756,7 @@ jQuery(document).ready(function (jQuery) {
 
 
             jQuery.ajax({
-                url: "includes/site-registration/php/index.php?op=activate",
+                url: sr_path + "/php/index.php?op=activate",
                 context: document.body,
                 dataType: 'json',
                 type: 'POST',
@@ -834,7 +834,7 @@ jQuery(document).ready(function (jQuery) {
             }
 
             jQuery.ajax({
-                url: "includes/site-registration/php/index.php?op=linkaccount",
+                url: sr_path + "/php/index.php?op=linkaccount",
                 context: document.body,
                 type: 'POST',
                 cache: false,

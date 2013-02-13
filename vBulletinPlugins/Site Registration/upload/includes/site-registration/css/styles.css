@@ -30,27 +30,27 @@ li {
 }
 
 
-.dark_grey {
+.sr-dark_grey {
 	color: #666666;
 }
 
-.light_grey {
+.sr-light_grey {
 	color: #888888;
 }
 
-.lighter_grey {
+.sr-lighter_grey {
 	color: #CCCCCC;
 }
 
-.border_grey {
+.sr-border_grey {
 	color: #A40219;
 }
 
-.background_grey {
+.sr-background_grey {
 	background-color: #EEEEEE;
 }
 
-.background_yellow {
+.sr-background_yellow {
 	background-color: #FFFFCC ;
 	*width: 100% ;
 	*padding-bottom: 20px;
@@ -185,7 +185,7 @@ li {
 	margin-left: 20px;
 }
 
-.centered {
+.sr-centered {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;

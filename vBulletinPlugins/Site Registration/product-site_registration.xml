@@ -97,13 +97,13 @@
             <!--[if IE]>
                 <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
             <![endif]-->
-            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
+            <script>typeof jQuery.ui !== 'undefined' || document.write('<link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]">')</script>
          
             <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
             <script>window.jQuery.ui || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-ui-1.9.2.custom.min.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+            <script> var sr_path = '$vboptions[site_registration_includes_path]';</script>
             <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
-            <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
-            <script src="$vboptions[site_registration_includes_path]/js/jquery.form.js?v=$vboptions[simpleversion]" type="text/javascript"></script>
+            <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script> 
             <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
                  
 		    ]]>
@@ -137,10 +137,10 @@ $stylevar[htmldoctype]
 
 		<!-- Ad units -->
 		<div id="ad-units" class="grid_12">
-			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">	
+			<div id="first-ad-unit" class="grid_10 sr-centered pull-left alpha">	
 			    $vboptions[site_registration_adunit1]
 			</div>
-			<div id="second-ad-unit" class="grid_2  centered pull-right omega">
+			<div id="second-ad-unit" class="grid_2  sr-centered pull-right omega">
 				$vboptions[site_registration_adunit2]
 			</div>
 			<div class="clear sr-clear_20"></div>
@@ -469,11 +469,11 @@ $stylevar[htmldoctype]
   
 		<!-- Ad units -->
 		<div id="ad-units" class="grid_12">
-			<div id="first-ad-unit" class="grid_10 centered pull-left alpha">
+			<div id="first-ad-unit" class="grid_10 sr-centered pull-left alpha">
 				$vboptions[site_registration_adunit1]
 			</div>
 			<div id="second-ad-unit"
-				class="grid_2  centered pull-right omega">
+				class="grid_2  sr-centered pull-right omega">
 				$vboptions[site_registration_adunit2]
 			</div>
 			<div class="clear sr-clear_20"></div>
@@ -727,7 +727,7 @@ $stylevar[htmldoctype]
 			            <if condition="$show['vbnexus_button_fb']">
                             <!-- OR -->
 	                        <div class="grid_1 sr-vertical-rule">
-		                        <div class="centered">
+		                        <div class="sr-centered">
 			                        <div class="horizontal-wrapper">
 				                        <sub>OR</sub>
 			                        </div> 
@@ -756,7 +756,7 @@ $stylevar[htmldoctype]
 							        <span>Login with Facebook</span>
 						        </a>
 				                <div class="clear sr-clear_15"></div> 
-				                <span class="sr-small light_grey">It's secure and easy!</span>
+				                <span class="sr-small sr-light_grey">It's secure and easy!</span>
                             <else />
                                 &nbsp;
                             </if>
@@ -951,7 +951,7 @@ $stylevar[htmldoctype]
 
 			<!-- Thumb -->
 			<div class="grid_1 alpha">
-				<div class="centered">
+				<div class="sr-centered">
 					<img src="$fbPicture" alt="" />
 				</div>
 			</div>
@@ -961,7 +961,7 @@ $stylevar[htmldoctype]
 			<!-- Create site Account -->
 			<div class="grid_4" id="create-site-account">
 
-				<h1 class="dark_grey">Welcome $fbName!</h1>
+				<h1 class="sr-dark_grey">Welcome $fbName!</h1>
 
 				<div class="clear sr-clear_10"></div>
 
@@ -981,7 +981,7 @@ $stylevar[htmldoctype]
 
                 $fbEmailParent
                 
-				<span class="help-block sr-tiny dark_grey"></span> 
+				<span class="help-block sr-tiny sr-dark_grey"></span> 
 				
 				<div class="clear "></div>
 				
@@ -997,7 +997,7 @@ $stylevar[htmldoctype]
 
                 
                 
-				<span class="help-block sr-tiny dark_grey">Maximum $vboptions[maxuserlength] characters.</span>
+				<span class="help-block sr-tiny sr-dark_grey">Maximum $vboptions[maxuserlength] characters.</span>
 
 
 				<div class="clear "></div>
@@ -1037,7 +1037,7 @@ $stylevar[htmldoctype]
 				        <input type="checkbox" value="" checked="checked"
 					       id="terms-and-conditions" name="terms-and-conditions" 
 					         />
-				        <span class="sr-small light_grey span2 no-margin"> Yes, I agree with the
+				        <span class="sr-small sr-light_grey span2 no-margin"> Yes, I agree with the
 						    <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 				        </span>
 				    </label>
@@ -1057,7 +1057,7 @@ $stylevar[htmldoctype]
 
 			<!--  Already a member -->
 			<div class="grid_4 omega" id="already-member">
-				<h3 class="dark_grey">Already a member?</h3>
+				<h3 class="sr-dark_grey">Already a member?</h3>
 				
 				<div class="clear sr-clear_15"></div>
 				
@@ -1210,7 +1210,7 @@ $stylevar[htmldoctype]
 					<span class="error-label" id="username-error-label"></span> 
 				</div>
 				
-				<span class="help-block sr-tiny dark_grey">
+				<span class="help-block sr-tiny sr-dark_grey">
 				    Maximum $vboptions[maxuserlength] characters
 				</span>
 				
@@ -1290,7 +1290,7 @@ $stylevar[htmldoctype]
 					    <input type="checkbox" value="" id="terms-and-conditions"
 					       name="terms-and-conditions" checked="checked"
 					         />
-					    <span class="sr-small light_grey">
+					    <span class="sr-small sr-light_grey">
 					       Yes, I agree with the
 					       <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 					    </span>
@@ -1869,12 +1869,12 @@ $stylevar[htmldoctype]
 			    <![CDATA[
 			        $php_self = $_SERVER['REQUEST_URI'];
  
-                    $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
-                    
                     if (!session_id()) {
                         session_start();
                     }
                     
+                    
+                    $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
                      
 		            if(!(int)$vbulletin->userinfo['userid']){
 
