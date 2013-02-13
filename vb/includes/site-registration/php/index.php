@@ -697,6 +697,8 @@ case 'validate_site_account_details':
 
             if ($newusergroupid == 2) {
                 if ($vbulletin->options['welcomemail']) {
+                    $username = $vbulletin->GPC['username'];
+                
                     eval(fetch_email_phrases('welcomemail'));
                     vbmail($email, $subject, $message);
                 }

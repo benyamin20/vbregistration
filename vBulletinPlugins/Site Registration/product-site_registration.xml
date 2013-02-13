@@ -86,25 +86,27 @@
 	    <template name="site_reg_includes" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0">
 		    <![CDATA[
-	        <link rel="stylesheet" type="text/css" media="all" href="$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]" />
-            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
-            <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
-            <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
-            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/fonts.css?v=$vboptions[simpleversion]" />
-            <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/facebox/facebox.css?v=$vboptions[simpleversion]" />
-            <link rel="stylesheet" href="$vboptions[site_registration_includes_path]/css/styles.css?v=$vboptions[simpleversion]" />
+	        <link rel="stylesheet" type="text/css" media="all" href="$vboptions[site_registration_includes_path_css]/960/css/min/960.css?v=$vboptions[simpleversion]" />
+            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
+            <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
+            <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
+            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/css/fonts.css?v=$vboptions[simpleversion]" />
+            <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path_css]/facebox/facebox.css?v=$vboptions[simpleversion]" />
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/css/styles.css?v=$vboptions[simpleversion]" />
+            <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]" />
             <!--[if IE]>
-                <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
+                <link rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path_css]/css/all-ie-only.css?v=$vboptions[simpleversion]" />
             <![endif]-->
-            <script>typeof jQuery.ui !== 'undefined' || document.write('<link rel="stylesheet" href="$vboptions[site_registration_includes_path]/jquery-ui/css/blitzer/jquery-ui-1.9.2.custom.min.css?v=$vboptions[simpleversion]">')</script>
-         
-            <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-            <script>window.jQuery.ui || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-ui-1.9.2.custom.min.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-            <script> var sr_path = '$vboptions[site_registration_includes_path]';</script>
-            <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
-            <script src="$vboptions[site_registration_includes_path]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script> 
-            <script src="$vboptions[site_registration_includes_path]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script> 
+            
+            <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+            <script>window.jQuery.ui || document.write('<script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-ui-1.9.2.custom.min.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+            <script> var sr_path_js  = '$vboptions[site_registration_includes_path_js]';</script>
+            <script> var sr_path_php = '$vboptions[site_registration_includes_path_php]';</script>
+            <script> var sr_path_img = '$vboptions[site_registration_includes_path_img]';</script>
+            <script> var sr_path_css = '$vboptions[site_registration_includes_path_css]';</script>
+            <script src="$vboptions[site_registration_includes_path_js]/bootstrap/js/bootstrap.min.js?v=$vboptions[simpleversion]"></script>
+            <script src="$vboptions[site_registration_includes_path_js]/js/common.js?v=$vboptions[simpleversion]" type="text/javascript"></script>  
                  
 		    ]]>
 		</template>
@@ -136,7 +138,7 @@ $stylevar[htmldoctype]
  
 
 		<!-- Ad units -->
-		<div id="ad-units" class="grid_12">
+		<div id="sr-ad-units" class="grid_12">
 			<div id="first-ad-unit" class="grid_10 sr-centered pull-left alpha">	
 			    $vboptions[site_registration_adunit1]
 			</div>
@@ -205,7 +207,7 @@ $stylevar[htmldoctype]
 						
 						<form id="complete-your-profile-form"
 		                name="complete_your_profile_form" 
-		                action="$vboptions[site_registration_includes_path]/php/index.php?op=complete_your_profile" 
+		                action="$vboptions[site_registration_includes_path_php]/php/index.php?op=complete_your_profile" 
 		                method="post"> 
 
                         <!--  Avatar -->
@@ -216,7 +218,7 @@ $stylevar[htmldoctype]
 						    <div id="upload-wrapper" class="grid_4 no-margin">
 							    <!--
 							        <div class="grid_1 no-margin pull-left">
-								        <img src="$vboptions[site_registration_includes_path]/img/unknown.png" 
+								        <img src="$vboptions[site_registration_includes_path_img]/img/unknown.png" 
 								            id="selected-avatar" />
 							        </div>
 							    -->
@@ -227,7 +229,7 @@ $stylevar[htmldoctype]
                                                     thumbnail
                                                     avatar-thumbnail">
                                                 <img 
-                                                    src="$vboptions[site_registration_includes_path]/img/unknown.png"
+                                                    src="$vboptions[site_registration_includes_path_img]/img/unknown.png"
                                                     id="selected-avatar" />
                                         </div>
                                         <div class="fileupload-preview 
@@ -468,7 +470,7 @@ $stylevar[htmldoctype]
 	<div id="sr-container" class="container_12  activate-account-container">
   
 		<!-- Ad units -->
-		<div id="ad-units" class="grid_12">
+		<div id="sr-ad-units" class="grid_12">
 			<div id="first-ad-unit" class="grid_10 sr-centered pull-left alpha">
 				$vboptions[site_registration_adunit1]
 			</div>
@@ -493,7 +495,7 @@ $stylevar[htmldoctype]
 			<div class="clear sr-clear_20"></div>
 			<div class="clear sr-clear_20"></div>
 			<div class="grid_2 alpha">
-				<img src="$vboptions[site_registration_includes_path]/img/email-icon.png" id="email-icon" />
+				<img src="$vboptions[site_registration_includes_path_img]/img/email-icon.png" id="email-icon" />
 			</div>
 			<div class="grid_8 omega">
 				<h1 class="email-sent">We have dispatched a very special email to
@@ -504,11 +506,11 @@ $stylevar[htmldoctype]
 				<div class="clear sr-clear_20"></div>
 				<div class="clear sr-clear_10"></div>
 				<p class="sr-bold">Did not receive it?</p>
-				<a href="$php_self#resend" id="resend-email" class="sr-small sr-link_blue">
+				<a href="$php_self#resend" id="sr-resend-email" class="sr-small sr-link_blue">
 				Resend Email</a>
 				&nbsp;&nbsp;&nbsp;
 				<span id="ajax-loader"></span>
-				<span id="email-sent" class="sr-small email-sent">
+				<span id="sr-email-sent" class="sr-small email-sent">
 				
 				</span>
 				<input type="hidden" name="token" id="token" value="" />
@@ -531,19 +533,23 @@ $stylevar[htmldoctype]
 		    date="1352855133" username="IB Chandak" 
 		    version="1.0">
 		    <![CDATA[ 
-		        <link rel='stylesheet' href='$vboptions[site_registration_includes_path]/960/css/min/960.css?v=$vboptions[simpleversion]' />
-		        <link rel='stylesheet' href='$vboptions[site_registration_includes_path]/css/not_active.css?v=$vboptions[simpleversion]' />
+		        <link rel='stylesheet' href='$vboptions[site_registration_includes_path_css]/960/css/min/960.css?v=$vboptions[simpleversion]' />
+		        <link rel='stylesheet' href='$vboptions[site_registration_includes_path_css]/css/not_active.css?v=$vboptions[simpleversion]' />
                 <!--[if IE]>
-	            <link rel='stylesheet' href='$vboptions[site_registration_includes_path]/css/all-ie-only.css?v=$vboptions[simpleversion]' />
+	            <link rel='stylesheet' href='$vboptions[site_registration_includes_path_css]/css/all-ie-only.css?v=$vboptions[simpleversion]' />
                 <![endif]-->
                 
-                <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-                <script src='$vboptions[site_registration_includes_path]/js/common.js'></script>
+                <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
+                <script> var sr_path_js  = '$vboptions[site_registration_includes_path_js]';</script>
+                <script> var sr_path_php = '$vboptions[site_registration_includes_path_php]';</script>
+                <script> var sr_path_img = '$vboptions[site_registration_includes_path_img]';</script>
+                <script> var sr_path_css = '$vboptions[site_registration_includes_path_css]';</script>
+                <script src='$vboptions[site_registration_includes_path_js]/js/common.js'></script>
 
                 <div id='sr-container' class='container_12 sr-background_yellow sr-not-active'>
                     <div id='sr-warning-container' >
                         <div class='pull-left sr-no-margin grid_1 alpha'>
-                            <img src='$vboptions[site_registration_includes_path]/img/icon-email-medium.png' 
+                            <img src='$vboptions[site_registration_includes_path_img]/img/icon-email-medium.png' 
                                 id='sr-email-icon' />
                         </div>
                         <div class='sr-margin_left_20 grid_9 omega'>
@@ -2125,16 +2131,52 @@ $stylevar[htmldoctype]
 	</plugins>
 	<phrases>
 		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
-		    <phrase name="setting_site_registration_includes_path_title" 
+		    <phrase name="setting_site_registration_includes_path_js_title" 
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
-			    Product include files path			
+			    Product include js files path			
 			    ]]>
 			</phrase>
-		    <phrase name="setting_site_registration_includes_path_desc" 
+		    <phrase name="setting_site_registration_includes_path_js_desc" 
 			    date="1340664696" username="fromero" version="1.0">
 			    <![CDATA[
-			    Product include files path			
+			    Product include js files path			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_includes_path_img_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include img files path			
+			    ]]>
+			</phrase>
+		    <phrase name="setting_site_registration_includes_path_img_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include img files path			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_includes_path_css_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include css files path			
+			    ]]>
+			</phrase>
+		    <phrase name="setting_site_registration_includes_path_css_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include css files path			
+			    ]]>
+			</phrase>
+			<phrase name="setting_site_registration_includes_path_php_title" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include php files path			
+			    ]]>
+			</phrase>
+		    <phrase name="setting_site_registration_includes_path_php_desc" 
+			    date="1340664696" username="fromero" version="1.0">
+			    <![CDATA[
+			    Product include php files path			
 			    ]]>
 			</phrase>
 			<phrase name="setting_site_registration_title_desc" 
@@ -2386,7 +2428,31 @@ $stylevar[htmldoctype]
 	<options>
 	    
 		<settinggroup name="site_registration_settings_group" displayorder="65535">
-		    <setting varname="site_registration_includes_path" displayorder="5">
+		    <setting varname="site_registration_includes_path_js" displayorder="6">
+				<datatype>free</datatype>
+				<defaultvalue>
+				<![CDATA[
+				    includes/site-registration
+				]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_includes_path_img" displayorder="7">
+				<datatype>free</datatype>
+				<defaultvalue>
+				<![CDATA[
+				    includes/site-registration
+				]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_includes_path_css" displayorder="8">
+				<datatype>free</datatype>
+				<defaultvalue>
+				<![CDATA[
+				    includes/site-registration
+				]]>
+				</defaultvalue>
+			</setting>
+			<setting varname="site_registration_includes_path_php" displayorder="9">
 				<datatype>free</datatype>
 				<defaultvalue>
 				<![CDATA[

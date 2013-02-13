@@ -413,7 +413,7 @@ li {
 */
 
 .activate-account-container{
-    min-height: 600px ;
+    padding-bottom: 250px;
 }
 
 #have-account-error{
@@ -562,6 +562,11 @@ a.sr-link_blue {
 	cursor: pointer;
 }
 
+.sr-link_blue {
+	color: #0066DD;
+	cursor: pointer;
+}
+
 
 #log-in, .no-margin{
 	margin: 0px ;
@@ -572,4 +577,8 @@ a.sr-link_blue {
     color: #953B39 !important;
     background-color: #FFE9EA !important;
     
+}
+
+#sr-ad-units{
+    margin-top:20px;
 }
