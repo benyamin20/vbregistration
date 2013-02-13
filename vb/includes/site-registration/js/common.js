@@ -121,6 +121,10 @@ function initialize_spinner() {
  *   AJAX error handling ACP-455
  **/
 jQuery.ajaxSetup({
+
+    beforeSend: function(xhr){
+    
+    },
     error: function (jqXHR, exception) {
         if (jQuery('#ajax-spinner').exists()) {
             jQuery('#ajax-spinner').remove();

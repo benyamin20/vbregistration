@@ -150,7 +150,7 @@ $stylevar[htmldoctype]
 		</div>
 
 		<!-- Site heading -->
-		<div id="site-heading" class="grid_12">
+		<div id="sr-site-heading" class="grid_12">
 			<span class="sr-title_red">Account activated, $username_db!</span>
 		</div>
 		<div class="clear sr-clear_10"></div>
@@ -483,7 +483,7 @@ $stylevar[htmldoctype]
 		</div>
 
 		<!-- Site heading -->
-		<div id="site-heading" class="grid_12">
+		<div id="sr-site-heading" class="grid_12">
 			<span class="sr-title_red">Please Activate Your Account</span>
 		</div>
 
@@ -665,7 +665,7 @@ $stylevar[htmldoctype]
 	    <div id="sr-container-wrapper">
 	    <div id="sr-container" class="container_12">
 		    <!-- Site heading -->
-		    <div id="site-heading" class="grid_12">
+		    <div id="sr-site-heading" class="grid_12">
 			    <span class="sr-title_red">Join $vboptions[bbtitle]</span>
 		    </div>
 		    <div class="clear sr-clear_10"></div>
@@ -896,7 +896,7 @@ $header
 	<div id="sr-container" class="container_12 activate-account-container">
  
 		<!-- Site heading -->
-		<div id="site-heading" class="grid_12">
+		<div id="sr-site-heading" class="grid_12">
 			<span class="sr-title_red"><phrase>$vbphrase[noregister]</phrase></span>
 		</div>
 		<div class="clear sr-clear_10"></div>
@@ -946,7 +946,7 @@ $stylevar[htmldoctype]
 	<div id="sr-container" class="container_12 activate-account-container">
  
 		<!-- Site heading -->
-		<div id="site-heading" class="grid_12">
+		<div id="sr-site-heading" class="grid_12">
 			<span class="sr-title_red"> Confirm your details </span>
 		</div>
 		<div class="clear sr-clear_10"></div>
@@ -1195,7 +1195,7 @@ $stylevar[htmldoctype]
 	<div id="sr-container" class="container_12">
 		 
 		<!-- Site heading -->
-		<div id="site-heading" class="grid_12">
+		<div id="sr-site-heading" class="grid_12">
 			<span class="sr-title_red">
 			     Pick your username and password:
 			</span>
