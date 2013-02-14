@@ -416,7 +416,7 @@ case 'validate_site_account_details':
 
     
     
-    if ( $_SESSION['site_registration']['coppauser'] === true) {
+    if ( $_SESSION['site_registration']['coppauser'] === true && $vbulletin->options['usecoppa'] > 0) {
         if (empty($vbulletin->GPC['parent-guardian-email'])) {
             $valid_entries = FALSE;
             $error_type = "parent-guardian-email"; 
