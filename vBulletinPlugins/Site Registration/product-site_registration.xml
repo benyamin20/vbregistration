@@ -213,16 +213,7 @@ $stylevar[htmldoctype]
 		                name="complete_your_profile_form" 
 		                action="$vboptions[site_registration_includes_path_php]/php/index.php?op=complete_your_profile" 
 		                method="post"> 
-                        
-                        <h1>user info permissions: $userinfo_permissions</h1>
-                        <div class="clear"></div>
-                        <h1>generic avatar : $generic_canuseavatar</h1>
-                        <div class="clear"></div>
-                        <h1>enabled: $avatar_usergroup_enabled</h1>
-                        <div class="clear"></div>
-                        <h1>user info str: </h1> <pre>$userinfo_str</pre>
-                        <div class="clear"></div>
-                        
+                         
                         <!--  Avatar -->
                         <if condition="$vboptions[avatarenabled]">
                             <if condition="$avatar_usergroup_enabled">
@@ -1575,7 +1566,7 @@ $stylevar[htmldoctype]
                          
                          $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
                          cache_permissions($userinfo, false);
-                         $userinfo_str              = var_export($userinfo, true);
+                         /*$userinfo_str              = var_export($userinfo, true);*/
                          $userinfo_permissions      = $userinfo['permissions']['genericpermissions'];
                          $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
                          $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
@@ -2141,7 +2132,7 @@ $stylevar[htmldoctype]
                  
                          $userinfo                  = fetch_userinfo($vbulletin->userinfo['userid'], FETCH_USERINFO_PROFILEPIC);
                          cache_permissions($userinfo, false);
-                         $userinfo_str              = var_export($userinfo, true);
+                         /*$userinfo_str              = var_export($userinfo, true);*/
                          $userinfo_permissions      = $userinfo['permissions']['genericpermissions'];
                          $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
                          $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
