@@ -1376,8 +1376,7 @@ case 'activate':
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
-                'publish'       => $publish,
-                'birthdate'     => $birthday
+                'publish'       => $publish,                
             );            
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);    
