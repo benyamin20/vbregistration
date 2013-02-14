@@ -249,37 +249,45 @@ case 'complete_your_profile':
     }
     
     
+    $userinfo = fetch_userinfo($_SESSION['site_registration']['userid'], FETCH_USERINFO_PROFILEPIC);
+    cache_permissions($userinfo, false);
+        
+    $userinfo_permissions      = $userinfo['permissions']['genericpermissions'];
+    $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
+    $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
+    
     //update avatar if option enabled
     if($vbulletin->options['avatarenabled']){
-        $userinfo = fetch_userinfo($_SESSION['site_registration']['userid']);
+        if($avatar_usergroup_enabled){
+            // init user datamanager
+            $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
+            $userdata->set_existing($userinfo);
+            
+            $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
+            
+            if(empty($vbulletin->GPC['upload'])){
+                $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/img/unknown.png";
+            }
         
-        // init user datamanager
-        $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
-        $userdata->set_existing($userinfo);
-        
-        $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
-        
-        if(empty($vbulletin->GPC['upload'])){
-            $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/img/unknown.png";
-        }
-    
-        require_once(DIR . '/includes/class_upload.php');
-        require_once(DIR . '/includes/class_image.php');
-        
-        $upload = new vB_Upload_Userpic($vbulletin); 
+            require_once(DIR . '/includes/class_upload.php');
+            require_once(DIR . '/includes/class_image.php');
+            
+            $upload = new vB_Upload_Userpic($vbulletin); 
 
-        $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
-        $upload->image =& vB_Image::fetch_library($vbulletin);
-        $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
-        $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
-        $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
-        $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
+            $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
+            $upload->image =& vB_Image::fetch_library($vbulletin);
+            $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
+            $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
+            $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
+            $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
 
-        if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
-            $valid_entries = FALSE;
-            $error_type = "upload";
-            $messages['fields'][] = $error_type;
-            $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
+            if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
+                $valid_entries = FALSE;
+                $error_type = "upload";
+                $messages['fields'][] = $error_type;
+                $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
+            }
+        
         }
 
     }else{
