@@ -249,37 +249,45 @@ case 'complete_your_profile':
     }
     
     
+    $userinfo = fetch_userinfo($_SESSION['site_registration']['userid'], FETCH_USERINFO_PROFILEPIC);
+    cache_permissions($userinfo, false);
+        
+    $userinfo_permissions      = $userinfo['permissions']['genericpermissions'];
+    $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
+    $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
+    
     //update avatar if option enabled
     if($vbulletin->options['avatarenabled']){
-        $userinfo = fetch_userinfo($_SESSION['site_registration']['userid']);
+        if($avatar_usergroup_enabled){
+            // init user datamanager
+            $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
+            $userdata->set_existing($userinfo);
+            
+            $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
+            
+            if(empty($vbulletin->GPC['upload'])){
+                $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/img/unknown.png";
+            }
         
-        // init user datamanager
-        $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
-        $userdata->set_existing($userinfo);
-        
-        $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);     
-        
-        if(empty($vbulletin->GPC['upload'])){
-            $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/img/unknown.png";
-        }
-    
-        require_once(DIR . '/includes/class_upload.php');
-        require_once(DIR . '/includes/class_image.php');
-        
-        $upload = new vB_Upload_Userpic($vbulletin); 
+            require_once(DIR . '/includes/class_upload.php');
+            require_once(DIR . '/includes/class_image.php');
+            
+            $upload = new vB_Upload_Userpic($vbulletin); 
 
-        $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
-        $upload->image =& vB_Image::fetch_library($vbulletin);
-        $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
-        $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
-        $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
-        $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
+            $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
+            $upload->image =& vB_Image::fetch_library($vbulletin);
+            $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
+            $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
+            $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
+            $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
 
-        if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
-            $valid_entries = FALSE;
-            $error_type = "upload";
-            $messages['fields'][] = $error_type;
-            $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
+            if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
+                $valid_entries = FALSE;
+                $error_type = "upload";
+                $messages['fields'][] = $error_type;
+                $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
+            }
+        
         }
 
     }else{
@@ -1123,7 +1131,7 @@ case 'activate':
                     array('email' => TYPE_STR, 'birthdate' => TYPE_STR,
                             'username' => TYPE_NOHTML, 'avatar' => TYPE_STR,
                             'from' => TYPE_STR,
-                            'vbnexus_fb_publish' => TYPE_STR,
+                            'vbnexus_fb_publish' => TYPE_INT,
                             'terms_and_conditions' => TYPE_STR));
 
     //check if variables are set
@@ -1325,9 +1333,7 @@ case 'activate':
     if ($valid_entries) {
         $fbID = $_SESSION['site_registration']["fbID"];
 
-        $birthday = preg_replace("/\//", "-",
-                $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
-                
+        $birthday = preg_replace("/\//", "-", $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));                
         
         if ($vbulletin->options['verifyemail']) {
             $newusergroupid = 3;
@@ -1369,7 +1375,9 @@ case 'activate':
             $time     = time(); 
             $publish  = $vbulletin->GPC['vbnexus_fb_publish'];
 
-            $vbnexus_regData = array(
+            $birthday = str_replace("/", "-", $birthday);
+
+            $data = array(
                 'type'          => "new",
                 'service'       => "fb",
                 'userid'        => $fbID,
@@ -1378,12 +1386,13 @@ case 'activate':
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
-                'publish'       => 1,
+                'publish'       => $publish,
+                'birthday'      => $birthday                
             );            
             
-            $vbnexus_result = $vBNexus->register($vbnexus_regData);    
+            $result = $vBNexus->register($data);    
             
-            if($vbnexus_result) {
+            if($result) {
                 $token = md5(uniqid(microtime(), true));
                 $token_time = time();
                 $form = "site-account-details";
@@ -1393,7 +1402,14 @@ case 'activate':
                 $vbulletin->userinfo = $vbulletin->db->query_first("SELECT ". TABLE_PREFIX ."vbnexus_user.userid, ". TABLE_PREFIX ."user.password FROM ". TABLE_PREFIX ."vbnexus_user
                                                         INNER JOIN ". TABLE_PREFIX ."user ON ". TABLE_PREFIX ."user.userid = ". TABLE_PREFIX ."vbnexus_user.userid
                                                         WHERE nonvbid = ". $fbID);
+
+                //$userid = $vbulletin->userinfo['userid'];
+
                 
+
+                /*$sql = "UPDATE ". TABLE_PREFIX ."user SET birthday = '$birthday' WHERE userid = '$userid'";
+                $vbulletin->db->query_write($sql);*/
+
                 require_once(DIR . '/includes/functions_login.php');
 
                 vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
