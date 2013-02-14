@@ -1123,7 +1123,7 @@ case 'activate':
                     array('email' => TYPE_STR, 'birthdate' => TYPE_STR,
                             'username' => TYPE_NOHTML, 'avatar' => TYPE_STR,
                             'from' => TYPE_STR,
-                            'vbnexus_fb_publish' => TYPE_STR,
+                            'vbnexus_fb_publish' => TYPE_INT,
                             'terms_and_conditions' => TYPE_STR));
 
     //check if variables are set
@@ -1325,9 +1325,7 @@ case 'activate':
     if ($valid_entries) {
         $fbID = $_SESSION['site_registration']["fbID"];
 
-        $birthday = preg_replace("/\//", "-",
-                $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
-                
+        $birthday = preg_replace("/\//", "-", $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));                
         
         if ($vbulletin->options['verifyemail']) {
             $newusergroupid = 3;
@@ -1378,7 +1376,8 @@ case 'activate':
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
-                'publish'       => 1,
+                'publish'       => $publish,
+                'birthdate'     => $birthday
             );            
             
             $vbnexus_result = $vBNexus->register($vbnexus_regData);    
@@ -1482,19 +1481,6 @@ case 'activate':
         $nonvbid = $fbID;
 
         if ($vbulletin->options['verifyemail']) {
-            $activateid = build_user_activation_id($userid,
-                        (($vbulletin->options['moderatenewmembers']
-                                OR $_SESSION['site_registration']['coppauser']) ? 4
-                                : 2), 0);
-
-            eval(fetch_email_phrases('activateaccount'));
-
-            if(empty($subject)) {
-                $subject = fetch_phrase('activate_your_account', 'threadmanage');
-            }
-
-            vbmail($email, $subject, $message, false);
-
             $sql = "SELECT activationid FROM useractivation WHERE userid = '". $userid ."'";
             
             $data = $vbulletin->db->query_first($sql);
