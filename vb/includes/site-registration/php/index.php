@@ -109,7 +109,7 @@ case 'generate_thumbnail':
         $arr['id'] = $actual_image_name; 
     }
     
-    json_headers($arr);
+    json_headers_ie_support($arr);
     
 break;
 

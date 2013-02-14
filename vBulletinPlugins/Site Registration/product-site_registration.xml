@@ -90,7 +90,7 @@
             <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
             <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
             <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
+            
             <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/css/fonts.css?v=$vboptions[simpleversion]" />
             <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path_css]/facebox/facebox.css?v=$vboptions[simpleversion]" />
             <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/css/styles.css?v=$vboptions[simpleversion]" />
@@ -122,9 +122,16 @@ $stylevar[htmldoctype]
     $headinclude
     <!-- /head include -->
     
+    
+    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
     <!-- site registration includes -->
     $site_reg_includes
     <!-- /site registration includes -->
+    <script src="$vboptions[site_registration_includes_path_js]/js/jquery.form.js?v=$vboptions[simpleversion]"></script>
+    <script src="$vboptions[site_registration_includes_path_js]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script>
+    
+    
+    
 
 </head>
 
@@ -247,7 +254,7 @@ $stylevar[htmldoctype]
                                         <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
                                         <div class="clear"></div>
                                         <!-- <a class="sr-small sr-link_blue" id="use-default">Use default.</a> -->
-                                        <span class="error-label sr-small sr-no-margin no-top grid_3" id="upload-error-label"></span>
+                                        <span class="sr-error-label sr-small sr-no-margin no-top grid_3" id="upload-sr-error-label"></span>
                                 </div>
 								    <div class="clear"></div>
 								
@@ -299,7 +306,7 @@ $stylevar[htmldoctype]
                                 <option class="" value="11"><phrase>$vbphrase[timezone_gmt_plus_1100]</phrase></option>
                                 <option class="" value="12"><phrase>$vbphrase[timezone_gmt_plus_1200]</phrase></option>
                             </select>
-                            <span class="error-label" id="timezone-error-label"></span>
+                            <span class="sr-error-label" id="timezone-sr-error-label"></span>
                         </div><!--  /Timezone -->
  
 						<!-- Secret inputs  -->
@@ -310,14 +317,14 @@ $stylevar[htmldoctype]
 						<label for="secret_question">Secret Question</label>
 						    <input type="text" id="secret_question" name="secret_question"
 							    title="Secret Question" value="" />
-							<span class="error-label" id="secret_question-error-label"></span>
+							<span class="sr-error-label" id="secret_question-sr-error-label"></span>
                         </div>
 						<div class="clear"></div>
 						<div id="secret_answer-wrapper">
 						    <label for="secret_answer">Secret Answer</label>
 						    <input type="text" name="secret_answer" id="secret_answer"
 							title="Secret Aswer" value="" />
-							<span class="error-label" id="secret_answer-error-label"></span>
+							<span class="sr-error-label" id="secret_answer-sr-error-label"></span>
                         </div>
                         
                         <!--  Contact check boxes -->
@@ -428,8 +435,7 @@ $stylevar[htmldoctype]
 
 		</div>
 
-		<div class="clear"></div>
-
+		<div class="clear"></div> 
 	</div>
 	</div>
 	
@@ -685,9 +691,9 @@ $stylevar[htmldoctype]
 				            <h1>Create Site Account</h1>
 				            <div class="clear sr-clear_20"></div>
 				            <div class="error_red sr-small" id="create-site-account-error">
-				                <span id="email-error-label" class="error-label sr-no-margin"></span>
+				                <span id="email-sr-error-label" class="sr-error-label sr-no-margin"></span>
 				                 <div class="clear"></div>
-				                <span id="datepicker-error-label" class="error-label sr-no-margin"></span>
+				                <span id="datepicker-sr-error-label" class="sr-error-label sr-no-margin"></span>
 				            </div>
 			                <div class="clear" id="create-site-account-spacer"></div>
          
@@ -943,7 +949,7 @@ $stylevar[htmldoctype]
  
 	<!-- main container -->
 	<div id="sr-container-wrapper">
-	<div id="sr-container" class="container_12 activate-account-container">
+	<div id="sr-container" class="container_12 activate-account-container sr-container-fb">
  
 		<!-- Site heading -->
 		<div id="sr-site-heading" class="grid_12">
@@ -982,7 +988,7 @@ $stylevar[htmldoctype]
 				    <input class="" id="email" name="email" title="Email"
 					    value="$fbEmail" autocomplete="off" type="text" 
 					     />
-					<span class="error-label sr-small" id="email-error-label"></span>
+					<span class="sr-error-label sr-small" id="email-sr-error-label"></span>
                 </div>
 
                 $fbEmailParent
@@ -998,7 +1004,7 @@ $stylevar[htmldoctype]
 					    class="" id="username" name="username" title="Username"
 					    value="$fbUsername" autocomplete="off" type="text" 
 					    maxlength="$vboptions[maxuserlength]"  />
-				    <span class="error-label sr-small" id="username-error-label"></span>
+				    <span class="sr-error-label sr-small" id="username-sr-error-label"></span>
 				</div>
 
                 
@@ -1020,7 +1026,7 @@ $stylevar[htmldoctype]
                             
                             title="Birthday" />
                     </div>
-                    <span class="error-label sr-small" id="datepicker-error-label"></span>
+                    <span class="sr-error-label sr-small" id="datepicker-sr-error-label"></span>
                 </div>
 
                 <div class="clear sr-clear_10"></div>
@@ -1047,7 +1053,7 @@ $stylevar[htmldoctype]
 						    <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 				        </span>
 				    </label>
-				    <span class="error-label sr-small" id="terms_and_conditions-error-label"></span>
+				    <span class="sr-error-label sr-small" id="terms_and_conditions-sr-error-label"></span>
                 </div>
                 
 				<div class="clear sr-clear_15"></div>
@@ -1072,9 +1078,9 @@ $stylevar[htmldoctype]
 				</p>
                 
                 <div class="clear sr-clear_15"></div>
-                <span id="username-member-error-label" class="error-label sr-no-margin  "></span>
+                <span id="username-member-sr-error-label" class="sr-error-label sr-no-margin  "></span>
                 <div class="clear"></div>
-                <span id="password-member-error-label" class="error-label sr-no-margin  "></span>
+                <span id="password-member-sr-error-label" class="sr-error-label sr-no-margin  "></span>
                 <div class="clear"></div>
                 <label for="username-member"><phrase>$vbphrase[user_name]</phrase></label>
                 
@@ -1213,7 +1219,7 @@ $stylevar[htmldoctype]
 				    <input class="" id="username" name="username"
 				           title="<phrase>$vbphrase[user_name]</phrase>" value="$suggested_username"
 					       autocomplete="off" type="text" maxlength="$vboptions[maxuserlength]"  />
-					<span class="error-label" id="username-error-label"></span> 
+					<span class="sr-error-label" id="username-sr-error-label"></span> 
 				</div>
 				
 				<span class="help-block sr-tiny sr-dark_grey">
@@ -1226,7 +1232,7 @@ $stylevar[htmldoctype]
 					       id="password" name="password" title="<phrase>$vbphrase[password]</phrase>" 
 					       value="" autocomplete="off"
 					       type="password"  /> 
-					<span class="error-label" id="password-error-label"></span>
+					<span class="sr-error-label" id="password-sr-error-label"></span>
 				</div>
 				
 				<div class="clear sr-clear_10"></div>
@@ -1238,7 +1244,7 @@ $stylevar[htmldoctype]
 					       value="" 
 					       autocomplete="off"
 					       type="password"  /> 
-				    <span class="error-label" id="confirm-password-error-label"></span>    
+				    <span class="sr-error-label" id="confirm-password-sr-error-label"></span>    
 				</div>
 				
 					
@@ -1253,7 +1259,7 @@ $stylevar[htmldoctype]
 					           value="" 
 					           autocomplete="off"
 					           type="text"  /> 
-				        <span class="error-label" id="parent-guardian-email-error-label"></span>    
+				        <span class="sr-error-label" id="parent-guardian-email-sr-error-label"></span>    
 				    </div>
 					
 				    <div class="clear sr-clear_10"></div>
@@ -1268,7 +1274,7 @@ $stylevar[htmldoctype]
 					           title="Enter Security Code" value="" 
 					           autocomplete="off"
 					           type="text"  />
-			            <span class="error-label" id="security-code-error-label"></span>
+			            <span class="sr-error-label" id="security-code-sr-error-label"></span>
 			        </div>
 				
 				    <div class="clear sr-clear_10"></div>
@@ -1301,7 +1307,7 @@ $stylevar[htmldoctype]
 					       <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 					    </span>
 				    </label>
-				    <span class="error-label" id="terms-and-conditions-error-label"></span>
+				    <span class="sr-error-label" id="terms-and-conditions-sr-error-label"></span>
 				</div>
  
 				<div class="clear sr-clear_15"></div>
@@ -1541,6 +1547,7 @@ $stylevar[htmldoctype]
                     if($valid_activation_code && $valid_user){
                     
                         // delete activationid
+                        
                         $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -1618,7 +1625,7 @@ $stylevar[htmldoctype]
 									<div class="grid_6 sr-no-margin" id="email-wrapper">
 									    <input class="" id="parentEmail" name="parentEmail" title="Email"
 										    value="" autocomplete="off" type="text" />
-										<span class="error-label sr-small" id="email-error-label"></span>
+										<span class="sr-error-label sr-small" id="email-sr-error-label"></span>
 					                </div>';
                         	} else {
                         		$fbEmailParent = $_SESSION['site_registration']["fbEmailParent"] = false;
