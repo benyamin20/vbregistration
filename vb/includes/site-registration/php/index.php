@@ -1367,7 +1367,9 @@ case 'activate':
             $time     = time(); 
             $publish  = $vbulletin->GPC['vbnexus_fb_publish'];
 
-            $vbnexus_regData = array(
+            $birthday = str_replace("/", "-", $birthday);
+
+            $data = array(
                 'type'          => "new",
                 'service'       => "fb",
                 'userid'        => $fbID,
@@ -1377,12 +1379,12 @@ case 'activate':
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
                 'publish'       => $publish,
-                'birthdate'     => $birthday
+                'birthday'      => $birthday                
             );            
             
-            $vbnexus_result = $vBNexus->register($vbnexus_regData);    
+            $result = $vBNexus->register($data);    
             
-            if($vbnexus_result) {
+            if($result) {
                 $token = md5(uniqid(microtime(), true));
                 $token_time = time();
                 $form = "site-account-details";
@@ -1392,7 +1394,14 @@ case 'activate':
                 $vbulletin->userinfo = $vbulletin->db->query_first("SELECT ". TABLE_PREFIX ."vbnexus_user.userid, ". TABLE_PREFIX ."user.password FROM ". TABLE_PREFIX ."vbnexus_user
                                                         INNER JOIN ". TABLE_PREFIX ."user ON ". TABLE_PREFIX ."user.userid = ". TABLE_PREFIX ."vbnexus_user.userid
                                                         WHERE nonvbid = ". $fbID);
+
+                //$userid = $vbulletin->userinfo['userid'];
+
                 
+
+                /*$sql = "UPDATE ". TABLE_PREFIX ."user SET birthday = '$birthday' WHERE userid = '$userid'";
+                $vbulletin->db->query_write($sql);*/
+
                 require_once(DIR . '/includes/functions_login.php');
 
                 vbsetcookie('userid', $vbulletin->userinfo['userid'], true, true, true);
