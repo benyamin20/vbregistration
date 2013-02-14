@@ -363,81 +363,78 @@ jQuery(document).ready(function (jQuery) {
 
     //activates account on last step
     if (jQuery("#save-account-activated").exists()) {
-    
-        jQuery.getScript(sr_path_js + "/bootstrap/js/bootstrap-fileupload.min.js", function () {});
-        
-        jQuery.getScript(sr_path_js + "/js/jquery.form.js", function () {
-            //bind enter event to  fields
-            jQuery("#secret_question").enterKey(function () {
-                jQuery("#save-account-activated").trigger('click');
-            });
-
-            jQuery("#secret_answer").enterKey(function () {
-                jQuery("#save-account-activated").trigger('click');
-            });
-
-            // prepare Options Object 
-            var options = {
-                type: 'POST',
-                dataType: 'json',
-                beforeSubmit: function () {
-                    jQuery("#progress-indicator-container").addClass("progress-striped active");
-
-                    initialize_spinner();
-                },
-                success: function (response) {
-                    if (jQuery('#ajax-spinner').exists()) {
-                        jQuery('#ajax-spinner').remove();
-                    }
-
-                    if (response.valid_entries == false) {
-                        jQuery("#progress-indicator-container").removeClass("progress-striped active");
-
-                        clear_errors();
-
-                        jQuery.each(response.messages.fields, function (index, value) {
-                            if (value == 'upload') {
-                                jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
-                            } else {
-                                jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
-                            }
-
-                            jQuery('#' + value).addClass("sr-input-error");
-                            jQuery('#' + value + '-sr-error-label').empty();
-                            jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
-                        });
-
-                    } else {
-                        //valid entries
-                        for (i = 50; i <= 100; i++) {
-                            jQuery('#progress-indicator').css("width", i + '%');
-                            jQuery('#percentage-indicator').html(i);
-                        }
-
-                        try {
-                            clear_errors();
-                        } catch (e) {
-
-                        }
-
-                        jQuery('#would-you-like').hide();
-                        jQuery('#show-great').empty();
-                        jQuery('#show-great').html("Thanks!");
-                        jQuery('#complete-your-profile-form').remove();
-                        jQuery("#progress-indicator-container").removeClass("progress-striped active");
-                        jQuery("#icon-ok").removeClass('hidden');
-                        jQuery("#icon-ok").show();
-                        jQuery("#user-cp").removeClass('hidden');
-                        jQuery("#user-cp").show();
-
-                    }
-                }
-            };
-     
-
-            jQuery('#complete-your-profile-form').ajaxForm(options);
-        
+ 
+ 
+        //bind enter event to  fields
+        jQuery("#secret_question").enterKey(function () {
+            jQuery("#save-account-activated").trigger('click');
         });
+
+        jQuery("#secret_answer").enterKey(function () {
+            jQuery("#save-account-activated").trigger('click');
+        });
+
+        // prepare Options Object 
+        var options = {
+            type: 'POST',
+            dataType: 'json',
+            beforeSubmit: function () {
+                jQuery("#progress-indicator-container").addClass("progress-striped active");
+
+                initialize_spinner();
+            },
+            success: function (response) {
+                if (jQuery('#ajax-spinner').exists()) {
+                    jQuery('#ajax-spinner').remove();
+                }
+
+                if (response.valid_entries == false) {
+                    jQuery("#progress-indicator-container").removeClass("progress-striped active");
+
+                    clear_errors();
+
+                    jQuery.each(response.messages.fields, function (index, value) {
+                        if (value == 'upload') {
+                            jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
+                        } else {
+                            jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                        }
+
+                        jQuery('#' + value).addClass("sr-input-error");
+                        jQuery('#' + value + '-sr-error-label').empty();
+                        jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
+                    });
+
+                } else {
+                    //valid entries
+                    for (i = 50; i <= 100; i++) {
+                        jQuery('#progress-indicator').css("width", i + '%');
+                        jQuery('#percentage-indicator').html(i);
+                    }
+
+                    try {
+                        clear_errors();
+                    } catch (e) {
+
+                    }
+
+                    jQuery('#would-you-like').hide();
+                    jQuery('#show-great').empty();
+                    jQuery('#show-great').html("Thanks!");
+                    jQuery('#complete-your-profile-form').remove();
+                    jQuery("#progress-indicator-container").removeClass("progress-striped active");
+                    jQuery("#icon-ok").removeClass('hidden');
+                    jQuery("#icon-ok").show();
+                    jQuery("#user-cp").removeClass('hidden');
+                    jQuery("#user-cp").show();
+
+                }
+            }
+        };
+ 
+
+        jQuery('#complete-your-profile-form').ajaxForm(options);
+ 
     
 
     }

@@ -15,20 +15,6 @@
 	<templates>
 	    <template name="site_registration_benefits" templatetype="template" 
 		    date="1352855133" username="fromero" version="1.0">
-		</template>
-	    
-	    	require_once(DIR . '/includes/functions_misc.php');
-	$timezoneoptions = '';
-	foreach (fetch_timezone() AS $optionvalue => $timezonephrase)
-	{
-		$optiontitle = $vbphrase["$timezonephrase"];
-		$optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
-		eval('$timezoneoptions .= "' . fetch_template('option') . '";');
-	}
-	
-	
-	    <template name="site_registration_benefits" templatetype="template" 
-		    date="1352855133" username="fromero" version="1.0">
 		    <![CDATA[
             <table class='tborder' cellpadding='6' cellspacing='1' border='0' width='97%' align='center'>
               <tr>
@@ -104,7 +90,7 @@
             <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap.min.css?v=$vboptions[simpleversion]">
             <!--[if lt IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-ie7buttonfix.css?v=$vboptions[simpleversion]"><![endif]-->
             <!--[if IE 8]><link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-ie8buttonfix.css?v=$vboptions[simpleversion]"><![endif]--> 
-            <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
+            
             <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/css/fonts.css?v=$vboptions[simpleversion]" />
             <link media="screen" rel="stylesheet" type="text/css" href="$vboptions[site_registration_includes_path_css]/facebox/facebox.css?v=$vboptions[simpleversion]" />
             <link rel="stylesheet" href="$vboptions[site_registration_includes_path_css]/css/styles.css?v=$vboptions[simpleversion]" />
@@ -136,9 +122,16 @@ $stylevar[htmldoctype]
     $headinclude
     <!-- /head include -->
     
+    
+    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
     <!-- site registration includes -->
     $site_reg_includes
     <!-- /site registration includes -->
+    <script src="$vboptions[site_registration_includes_path_js]/js/jquery.form.js?v=$vboptions[simpleversion]"></script>
+    <script src="$vboptions[site_registration_includes_path_js]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script>
+    
+    
+    
 
 </head>
 
@@ -443,7 +436,7 @@ $stylevar[htmldoctype]
 		</div>
 
 		<div class="clear"></div>
-
+        <iframe id="sr-upload-iframe" name="sr-upload-iframe"></iframe>
 	</div>
 	</div>
 	
@@ -1555,6 +1548,7 @@ $stylevar[htmldoctype]
                     if($valid_activation_code && $valid_user){
                     
                         // delete activationid
+                        
                         $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
