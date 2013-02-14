@@ -1250,7 +1250,7 @@ $stylevar[htmldoctype]
 					
 				<div class="clear sr-clear_10"></div>
 				
-				<if condition="$_SESSION[site_registration][coppauser] === true">
+				<if condition="$_SESSION[site_registration][coppauser] === true && $vboptions[usecoppa] > 0">
 				    <!-- parent - guardian email -->
 				    <div class="grid_7 sr-no-margin" id="parent-guardian-email-wrapper">
 				        <label for="parent-guardian-email"><phrase>$vbphrase[parent_guardian_email]</phrase></label>
