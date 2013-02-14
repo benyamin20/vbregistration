@@ -1383,7 +1383,7 @@ case 'activate':
             );            
             
             $result = $vBNexus->register($data);    
-            die(var_dump($result));
+            
             if($result) {
                 $token = md5(uniqid(microtime(), true));
                 $token_time = time();
