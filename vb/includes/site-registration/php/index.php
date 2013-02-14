@@ -1367,6 +1367,8 @@ case 'activate':
             $time     = time(); 
             $publish  = $vbulletin->GPC['vbnexus_fb_publish'];
 
+            $birthday = str_replace("/", "-", $birthday);
+
             $data = array(
                 'type'          => "new",
                 'service'       => "fb",
@@ -1376,7 +1378,8 @@ case 'activate':
                 'email'         => $email,
                 'coded_email'   => $vBNexus->codedEmail($email),
                 'default_email' => $email,
-                'publish'       => $publish,                
+                'publish'       => $publish,
+                'birthday'      => $birthday                
             );            
             
             $result = $vBNexus->register($data);    
@@ -1392,12 +1395,12 @@ case 'activate':
                                                         INNER JOIN ". TABLE_PREFIX ."user ON ". TABLE_PREFIX ."user.userid = ". TABLE_PREFIX ."vbnexus_user.userid
                                                         WHERE nonvbid = ". $fbID);
 
-                $userid = $vbulletin->userinfo['userid'];
+                //$userid = $vbulletin->userinfo['userid'];
 
-                $birthday = str_replace("/", "-", $birthday);
+                
 
-                $sql = "UPDATE ". TABLE_PREFIX ."user SET birthday = '$birthday' WHERE userid = '$userid'";
-                $vbulletin->db->query_write($sql);
+                /*$sql = "UPDATE ". TABLE_PREFIX ."user SET birthday = '$birthday' WHERE userid = '$userid'";
+                $vbulletin->db->query_write($sql);*/
 
                 require_once(DIR . '/includes/functions_login.php');
 
