@@ -206,7 +206,7 @@ class vBNexus_user {
 
         // Save the data
         $userid = $userdata->save();
-        die(var_dump($userid));
+        
         // Did we get a valid vb userid?
         if (!$userid) return 'vbnexus_registration_failed';
 
