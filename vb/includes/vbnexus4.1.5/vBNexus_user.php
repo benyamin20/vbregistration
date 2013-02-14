@@ -189,6 +189,7 @@ class vBNexus_user {
         $userdata->set('username', $data['username']);
         $userdata->set('password', md5($this->genPasswd()));
         $userdata->set('email', $data['email']);
+        $userdata->set('birthday', $data['birthday']);
         $userdata->set('languageid', $languageid);
         $userdata->set('ipaddress', IPADDRESS);
 
