@@ -1759,7 +1759,6 @@ case "linkaccount":
             $messages['fields'][] = $error_type = "password-member";
 
             if ($vbulletin->options['usestrikesystem']) {
-
                 $strikes = verify_strike_status($vbulletin->GPC['username']);
                 exec_strike_user($vbulletin->GPC['username']);
 
