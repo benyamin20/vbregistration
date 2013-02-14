@@ -1367,7 +1367,7 @@ case 'activate':
             $time     = time(); 
             $publish  = $vbulletin->GPC['vbnexus_fb_publish'];
 
-            $vbnexus_regData = array(
+            $data = array(
                 'type'          => "new",
                 'service'       => "fb",
                 'userid'        => $fbID,
@@ -1379,9 +1379,9 @@ case 'activate':
                 'publish'       => $publish,                
             );            
             
-            $vbnexus_result = $vBNexus->register($vbnexus_regData);    
-            
-            if($vbnexus_result) {
+            $result = $vBNexus->register($data);    
+            die(var_dump($result));
+            if($result) {
                 $token = md5(uniqid(microtime(), true));
                 $token_time = time();
                 $form = "site-account-details";
@@ -1395,7 +1395,7 @@ case 'activate':
                 $userid = $vbulletin->userinfo['userid'];
 
                 $birthday = str_replace("/", "-", $birthday);
-                
+
                 $sql = "UPDATE ". TABLE_PREFIX ."user SET birthday = '$birthday' WHERE userid = '$userid'";
                 $vbulletin->db->query_write($sql);
 
