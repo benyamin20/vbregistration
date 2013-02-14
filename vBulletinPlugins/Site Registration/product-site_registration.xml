@@ -840,7 +840,7 @@ $stylevar[htmldoctype]
 								            autocomplete="off"
 								            type="password"  />
 							            <div class="clear sr-clear_15"></div>
-							            <button class="btn btn-medium" id="login-button"><phrase>$vbphrase[log_in]</phrase></button>
+							            <a class="btn btn-medium" id="login-button"><phrase>$vbphrase[log_in]</phrase></a>
 							            <span id="ajax-loader-secondary"></span>
 							        <!--</form>-->
 							        <div class="clear sr-clear_15"></div>
