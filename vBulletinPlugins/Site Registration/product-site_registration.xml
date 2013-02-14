@@ -435,8 +435,7 @@ $stylevar[htmldoctype]
 
 		</div>
 
-		<div class="clear"></div>
-        <iframe id="sr-upload-iframe" name="sr-upload-iframe"></iframe>
+		<div class="clear"></div> 
 	</div>
 	</div>
 	
