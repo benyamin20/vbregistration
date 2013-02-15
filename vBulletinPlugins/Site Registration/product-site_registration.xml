@@ -1513,7 +1513,7 @@ $stylevar[htmldoctype]
                     if($valid_activation_code && $valid_user){
                     
                         // delete activationid
-                        /*
+
                         $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -1531,7 +1531,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
-                         */
+
                          $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
                          cache_permissions($userinfo, false); 
                          $userinfo_permissions      = $userinfo['permissions']['genericpermissions'];
@@ -2031,7 +2031,7 @@ $stylevar[htmldoctype]
 	                
 	                    //delete pending activation code and show activation
 	                    //home page
-                        /*
+
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -2049,7 +2049,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
-                        */
+
                         
                         //fixes birthday to be able to search it on  table
                         $birthday = preg_replace("/\-/","/", $birthday);
@@ -2122,6 +2122,13 @@ $stylevar[htmldoctype]
 	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
 	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
                         }
+                        
+                        
+                        //ACP-506
+                        $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+			            $userinfo = fetch_userinfo($vbulletin->userinfo['userid']);
+			            $userdata->set_existing($userinfo);
+			            $userdata->send_welcomepm();
 	 
                  
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');

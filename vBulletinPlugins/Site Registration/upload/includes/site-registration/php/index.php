@@ -754,7 +754,11 @@ case 'validate_site_account_details':
 					eval(fetch_email_phrases('welcomemail'));
 					vbmail($email, $subject, $message);
 				}
+
+				$userdata->send_welcomepm();
 			}
+
+
 
 			if ($vbulletin->options['verifyemail']) {
 				//Redirect user to Activation Screen
@@ -1591,6 +1595,11 @@ case 'activate':
 				eval(fetch_email_phrases('welcomemail'));
 				vbmail($email, $subject, $message);
 			}
+
+			$userdata =& datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+			$userinfo = fetch_userinfo($userid);
+			$userdata->set_existing($userinfo);
+			$userdata->send_welcomepm();
 		}
 	}
 
