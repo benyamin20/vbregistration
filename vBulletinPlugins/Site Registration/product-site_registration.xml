@@ -268,6 +268,11 @@ $stylevar[htmldoctype]
 						<!--  Timezone -->
 						<div id="timezone-wrapper">
 						    <label for="timezone">Your <phrase>$vbphrase[timezone]</phrase></label>
+						    
+						    
+						    $timezoneoptions
+						    
+						    
 						    <select name="timezone" id="timezone">
                                 <option value="" selected="selected"></option> 
 			                    <option class="" value="-12"><phrase>$vbphrase[timezone_gmt_minus_1200]</phrase></option>
@@ -1545,7 +1550,7 @@ $stylevar[htmldoctype]
                     if($valid_activation_code && $valid_user){
                     
                         // delete activationid
-                        
+                        /*
                         $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -1563,13 +1568,23 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
-                         
+                         */
                          $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
-                         cache_permissions($userinfo, false);
-                         /*$userinfo_str              = var_export($userinfo, true);*/
+                         cache_permissions($userinfo, false); 
                          $userinfo_permissions      = $userinfo['permissions']['genericpermissions'];
                          $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
                          $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
+                         
+                        require_once(DIR . '/includes/functions_misc.php');
+                        $timezoneoptions = '';
+                        foreach (fetch_timezone() AS $optionvalue => $timezonephrase)
+                        {
+	                        $optiontitle = $vbphrase["$timezonephrase"];
+	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
+	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
+                        }
+	                    
+	                    eval('$timezoneoptions = "' . fetch_template('modifyoptions_timezone') . '";');
                          
                         
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
@@ -2055,7 +2070,7 @@ $stylevar[htmldoctype]
 	                
 	                    //delete pending activation code and show activation
 	                    //home page
- 
+                        /*
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -2073,6 +2088,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
+                        */
                         
                         //fixes birthday to be able to search it on  table
                         $birthday = preg_replace("/\-/","/", $birthday);
@@ -2131,11 +2147,21 @@ $stylevar[htmldoctype]
                  
                  
                          $userinfo                  = fetch_userinfo($vbulletin->userinfo['userid'], FETCH_USERINFO_PROFILEPIC);
-                         cache_permissions($userinfo, false);
-                         /*$userinfo_str              = var_export($userinfo, true);*/
+                         cache_permissions($userinfo, false); 
                          $userinfo_permissions      = $userinfo['permissions']['genericpermissions'];
                          $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
                          $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
+                         
+                     	require_once(DIR . '/includes/functions_misc.php');
+                        $timezoneoptions = '';
+                        foreach (fetch_timezone() AS $optionvalue => $timezonephrase)
+                        {
+	                        $optiontitle = $vbphrase["$timezonephrase"];
+	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
+	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
+                        }
+	                    
+	                    eval('$timezoneoptions = "' . fetch_template('modifyoptions_timezone') . '";');
                  
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
