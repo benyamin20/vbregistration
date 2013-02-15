@@ -268,46 +268,9 @@ $stylevar[htmldoctype]
 						<!--  Timezone -->
 						<div id="timezone-wrapper">
 						    <label for="timezone">Your <phrase>$vbphrase[timezone]</phrase></label>
-						    
-						    
-						    $timezoneoptions
-						    
-						    
+ 
 						    <select name="timezone" id="timezone">
-                                <option value="" selected="selected"></option> 
-			                    <option class="" value="-12"><phrase>$vbphrase[timezone_gmt_minus_1200]</phrase></option>
-                                <option class="" value="-11"><phrase>$vbphrase[timezone_gmt_minus_1100]</phrase></option>
-                                <option class="" value="-10"><phrase>$vbphrase[timezone_gmt_minus_1000]</phrase></option>
-                                <option class="" value="-9"><phrase>$vbphrase[timezone_gmt_minus_0900]</phrase></option>
-                                <option class="" value="-8"><phrase>$vbphrase[timezone_gmt_minus_0800]</phrase></option>
-                                <option class="" value="-7"><phrase>$vbphrase[timezone_gmt_minus_0700]</phrase></option>
-                                <option class="" value="-6"><phrase>$vbphrase[timezone_gmt_minus_0600]</phrase></option>
-                                <option class="" value="-5"><phrase>$vbphrase[timezone_gmt_minus_0500]</phrase></option>
-                                <option class="" value="-4.5"><phrase>$vbphrase[timezone_gmt_minus_0430]</phrase></option>
-                                <option class="" value="-4"><phrase>$vbphrase[timezone_gmt_minus_0400]</phrase></option>
-                                <option class="" value="-3.5"><phrase>$vbphrase[timezone_gmt_minus_0330]</phrase></option>
-                                <option class="" value="-3"><phrase>$vbphrase[timezone_gmt_minus_0300]</phrase></option>
-                                <option class="" value="-2"><phrase>$vbphrase[timezone_gmt_minus_0200]</phrase></option>
-                                <option class="" value="-1"><phrase>$vbphrase[timezone_gmt_minus_0100]</phrase></option>
-                                <option class="" value="0"><phrase>$vbphrase[timezone_gmt_plus_0000]</phrase></option>
-                                <option class="" value="1"><phrase>$vbphrase[timezone_gmt_plus_0100]</phrase></option>
-                                <option class="" value="2"><phrase>$vbphrase[timezone_gmt_plus_0200]</phrase></option>
-                                <option class="" value="3"><phrase>$vbphrase[timezone_gmt_plus_0300]</phrase></option>
-                                <option class="" value="3.5"><phrase>$vbphrase[timezone_gmt_plus_0330]</phrase></option>
-                                <option class="" value="4"><phrase>$vbphrase[timezone_gmt_plus_0400]</phrase></option>
-                                <option class="" value="4.5"><phrase>$vbphrase[timezone_gmt_plus_0430]</phrase></option>
-                                <option class="" value="5"><phrase>$vbphrase[timezone_gmt_plus_0500]</phrase></option>
-                                <option class="" value="5.5"><phrase>$vbphrase[timezone_gmt_plus_0530]</phrase></option>
-                                <option class="" value="5.75"><phrase>$vbphrase[timezone_gmt_plus_0545]</phrase></option>
-                                <option class="" value="6"><phrase>$vbphrase[timezone_gmt_plus_0600]</phrase></option>
-                                <option class="" value="6.5"><phrase>$vbphrase[timezone_gmt_plus_0630]</phrase></option>
-                                <option class="" value="7"><phrase>$vbphrase[timezone_gmt_plus_0700]</phrase></option>
-                                <option class="" value="8"><phrase>$vbphrase[timezone_gmt_plus_0800]</phrase></option>
-                                <option class="" value="9"><phrase>$vbphrase[timezone_gmt_plus_0900]</phrase></option>
-                                <option class="" value="9.5"><phrase>$vbphrase[timezone_gmt_plus_0930]</phrase></option>
-                                <option class="" value="10"><phrase>$vbphrase[timezone_gmt_plus_1000]</phrase></option>
-                                <option class="" value="11"><phrase>$vbphrase[timezone_gmt_plus_1100]</phrase></option>
-                                <option class="" value="12"><phrase>$vbphrase[timezone_gmt_plus_1200]</phrase></option>
+						        $timezoneoptions
                             </select>
                             <span class="sr-error-label" id="timezone-sr-error-label"></span>
                         </div><!--  /Timezone -->
@@ -1575,6 +1538,7 @@ $stylevar[htmldoctype]
                          $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
                          $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
                          
+                        //ACP-504
                         require_once(DIR . '/includes/functions_misc.php');
                         $timezoneoptions = '';
                         foreach (fetch_timezone() AS $optionvalue => $timezonephrase)
@@ -1583,10 +1547,7 @@ $stylevar[htmldoctype]
 	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
 	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
                         }
-	                    
-	                    eval('$timezoneoptions = "' . fetch_template('modifyoptions_timezone') . '";');
-                         
-                        
+  
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
 
@@ -2152,6 +2113,7 @@ $stylevar[htmldoctype]
                          $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
                          $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
                          
+                        //ACP-504
                      	require_once(DIR . '/includes/functions_misc.php');
                         $timezoneoptions = '';
                         foreach (fetch_timezone() AS $optionvalue => $timezonephrase)
@@ -2160,8 +2122,7 @@ $stylevar[htmldoctype]
 	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
 	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
                         }
-	                    
-	                    eval('$timezoneoptions = "' . fetch_template('modifyoptions_timezone') . '";');
+	 
                  
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
 	                    eval('print_output("' . fetch_template('site_reg_account-activated') . '");'); 
