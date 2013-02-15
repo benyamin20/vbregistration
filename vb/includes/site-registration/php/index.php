@@ -124,8 +124,7 @@ case 'show_thumbnail':
 		$tmpdir = sys_get_temp_dir();
 	}
 
-	$uploaded = $tmpdir . DIRECTORY_SEPARATOR
-			. $vbulletin->GPC['id'];
+	$uploaded = $tmpdir . DIRECTORY_SEPARATOR . $vbulletin->GPC['id'];
 
 	$sImage = $uploaded;
 
@@ -270,8 +269,18 @@ case 'complete_your_profile':
 			$vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
 
 			if (empty($vbulletin->GPC['upload'])) {
-				$vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl']
-						. "/includes/site-registration/img/unknown.png";
+
+				if (!preg_match("/http/i",
+						$vbulletin
+								->options['site_registration_includes_path_img'])) {
+					$vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl']
+							. "/includes/site-registration/img/unknown.png";
+				} else {
+					$vbulletin->GPC['avatarurl'] = $vbulletin
+							->options['site_registration_includes_path_img']
+							. "/img/unknown.png";
+				}
+
 			}
 
 			require_once(DIR . '/includes/class_upload.php');
@@ -639,20 +648,17 @@ case 'validate_site_account_details':
 		//$userdata->set_dst($vbulletin->GPC['dst']);
 		//$userdata->set('timezoneoffset', $vbulletin->GPC['timezoneoffset']);
 
-
-		if($_SESSION['site_registration']['coppauser'] === true
-			&& $vbulletin->options['usecoppa'] > 0){
+		if ($_SESSION['site_registration']['coppauser'] === true
+				&& $vbulletin->options['usecoppa'] > 0) {
 			$userdata
-			->set_info('coppauser',
-					$_SESSION['site_registration']['coppauser']);
+					->set_info('coppauser',
+							$_SESSION['site_registration']['coppauser']);
 			$userdata->set_info('coppapassword', $vbulletin->GPC['password']);
 			$userdata
-			->set_bitfield('options', 'coppauser',
-					$_SESSION['site_registration']['coppauser']);
-
+					->set_bitfield('options', 'coppauser',
+							$_SESSION['site_registration']['coppauser']);
 
 		}
-
 
 		//ACP-479
 		if ($vbulletin->options['usecoppa'] > 0
