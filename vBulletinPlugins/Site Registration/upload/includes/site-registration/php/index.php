@@ -639,13 +639,20 @@ case 'validate_site_account_details':
 		//$userdata->set_dst($vbulletin->GPC['dst']);
 		//$userdata->set('timezoneoffset', $vbulletin->GPC['timezoneoffset']);
 
-		$userdata
-				->set_info('coppauser',
-						$_SESSION['site_registration']['coppauser']);
-		$userdata->set_info('coppapassword', $vbulletin->GPC['password']);
-		$userdata
-				->set_bitfield('options', 'coppauser',
-						$_SESSION['site_registration']['coppauser']);
+
+		if($_SESSION['site_registration']['coppauser'] === true
+			&& $vbulletin->options['usecoppa'] > 0){
+			$userdata
+			->set_info('coppauser',
+					$_SESSION['site_registration']['coppauser']);
+			$userdata->set_info('coppapassword', $vbulletin->GPC['password']);
+			$userdata
+			->set_bitfield('options', 'coppauser',
+					$_SESSION['site_registration']['coppauser']);
+
+
+		}
+
 
 		//ACP-479
 		if ($vbulletin->options['usecoppa'] > 0
