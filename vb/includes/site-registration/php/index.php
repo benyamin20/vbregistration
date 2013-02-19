@@ -499,7 +499,7 @@ case 'validate_site_account_details':
 	unset($userdata->errors);
 
 	//ACP-494 decode js escaped unicode characters
-	$username = utf8_decode($vbulletin->GPC["username"]);
+	$username = $vbulletin->GPC["username"];
 	die(var_dump($username));
 	$vbulletin->GPC['username'] = preg_replace("/%u([A-Fa-f0-9]{4})/", "&#x$1;", $vbulletin->GPC['username']);
 
