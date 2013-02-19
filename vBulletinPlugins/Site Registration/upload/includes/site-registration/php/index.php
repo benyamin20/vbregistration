@@ -502,12 +502,8 @@ case 'validate_site_account_details':
 	$vbulletin->GPC['username'] = preg_replace("/%u([A-Fa-f0-9]{4})/",
 			"&#x$1;", $vbulletin->GPC['username']);
 
-
-	$vbulletin->GPC['username']  = html_entity_decode(
-			$vbulletin->GPC['username'],
-			ENT_COMPAT,
-			'UTF-8'
-			);
+	$vbulletin->GPC['username'] = html_entity_decode(
+			$vbulletin->GPC['username'], ENT_COMPAT, 'UTF-8');
 
 	$username3 = $vbulletin->GPC['username'];
 
@@ -534,20 +530,20 @@ case 'validate_site_account_details':
 
 	//check if username already exists on DB
 	/*$user_exists = $db
-			->query_first(
-					"
-        SELECT userid, username, email, languageid
-        FROM " . TABLE_PREFIX . "user
-        WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
-							. "'
-    ");
+	        ->query_first(
+	                "
+	    SELECT userid, username, email, languageid
+	    FROM " . TABLE_PREFIX . "user
+	    WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
+	                        . "'
+	");
 
 	if (!empty($user_exists['username'])) {
-		$valid_entries = FALSE;
-		$error_type = "username";
-		$messages['fields'][] = $error_type;
-		$messages['errors'][] = "Sorry, this username is already taken.";
-		//fetch_error('usernametaken', $user_exists['username'], '');
+	    $valid_entries = FALSE;
+	    $error_type = "username";
+	    $messages['fields'][] = $error_type;
+	    $messages['errors'][] = "Sorry, this username is already taken.";
+	    //fetch_error('usernametaken', $user_exists['username'], '');
 	}*/
 
 	if (fetch_require_hvcheck('register')) {
@@ -785,12 +781,9 @@ case 'validate_site_account_details':
 	}
 
 	$arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-			"url" => $url,
-			"GPC_username" => $vbulletin->GPC['username'],
-			"username" => $username,
-			"username3" => $username3,
-			"username4" => $username4,
-			"time" => time());
+			"url" => $url, "GPC_username" => $vbulletin->GPC['username'],
+			"username" => $username, "username3" => $username3,
+			"username4" => $username4, "time" => time());
 
 	json_headers($arr);
 
@@ -1411,23 +1404,6 @@ case 'activate':
 		}
 
 		if ($fbID) {
-			/************OLD VERSION *******************************
-			$email = $vbulletin->db->escape_string($vbulletin->GPC['email']);
-			$username = $vbulletin->GPC['username'];
-			$time = time();
-
-			//insert query
-			$vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."user (usergroupid, email, birthday, username, reputation, joindate, ipaddress) VALUES ('$newusergroupid', '$email', '$birthday', '$username', '10', '$time', '". IPADDRESS ."')");
-
-			$sql = "SELECT userid FROM ". TABLE_PREFIX."user WHERE email = '$email' AND username = '$username'";
-
-			$data = $vbulletin->db->query_first($sql);
-
-			$userid = $data["userid"];
-
-			$vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."userfield (userid) VALUES ('$userid')");
-			$vbulletin->db->query_write("INSERT IGNORE INTO ". TABLE_PREFIX."usertextfield (userid) VALUES ('$userid')");
-			 */
 
 			/**************VBNEXUS*************************/
 			$vBNexus = new vBNexus;
@@ -1503,53 +1479,7 @@ case 'activate':
 		$valid_entries = TRUE;
 		$message = "OK";
 
-		/*$parts = explode(".", $avatar);
-		$extension = end($parts);
-		$filedata = file_get_contents($avatar);
-		$dateline = time();
-		$visible = 1;
-		$filesize = strlen($filedata);
-		$filename = substr(md5(time()), 0, 10) . "." . $extension;*/
 
-		/*
-		if($vbulletin->options['avatarenabled']){
-		    $userinfo = fetch_userinfo($userid);
-
-		    // init user datamanager
-		    $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_CP);
-		    $userdata->set_existing($userinfo);
-
-		    $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
-
-		    if(empty($vbulletin->GPC['upload'])){
-		        $vbulletin->GPC['avatarurl'] = $vbulletin->options['bburl'] . "/includes/site-registration/unknown.png";
-		    }
-
-		    require_once(DIR . '/includes/class_upload.php');
-		    require_once(DIR . '/includes/class_image.php');
-
-		    $upload = new vB_Upload_Userpic($vbulletin);
-
-		    $upload->data =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
-		    $upload->image =& vB_Image::fetch_library($vbulletin);
-		    $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
-		    $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
-		    $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
-		    $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
-
-		    if (!$upload->process_upload($vbulletin->GPC['avatarurl'])) {
-		        $valid_entries = FALSE;
-		        $error_type = "upload";
-		        $messages['fields'][] = $error_type;
-		        $messages['errors'][] = fetch_error( 'there_were_errors_encountered_with_your_upload_x', $upload->fetch_error());
-		    }
-
-		}else{
-		    // predefined avatar
-		    $userpic =& datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
-		    $userpic->condition = "userid = " . $userinfo['userid'];
-		    $userpic->delete();
-		}*/
 
 		$token = md5(uniqid(microtime(), true));
 		$token_time = time();
@@ -1703,9 +1633,20 @@ case "linkaccount":
 											. $fbID . "', '" . $userid
 											. "', '1')");
 
+					$userinfo = fetch_userinfo($userid,
+							FETCH_USERINFO_PROFILEPIC);
+
+					cache_permissions($userinfo, false);
+
+					$userinfo_permissions = $userinfo['permissions']['genericpermissions'];
+					$generic_canuseavatar = $vbulletin
+							->bf_ugp_genericpermissions['canuseavatar'];
+					$avatar_usergroup_enabled = $userinfo_permissions
+							& $generic_canuseavatar;
+
 					//update avatar if option enabled
-					if ($vbulletin->options['avatarenabled']) {
-						$userinfo = fetch_userinfo($userid);
+					if ($avatar_usergroup_enabled) {
+						//$userinfo = fetch_userinfo($userid);
 
 						// init user datamanager
 						$userdata = &datamanager_init('User', $vbulletin,
@@ -1749,51 +1690,6 @@ case "linkaccount":
 						$userpic->delete();
 					}
 
-					/*$parts = explode(".", $avatar);
-					$extension = end($parts);
-					$filedata = file_get_contents($avatar);
-					$dateline = time();
-					$visible = 1;
-					$filesize = strlen($filedata);
-					$filename = substr(md5(time()), 0, 10) . "." . $extension;
-
-					$sql = "
-					    REPLACE INTO " . TABLE_PREFIX
-					        . "customprofilepic
-					    (userid, filedata, dateline, filename, visible, filesize, width, height)
-					    VALUES
-					    ('" . $vbulletin->db->escape_string($userid)
-					        . "',
-					     '" . $vbulletin->db->escape_string($filedata)
-					        . "',
-					     '" . $vbulletin->db->escape_string($dateline)
-					        . "',
-					     '" . $vbulletin->db->escape_string($filename)
-					        . "',
-					     '" . $vbulletin->db->escape_string($visible)
-					        . "',
-					     '" . $vbulletin->db->escape_string($filesize)
-					        . "',
-					     '" . $vbulletin->db->escape_string("50")
-					        . "',
-					     '" . $vbulletin->db->escape_string("50")
-					        . "'
-					     )
-					";*/
-
-					/*insert query*/
-					//$vbulletin->db->query_write($sql);
-
-					//Send Activation Email: Refer to Automated Emails
-					// send new user email
-
-					// delete activationid
-					/*$vbulletin->db
-					        ->query_write(
-					                "DELETE FROM " . TABLE_PREFIX
-					                        . "useractivation
-					        WHERE userid = '" . $userid . "'
-					        AND type = 0");*/
 
 					$nonvbid = $fbID;
 
