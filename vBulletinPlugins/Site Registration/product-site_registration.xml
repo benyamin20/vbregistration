@@ -1512,6 +1512,16 @@ $stylevar[htmldoctype]
 
                     if($valid_activation_code && $valid_user){
                     
+                        //check for default setting of admin email -- ACP-393
+                        if( bitwise($vbulletin->bf_misc_regoptions['adminemail'], $vbulletin->options['defaultregoptions'])  ){
+                            $default_email_from_administrators = " checked='checked' ";
+                        }
+                        
+                        // ACP-509
+                        if( bitwise($vbulletin->bf_misc_regoptions['receiveemail'], $vbulletin->options['defaultregoptions'])  ){
+                            $default_email_from_members = " checked='checked' ";
+                        }
+                    
                         // delete activationid
 
                         $vbulletin->db->query_write(
@@ -2075,6 +2085,12 @@ $stylevar[htmldoctype]
                         if( bitwise($vbulletin->bf_misc_regoptions['adminemail'], $vbulletin->options['defaultregoptions'])  ){
                             $default_email_from_administrators = " checked='checked' ";
                         }
+                        
+                        // ACP-509
+                        if( bitwise($vbulletin->bf_misc_regoptions['receiveemail'], $vbulletin->options['defaultregoptions'])  ){
+                            $default_email_from_members = " checked='checked' ";
+                        }
+                        
                          
                         //try to start a valid session 
                         $vbulletin->userinfo = $vbulletin->db
