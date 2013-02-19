@@ -1369,7 +1369,7 @@ $stylevar[htmldoctype]
 	                $user['activationid'] = $users['activationid']; 
 	                //$vbulletin->db->fetch_field($users);
 	                
-	                if (!empty($user['activationid'])){
+	                if (!empty($user['activationid']) && $vbulletin->userinfo['usergroupid'] != 2 ){
 	                    //pending activation id
 	                    
 	                    eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
