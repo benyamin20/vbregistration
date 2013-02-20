@@ -1953,16 +1953,13 @@ $stylevar[htmldoctype]
                                 break;
                         }
 		            
-		                if(!$vbulletin->bf_ugp_forumpermissions['canview']){
+		                if($vbulletin->bf_ugp_forumpermissions['canview']){
 		                    header("Location: register.php?ref=$reg_ref");
 		                }else{
 		                }
 		                
 		            } 
-			         
-                    
-                    
-			        
+
 			    ]]>
 			</phpcode>
 		</plugin>

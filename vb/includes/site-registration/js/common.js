@@ -14,7 +14,7 @@ jQuery.getScript(sr_path_js + "/js/bootbox.min.js", function () {});
  */
 jQuery.fn.exists = function () {
     return this.length > 0;
-}
+};
 
 
 
@@ -31,9 +31,9 @@ jQuery.fn.enterKey = function (fnc) {
             if (keycode == '13') {
                 fnc.call(this, ev);
             }
-        })
-    })
-}
+        });
+    });
+};
 
 /*
     Get value from a checkbox
@@ -407,6 +407,7 @@ jQuery(document).ready(function (jQuery) {
 
                 } else {
                     //valid entries
+                	var i = 50;
                     for (i = 50; i <= 100; i++) {
                         jQuery('#progress-indicator').css("width", i + '%');
                         jQuery('#percentage-indicator').html(i);
