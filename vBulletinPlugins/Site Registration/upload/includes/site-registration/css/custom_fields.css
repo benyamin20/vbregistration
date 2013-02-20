@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+legend{
+    display:none;
+    visibility: hidden;
+    font-size: 0px;
+    line-height: 0px;
+    margin-bottom: 0px;
+    padding: 0;
+    width: 100%;
+}
+
+ 
+.fieldset, .fieldset td, .fieldset p, .fieldset li {
+    color: #666666;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica,Arial,'sans-serif';
+}
+
+input[type="radio"]{
+    vertical-align: text-bottom;
+}
+
+
+textarea, .bginput{
+    font: 14px Helvetica,Arial,'sans-serif';
+}
