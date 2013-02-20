@@ -1,173 +1,186 @@
 AJAX_Compatible = true;
 var md5_loaded = false;
 
-var spinner = '<img id="ajax-spinner" src="' + sr_path_img + '/img/ajax-loader.gif" />';
-var spinner_secondary = '<img id="ajax-spinner-secondary" src="' + sr_path_img +'/img/ajax-loader.gif" />';
-
-
-jQuery.getScript(sr_path_js + "/js/bootbox.min.js", function () {});
-
-
+var spinner = '<img id="ajax-spinner" src="' + sr_path_img
+		+ '/img/ajax-loader.gif" />';
+var spinner_secondary = '<img id="ajax-spinner-secondary" src="' + sr_path_img
+		+ '/img/ajax-loader.gif" />';
 
 /**
  * check if something exists
  */
-jQuery.fn.exists = function () {
-    return this.length > 0;
+jQuery.fn.exists = function() {
+	return this.length > 0;
 };
-
-
-
-
-
 
 /**
  * bind function to check if enter is pressed
  */
-jQuery.fn.enterKey = function (fnc) {
-    return this.each(function () {
-        jQuery(this).keypress(function (ev) {
-            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
-            if (keycode == '13') {
-                fnc.call(this, ev);
-            }
-        });
-    });
+jQuery.fn.enterKey = function(fnc) {
+	return this.each(function() {
+		jQuery(this).keypress(function(ev) {
+			var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+			if (keycode == '13') {
+				fnc.call(this, ev);
+			}
+		});
+	});
 };
 
 /*
-    Get value from a checkbox
-*/
-$.fn.realVal = function () {
-    var $obj = $(this);
-    var val = $obj.val();
-    var type = $obj.attr('type');
-    if (type && type === 'checkbox') {
-        var un_val = $obj.attr('data-unchecked');
-        if (typeof un_val === 'undefined') un_val = '';
-        return $obj.prop('checked') ? val : un_val;
-    } else {
-        return val;
-    }
+ * Get value from a checkbox
+ */
+$.fn.realVal = function() {
+	var $obj = $(this);
+	var val = $obj.val();
+	var type = $obj.attr('type');
+	if (type && type === 'checkbox') {
+		var un_val = $obj.attr('data-unchecked');
+		if (typeof un_val === 'undefined')
+			un_val = '';
+		return $obj.prop('checked') ? val : un_val;
+	} else {
+		return val;
+	}
 };
 
-//alternative function to close a facebox through a trigger
+// alternative function to close a facebox through a trigger
 function closeTnC() {
-    jQuery(document).trigger('close.facebox');
+	jQuery(document).trigger('close.facebox');
 }
 
 /**
  * close term and conditions dialog
  */
 function closeTnCAccept() {
-    jQuery(document).trigger('close.facebox');
-    jQuery('#terms-and-conditions').attr('checked', true);
+	jQuery(document).trigger('close.facebox');
+	jQuery('#terms-and-conditions').attr('checked', true);
 }
 
 /**
  * Try to set the default value for timezone on last step
  */
 function get_time_zone_offset() {
-    var current_date = new Date();
-    var gmt_offset = (current_date.getTimezoneOffset() * -1) / 60;
-    return gmt_offset;
+	var current_date = new Date();
+	var gmt_offset = (current_date.getTimezoneOffset() * -1) / 60;
+	return gmt_offset;
 }
 
+/*
+ * Set up security token
+ */
+function regenerate_token() {
+	// regenerate token to avoid getting security errors
+	if (jQuery('#token').exists()) {
+
+		jQuery.getJSON(sr_path_php
+				+ "/php/index.php?op=regenerate_security_token",
+
+		function(json) {
+			jQuery('#token').val(json.token);
+		});
+
+	}
+}
 
 /**
  * Clear errors
  */
 function clear_errors() {
 
-    if (jQuery('.sr-error-label').exists()) {
-        jQuery('.sr-error-label').empty();
-    }
+	if (jQuery('.sr-error-label').exists()) {
+		jQuery('.sr-error-label').empty();
+	}
 
-    if (jQuery('.large-sr-input-error-container').exists()) {
-        jQuery('.large-sr-input-error-container').removeClass("large-sr-input-error-container");
-    }
+	if (jQuery('.large-sr-input-error-container').exists()) {
+		jQuery('.large-sr-input-error-container').removeClass(
+				"large-sr-input-error-container");
+	}
 
-    if (jQuery('.sr-input-error-container').exists()) {
-        jQuery('.sr-input-error-container').removeClass("sr-input-error-container");
-    }
+	if (jQuery('.sr-input-error-container').exists()) {
+		jQuery('.sr-input-error-container').removeClass(
+				"sr-input-error-container");
+	}
 
-    if (jQuery('.terms-and-conditions-sr-input-error-container').exists()) {
-        jQuery('.terms-and-conditions-sr-input-error-container').removeClass("terms-and-conditions-sr-input-error-container");
-    }
+	if (jQuery('.terms-and-conditions-sr-input-error-container').exists()) {
+		jQuery('.terms-and-conditions-sr-input-error-container').removeClass(
+				"terms-and-conditions-sr-input-error-container");
+	}
 
-    if (jQuery('span.add-on').exists()) {
-        jQuery('span.add-on').removeClass("sr-input-error");
-    }
+	if (jQuery('span.add-on').exists()) {
+		jQuery('span.add-on').removeClass("sr-input-error");
+	}
 
-    if (jQuery('.sr-input-error').exists()) {
-        jQuery('.sr-input-error').removeClass("sr-input-error");
-    }
+	if (jQuery('.sr-input-error').exists()) {
+		jQuery('.sr-input-error').removeClass("sr-input-error");
+	}
 
 }
-
 
 /**
  * Show spinners
  */
 function initialize_spinner() {
-    if (jQuery('#ajax-loader').exists()) {
-        jQuery('#ajax-loader').empty();
-        jQuery('#ajax-loader').append(spinner);
-    }
+	if (jQuery('#ajax-loader').exists()) {
+		jQuery('#ajax-loader').empty();
+		jQuery('#ajax-loader').append(spinner);
+	}
 }
 
-
 /**
- *   AJAX error handling ACP-455
- **/
-jQuery.ajaxSetup({
+ * AJAX error handling ACP-455
+ */
+jQuery
+		.ajaxSetup({
 
-    beforeSend: function(xhr){
-    
-    },
-    error: function (jqXHR, exception) {
-        if (jQuery('#ajax-spinner').exists()) {
-            jQuery('#ajax-spinner').remove();
-        }
+			beforeSend : function(xhr) {
 
-        if (jqXHR.status === 0) {
-            msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';
-        } else if (jqXHR.status == 404) {
-            msg = 'Please try again later.\n Requested page not found. [404]';
-        } else if (jqXHR.status == 500) {
-            msg = 'Please try again later.\n Internal Server Error [500].';
-        } else if (exception === 'parsererror') {
+			},
+			error : function(jqXHR, exception) {
+				if (jQuery('#ajax-spinner').exists()) {
+					jQuery('#ajax-spinner').remove();
+				}
 
-            var ct = jqXHR.getResponseHeader("content-type") || "";
+				if (jqXHR.status === 0) {
+					msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';
+				} else if (jqXHR.status == 404) {
+					msg = 'Please try again later.\n Requested page not found. [404]';
+				} else if (jqXHR.status == 500) {
+					msg = 'Please try again later.\n Internal Server Error [500].';
+				} else if (exception === 'parsererror') {
 
-            if (ct != "application/json") {
-                var xml = jqXHR.responseText,
-                    xmlDoc = $.parseXML(xml),
-                    $xml = $(xmlDoc),
-                    $error = $xml.find("error");
+					var ct = jqXHR.getResponseHeader("content-type") || "";
 
-                msg = $error.text();
-            } else {
-                msg = 'Please try again later.\n Requested JSON parse failed.';
-            }
+					if (ct != "application/json") {
+						var xml = jqXHR.responseText, xmlDoc = $.parseXML(xml), $xml = $(xmlDoc), $error = $xml
+								.find("error");
 
+						msg = $error.text();
+					} else {
+						msg = 'Please try again later.\n Requested JSON parse failed.';
+					}
 
-        } else if (exception === 'timeout') {
-            msg = 'Please try again later.\n Time out error.';
-        } else if (exception === 'abort') {
-            msg = 'Please try again later.\n Ajax request aborted.';
-        } else {
-            msg = 'Please try again later.\n Uncaught Error.\n' + jqXHR.responseText;
-        }
+				} else if (exception === 'timeout') {
+					msg = 'Please try again later.\n Time out error.';
+				} else if (exception === 'abort') {
+					msg = 'Please try again later.\n Ajax request aborted.';
+				} else {
+					msg = 'Please try again later.\n Uncaught Error.\n'
+							+ jqXHR.responseText;
+				}
 
+				if (!bootbox) {
+					jQuery.getScript(sr_path_js + "/js/bootbox.min.js",
+							function() {
+							});
+				}
 
-        if (msg) {
-            bootbox.alert(msg);
-        }
+				if (msg) {
+					bootbox.alert(msg);
+				}
 
-
-    }
-});
+			}
+		});
 
 
  
@@ -179,9 +192,9 @@ jQuery.ajaxSetup({
  */
 jQuery(document).ready(function (jQuery) {
 
-    //jQuery(':input[placeholder]').placeholder();
+    // jQuery(':input[placeholder]').placeholder();
 
-    //try to automatically assign timezone
+    // try to automatically assign timezone
     if (jQuery("#timezone").exists()) {
         try {
             jQuery("#timezone").val(get_time_zone_offset());
@@ -266,20 +279,7 @@ jQuery(document).ready(function (jQuery) {
     }
 
 
-    //regenerate token to avoid getting security errors
-    if (jQuery('#token').exists()) {
-        jQuery(function () {
-            function update() {
-                jQuery.getJSON(sr_path_php + "/php/index.php?op=regenerate_security_token",
 
-                function (json) {
-                    jQuery('#token').val(json.token);
-                });
-            }
-            setInterval(update, 50000);
-            update();
-        });
-    }
 
     //refresh captcha on click
     if (jQuery('#refresh-captcha').exists()) {
@@ -295,6 +295,7 @@ jQuery(document).ready(function (jQuery) {
                 beforeSend: function () {
                     jQuery('#ajax-loader-secondary').empty();
                     jQuery('#ajax-loader-secondary').append(spinner_secondary);
+                    regenerate_token();
 
                 },
                 success: function (response) {
@@ -382,6 +383,7 @@ jQuery(document).ready(function (jQuery) {
                 jQuery("#progress-indicator-container").addClass("progress-striped active");
 
                 initialize_spinner();
+                regenerate_token();
             },
             success: function (response) {
                 if (jQuery('#ajax-spinner').exists()) {
@@ -483,6 +485,7 @@ jQuery(document).ready(function (jQuery) {
                 data: 'username=' + username + '&password=' + password + '&confirm_password=' + confirm_password + '&security_code=' + security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken=' + token + '&parent-guardian-email='+parent_guardian_email,
                 beforeSend: function () {
                     initialize_spinner();
+                    regenerate_token();
                 },
                 success: function (response) {
 
@@ -572,6 +575,7 @@ jQuery(document).ready(function (jQuery) {
                 beforeSend: function () {
                     jQuery('#ajax-loader-secondary').empty();
                     jQuery('#ajax-loader-secondary').append(spinner_secondary);
+                    regenerate_token();
                 },
                 success: function (response, status, xhr) {
 
@@ -638,6 +642,7 @@ jQuery(document).ready(function (jQuery) {
                 beforeSend: function () {
                     jQuery('#sr-email-sent').empty();
                     initialize_spinner();
+                    regenerate_token();
                 },
                 success: function (response) {
                     if (jQuery('#ajax-spinner').exists()) {
@@ -695,6 +700,7 @@ jQuery(document).ready(function (jQuery) {
                     if (jQuery('#ajax-loader').exists()) {
                         initialize_spinner();
                     }
+                    regenerate_token();
                 },
                 success: function (response) {
                     if (response.valid_entries == false) {
@@ -776,6 +782,7 @@ jQuery(document).ready(function (jQuery) {
                     if (jQuery('#ajax-loader').exists()) {
                         jQuery('#ajax-loader').append(spinner);
                     }
+                    regenerate_token();
                 },
                 success: function (response) {
                     if (response.valid_entries == false) {
@@ -853,6 +860,7 @@ jQuery(document).ready(function (jQuery) {
                     if (jQuery('#ajax-loader-secondary').exists()) {
                         jQuery('#ajax-loader-secondary').append(spinner_secondary);
                     }
+                    regenerate_token();
                 },
                 success: function (response, status, xhr) {
 
