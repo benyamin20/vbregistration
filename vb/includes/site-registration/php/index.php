@@ -397,8 +397,7 @@ case 'validate_site_account_details':
 							'security_code' => TYPE_STR,
 							'terms_and_conditions' => TYPE_INT));
 
-	if (empty($vbulletin->GPC['password'])
-			|| $vbulletin->GPC['password'] == md5("")) {
+	if (empty($vbulletin->GPC['password']) || $vbulletin->GPC['password'] == md5("")) {
 
 		$valid_entries = FALSE;
 		//$userdata->error('enter_password_for_account');
@@ -408,8 +407,7 @@ case 'validate_site_account_details':
 		//fetch_phrase('enter_password_for_account', 'global');
 	}
 
-	if (empty($vbulletin->GPC['confirm_password'])
-			|| $vbulletin->GPC['confirm_password'] == md5("")) {
+	if (empty($vbulletin->GPC['confirm_password']) || $vbulletin->GPC['confirm_password'] == md5("")) {
 		unset($userdata->errors);
 		$valid_entries = FALSE;
 		//$userdata->error('enter_password_for_account');
@@ -474,7 +472,11 @@ case 'validate_site_account_details':
 
 	unset($userdata->errors);
 
+<<<<<<< HEAD
 	//ACP-494 decode js escaped unicode characters
+=======
+	//ACP-494 decode js escaped unicode characters	
+>>>>>>> c7a3d94c7abfb37c207efd816ce5dd6c44dc2656
 	$username = $vbulletin->GPC['username'];
 	if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
 		$valid_entries = FALSE;
@@ -491,9 +493,7 @@ case 'validate_site_account_details':
 
 	} else {
 
-	}
-
-	$username4 = $vbulletin->GPC['username'];
+	}	
 
 	//check if username already exists on DB
 	/*$user_exists = $db
@@ -748,9 +748,7 @@ case 'validate_site_account_details':
 	}
 
 	$arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-			"url" => $url, "GPC_username" => $vbulletin->GPC['username'],
-			"username" => $username, "username3" => $username3,
-			"username4" => $username4, "time" => time());
+			"url" => $url, "username" => $username, "time" => time());
 
 	json_headers($arr);
 
