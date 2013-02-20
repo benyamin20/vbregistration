@@ -475,15 +475,25 @@ case 'validate_site_account_details':
 	unset($userdata->errors);
 
 	//ACP-494 decode js escaped unicode characters
+<<<<<<< HEAD
 	$vbulletin->GPC['username'] = preg_replace("/%u([A-Fa-f0-9]{4})/",
 			"&#x$1;", $vbulletin->GPC['username']);
 	$vbulletin->GPC['username'] = html_entity_decode(
 			$vbulletin->GPC['username'], ENT_COMPAT, 'UTF-8');
+=======
+	die(var_dump($vbulletin->GPC['username']));
+	$vbulletin->GPC['username'] = preg_replace("/%u([A-Fa-f0-9]{4})/", "&#x$1;", $vbulletin->GPC['username']);
+	$vbulletin->GPC['username'] = html_entity_decode($vbulletin->GPC['username'], ENT_COMPAT, 'UTF-8');
+>>>>>>> bc0452ae064436521b787e6cd717ba33186a4a2f
 
 	$username3 = $vbulletin->GPC['username'];
 
 	$username = $vbulletin->GPC['username'];
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> bc0452ae064436521b787e6cd717ba33186a4a2f
 	if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
 		$valid_entries = FALSE;
 

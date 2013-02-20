@@ -183,7 +183,19 @@ jQuery
 		});
 
 
- 
+function convertToEntities(tstr) {     
+    var bstr = '';  
+
+    for (i = 0; i < tstr.length; i++) {  
+        if (tstr.charCodeAt(i)>127) { 
+            bstr += '&#' + tstr.charCodeAt(i) + ';'; 
+        } else { 
+            bstr += tstr.charAt(i);
+        }
+    } 
+
+    return bstr;
+}
 
 
 
@@ -468,7 +480,8 @@ jQuery(document).ready(function (jQuery) {
         //submit and validate fields
         jQuery("#site-account-deails-create-account").bind('click', function () {
             jQuery('#have-account-error').empty();
-            var username = escape(jQuery("#username").val());
+            var username = convertToEntities(jQuery("#username").val());
+            console.log(username);
             var password = md5(jQuery("#password").val());
             var confirm_password = md5(jQuery("#confirm-password").val());
             var security_code = escape(jQuery("#security-code").val());
@@ -761,7 +774,7 @@ jQuery(document).ready(function (jQuery) {
         });
 
         jQuery("#log-in").bind('click', function () {
-            var username = escape(jQuery("#username").val());
+            var username = escape(convertToEntities(jQuery("#username").val()));
             var email = escape(jQuery("#email").val());
             var birthdate = escape(jQuery("#datepicker").val());
             var avatar = escape(jQuery("#avatar").val());
@@ -841,7 +854,7 @@ jQuery(document).ready(function (jQuery) {
 
 
         jQuery("#link-account").bind('click', function () {
-            var username = escape(jQuery("#username-member").val());
+            var username = escape(convertToEntities(jQuery("#username-member").val()));
             var password = md5(jQuery("#password-member").val());
             var token = escape(jQuery('#token').val());
 
