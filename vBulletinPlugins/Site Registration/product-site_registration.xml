@@ -123,10 +123,12 @@ $stylevar[htmldoctype]
     <!-- /head include -->
     
     
-    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">  
+    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/bootstrap/css/bootstrap-fileupload.min.css?v=$vboptions[simpleversion]">
     <!-- site registration includes -->
     $site_reg_includes
     <!-- /site registration includes -->
+    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/css/custom_fields.css?v=$vboptions[simpleversion]">    
+    
     <script src="$vboptions[site_registration_includes_path_js]/js/jquery.form.js?v=$vboptions[simpleversion]"></script>
     <script src="$vboptions[site_registration_includes_path_js]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script>
 
@@ -180,9 +182,6 @@ $stylevar[htmldoctype]
 				</div>
 				
 				<div class="">
-				<!--
-				    sr-margin_left_20
-				-->
 					<div class="">
 					    <h1 id="show-great"></h1>
 						<div class="clear sr-clear_10"></div> 
@@ -275,10 +274,11 @@ $stylevar[htmldoctype]
                             <span class="sr-error-label" id="timezone-sr-error-label"></span>
                         </div><!--  /Timezone -->
  
-						<!-- Secret inputs  -->
+						<!-- custom inputs  -->
 
 						<div class="clear"></div> 
 						<div class="clear"></div>
+						<!--
 						<div id="secret_question-wrapper">
 						<label for="secret_question">Secret Question</label>
 						    <input type="text" id="secret_question" name="secret_question"
@@ -292,10 +292,14 @@ $stylevar[htmldoctype]
 							title="Secret Aswer" value="" />
 							<span class="sr-error-label" id="secret_answer-sr-error-label"></span>
                         </div>
+                        -->
+                        
+                        $profile_variable
                         
                         <!--  Contact check boxes -->
 
 						<div class="clear"></div>
+						<div class="clear sr-clear_10"></div>
 						<label>Who can contact you?</label>
 						<div class="clear"></div>
 						<label class="checkbox"> 
@@ -1523,7 +1527,7 @@ $stylevar[htmldoctype]
                         }
                     
                         // delete activationid
-
+                        /*
                         $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -1541,6 +1545,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
+                         */
 
                          $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
                          cache_permissions($userinfo, false); 
@@ -1557,6 +1562,10 @@ $stylevar[htmldoctype]
 	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
 	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
                         }
+                        
+                        //ACP-503
+                        //show custom profile fields
+                        require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
   
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
@@ -2038,7 +2047,7 @@ $stylevar[htmldoctype]
 	                
 	                    //delete pending activation code and show activation
 	                    //home page
-
+                        /*
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -2056,7 +2065,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
-
+                        */
                         
                         //fixes birthday to be able to search it on  table
                         $birthday = preg_replace("/\-/","/", $birthday);
@@ -2142,6 +2151,10 @@ $stylevar[htmldoctype]
 			            $userinfo = fetch_userinfo($vbulletin->userinfo['userid']);
 			            $userdata->set_existing($userinfo);
 			            $userdata->send_welcomepm();
+			            
+			            //ACP-503
+			            //show custom profile fields
+                        require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
 	 
                  
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');

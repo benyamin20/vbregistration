@@ -41,6 +41,7 @@ $op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
+// generate thumbnail for IE
 case 'generate_thumbnail':
 	$vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
 
@@ -115,8 +116,10 @@ case 'generate_thumbnail':
 
 	break;
 
+//show thumbnail for IE
 case 'show_thumbnail':
 	$vbulletin->input->clean_array_gpc('g', array('id' => TYPE_STR));
+	$gd = false;
 
 	if ($vbulletin->options['safeupload']) {
 		$tmpdir = $vbulletin->options['tmppath'];
@@ -124,16 +127,28 @@ case 'show_thumbnail':
 		$tmpdir = sys_get_temp_dir();
 	}
 
+	if (extension_loaded('gd') && function_exists('gd_info')) {
+		$gd = true;
+	}
+
 	$uploaded = $tmpdir . DIRECTORY_SEPARATOR . $vbulletin->GPC['id'];
 
 	$sImage = $uploaded;
 
-	$info = getimagesize($uploaded);
-	$mime = image_type_to_mime_type($info[2]);
-	header("Content-Type: $mime");
-	header("Content-Length: " . filesize($sImage));
+	if ($gd) {
+		$im = thumbnail($sImage, 100);
+		header('Content-Type: image/jpeg');
+		imageToFile($im, $sImage . '-temp-thumbnail.jpg');
+		echo file_get_contents($sImage . '-temp-thumbnail.jpg');
+		imagedestroy($im);
+	} else {
+		$info = getimagesize($uploaded);
+		$mime = image_type_to_mime_type($info[2]);
+		header("Content-Type: $mime");
+		header("Content-Length: " . filesize($sImage));
 
-	echo file_get_contents($sImage);
+		echo file_get_contents($sImage);
+	}
 
 	break;
 
@@ -200,33 +215,9 @@ case 'complete_your_profile':
 							'receive_emails_from_administrators' => TYPE_STR,
 							'receive_emails_from_other_members' => TYPE_STR,
 							'timezone' => TYPE_STR,
-							'use_default_image' => TYPE_STR));
+							'use_default_image' => TYPE_STR,
+							'userfield' => TYPE_ARRAY));
 
-	if (!empty($vbulletin->GPC['secret_question'])) {
-		if (empty($vbulletin->GPC['secret_answer'])) {
-			$valid_entries = FALSE;
-			$user_data->error('fieldmissing');
-			$error_type = "secret_answer";
-			$messages['fields'][] = $error_type;
-			$messages['errors'][] = "Please enter a secret answer";
-		}
-	} else {
-
-	}
-
-	if (!empty($vbulletin->GPC['secret_answer'])) {
-
-		if (empty($vbulletin->GPC['secret_question'])) {
-			$valid_entries = FALSE;
-			$user_data->error('fieldmissing');
-			$error_type = "secret_question";
-			$messages['fields'][] = $error_type;
-			$messages['errors'][] = "Please enter a secret question.";
-		}
-
-	} else {
-
-	}
 
 	if (empty($vbulletin->GPC['timezone'])) {
 		$valid_entries = FALSE;
@@ -317,70 +308,55 @@ case 'complete_your_profile':
 		$userpic->delete();
 	}
 
+
+
+	if (!isset($userdata)) {
+		$userdata = &datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
+		$vbulletin->userinfo = fetch_userinfo($userid);
+		$userdata->set_existing($vbulletin->userinfo);
+	}
+
+	//update who can contact you
+	$userdata->set_bitfield('options', "adminemail", $adminemail);
+	$userdata->set_bitfield('options', "showemail", $showemail);
+
+	// update avatar and timezone
+	$userdata->set('avatarid', $vbulletin->GPC['avatarid']);
+	$userdata->set('timezoneoffset', $vbulletin->GPC['timezone']);
+
+	// set profile fields
+	$customfields = $userdata
+			->set_userfields($vbulletin->GPC['userfield'], true, 'register');
+
+
+	// pre save fields
+	try{
+		$userdata->pre_save();
+	}catch(Exception $e){
+
+	}
+
+
+	// check for errors
+	if (!empty($userdata->errors)) {
+		$valid_entries = FALSE;
+
+		foreach ($userdata->errors AS $index => $error) {
+			$messages['fields'][] = $index;
+			$messages['errors'][] = $error;
+		}
+
+	} else {
+		$valid_entries = TRUE;
+	}
+
 	if ($valid_entries) {
-
-		if (!empty($vbulletin->GPC['secret_question'])
-				&& !empty($vbulletin->GPC['secret_answer'])) {
-			//update secret question and secret answer
-			$temp_table_query = "
-                CREATE  TABLE IF NOT EXISTS " . TABLE_PREFIX
-					. "siteregistration_security_details (
-                    userid INT(128) NOT NULL,
-                    question VARCHAR(255) NOT NULL,
-                    answer VARCHAR(255) NOT NULL
-                )";
-
-			$vbulletin->db->query_write($temp_table_query);
-
-			$userid = $_SESSION['site_registration']['userid'];
-			$question = $vbulletin->GPC['secret_question'];
-			$answer = $vbulletin->GPC['secret_answer'];
-			$salt = $vbulletin->db->escape_string($vbulletin->userinfo['salt']);
-
-			/*insert query*/
-			$vbulletin->db
-					->query_write(
-							"
-                REPLACE INTO " . TABLE_PREFIX
-									. "siteregistration_security_details
-                (userid,question,answer)
-                VALUES
-                (   '" . $vbulletin->db->escape_string($userid)
-									. "',
-                    AES_ENCRYPT('" . $vbulletin->db->escape_string($question)
-									. "','" . $salt
-									. "'),
-                    AES_ENCRYPT('" . $vbulletin->db->escape_string($answer)
-									. "','" . $salt
-									. "')
-                 )
-            ");
-		}
-
-		//update who can contact you
-
-		if (!isset($userdata)) {
-			$userdata = &datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
-			$vbulletin->userinfo = fetch_userinfo($userid);
-			$userdata->set_existing($vbulletin->userinfo);
-		}
-
-		$userdata->set_bitfield('options', "adminemail", $adminemail);
-		$userdata->set_bitfield('options', "showemail", $showemail);
-
-		$userdata->set('avatarid', $vbulletin->GPC['avatarid']);
-		$userdata->set('timezoneoffset', $vbulletin->GPC['timezone']);
-
+		//data is valid save it
 		$userdata->save();
 
 		//start new session
 		if (!isset($vbulletin->userinfo)) {
-			$vbulletin->userinfo = $vbulletin->db
-					->query_first(
-							"SELECT userid, usergroupid, membergroupids, infractiongroupids,
-                username, password, salt FROM " . TABLE_PREFIX
-									. "user
-                WHERE userid = " . $userid);
+			$vbulletin->userinfo = $userinfo = fetch_userinfo($userid);
 		}
 
 		require_once(DIR . '/includes/functions_login.php');
@@ -498,14 +474,16 @@ case 'validate_site_account_details':
 
 	unset($userdata->errors);
 
-	//ACP-494 decode js escaped unicode characters	
-	$vbulletin->GPC['username'] = preg_replace("/%u([A-Fa-f0-9]{4})/", "&#x$1;", $vbulletin->GPC['username']);
+	//ACP-494 decode js escaped unicode characters
+	$vbulletin->GPC['username'] = preg_replace("/%u([A-Fa-f0-9]{4})/",
+			"&#x$1;", $vbulletin->GPC['username']);
+	$vbulletin->GPC['username'] = html_entity_decode(
+			$vbulletin->GPC['username'], ENT_COMPAT, 'UTF-8');
 
-	$vbulletin->GPC['username'] = mb_convert_encoding($vbulletin->GPC['username'], 'UTF-8', 'HTML-ENTITIES');	
+	$username3 = $vbulletin->GPC['username'];
 
 	$username = $vbulletin->GPC['username'];
 
-	die(var_dump($username));
 	if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
 		$valid_entries = FALSE;
 
@@ -1476,8 +1454,6 @@ case 'activate':
 		$valid_entries = TRUE;
 		$message = "OK";
 
-
-
 		$token = md5(uniqid(microtime(), true));
 		$token_time = time();
 		$form = "site-account-details";
@@ -1687,7 +1663,6 @@ case "linkaccount":
 						$userpic->delete();
 					}
 
-
 					$nonvbid = $fbID;
 
 					$sql = "SELECT activationid FROM useractivation WHERE userid = '"
@@ -1778,3 +1753,4 @@ case "linkaccount":
 	break;
 
 }
+
