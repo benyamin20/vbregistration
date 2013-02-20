@@ -339,6 +339,8 @@ case 'complete_your_profile':
 		foreach ($userdata_save->errors AS $index => $error) {
 			$messages['fields'][] = $index;
 			$messages['errors'][] = $error;
+
+			$messages['raw'] = var_export($userdata_save->errors, true);
 		}
 
 	} else {
