@@ -310,38 +310,33 @@ case 'complete_your_profile':
 
 
 
-	if (!isset($userdata)) {
-		$userdata = &datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
-		$vbulletin->userinfo = fetch_userinfo($userid);
-		$userdata->set_existing($vbulletin->userinfo);
-	}
+
+	$userdata_save = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+	$vbulletin->userinfo = fetch_userinfo($userid);
+	$userdata_save->set_existing($vbulletin->userinfo);
+
 
 	//update who can contact you
-	$userdata->set_bitfield('options', "adminemail", $adminemail);
-	$userdata->set_bitfield('options', "showemail", $showemail);
+	$userdata_save->set_bitfield('options', "adminemail", $adminemail);
+	$userdata_save->set_bitfield('options', "showemail", $showemail);
 
 	// update avatar and timezone
-	$userdata->set('avatarid', $vbulletin->GPC['avatarid']);
-	$userdata->set('timezoneoffset', $vbulletin->GPC['timezone']);
+	$userdata_save->set('avatarid', $vbulletin->GPC['avatarid']);
+	$userdata_save->set('timezoneoffset', $vbulletin->GPC['timezone']);
 
 	// set profile fields
-	$customfields = $userdata
+	$customfields = $userdata_save
 			->set_userfields($vbulletin->GPC['userfield'], true, 'register');
 
 
 	// pre save fields
-	try{
-		$userdata->pre_save();
-	}catch(Exception $e){
-
-	}
-
+ 	$userdata_save->pre_save();
 
 	// check for errors
-	if (!empty($userdata->errors)) {
+ 	if (!empty($userdata_save->errors)) {
 		$valid_entries = FALSE;
 
-		foreach ($userdata->errors AS $index => $error) {
+		foreach ($userdata_save->errors AS $index => $error) {
 			$messages['fields'][] = $index;
 			$messages['errors'][] = $error;
 		}
@@ -352,7 +347,7 @@ case 'complete_your_profile':
 
 	if ($valid_entries) {
 		//data is valid save it
-		$userdata->save();
+		$userdata_save->save();
 
 		//start new session
 		if (!isset($vbulletin->userinfo)) {
@@ -472,11 +467,8 @@ case 'validate_site_account_details':
 
 	unset($userdata->errors);
 
-<<<<<<< HEAD
+
 	//ACP-494 decode js escaped unicode characters
-=======
-	//ACP-494 decode js escaped unicode characters	
->>>>>>> c7a3d94c7abfb37c207efd816ce5dd6c44dc2656
 	$username = $vbulletin->GPC['username'];
 	if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
 		$valid_entries = FALSE;
@@ -493,7 +485,7 @@ case 'validate_site_account_details':
 
 	} else {
 
-	}	
+	}
 
 	//check if username already exists on DB
 	/*$user_exists = $db
@@ -1743,4 +1735,3 @@ case "linkaccount":
 	break;
 
 }
-
