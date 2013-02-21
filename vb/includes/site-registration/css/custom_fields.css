@@ -21,7 +21,8 @@ legend{
 }
 
 input[type="radio"]{
-    vertical-align: text-bottom;
+    margin: 2px;
+    vertical-align: middle;
 }
 
 

@@ -71,13 +71,14 @@ function get_time_zone_offset() {
  */
 function regenerate_token() {
 	// regenerate token to avoid getting security errors
-	if (jQuery('#token').exists()) {
+	if (jQuery('#token').exists() || jQuery('#securitytoken').exists()) {
 
 		jQuery.getJSON(sr_path_php
 				+ "/php/index.php?op=regenerate_security_token",
 
 		function(json) {
-			jQuery('#token').val(json.token);
+			jQuery('#token').val(json.token)
+					|| jQuery('#securitytoken').val(json.token);
 		});
 
 	}
@@ -336,7 +337,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery("input[name=use_default_image]").val("true");
 
             //change image preview thumb
-            jQuery("#selected-avatar").attr("src", "images/misc/unknown.gif");
+            jQuery("#selected-avatar").attr("src", sr_path_img + "/images/misc/unknown.gif");
         });
 
 
@@ -351,7 +352,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery("input[name=use_default_image]").val("true");
 
             //change image preview thumb
-            jQuery("#selected-avatar").attr("src", "images/misc/unknown.gif");
+            jQuery("#selected-avatar").attr("src", sr_path_img + "/images/misc/unknown.gif");
             jQuery("#upload-sr-error-label").empty();
             jQuery("#upload-wrapper").removeClass("terms-and-conditions-sr-input-error-container");
         });
@@ -392,6 +393,7 @@ jQuery(document).ready(function (jQuery) {
                 initialize_spinner();
                 regenerate_token();
                 
+                //remove wrapper for custom fields
                 jQuery('input[name^="userfield"]').unwrap();
             },
             success: function (response) {
@@ -400,6 +402,7 @@ jQuery(document).ready(function (jQuery) {
                 }
 
                 if (response.valid_entries == false) {
+                	//stop animated progress bar
                     jQuery("#progress-indicator-container").removeClass("progress-striped active");
 
                     clear_errors();
@@ -408,17 +411,25 @@ jQuery(document).ready(function (jQuery) {
 
                     jQuery.each(response.messages.fields, function (index, value) {
                     	
+                    	//upload might need a different error container
                         if (value == 'upload') {
                             jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
                         } else {
+                        	//handle custom field errors
                         	if(value.indexOf(pattern) !=-1){
                         		jQuery('[name="' + value + '"]').addClass("sr-input-error");
+                        		jQuery('[name="' + value + '"]')
+                        			.wrap('<div class="large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
                         		
-                        		if(jQuery("#" + value + "-sr-error-label").exists()){
-                        			alert(1);
+                        		if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
+	                    			jQuery('[name="' + value + '"]')
+		                    			.after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
+	                    			
+	                    			jQuery('[id="' + value + '-sr-error-label"]')	
+	                    				.html('Required field missing or has an invalid value.');	
                         		}
                         		
-                        		jQuery('[name="' + value + '"]').wrap('<div class="large-sr-input-error-container" id="' + value + '-sr-error-label" />');
+                        		
                         	}else{
                         		jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
                         	}
