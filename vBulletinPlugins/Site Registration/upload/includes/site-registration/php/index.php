@@ -340,8 +340,10 @@ case 'complete_your_profile':
 			$messages['fields'][] = $index;
 			$messages['errors'][] = $error;
 
-			$messages['raw'] = var_export($userdata_save->errors, true);
+
 		}
+
+		$messages['raw'] = var_export($userdata_save->errors, true);
 
 	} else {
 		$valid_entries = TRUE;

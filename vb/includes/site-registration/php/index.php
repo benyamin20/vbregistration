@@ -316,7 +316,7 @@ case 'complete_your_profile':
 	$userdata_save->set_existing($vbulletin->userinfo);
 
 
-	//update who can contact you
+	// update who can contact you
 	$userdata_save->set_bitfield('options', "adminemail", $adminemail);
 	$userdata_save->set_bitfield('options', "showemail", $showemail);
 
@@ -340,8 +340,10 @@ case 'complete_your_profile':
 			$messages['fields'][] = $index;
 			$messages['errors'][] = $error;
 
-			$messages['raw'] = var_export($userdata_save->errors, true);
+
 		}
+
+		$messages['raw'] = var_export($userdata_save->errors, true);
 
 	} else {
 		$valid_entries = TRUE;
