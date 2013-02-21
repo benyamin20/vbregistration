@@ -480,7 +480,7 @@ jQuery(document).ready(function (jQuery) {
         //submit and validate fields
         jQuery("#site-account-deails-create-account").bind('click', function () {
             jQuery('#have-account-error').empty();
-            var username = convertToEntities(jQuery("#username").val());
+            var username = escape(convertToEntities(jQuery("#username").val()));
             console.log(username);
             var password = md5(jQuery("#password").val());
             var confirm_password = md5(jQuery("#confirm-password").val());
