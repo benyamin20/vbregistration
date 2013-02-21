@@ -471,7 +471,7 @@ case 'validate_site_account_details':
 	//ACP-494 decode js escaped unicode characters
 	$username = $vbulletin->GPC['username'];
 	
-	/*if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
+	if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
 		$valid_entries = FALSE;
 
 		$error_type = "username";
@@ -484,8 +484,7 @@ case 'validate_site_account_details':
 			$messages['errors'][] = $userdata->errors[0];
 		}
 
-	} else {
-	}*/	
+	}
 
 	//check if username already exists on DB
 	/*$user_exists = $db
