@@ -337,13 +337,13 @@ case 'complete_your_profile':
 		$valid_entries = FALSE;
 
 		foreach ($userdata_save->errors AS $index => $error) {
-			$messages['fields'][] = $index;
-			$messages['errors'][] = $error;
-
-
+			$name = getTextBetweenTags($error, "em");
+			if(!empty($name)){
+				$field = "userfield[$name]";
+				$messages['fields'][] = $field;
+				$messages['errors'][] = $error;
+			}
 		}
-
-		$messages['raw'] = var_export($userdata_save->errors, true);
 
 	} else {
 		$valid_entries = TRUE;
@@ -474,7 +474,7 @@ case 'validate_site_account_details':
 
 	//ACP-494 decode js escaped unicode characters
 	$username = $vbulletin->GPC['username'];
-	
+
 	if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
 		$valid_entries = FALSE;
 

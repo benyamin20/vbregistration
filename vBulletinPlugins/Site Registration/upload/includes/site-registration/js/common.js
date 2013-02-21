@@ -188,7 +188,7 @@ function convertToEntities(tstr) {
 
     for (i = 0; i < tstr.length; i++) {  
         if (tstr.charCodeAt(i)>127) { 
-            bstr += '&#' + tstr.charCodeAt(i) + ';'; 
+            bstr += '\&#' + tstr.charCodeAt(i) + ';'; 
         } else { 
             bstr += tstr.charAt(i);
         }
@@ -377,25 +377,22 @@ jQuery(document).ready(function (jQuery) {
     //activates account on last step
     if (jQuery("#save-account-activated").exists()) {
  
+        //bind enter event to custom fields
+    	jQuery('input[name^="userfield"]').enterKey(function () {
+            jQuery("#save-account-activated").trigger('click');
+        });
  
-        //bind enter event to  fields
-        jQuery("#secret_question").enterKey(function () {
-            jQuery("#save-account-activated").trigger('click');
-        });
-
-        jQuery("#secret_answer").enterKey(function () {
-            jQuery("#save-account-activated").trigger('click');
-        });
-
         // prepare Options Object 
         var options = {
             type: 'POST',
             dataType: 'json',
-            beforeSubmit: function () {
+            beforeSend: function () {
                 jQuery("#progress-indicator-container").addClass("progress-striped active");
 
                 initialize_spinner();
                 regenerate_token();
+                
+                jQuery('input[name^="userfield"]').unwrap();
             },
             success: function (response) {
                 if (jQuery('#ajax-spinner').exists()) {
@@ -406,17 +403,31 @@ jQuery(document).ready(function (jQuery) {
                     jQuery("#progress-indicator-container").removeClass("progress-striped active");
 
                     clear_errors();
+                    
+                    var pattern="userfield";
 
                     jQuery.each(response.messages.fields, function (index, value) {
+                    	
                         if (value == 'upload') {
                             jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
                         } else {
-                            jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                        	if(value.indexOf(pattern) !=-1){
+                        		jQuery('[name="' + value + '"]').addClass("sr-input-error");
+                        		
+                        		if(jQuery("#" + value + "-sr-error-label").exists()){
+                        			alert(1);
+                        		}
+                        		
+                        		jQuery('[name="' + value + '"]').wrap('<div class="large-sr-input-error-container" id="' + value + '-sr-error-label" />');
+                        	}else{
+                        		jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                        	}
                         }
-
-                        jQuery('#' + value).addClass("sr-input-error");
+                        
+                    	jQuery('#' + value).addClass("sr-input-error");
                         jQuery('#' + value + '-sr-error-label').empty();
-                        jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
+                        jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);	
+
                     });
 
                 } else {
@@ -480,7 +491,7 @@ jQuery(document).ready(function (jQuery) {
         //submit and validate fields
         jQuery("#site-account-deails-create-account").bind('click', function () {
             jQuery('#have-account-error').empty();
-            var username = convertToEntities(jQuery("#username").val());
+            var username = escape(convertToEntities(jQuery("#username").val()));
             console.log(username);
             var password = md5(jQuery("#password").val());
             var confirm_password = md5(jQuery("#confirm-password").val());

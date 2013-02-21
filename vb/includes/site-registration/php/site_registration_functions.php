@@ -241,3 +241,12 @@ function imageToFile($im, $fileName, $quality = 75) {
 	return true;
 }
 
+
+
+
+function getTextBetweenTags($string, $tagname) {
+	$pattern = "/<$tagname ?.*>(.*)<\/$tagname>/";
+	preg_match($pattern, $string, $matches);
+	return $matches[1];
+}
+
