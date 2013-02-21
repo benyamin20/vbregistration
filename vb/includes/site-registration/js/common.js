@@ -188,7 +188,7 @@ function convertToEntities(tstr) {
 
     for (i = 0; i < tstr.length; i++) {  
         if (tstr.charCodeAt(i)>127) { 
-            bstr += '&#' + tstr.charCodeAt(i) + ';'; 
+            bstr += '\&#' + tstr.charCodeAt(i) + ';'; 
         } else { 
             bstr += tstr.charAt(i);
         }
