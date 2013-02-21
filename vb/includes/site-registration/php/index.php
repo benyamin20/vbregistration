@@ -474,6 +474,7 @@ case 'validate_site_account_details':
 
 	//ACP-494 decode js escaped unicode characters
 	$username = $vbulletin->GPC['username'];
+	
 	if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
 		$valid_entries = FALSE;
 
@@ -486,8 +487,6 @@ case 'validate_site_account_details':
 		} else {
 			$messages['errors'][] = $userdata->errors[0];
 		}
-
-	} else {
 
 	}
 
@@ -534,10 +533,8 @@ case 'validate_site_account_details':
 	}
 
 	if ($valid_entries) {
-		$_SESSION['site_registration']['username'] = $vbulletin
-				->GPC['username'];
-		$_SESSION['site_registration']['password'] = $vbulletin
-				->GPC['password'];
+		$_SESSION['site_registration']['username'] = $username;
+		$_SESSION['site_registration']['password'] = $password;
 
 		$token = md5(uniqid(microtime(), true));
 		$token_time = time();
@@ -549,7 +546,7 @@ case 'validate_site_account_details':
 		//Create Site Account in database
 
 		$userdata->set('email', $_SESSION['site_registration']['email']);
-		$userdata->set('username', $vbulletin->GPC['username']);
+		$userdata->set('username', $username);
 		$userdata->set('password', $_SESSION['site_registration']['password']);
 
 		//$userdata->set('referrerid', $vbulletin->GPC['referrername']);
@@ -664,8 +661,7 @@ case 'validate_site_account_details':
 
 		} else {
 			// save the data
-			$_SESSION['site_registration']['userid'] = $vbulletin
-					->userinfo['userid'] = $userid = $userdata->save();
+			$_SESSION['site_registration']['userid'] = $vbulletin->userinfo['userid'] = $userid = $userdata->save();
 
 			$userinfo = fetch_userinfo($userid);
 			$userdata_rank = &datamanager_init('User', $vbulletin,
@@ -698,7 +694,7 @@ case 'validate_site_account_details':
 
 			//Send Activation Email: Refer to Automated Emails
 			// send new user email
-			$username = $vbulletin->GPC['username'];
+			$username = $username;
 			$email = $_SESSION['site_registration']['email'];
 
 			if ($vbulletin->options['verifyemail']) {
