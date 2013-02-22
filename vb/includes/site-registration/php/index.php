@@ -1049,7 +1049,7 @@ default:
 		//check if username and password are valid
 		$vbulletin->input
 				->clean_array_gpc('p',
-						array('vb_login_username' => TYPE_NOHTML,
+						array('vb_login_username' => TYPE_STR,
 								'vb_login_password' => TYPE_STR,
 								'vb_login_md5password' => TYPE_STR,
 								'vb_login_md5password_utf' => TYPE_STR,
