@@ -398,7 +398,7 @@ jQuery(document).ready(function (jQuery) {
                 regenerate_token();
                 
                 //remove wrapper for custom fields
-                jQuery('input[name^="userfield"]').unwrap();
+                jQuery('[name^="userfield"]').unwrap();
             },
             success: function (response) {
                 if (jQuery('#ajax-spinner').exists()) {
