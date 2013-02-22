@@ -595,3 +595,9 @@ a.sr-link_blue, .info a, .popup a, a {
 a.move-to-top-avatar-upload {
     color: #333333;
 }
+
+.no-top-text-area{
+    top: -37px;
+    
+}
+

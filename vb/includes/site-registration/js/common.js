@@ -425,7 +425,7 @@ jQuery(document).ready(function (jQuery) {
 	                    			jQuery('[name="' + value + '"]')
 		                    			.after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
 	                    			
-	                    			jQuery('[id="' + value + '-sr-error-label"]')	
+	                    			jQuery('span[id="' + value + '-sr-error-label"]')	
 	                    				.html('Required field missing or has an invalid value.');	
                         		}
                         		
