@@ -499,22 +499,6 @@ case 'validate_site_account_details':
 	}
 
 	//check if username already exists on DB
-	/*$user_exists = $db
-	        ->query_first(
-	                "
-	    SELECT userid, username, email, languageid
-	    FROM " . TABLE_PREFIX . "user
-	    WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
-	                        . "'
-	");
-
-	if (!empty($user_exists['username'])) {
-	    $valid_entries = FALSE;
-	    $error_type = "username";
-	    $messages['fields'][] = $error_type;
-	    $messages['errors'][] = "Sorry, this username is already taken.";
-	    //fetch_error('usernametaken', $user_exists['username'], '');
-	}*/
 
 	if (fetch_require_hvcheck('register')) {
 		//check if CAPTCHA value is correct
