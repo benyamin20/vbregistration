@@ -598,7 +598,7 @@ jQuery(document).ready(function (jQuery) {
         //submit and validate authentication
         jQuery("#login-button").bind('click', function (e) {
             jQuery('#have-account-error').empty();
-            var username = jQuery("#username").val();
+            var username = escape(convertToEntities(jQuery("#username").val()));
             var password = md5(jQuery("#password").val());
             var s = '';
             var login = 'do';
