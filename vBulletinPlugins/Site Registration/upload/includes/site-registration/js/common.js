@@ -6,6 +6,9 @@ var spinner = '<img id="ajax-spinner" src="' + sr_path_img
 var spinner_secondary = '<img id="ajax-spinner-secondary" src="' + sr_path_img
 		+ '/img/ajax-loader.gif" />';
 
+jQuery.getScript(sr_path_js + "/js/bootbox.min.js", function() {
+});
+
 /**
  * check if something exists
  */
@@ -169,15 +172,11 @@ jQuery
 					msg = 'Please try again later.\n Uncaught Error.\n'
 							+ jqXHR.responseText;
 				}
-
-				if (!bootbox) {
-					jQuery.getScript(sr_path_js + "/js/bootbox.min.js",
-							function() {
-							});
-				}
-
-				if (msg) {
+ 
+				if (msg && bootbox) {
 					bootbox.alert(msg);
+				}else{
+					alert(msg);
 				}
 
 			}
