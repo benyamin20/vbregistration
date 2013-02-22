@@ -144,6 +144,10 @@ jQuery
                 if (jQuery('#ajax-spinner').exists()) {
                     jQuery('#ajax-spinner').remove();
                 }
+                
+                if (jQuery('#ajax-spinner-secondary').exists()) {
+                    jQuery('#ajax-spinner-secondary').remove();
+                }
 
                 if (jqXHR.status === 0) {
                     msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';

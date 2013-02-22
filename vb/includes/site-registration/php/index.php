@@ -137,9 +137,15 @@ case 'show_thumbnail':
 
 	if ($gd) {
 		$im = thumbnail($sImage, 100);
-		header('Content-Type: image/jpeg');
-		imageToFile($im, $sImage . '-temp-thumbnail.jpg');
-		echo file_get_contents($sImage . '-temp-thumbnail.jpg');
+		$info = getimagesize($sImage);
+		$mime = image_type_to_mime_type($info[2]);
+		header("Content-Type: $mime");
+		header("Content-Length: " . filesize($sImage));
+
+		$ext = strtolower(substr($sImage, strrpos($sImage, '.')));
+
+		imageToFile($im, $sImage . '-temp-thumbnail.' . $ext);
+		echo file_get_contents($sImage . '-temp-thumbnail.' . $ext);
 		imagedestroy($im);
 	} else {
 		$info = getimagesize($uploaded);
@@ -1049,7 +1055,7 @@ default:
 		//check if username and password are valid
 		$vbulletin->input
 				->clean_array_gpc('p',
-						array('vb_login_username' => TYPE_STR,
+						array('vb_login_username' => TYPE_NOHTML,
 								'vb_login_password' => TYPE_STR,
 								'vb_login_md5password' => TYPE_STR,
 								'vb_login_md5password_utf' => TYPE_STR,

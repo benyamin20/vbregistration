@@ -2,9 +2,9 @@ AJAX_Compatible = true;
 var md5_loaded = false;
 
 var spinner = '<img id="ajax-spinner" src="' + sr_path_img
-		+ '/img/ajax-loader.gif" />';
+        + '/img/ajax-loader.gif" />';
 var spinner_secondary = '<img id="ajax-spinner-secondary" src="' + sr_path_img
-		+ '/img/ajax-loader.gif" />';
+        + '/img/ajax-loader.gif" />';
 
 jQuery.getScript(sr_path_js + "/js/bootbox.min.js", function() {
 });
@@ -13,78 +13,78 @@ jQuery.getScript(sr_path_js + "/js/bootbox.min.js", function() {
  * check if something exists
  */
 jQuery.fn.exists = function() {
-	return this.length > 0;
+    return this.length > 0;
 };
 
 /**
  * bind function to check if enter is pressed
  */
 jQuery.fn.enterKey = function(fnc) {
-	return this.each(function() {
-		jQuery(this).keypress(function(ev) {
-			var keycode = (ev.keyCode ? ev.keyCode : ev.which);
-			if (keycode == '13') {
-				fnc.call(this, ev);
-			}
-		});
-	});
+    return this.each(function() {
+        jQuery(this).keypress(function(ev) {
+            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+            if (keycode == '13') {
+                fnc.call(this, ev);
+            }
+        });
+    });
 };
 
 /*
  * Get value from a checkbox
  */
 $.fn.realVal = function() {
-	var $obj = $(this);
-	var val = $obj.val();
-	var type = $obj.attr('type');
-	if (type && type === 'checkbox') {
-		var un_val = $obj.attr('data-unchecked');
-		if (typeof un_val === 'undefined')
-			un_val = '';
-		return $obj.prop('checked') ? val : un_val;
-	} else {
-		return val;
-	}
+    var $obj = $(this);
+    var val = $obj.val();
+    var type = $obj.attr('type');
+    if (type && type === 'checkbox') {
+        var un_val = $obj.attr('data-unchecked');
+        if (typeof un_val === 'undefined')
+            un_val = '';
+        return $obj.prop('checked') ? val : un_val;
+    } else {
+        return val;
+    }
 };
 
 // alternative function to close a facebox through a trigger
 function closeTnC() {
-	jQuery(document).trigger('close.facebox');
+    jQuery(document).trigger('close.facebox');
 }
 
 /**
  * close term and conditions dialog
  */
 function closeTnCAccept() {
-	jQuery(document).trigger('close.facebox');
-	jQuery('#terms-and-conditions').attr('checked', true);
+    jQuery(document).trigger('close.facebox');
+    jQuery('#terms-and-conditions').attr('checked', true);
 }
 
 /**
  * Try to set the default value for timezone on last step
  */
 function get_time_zone_offset() {
-	var current_date = new Date();
-	var gmt_offset = (current_date.getTimezoneOffset() * -1) / 60;
-	return gmt_offset;
+    var current_date = new Date();
+    var gmt_offset = (current_date.getTimezoneOffset() * -1) / 60;
+    return gmt_offset;
 }
 
 /*
  * Set up security token
  */
 function regenerate_token() {
-	// regenerate token to avoid getting security errors
-	if (jQuery('#token').exists() || jQuery('#securitytoken').exists()) {
+    // regenerate token to avoid getting security errors
+    if (jQuery('#token').exists() || jQuery('#securitytoken').exists()) {
 
-		jQuery.getJSON(sr_path_php
-				+ "/php/index.php?op=regenerate_security_token",
+        jQuery.getJSON(sr_path_php
+                + "/php/index.php?op=regenerate_security_token",
 
-		function(json) {
-			jQuery('#token').val(json.token)
-					|| jQuery('#securitytoken').val(json.token);
-		});
+        function(json) {
+            jQuery('#token').val(json.token)
+                    || jQuery('#securitytoken').val(json.token);
+        });
 
-	}
+    }
 }
 
 /**
@@ -92,32 +92,32 @@ function regenerate_token() {
  */
 function clear_errors() {
 
-	if (jQuery('.sr-error-label').exists()) {
-		jQuery('.sr-error-label').empty();
-	}
+    if (jQuery('.sr-error-label').exists()) {
+        jQuery('.sr-error-label').empty();
+    }
 
-	if (jQuery('.large-sr-input-error-container').exists()) {
-		jQuery('.large-sr-input-error-container').removeClass(
-				"large-sr-input-error-container");
-	}
+    if (jQuery('.large-sr-input-error-container').exists()) {
+        jQuery('.large-sr-input-error-container').removeClass(
+                "large-sr-input-error-container");
+    }
 
-	if (jQuery('.sr-input-error-container').exists()) {
-		jQuery('.sr-input-error-container').removeClass(
-				"sr-input-error-container");
-	}
+    if (jQuery('.sr-input-error-container').exists()) {
+        jQuery('.sr-input-error-container').removeClass(
+                "sr-input-error-container");
+    }
 
-	if (jQuery('.terms-and-conditions-sr-input-error-container').exists()) {
-		jQuery('.terms-and-conditions-sr-input-error-container').removeClass(
-				"terms-and-conditions-sr-input-error-container");
-	}
+    if (jQuery('.terms-and-conditions-sr-input-error-container').exists()) {
+        jQuery('.terms-and-conditions-sr-input-error-container').removeClass(
+                "terms-and-conditions-sr-input-error-container");
+    }
 
-	if (jQuery('span.add-on').exists()) {
-		jQuery('span.add-on').removeClass("sr-input-error");
-	}
+    if (jQuery('span.add-on').exists()) {
+        jQuery('span.add-on').removeClass("sr-input-error");
+    }
 
-	if (jQuery('.sr-input-error').exists()) {
-		jQuery('.sr-input-error').removeClass("sr-input-error");
-	}
+    if (jQuery('.sr-input-error').exists()) {
+        jQuery('.sr-input-error').removeClass("sr-input-error");
+    }
 
 }
 
@@ -125,62 +125,66 @@ function clear_errors() {
  * Show spinners
  */
 function initialize_spinner() {
-	if (jQuery('#ajax-loader').exists()) {
-		jQuery('#ajax-loader').empty();
-		jQuery('#ajax-loader').append(spinner);
-	}
+    if (jQuery('#ajax-loader').exists()) {
+        jQuery('#ajax-loader').empty();
+        jQuery('#ajax-loader').append(spinner);
+    }
 }
 
 /**
  * AJAX error handling ACP-455
  */
 jQuery
-		.ajaxSetup({
+        .ajaxSetup({
 
-			beforeSend : function(xhr) {
+            beforeSend : function(xhr) {
 
-			},
-			error : function(jqXHR, exception) {
-				if (jQuery('#ajax-spinner').exists()) {
-					jQuery('#ajax-spinner').remove();
-				}
+            },
+            error : function(jqXHR, exception) {
+                if (jQuery('#ajax-spinner').exists()) {
+                    jQuery('#ajax-spinner').remove();
+                }
+                
+                if (jQuery('#ajax-spinner-secondary').exists()) {
+                    jQuery('#ajax-spinner-secondary').remove();
+                }
 
-				if (jqXHR.status === 0) {
-					msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';
-				} else if (jqXHR.status == 404) {
-					msg = 'Please try again later.\n Requested page not found. [404]';
-				} else if (jqXHR.status == 500) {
-					msg = 'Please try again later.\n Internal Server Error [500].';
-				} else if (exception === 'parsererror') {
+                if (jqXHR.status === 0) {
+                    msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Please try again later.\n Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Please try again later.\n Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
 
-					var ct = jqXHR.getResponseHeader("content-type") || "";
+                    var ct = jqXHR.getResponseHeader("content-type") || "";
 
-					if (ct != "application/json") {
-						var xml = jqXHR.responseText, xmlDoc = $.parseXML(xml), $xml = $(xmlDoc), $error = $xml
-								.find("error");
+                    if (ct != "application/json") {
+                        var xml = jqXHR.responseText, xmlDoc = $.parseXML(xml), $xml = $(xmlDoc), $error = $xml
+                                .find("error");
 
-						msg = $error.text();
-					} else {
-						msg = 'Please try again later.\n Requested JSON parse failed.';
-					}
+                        msg = $error.text();
+                    } else {
+                        msg = 'Please try again later.\n Requested JSON parse failed.';
+                    }
 
-				} else if (exception === 'timeout') {
-					msg = 'Please try again later.\n Time out error.';
-				} else if (exception === 'abort') {
-					msg = 'Please try again later.\n Ajax request aborted.';
-				} else {
-					msg = 'Please try again later.\n Uncaught Error.\n'
-							+ jqXHR.responseText;
-				}
+                } else if (exception === 'timeout') {
+                    msg = 'Please try again later.\n Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Please try again later.\n Ajax request aborted.';
+                } else {
+                    msg = 'Please try again later.\n Uncaught Error.\n'
+                            + jqXHR.responseText;
+                }
  
-				if (msg && bootbox) {
-					bootbox.alert(msg);
-				}else{
-					alert(msg);
-				}
+                if (msg && bootbox) {
+                    bootbox.alert(msg);
+                }else{
+                    alert(msg);
+                }
 
-			}
-		});
+            }
+        });
 
 
 function convertToEntities(tstr) {     
@@ -376,13 +380,13 @@ jQuery(document).ready(function (jQuery) {
 
     //activates account on last step
     if (jQuery("#save-account-activated").exists()) {
-    	
-    	//remove table width
-    	var tables = jQuery("#sr-container table");
-    	tables.removeAttr("width");
+        
+        //remove table width
+        var tables = jQuery("#sr-container table");
+        tables.removeAttr("width");
  
         //bind enter event to custom fields
-    	jQuery('input[name^="userfield"]').enterKey(function () {
+        jQuery('input[name^="userfield"]').enterKey(function () {
             jQuery("#save-account-activated").trigger('click');
         });
  
@@ -405,7 +409,7 @@ jQuery(document).ready(function (jQuery) {
                 }
 
                 if (response.valid_entries == false) {
-                	//stop animated progress bar
+                    //stop animated progress bar
                     jQuery("#progress-indicator-container").removeClass("progress-striped active");
 
                     clear_errors();
@@ -414,45 +418,45 @@ jQuery(document).ready(function (jQuery) {
                     var error = 'Required field missing or has an invalid value.';
 
                     jQuery.each(response.messages.fields, function (index, value) {
-                    	
-                    	//upload might need a different error container
+                        
+                        //upload might need a different error container
                         if (value == 'upload') {
                             jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
                         } else {
-                        	//handle custom field errors
-                        	if(value.indexOf(pattern) !=-1){
-                        		jQuery('[name="' + value + '"]').addClass("sr-input-error");
-                        		jQuery('[name="' + value + '"]')
-                        			.wrap('<div class="large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
-                        		
-                        		jQuery('span[id="' + value + '-sr-error-label"]').empty();
-                        		jQuery('[id="' + value + '-sr-error-label"]').remove();
-                        		
-                        		if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
-	                    			jQuery('[name="' + value + '"]')
-		                    			.after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
-	                    		}
-                        		
-	                    		
-                        		
-	                    		jQuery('span[id="' + value + '-sr-error-label"]')	
-                					.html(error);
-                        		
-                        		
-                        	}else{
-                        		jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
-                        	}
+                            //handle custom field errors
+                            if(value.indexOf(pattern) !=-1){
+                                jQuery('[name="' + value + '"]').addClass("sr-input-error");
+                                jQuery('[name="' + value + '"]')
+                                    .wrap('<div class="large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
+                                
+                                jQuery('span[id="' + value + '-sr-error-label"]').empty();
+                                jQuery('[id="' + value + '-sr-error-label"]').remove();
+                                
+                                if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
+                                    jQuery('[name="' + value + '"]')
+                                        .after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
+                                }
+                                
+                                
+                                
+                                jQuery('span[id="' + value + '-sr-error-label"]')   
+                                    .html(error);
+                                
+                                
+                            }else{
+                                jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                            }
                         }
                         
-                    	jQuery('#' + value).addClass("sr-input-error");
+                        jQuery('#' + value).addClass("sr-input-error");
                         jQuery('#' + value + '-sr-error-label').empty();
-                        jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);	
+                        jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);    
 
                     });
 
                 } else {
                     //valid entries
-                	var i = 50;
+                    var i = 50;
                     for (i = 50; i <= 100; i++) {
                         jQuery('#progress-indicator').css("width", i + '%');
                         jQuery('#percentage-indicator').html(i);
