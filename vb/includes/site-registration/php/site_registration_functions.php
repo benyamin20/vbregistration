@@ -203,6 +203,7 @@ function thumbnail($inputFileName, $maxSize = 100) {
 	// Copy resampled makes a smooth thumbnail
 	imagecopyresampled($thumb, $sourceImage, 0, 0, 0, 0, $tWidth, $tHeight,
 			$width, $height);
+	imagecolortransparent($thumb, imagecolorallocate($thumb, 0, 0, 0));
 	imagedestroy($sourceImage);
 
 	return $thumb;
@@ -229,6 +230,8 @@ function imageToFile($im, $fileName, $quality = 75) {
 		imagejpeg($im, $fileName, $quality);
 		break;
 	case '.png':
+		imagealphablending($im, false);
+		imagesavealpha($im, true);
 		imagepng($im, $fileName);
 		break;
 	case '.bmp':

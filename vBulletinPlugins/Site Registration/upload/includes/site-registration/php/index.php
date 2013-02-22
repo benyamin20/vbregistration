@@ -49,11 +49,11 @@ case 'generate_thumbnail':
 	$userinfo = fetch_userinfo($uid, FETCH_USERINFO_PROFILEPIC);
 	cache_permissions($userinfo, false);
 
-	if ($userinfo['permissions']['avatarmaxsize']) {
-		$max_upload = $userinfo['permissions']['avatarmaxsize'];
-	} else {
-		$max_upload = (int) (return_bytes(ini_get('upload_max_filesize')));
-	}
+	//if ($userinfo['permissions']['avatarmaxsize']) {
+	//	$max_upload = $userinfo['permissions']['avatarmaxsize'];
+	//} else {
+	$max_upload = (int) (return_bytes(ini_get('upload_max_filesize')));
+	//}
 
 	if ($_FILES['upload']['name'] != "") {
 
@@ -83,8 +83,7 @@ case 'generate_thumbnail':
 
 					} else {
 						$error = true;
-						$message = "Image size too large, Maximum "
-								. ($max_upload * 1024) . "KB.";
+						$message = "Image size too large";
 					}
 				} else {
 					$error = true;
@@ -135,14 +134,22 @@ case 'show_thumbnail':
 
 	$sImage = $uploaded;
 
+	$info = pathinfo($sImage);
+	$ext = $info['extension'];
+
+	// is this a gif or is it a transparent png -- ACP-518
+	if ($ext == "gif"
+			|| ord(@file_get_contents($sImage, NULL, NULL, 25, 1)) == 6) {
+		$gd = FALSE;
+	}
+
+	// try to generate thumb if gd is available
 	if ($gd) {
 		$im = thumbnail($sImage, 100);
 		$info = getimagesize($sImage);
 		$mime = image_type_to_mime_type($info[2]);
 		header("Content-Type: $mime");
 		header("Content-Length: " . filesize($sImage));
-
-		$ext = strtolower(substr($sImage, strrpos($sImage, '.')));
 
 		imageToFile($im, $sImage . '-temp-thumbnail.' . $ext);
 		echo file_get_contents($sImage . '-temp-thumbnail.' . $ext);
@@ -223,7 +230,6 @@ case 'complete_your_profile':
 							'timezone' => TYPE_STR,
 							'use_default_image' => TYPE_STR,
 							'userfield' => TYPE_ARRAY));
-
 
 	if (empty($vbulletin->GPC['timezone'])) {
 		$valid_entries = FALSE;
@@ -314,13 +320,9 @@ case 'complete_your_profile':
 		$userpic->delete();
 	}
 
-
-
-
 	$userdata_save = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
 	$vbulletin->userinfo = fetch_userinfo($userid);
 	$userdata_save->set_existing($vbulletin->userinfo);
-
 
 	// update who can contact you
 	$userdata_save->set_bitfield('options', "adminemail", $adminemail);
@@ -334,17 +336,16 @@ case 'complete_your_profile':
 	$customfields = $userdata_save
 			->set_userfields($vbulletin->GPC['userfield'], true, 'register');
 
-
 	// pre save fields
- 	$userdata_save->pre_save();
+	$userdata_save->pre_save();
 
 	// check for errors
- 	if (!empty($userdata_save->errors)) {
+	if (!empty($userdata_save->errors)) {
 		$valid_entries = FALSE;
 
 		foreach ($userdata_save->errors AS $index => $error) {
 			$name = getTextBetweenTags($error, "em");
-			if(!empty($name)){
+			if (!empty($name)) {
 				$field = "userfield[$name]";
 				$messages['fields'][] = $field;
 				$messages['errors'][] = $error;
@@ -402,7 +403,8 @@ case 'validate_site_account_details':
 							'security_code' => TYPE_STR,
 							'terms_and_conditions' => TYPE_INT));
 
-	if (empty($vbulletin->GPC['password']) || $vbulletin->GPC['password'] == md5("")) {
+	if (empty($vbulletin->GPC['password'])
+			|| $vbulletin->GPC['password'] == md5("")) {
 
 		$valid_entries = FALSE;
 		//$userdata->error('enter_password_for_account');
@@ -412,7 +414,8 @@ case 'validate_site_account_details':
 		//fetch_phrase('enter_password_for_account', 'global');
 	}
 
-	if (empty($vbulletin->GPC['confirm_password']) || $vbulletin->GPC['confirm_password'] == md5("")) {
+	if (empty($vbulletin->GPC['confirm_password'])
+			|| $vbulletin->GPC['confirm_password'] == md5("")) {
 		unset($userdata->errors);
 		$valid_entries = FALSE;
 		//$userdata->error('enter_password_for_account');
@@ -476,7 +479,6 @@ case 'validate_site_account_details':
 	}
 
 	unset($userdata->errors);
-
 
 	//ACP-494 decode js escaped unicode characters
 	$username = $vbulletin->GPC['username'];
@@ -667,7 +669,8 @@ case 'validate_site_account_details':
 
 		} else {
 			// save the data
-			$_SESSION['site_registration']['userid'] = $vbulletin->userinfo['userid'] = $userid = $userdata->save();
+			$_SESSION['site_registration']['userid'] = $vbulletin
+					->userinfo['userid'] = $userid = $userdata->save();
 
 			$userinfo = fetch_userinfo($userid);
 			$userdata_rank = &datamanager_init('User', $vbulletin,

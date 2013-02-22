@@ -229,6 +229,8 @@ function imageToFile($im, $fileName, $quality = 75) {
 		imagejpeg($im, $fileName, $quality);
 		break;
 	case '.png':
+		imagealphablending($im, false);
+		imagesavealpha($im, true);
 		imagepng($im, $fileName);
 		break;
 	case '.bmp':
