@@ -412,6 +412,7 @@ jQuery(document).ready(function (jQuery) {
                     clear_errors();
                     
                     var pattern="userfield";
+                    var error = 'Required field missing or has an invalid value.';
 
                     jQuery.each(response.messages.fields, function (index, value) {
                     	
@@ -425,13 +426,18 @@ jQuery(document).ready(function (jQuery) {
                         		jQuery('[name="' + value + '"]')
                         			.wrap('<div class="large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
                         		
+                        		jQuery('span[id="' + value + '-sr-error-label"]').empty();
+                        		jQuery('[id="' + value + '-sr-error-label"]').remove();
+                        		
                         		if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
 	                    			jQuery('[name="' + value + '"]')
 		                    			.after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
-	                    			
-	                    			jQuery('span[id="' + value + '-sr-error-label"]')	
-	                    				.html('Required field missing or has an invalid value.');	
-                        		}
+	                    		}
+                        		
+	                    		
+                        		
+	                    		jQuery('span[id="' + value + '-sr-error-label"]')	
+                					.html(error);
                         		
                         		
                         	}else{
