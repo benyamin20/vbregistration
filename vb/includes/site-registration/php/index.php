@@ -41,6 +41,7 @@ $op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
+// generate thumbnail for IE
 case 'generate_thumbnail':
 	$vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
 
@@ -48,11 +49,11 @@ case 'generate_thumbnail':
 	$userinfo = fetch_userinfo($uid, FETCH_USERINFO_PROFILEPIC);
 	cache_permissions($userinfo, false);
 
-	if ($userinfo['permissions']['avatarmaxsize']) {
-		$max_upload = $userinfo['permissions']['avatarmaxsize'];
-	} else {
-		$max_upload = (int) (return_bytes(ini_get('upload_max_filesize')));
-	}
+	//if ($userinfo['permissions']['avatarmaxsize']) {
+	//	$max_upload = $userinfo['permissions']['avatarmaxsize'];
+	//} else {
+	$max_upload = (int) (return_bytes(ini_get('upload_max_filesize')));
+	//}
 
 	if ($_FILES['upload']['name'] != "") {
 
@@ -82,8 +83,7 @@ case 'generate_thumbnail':
 
 					} else {
 						$error = true;
-						$message = "Image size too large, Maximum "
-								. ($max_upload * 1024) . "KB.";
+						$message = "Image size too large";
 					}
 				} else {
 					$error = true;
@@ -115,8 +115,10 @@ case 'generate_thumbnail':
 
 	break;
 
+//show thumbnail for IE
 case 'show_thumbnail':
 	$vbulletin->input->clean_array_gpc('g', array('id' => TYPE_STR));
+	$gd = false;
 
 	if ($vbulletin->options['safeupload']) {
 		$tmpdir = $vbulletin->options['tmppath'];
@@ -124,16 +126,42 @@ case 'show_thumbnail':
 		$tmpdir = sys_get_temp_dir();
 	}
 
+	if (extension_loaded('gd') && function_exists('gd_info')) {
+		$gd = true;
+	}
+
 	$uploaded = $tmpdir . DIRECTORY_SEPARATOR . $vbulletin->GPC['id'];
 
 	$sImage = $uploaded;
 
-	$info = getimagesize($uploaded);
-	$mime = image_type_to_mime_type($info[2]);
-	header("Content-Type: $mime");
-	header("Content-Length: " . filesize($sImage));
+	$info = pathinfo($sImage);
+	$ext = $info['extension'];
 
-	echo file_get_contents($sImage);
+	// is this a gif or is it a transparent png -- ACP-518
+	if ($ext == "gif"
+			|| ord(@file_get_contents($sImage, NULL, NULL, 25, 1)) == 6) {
+		$gd = FALSE;
+	}
+
+	// try to generate thumb if gd is available
+	if ($gd) {
+		$im = thumbnail($sImage, 100);
+		$info = getimagesize($sImage);
+		$mime = image_type_to_mime_type($info[2]);
+		header("Content-Type: $mime");
+		header("Content-Length: " . filesize($sImage));
+
+		imageToFile($im, $sImage . '-temp-thumbnail.' . $ext);
+		echo file_get_contents($sImage . '-temp-thumbnail.' . $ext);
+		imagedestroy($im);
+	} else {
+		$info = getimagesize($uploaded);
+		$mime = image_type_to_mime_type($info[2]);
+		header("Content-Type: $mime");
+		header("Content-Length: " . filesize($sImage));
+
+		echo file_get_contents($sImage);
+	}
 
 	break;
 
@@ -200,33 +228,8 @@ case 'complete_your_profile':
 							'receive_emails_from_administrators' => TYPE_STR,
 							'receive_emails_from_other_members' => TYPE_STR,
 							'timezone' => TYPE_STR,
-							'use_default_image' => TYPE_STR));
-
-	if (!empty($vbulletin->GPC['secret_question'])) {
-		if (empty($vbulletin->GPC['secret_answer'])) {
-			$valid_entries = FALSE;
-			$user_data->error('fieldmissing');
-			$error_type = "secret_answer";
-			$messages['fields'][] = $error_type;
-			$messages['errors'][] = "Please enter a secret answer";
-		}
-	} else {
-
-	}
-
-	if (!empty($vbulletin->GPC['secret_answer'])) {
-
-		if (empty($vbulletin->GPC['secret_question'])) {
-			$valid_entries = FALSE;
-			$user_data->error('fieldmissing');
-			$error_type = "secret_question";
-			$messages['fields'][] = $error_type;
-			$messages['errors'][] = "Please enter a secret question.";
-		}
-
-	} else {
-
-	}
+							'use_default_image' => TYPE_STR,
+							'userfield' => TYPE_ARRAY));
 
 	if (empty($vbulletin->GPC['timezone'])) {
 		$valid_entries = FALSE;
@@ -317,70 +320,49 @@ case 'complete_your_profile':
 		$userpic->delete();
 	}
 
+	$userdata_save = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+	$vbulletin->userinfo = fetch_userinfo($userid);
+	$userdata_save->set_existing($vbulletin->userinfo);
+
+	// update who can contact you
+	$userdata_save->set_bitfield('options', "adminemail", $adminemail);
+	$userdata_save->set_bitfield('options', "showemail", $showemail);
+
+	// update avatar and timezone
+	$userdata_save->set('avatarid', $vbulletin->GPC['avatarid']);
+	$userdata_save->set('timezoneoffset', $vbulletin->GPC['timezone']);
+
+	// set profile fields
+	$customfields = $userdata_save
+			->set_userfields($vbulletin->GPC['userfield'], true, 'register');
+
+	// pre save fields
+	$userdata_save->pre_save();
+
+	// check for errors
+	if (!empty($userdata_save->errors)) {
+		$valid_entries = FALSE;
+
+		foreach ($userdata_save->errors AS $index => $error) {
+			$name = getTextBetweenTags($error, "em");
+			if (!empty($name)) {
+				$field = "userfield[$name]";
+				$messages['fields'][] = $field;
+				$messages['errors'][] = $error;
+			}
+		}
+
+	} else {
+		$valid_entries = TRUE;
+	}
+
 	if ($valid_entries) {
-
-		if (!empty($vbulletin->GPC['secret_question'])
-				&& !empty($vbulletin->GPC['secret_answer'])) {
-			//update secret question and secret answer
-			$temp_table_query = "
-                CREATE  TABLE IF NOT EXISTS " . TABLE_PREFIX
-					. "siteregistration_security_details (
-                    userid INT(128) NOT NULL,
-                    question VARCHAR(255) NOT NULL,
-                    answer VARCHAR(255) NOT NULL
-                )";
-
-			$vbulletin->db->query_write($temp_table_query);
-
-			$userid = $_SESSION['site_registration']['userid'];
-			$question = $vbulletin->GPC['secret_question'];
-			$answer = $vbulletin->GPC['secret_answer'];
-			$salt = $vbulletin->db->escape_string($vbulletin->userinfo['salt']);
-
-			/*insert query*/
-			$vbulletin->db
-					->query_write(
-							"
-                REPLACE INTO " . TABLE_PREFIX
-									. "siteregistration_security_details
-                (userid,question,answer)
-                VALUES
-                (   '" . $vbulletin->db->escape_string($userid)
-									. "',
-                    AES_ENCRYPT('" . $vbulletin->db->escape_string($question)
-									. "','" . $salt
-									. "'),
-                    AES_ENCRYPT('" . $vbulletin->db->escape_string($answer)
-									. "','" . $salt
-									. "')
-                 )
-            ");
-		}
-
-		//update who can contact you
-
-		if (!isset($userdata)) {
-			$userdata = &datamanager_init('User', $vbulletin, ERRTYPE_STANDARD);
-			$vbulletin->userinfo = fetch_userinfo($userid);
-			$userdata->set_existing($vbulletin->userinfo);
-		}
-
-		$userdata->set_bitfield('options', "adminemail", $adminemail);
-		$userdata->set_bitfield('options', "showemail", $showemail);
-
-		$userdata->set('avatarid', $vbulletin->GPC['avatarid']);
-		$userdata->set('timezoneoffset', $vbulletin->GPC['timezone']);
-
-		$userdata->save();
+		//data is valid save it
+		$userdata_save->save();
 
 		//start new session
 		if (!isset($vbulletin->userinfo)) {
-			$vbulletin->userinfo = $vbulletin->db
-					->query_first(
-							"SELECT userid, usergroupid, membergroupids, infractiongroupids,
-                username, password, salt FROM " . TABLE_PREFIX
-									. "user
-                WHERE userid = " . $userid);
+			$vbulletin->userinfo = $userinfo = fetch_userinfo($userid);
 		}
 
 		require_once(DIR . '/includes/functions_login.php');
@@ -499,14 +481,6 @@ case 'validate_site_account_details':
 	unset($userdata->errors);
 
 	//ACP-494 decode js escaped unicode characters
-	$vbulletin->GPC['username'] = preg_replace("/%u([A-Fa-f0-9]{4})/",
-			"&#x$1;", $vbulletin->GPC['username']);
-
-	$vbulletin->GPC['username'] = html_entity_decode(
-			$vbulletin->GPC['username'], ENT_COMPAT, 'UTF-8');
-
-	$username3 = $vbulletin->GPC['username'];
-
 	$username = $vbulletin->GPC['username'];
 
 	if ($userdata->verify_username($vbulletin->GPC['username']) === FALSE) {
@@ -522,14 +496,10 @@ case 'validate_site_account_details':
 			$messages['errors'][] = $userdata->errors[0];
 		}
 
-	} else {
-
 	}
 
-	$username4 = $vbulletin->GPC['username'];
-
 	//check if username already exists on DB
-	/*$user_exists = $db
+	$user_exists = $db
 	        ->query_first(
 	                "
 	    SELECT userid, username, email, languageid
@@ -544,7 +514,7 @@ case 'validate_site_account_details':
 	    $messages['fields'][] = $error_type;
 	    $messages['errors'][] = "Sorry, this username is already taken.";
 	    //fetch_error('usernametaken', $user_exists['username'], '');
-	}*/
+	}
 
 	if (fetch_require_hvcheck('register')) {
 		//check if CAPTCHA value is correct
@@ -571,10 +541,8 @@ case 'validate_site_account_details':
 	}
 
 	if ($valid_entries) {
-		$_SESSION['site_registration']['username'] = $vbulletin
-				->GPC['username'];
-		$_SESSION['site_registration']['password'] = $vbulletin
-				->GPC['password'];
+		$_SESSION['site_registration']['username'] = $username;
+		$_SESSION['site_registration']['password'] = $password;
 
 		$token = md5(uniqid(microtime(), true));
 		$token_time = time();
@@ -586,8 +554,8 @@ case 'validate_site_account_details':
 		//Create Site Account in database
 
 		$userdata->set('email', $_SESSION['site_registration']['email']);
-		$userdata->set('username', $vbulletin->GPC['username']);
-		$userdata->set('password', $_SESSION['site_registration']['password']);
+		$userdata->set('username', $username);
+		$userdata->set('password', ($vbulletin->GPC['password_md5'] ? $vbulletin->GPC['password_md5'] : $vbulletin->GPC['password']));
 
 		//$userdata->set('referrerid', $vbulletin->GPC['referrername']);
 
@@ -735,7 +703,7 @@ case 'validate_site_account_details':
 
 			//Send Activation Email: Refer to Automated Emails
 			// send new user email
-			$username = $vbulletin->GPC['username'];
+			$username = $username;
 			$email = $_SESSION['site_registration']['email'];
 
 			if ($vbulletin->options['verifyemail']) {
@@ -781,9 +749,7 @@ case 'validate_site_account_details':
 	}
 
 	$arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-			"url" => $url, "GPC_username" => $vbulletin->GPC['username'],
-			"username" => $username, "username3" => $username3,
-			"username4" => $username4, "time" => time());
+			"url" => $url, "username" => $username, "time" => time());
 
 	json_headers($arr);
 
@@ -1479,8 +1445,6 @@ case 'activate':
 		$valid_entries = TRUE;
 		$message = "OK";
 
-
-
 		$token = md5(uniqid(microtime(), true));
 		$token_time = time();
 		$form = "site-account-details";
@@ -1689,7 +1653,6 @@ case "linkaccount":
 						$userpic->condition = "userid = " . $userinfo['userid'];
 						$userpic->delete();
 					}
-
 
 					$nonvbid = $fbID;
 

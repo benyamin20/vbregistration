@@ -137,9 +137,6 @@ function initialize_spinner() {
 jQuery
         .ajaxSetup({
 
-            beforeSend : function(xhr) {
-
-            },
             error : function(jqXHR, exception) {
                 if (jQuery('#ajax-spinner').exists()) {
                     jQuery('#ajax-spinner').remove();
@@ -150,7 +147,7 @@ jQuery
                 }
 
                 if (jqXHR.status === 0) {
-                    msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';
+                    //msg = 'Please try again later.\n Not connected.\n Verify Network connectivity.';
                 } else if (jqXHR.status == 404) {
                     msg = 'Please try again later.\n Requested page not found. [404]';
                 } else if (jqXHR.status == 500) {
