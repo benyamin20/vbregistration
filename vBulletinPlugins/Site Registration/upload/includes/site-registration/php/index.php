@@ -539,7 +539,7 @@ case 'validate_site_account_details':
 
 		$userdata->set('email', $_SESSION['site_registration']['email']);
 		$userdata->set('username', $username);
-		$userdata->set('password', $_SESSION['site_registration']['password']);
+		$userdata->set('password', ($vbulletin->GPC['password_md5'] ? $vbulletin->GPC['password_md5'] : $vbulletin->GPC['password']));
 
 		//$userdata->set('referrerid', $vbulletin->GPC['referrername']);
 
