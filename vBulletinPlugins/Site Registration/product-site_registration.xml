@@ -250,7 +250,6 @@ $stylevar[htmldoctype]
                                             
                                             <a href="#" class="btn fileupload-exists move-to-top-avatar-upload" data-dismiss="fileupload" id="remove">Remove</a>
                                             <div class="clear"></div>
-                                            <!-- <a class="sr-small sr-link_blue" id="use-default">Use default.</a> -->
                                             <span class="sr-error-label sr-small sr-no-margin no-top grid_3" id="upload-sr-error-label"></span>
                                     </div>
 								        <div class="clear"></div>
@@ -277,29 +276,14 @@ $stylevar[htmldoctype]
 						<!-- custom inputs  -->
 
 						<div class="clear"></div> 
-						<div class="clear"></div>
-						<!--
-						<div id="secret_question-wrapper">
-						<label for="secret_question">Secret Question</label>
-						    <input type="text" id="secret_question" name="secret_question"
-							    title="Secret Question" value="" />
-							<span class="sr-error-label" id="secret_question-sr-error-label"></span>
-                        </div>
-						<div class="clear"></div>
-						<div id="secret_answer-wrapper">
-						    <label for="secret_answer">Secret Answer</label>
-						    <input type="text" name="secret_answer" id="secret_answer"
-							title="Secret Aswer" value="" />
-							<span class="sr-error-label" id="secret_answer-sr-error-label"></span>
-                        </div>
-                        -->
+						<div class="clear sr-clear_10"></div>
                         
                         $profile_variable
                         
                         <!--  Contact check boxes -->
 
 						<div class="clear"></div>
-						<div class="clear sr-clear_10"></div>
+						<div class="clear"></div>
 						<label>Who can contact you?</label>
 						<div class="clear"></div>
 						<label class="checkbox"> 
@@ -1527,7 +1511,7 @@ $stylevar[htmldoctype]
                         }
                     
                         // delete activationid
- 
+                        /*
                         $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -1545,7 +1529,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
- 
+                        */
 
                          $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
                          cache_permissions($userinfo, false); 
@@ -2047,7 +2031,7 @@ $stylevar[htmldoctype]
 	                
 	                    //delete pending activation code and show activation
 	                    //home page
- 
+                        /*
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -2065,7 +2049,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
- 
+                        */
                         
                         //fixes birthday to be able to search it on  table
                         $birthday = preg_replace("/\-/","/", $birthday);

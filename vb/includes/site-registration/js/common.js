@@ -377,6 +377,10 @@ jQuery(document).ready(function (jQuery) {
 
     //activates account on last step
     if (jQuery("#save-account-activated").exists()) {
+    	
+    	//remove table width
+    	var tables = jQuery("#sr-container table");
+    	tables.removeAttr("width");
  
         //bind enter event to custom fields
     	jQuery('input[name^="userfield"]').enterKey(function () {
