@@ -187,7 +187,7 @@ function convertToEntities(tstr) {
     var bstr = '';  
 
     for (i = 0; i < tstr.length; i++) {  
-        if (tstr.charCodeAt(i)>127) { 
+        if (tstr.charCodeAt(i) > 127) { 
             bstr += '\&#' + tstr.charCodeAt(i) + ';'; 
         } else { 
             bstr += tstr.charAt(i);
@@ -598,7 +598,7 @@ jQuery(document).ready(function (jQuery) {
         //submit and validate authentication
         jQuery("#login-button").bind('click', function (e) {
             jQuery('#have-account-error').empty();
-            var username = jQuery("#username").val();
+            var username = escape(convertToEntities(jQuery("#username").val()));
             var password = md5(jQuery("#password").val());
             var s = '';
             var login = 'do';
