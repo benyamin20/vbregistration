@@ -6,6 +6,9 @@ var spinner = '<img id="ajax-spinner" src="' + sr_path_img
 var spinner_secondary = '<img id="ajax-spinner-secondary" src="' + sr_path_img
 		+ '/img/ajax-loader.gif" />';
 
+jQuery.getScript(sr_path_js + "/js/bootbox.min.js", function() {
+});
+
 /**
  * check if something exists
  */
@@ -71,13 +74,14 @@ function get_time_zone_offset() {
  */
 function regenerate_token() {
 	// regenerate token to avoid getting security errors
-	if (jQuery('#token').exists()) {
+	if (jQuery('#token').exists() || jQuery('#securitytoken').exists()) {
 
 		jQuery.getJSON(sr_path_php
 				+ "/php/index.php?op=regenerate_security_token",
 
 		function(json) {
-			jQuery('#token').val(json.token);
+			jQuery('#token').val(json.token)
+					|| jQuery('#securitytoken').val(json.token);
 		});
 
 	}
@@ -168,15 +172,11 @@ jQuery
 					msg = 'Please try again later.\n Uncaught Error.\n'
 							+ jqXHR.responseText;
 				}
-
-				if (!bootbox) {
-					jQuery.getScript(sr_path_js + "/js/bootbox.min.js",
-							function() {
-							});
-				}
-
-				if (msg) {
+ 
+				if (msg && bootbox) {
 					bootbox.alert(msg);
+				}else{
+					alert(msg);
 				}
 
 			}
@@ -188,7 +188,7 @@ function convertToEntities(tstr) {
 
     for (i = 0; i < tstr.length; i++) {  
         if (tstr.charCodeAt(i)>127) { 
-            bstr += '&#' + tstr.charCodeAt(i) + ';'; 
+            bstr += '\&#' + tstr.charCodeAt(i) + ';'; 
         } else { 
             bstr += tstr.charAt(i);
         }
@@ -336,7 +336,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery("input[name=use_default_image]").val("true");
 
             //change image preview thumb
-            jQuery("#selected-avatar").attr("src", "images/misc/unknown.gif");
+            jQuery("#selected-avatar").attr("src", sr_path_img + "/images/misc/unknown.gif");
         });
 
 
@@ -351,7 +351,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery("input[name=use_default_image]").val("true");
 
             //change image preview thumb
-            jQuery("#selected-avatar").attr("src", "images/misc/unknown.gif");
+            jQuery("#selected-avatar").attr("src", sr_path_img + "/images/misc/unknown.gif");
             jQuery("#upload-sr-error-label").empty();
             jQuery("#upload-wrapper").removeClass("terms-and-conditions-sr-input-error-container");
         });
@@ -376,26 +376,28 @@ jQuery(document).ready(function (jQuery) {
 
     //activates account on last step
     if (jQuery("#save-account-activated").exists()) {
+    	
+    	//remove table width
+    	var tables = jQuery("#sr-container table");
+    	tables.removeAttr("width");
  
- 
-        //bind enter event to  fields
-        jQuery("#secret_question").enterKey(function () {
+        //bind enter event to custom fields
+    	jQuery('input[name^="userfield"]').enterKey(function () {
             jQuery("#save-account-activated").trigger('click');
         });
-
-        jQuery("#secret_answer").enterKey(function () {
-            jQuery("#save-account-activated").trigger('click');
-        });
-
+ 
         // prepare Options Object 
         var options = {
             type: 'POST',
             dataType: 'json',
-            beforeSubmit: function () {
+            beforeSend: function () {
                 jQuery("#progress-indicator-container").addClass("progress-striped active");
 
                 initialize_spinner();
                 regenerate_token();
+                
+                //remove wrapper for custom fields
+                jQuery('[name^="userfield"]').unwrap();
             },
             success: function (response) {
                 if (jQuery('#ajax-spinner').exists()) {
@@ -403,20 +405,49 @@ jQuery(document).ready(function (jQuery) {
                 }
 
                 if (response.valid_entries == false) {
+                	//stop animated progress bar
                     jQuery("#progress-indicator-container").removeClass("progress-striped active");
 
                     clear_errors();
+                    
+                    var pattern="userfield";
+                    var error = 'Required field missing or has an invalid value.';
 
                     jQuery.each(response.messages.fields, function (index, value) {
+                    	
+                    	//upload might need a different error container
                         if (value == 'upload') {
                             jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
                         } else {
-                            jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                        	//handle custom field errors
+                        	if(value.indexOf(pattern) !=-1){
+                        		jQuery('[name="' + value + '"]').addClass("sr-input-error");
+                        		jQuery('[name="' + value + '"]')
+                        			.wrap('<div class="large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
+                        		
+                        		jQuery('span[id="' + value + '-sr-error-label"]').empty();
+                        		jQuery('[id="' + value + '-sr-error-label"]').remove();
+                        		
+                        		if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
+	                    			jQuery('[name="' + value + '"]')
+		                    			.after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
+	                    		}
+                        		
+	                    		
+                        		
+	                    		jQuery('span[id="' + value + '-sr-error-label"]')	
+                					.html(error);
+                        		
+                        		
+                        	}else{
+                        		jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                        	}
                         }
-
-                        jQuery('#' + value).addClass("sr-input-error");
+                        
+                    	jQuery('#' + value).addClass("sr-input-error");
                         jQuery('#' + value + '-sr-error-label').empty();
-                        jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
+                        jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);	
+
                     });
 
                 } else {
@@ -480,7 +511,7 @@ jQuery(document).ready(function (jQuery) {
         //submit and validate fields
         jQuery("#site-account-deails-create-account").bind('click', function () {
             jQuery('#have-account-error').empty();
-            var username = convertToEntities(jQuery("#username").val());
+            var username = escape(convertToEntities(jQuery("#username").val()));
             console.log(username);
             var password = md5(jQuery("#password").val());
             var confirm_password = md5(jQuery("#confirm-password").val());

@@ -160,8 +160,9 @@ li {
 }
 
 .login_button:active {
-	height: 38px;
-	margin-top: 2px;
+	/*height: 38px;*/
+	/*
+	margin-top: 2px;*/
 }
 
 .login_button:hover {
@@ -296,10 +297,13 @@ li {
 }
 
 .sr-error-label{
-    color: #800000 ;
+    color: #800000;
+    font-size: 12px;
+    font-weight: normal;
     margin-left: 30px;
     position: relative;
-    top: -5px;
+    top: 6px;
+    vertical-align: top;
 }
 
 .fix-tnc-width{
@@ -592,4 +596,9 @@ a.sr-link_blue, .info a, .popup a, a {
 
 a.move-to-top-avatar-upload {
     color: #333333;
+}
+
+.no-top-text-area{
+	top: -37px;
+	
 }
