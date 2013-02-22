@@ -336,7 +336,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery("input[name=use_default_image]").val("true");
 
             //change image preview thumb
-            jQuery("#selected-avatar").attr("src", sr_path_img + "/images/misc/unknown.gif");
+            jQuery("#selected-avatar").attr("src", sr_path_img + "/img/unknown.png");
         });
 
 
@@ -351,7 +351,7 @@ jQuery(document).ready(function (jQuery) {
             jQuery("input[name=use_default_image]").val("true");
 
             //change image preview thumb
-            jQuery("#selected-avatar").attr("src", sr_path_img + "/images/misc/unknown.gif");
+            jQuery("#selected-avatar").attr("src", sr_path_img + "/img/unknown.png");
             jQuery("#upload-sr-error-label").empty();
             jQuery("#upload-wrapper").removeClass("terms-and-conditions-sr-input-error-container");
         });
