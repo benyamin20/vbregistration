@@ -996,7 +996,11 @@ case 'create_site_account_first_step':
 		$_SESSION['site_registration'][$form . '_token'] = array(
 				'token' => $token, 'time' => $token_time);
 
+		unset($_SESSION['site_registration']['email']);
+		unset($_SESSION['site_registration']['birthday']);
+
 		$_SESSION['site_registration']['email'] = $vbulletin->GPC['email'];
+
 		$_SESSION['site_registration']['birthday'] = $vbulletin
 				->GPC['birthdate'];
 
