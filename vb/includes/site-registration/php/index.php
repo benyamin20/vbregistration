@@ -1458,11 +1458,10 @@ case 'activate':
 
 			$data = $vbulletin->db->query_first($sql);
 
-			$activationid = $data["activationid"];
-			die(var_dump($activationid));				
+			$activationid = $data["activationid"];			
 		}
 
-		if (!empty($activationid)) {
+		if (isset($activationid)) {
 			$url = "register.php?a=act&u=" . $userid;
 		} else {			
 			$url = prev_url();
@@ -1504,7 +1503,7 @@ case 'activate':
 	$arr = array("valid_entries" => $valid_entries,
 			"error_type" => $error_type, "messages" => $messages,
 			"url" => $url);
-
+	die(var_dump($url));
 	json_headers($arr);
 
 	break;
