@@ -1007,7 +1007,7 @@ $stylevar[htmldoctype]
 						    <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
 				        </span>
 				    </label>
-				    <span class="sr-error-label sr-small" id="terms_and_conditions-sr-error-label"></span>
+				    <span class="sr-error-label sr-small ie8-tnc-error-label" id="terms_and_conditions-sr-error-label"></span>
                 </div>
                 
 				<div class="clear sr-clear_15"></div>

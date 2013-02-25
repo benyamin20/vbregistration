@@ -44,4 +44,6 @@
     *margin-top:10px;
 }
 
-
+.ie8-tnc-error-label{
+	*left: 70px;
+}
