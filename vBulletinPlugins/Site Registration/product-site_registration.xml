@@ -884,7 +884,7 @@ $stylevar[htmldoctype]
      
  
  
-    <title>Confirm You Details - $vboptions[bbtitle]</title>
+    <title>Confirm Your Details - $vboptions[bbtitle]</title>
     
     <!-- head include -->
     $headinclude
@@ -996,7 +996,7 @@ $stylevar[htmldoctype]
                 </div>
                 
                 
-             c    <div class="clear sr-clear_15"></div>
+                <div class="clear sr-clear_15"></div>
 
                 <div class="grid_6 sr-no-margin" id="terms_and_conditions-wrapper">
 				    <label class="checkbox"> 
@@ -1846,7 +1846,7 @@ $stylevar[htmldoctype]
 			        	//check for direct access to action
 			        	if($invalid_request){ 
 			                if(!(int)$vbulletin->userinfo['userid']){
-			                    if($vbulletin->bf_ugp_forumpermissions['canview']){
+			                    if($permissions['forumpermissions'] & $vbulletin->bf_ugp_forumpermissions['canview']){
 			                         
                                     eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                                     
@@ -1867,10 +1867,12 @@ $stylevar[htmldoctype]
 			        if(isset($_REQUEST['a'] ) && $_REQUEST['a'] == 'act' || $_REQUEST['do'] == 'coppaform'  ){
 			            
 			        }else{
-			            if(!(int)$vbulletin->userinfo['userid']){ 
-			                eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
-			                $site_registration_benefits = fetch_template('site_registration_benefits'); 
-		                    eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			            if(!(int)$vbulletin->userinfo['userid']){
+			                 if($permissions['forumpermissions'] & $vbulletin->bf_ugp_forumpermissions['canview']){
+			                    eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
+                                $site_registration_benefits = fetch_template('site_registration_benefits'); 
+                                eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
+			                 }
 			            }else{
 			                if($vbulletin->options['allowmultiregs']){
 		                        $hide_on_multiple_regs = true;
@@ -1973,7 +1975,7 @@ $stylevar[htmldoctype]
                                 break;
                         }
 		            
-		                if($vbulletin->bf_ugp_forumpermissions['canview']){
+		                if($permissions['forumpermissions'] & $vbulletin->bf_ugp_forumpermissions['canview']){
 		                    header("Location: register.php?ref=$reg_ref");
 		                }else{
 		                }
