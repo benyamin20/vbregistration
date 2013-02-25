@@ -561,7 +561,7 @@ div.content table.tborder{
 }
 
 
-a.sr-link_blue, .info a, .popup a, a {
+a.sr-link_blue, .info a, .popup a,  #info a, #popup a {
     color: #0066DD;
     cursor: pointer;
     text-decoration: none;
