@@ -1503,7 +1503,7 @@ case 'activate':
 	$arr = array("valid_entries" => $valid_entries,
 			"error_type" => $error_type, "messages" => $messages,
 			"url" => $url);
-	die(var_dump($url));
+	
 	json_headers($arr);
 
 	break;
