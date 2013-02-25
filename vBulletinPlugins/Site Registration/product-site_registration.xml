@@ -996,7 +996,7 @@ $stylevar[htmldoctype]
                 </div>
                 
                 
-                <div class="clear sr-clear_15"></div>
+             c    <div class="clear sr-clear_15"></div>
 
                 <div class="grid_6 sr-no-margin" id="terms_and_conditions-wrapper">
 				    <label class="checkbox"> 
