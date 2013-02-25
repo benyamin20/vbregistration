@@ -1460,8 +1460,8 @@ case 'activate':
 								. "useractivation
                 WHERE userid = '" . $userid . "'
                 AND type = 0");
-                
-			$url = "register.php?a=act&u=" . $userid;
+
+			$url = "register.php?a=act&u=". $userid ."&i=". $activationid;
 		} else {			
 			$url = prev_url();
 
