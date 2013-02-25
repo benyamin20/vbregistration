@@ -884,7 +884,7 @@ $stylevar[htmldoctype]
      
  
  
-    <title>Confirm You Details - $vboptions[bbtitle]</title>
+    <title>Confirm Your Details - $vboptions[bbtitle]</title>
     
     <!-- head include -->
     $headinclude
