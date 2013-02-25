@@ -293,12 +293,12 @@ $stylevar[htmldoctype]
 							<phrase>$vbphrase[receive_email_from_bulletin_board_staff]</phrase>
 						</label>
 
-						<div class="clear"></div>
+						<div class="clear"></div> 
 						<label class="checkbox"> 
-						<input type="checkbox" 
-						    checked="checked"
+						<input type="checkbox"  
 							id="receive-emails-from-other-members"
-							name="receive_emails_from_other_members"  $default_email_from_members /> 
+							name="receive_emails_from_other_members"  $default_email_from_members 
+							/> 
 							    <phrase>$vbphrase[receive_email_from_other_members]</phrase>
 						</label>
 
@@ -1088,7 +1088,7 @@ $stylevar[htmldoctype]
 			<tbody>
 				<tr>
 					<td> 
-					   <if condition="$show['coppa']">
+					   <if condition="$show['coppa'] or $_SESSION['site_registration']['coppauser']">
                             <!-- coppa regulations -->
                             <p class="sr-small">
                                 <strong>$vbphrase[coppa_policy]</strong>
@@ -1309,6 +1309,17 @@ $stylevar[htmldoctype]
 			<tbody>
 				<tr>
 					<td>
+					   <if condition="$show['coppa'] or $_SESSION['site_registration']['coppauser']">
+                            <!-- coppa regulations -->
+                            <p class="sr-small">
+                                <strong>$vbphrase[coppa_policy]</strong>
+                            </p>
+
+                            <p class="sr-small">
+                                <phrase 1="$vboptions[bbtitle]" 2="$vboptions[forumhome].php$session[sessionurl_q]" 3="register.php?$session[sessionurl]do=coppaform" 4="$vboptions[webmasteremail]">$vbphrase[coppa_rules_description]</phrase>
+                            </p>
+                            <!-- / coppa regulations -->
+                        </if>
 					    <p class="sr-small">
 							<phrase 1="$vboptions[forumhome].php$session[sessionurl_q]" 2="$vboptions[bbtitle]">$vbphrase[forum_rules_registration]</phrase>
 						</p>
@@ -1511,15 +1522,19 @@ $stylevar[htmldoctype]
 
                     if($valid_activation_code && $valid_user){
                     
+                    
+                        // ACP-509
+                        if( bitwise($vbulletin->bf_misc_regoptions['receiveemail'], $vbulletin->options['defaultregoptions']) ){
+                            $default_email_from_members = " checked='checked' ";
+                        }
+                        
+         
                         //check for default setting of admin email -- ACP-393
                         if( bitwise($vbulletin->bf_misc_regoptions['adminemail'], $vbulletin->options['defaultregoptions'])  ){
                             $default_email_from_administrators = " checked='checked' ";
                         }
                         
-                        // ACP-509
-                        if( bitwise($vbulletin->bf_misc_regoptions['receiveemail'], $vbulletin->options['defaultregoptions'])  ){
-                            $default_email_from_members = " checked='checked' ";
-                        }
+                        
                     
                         // delete activationid
                         
@@ -1540,6 +1555,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
+                         
                         
 
                          $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
@@ -2043,6 +2059,7 @@ $stylevar[htmldoctype]
 	                    //delete pending activation code and show activation
 	                    //home page
                         
+                        
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -2080,17 +2097,20 @@ $stylevar[htmldoctype]
                         }else{
                             $prev_url = $rs['initialpage'];
                         }
-                      
+                        
+                        
+                        // ACP-509
+                        if( bitwise($vbulletin->bf_misc_regoptions['receiveemail'], $vbulletin->options['defaultregoptions']) ){
+                            $default_email_from_members = " checked='checked' ";
+                        }
+     
                         
                         //check for default setting of admin email -- ACP-393
                         if( bitwise($vbulletin->bf_misc_regoptions['adminemail'], $vbulletin->options['defaultregoptions'])  ){
                             $default_email_from_administrators = " checked='checked' ";
                         }
                         
-                        // ACP-509
-                        if( bitwise($vbulletin->bf_misc_regoptions['receiveemail'], $vbulletin->options['defaultregoptions'])  ){
-                            $default_email_from_members = " checked='checked' ";
-                        }
+                        
                         
                          
                         //try to start a valid session 
