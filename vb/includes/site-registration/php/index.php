@@ -1459,11 +1459,13 @@ case 'activate':
 			$data = $vbulletin->db->query_first($sql);
 
 			$activationid = $data["activationid"];
+			die(var_dump($activationid));			
 		}
 
 		if (!empty($activationid)) {
 			$url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
 		} else {
+			die("No");
 			$url = prev_url();
 
 			// Process vBulletin login
