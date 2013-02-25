@@ -1442,14 +1442,6 @@ case 'activate':
 		//Send Activation Email: Refer to Automated Emails
 		// send new user email
 
-		// delete activationid
-		/*$vbulletin->db
-				->query_write(
-						"DELETE FROM " . TABLE_PREFIX
-								. "useractivation
-                WHERE userid = '" . $userid . "'
-                AND type = 0");*/
-
 		$nonvbid = $fbID;
 
 		if ($vbulletin->options['verifyemail']) {
@@ -1462,6 +1454,13 @@ case 'activate':
 		}
 
 		if (isset($activationid)) {
+			$vbulletin->db
+				->query_write(
+						"DELETE FROM " . TABLE_PREFIX
+								. "useractivation
+                WHERE userid = '" . $userid . "'
+                AND type = 0");
+                
 			$url = "register.php?a=act&u=" . $userid;
 		} else {			
 			$url = prev_url();
@@ -1503,7 +1502,7 @@ case 'activate':
 	$arr = array("valid_entries" => $valid_entries,
 			"error_type" => $error_type, "messages" => $messages,
 			"url" => $url);
-	
+
 	json_headers($arr);
 
 	break;
