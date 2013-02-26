@@ -726,8 +726,9 @@ $stylevar[htmldoctype]
                                 &nbsp;
                             </if>
 			            </div>
-			            <span class="sr-small sr-light_grey" style="margin-top: 110px; margin-left: -230px; float: left;">It's secure and easy!</span>
-			       
+			            <if condition="$show['vbnexus_button_fb']">
+			            	<span class="sr-small sr-light_grey" style="margin-top: 110px; margin-left: -230px; float: left;">It's secure and easy!</span>
+			       		</if>
 			       
 		            </div><!-- /create site account options -->
 		            
