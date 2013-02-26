@@ -506,6 +506,10 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#security-code").enterKey(function () {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
+        
+        jQuery("#parent-guardian-email").enterKey(function () {
+            jQuery("#site-account-deails-create-account").trigger('click');
+        });
 
 
 

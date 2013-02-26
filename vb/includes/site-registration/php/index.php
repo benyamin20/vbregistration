@@ -608,21 +608,28 @@ case 'validate_site_account_details':
 
 			$coppaage = $vbulletin->input
 					->clean_gpc('c',
-							COOKIE_PREFIX . 'site_registration_coppage',
+							COOKIE_PREFIX . 'coppaage',
 							TYPE_STR);
 
-			if (!empty($coppage)) {
-				//mm/dd/yyyy
-				$date_parts = explode("/", $coppaage);
+			if (!empty($coppaage)) {
+				if ($vbulletin->options['usecoppa']
+						AND $vbulletin->options['checkcoppa'] AND $coppaage) {
+					$dob = explode('-', $coppaage);
+					$month = $dob[0];
+					$day = $dob[1];
+					$year = $dob[2];
+				}
 			} else {
 				//mm/dd/yyyy
 				$date_parts = explode("/",
 						$_SESSION['site_registration']['birthday']);
+
+				$month = $date_parts[0];
+				$year = $date_parts[2];
+				$day = $date_parts[1];
 			}
 
-			$month = $date_parts[0];
-			$year = $date_parts[2];
-			$day = $date_parts[1];
+
 
 			$userdata
 					->set('birthday',
@@ -755,14 +762,21 @@ case 'validate_site_account_details':
 
 				$url = prev_url();
 
+				if(empty($url)){
+					$url = "register.php?step=activate";
+				}
+
 			}
 
 		}
 
 	}
 
-	$arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-			"url" => $url, "username" => $username, "time" => time());
+	$arr = array(	"valid_entries" => $valid_entries,
+					"messages" => $messages,
+					"url" => $url,
+					"username" => $username
+			);
 
 	json_headers($arr);
 
