@@ -721,12 +721,12 @@ $stylevar[htmldoctype]
 							        </div> 
 							        <span>Login with Facebook</span>
 						        </a>
-				                <div class="clear sr-clear_15"></div> 
-				                <span class="sr-small sr-light_grey">It's secure and easy!</span>
+				                <div class="clear sr-clear_15"></div> 				                
                             <else />
                                 &nbsp;
                             </if>
 			            </div>
+			            <span class="sr-small sr-light_grey" style="margin-top: 110px; margin-left: -230px; float: left;">It's secure and easy!</span>
 			       
 			       
 		            </div><!-- /create site account options -->
