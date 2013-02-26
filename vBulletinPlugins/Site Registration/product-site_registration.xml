@@ -1865,6 +1865,13 @@ $stylevar[htmldoctype]
                             eval('print_output("' . fetch_template('site_reg_exception-not-activated') . '");');
                         }
 			        }
+			        
+			        if(isset($_REQUEST['ref'] ) && $_REQUEST['a'] == 'no_permissions'){
+			                    $site_registration_benefits =  1;
+			        }else{
+			                     $site_registration_benefits = 2;
+			        
+			        }
 			         
 			        
 			        if(isset($_REQUEST['a'] ) && $_REQUEST['a'] == 'act' || $_REQUEST['do'] == 'coppaform'  ){
@@ -1979,13 +1986,9 @@ $stylevar[htmldoctype]
                             break;
                     }
                     
-                    if(!$no_permissons){
-                        header("Location: register.php?ref=$reg_ref");
-                    }else{
-                        eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
-                        $site_registration_benefits = fetch_template('site_registration_benefits'); 
-                        eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
-                    }
+
+                    header("Location: register.php?ref=$reg_ref");
+
  
 			    ]]>
 			</phpcode>
