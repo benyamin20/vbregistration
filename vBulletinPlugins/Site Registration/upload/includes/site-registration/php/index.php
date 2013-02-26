@@ -498,7 +498,22 @@ case 'validate_site_account_details':
 
 	}
 
-	//check if username already exists on DB
+    //check if username already exists on DB
+    $user_exists = $db
+            ->query_first(
+                    "
+        SELECT userid, username, email, languageid
+        FROM " . TABLE_PREFIX . "user
+        WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
+                            . "'
+    ");
+
+    if (!empty($user_exists['username'])) {
+        $valid_entries = FALSE;
+        $error_type = "username";
+        $messages['fields'][] = $error_type;
+        $messages['errors'][] = "Sorry, this username is already taken.";//fetch_error('usernametaken', $user_exists['username'], '');
+    }
 
 	if (fetch_require_hvcheck('register')) {
 		//check if CAPTCHA value is correct
@@ -1450,12 +1465,12 @@ case 'activate':
 
 			$data = $vbulletin->db->query_first($sql);
 
-			$activationid = $data["activationid"];			
+			$activationid = $data["activationid"];
 		}
 
 		if (isset($activationid)) {
 			$url = "register.php?a=act&u=". $userid ."&i=". $activationid;
-		} else {			
+		} else {
 			$url = prev_url();
 
 			// Process vBulletin login
