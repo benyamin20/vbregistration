@@ -1454,13 +1454,6 @@ case 'activate':
 		}
 
 		if (isset($activationid)) {
-			$vbulletin->db
-				->query_write(
-						"DELETE FROM " . TABLE_PREFIX
-								. "useractivation
-                WHERE userid = '" . $userid . "'
-                AND type = 0");
-
 			$url = "register.php?a=act&u=". $userid ."&i=". $activationid;
 		} else {			
 			$url = prev_url();
