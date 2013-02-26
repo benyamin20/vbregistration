@@ -498,22 +498,22 @@ case 'validate_site_account_details':
 
 	}
 
-    //check if username already exists on DB
-    $user_exists = $db
-            ->query_first(
-                    "
+	//check if username already exists on DB
+	$user_exists = $db
+			->query_first(
+					"
         SELECT userid, username, email, languageid
         FROM " . TABLE_PREFIX . "user
         WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
-                            . "'
+							. "'
     ");
 
-    if (!empty($user_exists['username'])) {
-        $valid_entries = FALSE;
-        $error_type = "username";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Sorry, this username is already taken.";//fetch_error('usernametaken', $user_exists['username'], '');
-    }
+	if (!empty($user_exists['username'])) {
+		$valid_entries = FALSE;
+		$error_type = "username";
+		$messages['fields'][] = $error_type;
+		$messages['errors'][] = "Sorry, this username is already taken.";//fetch_error('usernametaken', $user_exists['username'], '');
+	}
 
 	if (fetch_require_hvcheck('register')) {
 		//check if CAPTCHA value is correct
@@ -554,7 +554,11 @@ case 'validate_site_account_details':
 
 		$userdata->set('email', $_SESSION['site_registration']['email']);
 		$userdata->set('username', $username);
-		$userdata->set('password', ($vbulletin->GPC['password_md5'] ? $vbulletin->GPC['password_md5'] : $vbulletin->GPC['password']));
+		$userdata
+				->set('password',
+						($vbulletin->GPC['password_md5'] ? $vbulletin
+										->GPC['password_md5']
+								: $vbulletin->GPC['password']));
 
 		//$userdata->set('referrerid', $vbulletin->GPC['referrername']);
 
@@ -602,9 +606,19 @@ case 'validate_site_account_details':
 			// set birthday
 			$userdata->set('showbirthday', $vbulletin->GPC['showbirthday']);
 
-			//mm/dd/yyyy
-			$date_parts = explode("/",
-					$_SESSION['site_registration']['birthday']);
+			$coppaage = $vbulletin->input
+					->clean_gpc('c',
+							COOKIE_PREFIX . 'site_registration_coppage',
+							TYPE_STR);
+
+			if (!empty($coppage)) {
+				//mm/dd/yyyy
+				$date_parts = explode("/", $coppaage);
+			} else {
+				//mm/dd/yyyy
+				$date_parts = explode("/",
+						$_SESSION['site_registration']['birthday']);
+			}
 
 			$month = $date_parts[0];
 			$year = $date_parts[2];
@@ -865,6 +879,8 @@ case 'create_site_account_first_step':
 							AND $vbulletin->options['usecoppa']) {
 						vbsetcookie('coppaage',
 								$month . '-' . $day . '-' . $year, 1);
+						vbsetcookie('site_registration_coppage',
+								$vbulletin->GPC['birthdate'], 1);
 					}
 
 					if ($vbulletin->options['usecoppa'] == 2) {
@@ -1469,7 +1485,7 @@ case 'activate':
 		}
 
 		if (isset($activationid)) {
-			$url = "register.php?a=act&u=". $userid ."&i=". $activationid;
+			$url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
 		} else {
 			$url = prev_url();
 
