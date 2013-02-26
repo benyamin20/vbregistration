@@ -726,6 +726,7 @@ $stylevar[htmldoctype]
                                 &nbsp;
                             </if>
 			            </div>
+			            
 			            <if condition="$show['vbnexus_button_fb']">
 			            	<span class="sr-small sr-light_grey" style="margin-top: 110px; margin-left: -230px; float: left;">It's secure and easy!</span>
 			       		</if>
@@ -1979,6 +1980,10 @@ $stylevar[htmldoctype]
                     
                     if(!$no_permissons){
                         header("Location: register.php?ref=$reg_ref");
+                    }else{
+                        eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
+                        $site_registration_benefits = fetch_template('site_registration_benefits'); 
+                        eval('print_output("' . fetch_template('site_reg_sign-in-step-1') . '");');
                     }
  
 			    ]]>

@@ -498,22 +498,22 @@ case 'validate_site_account_details':
 
 	}
 
-    //check if username already exists on DB
-    $user_exists = $db
-            ->query_first(
-                    "
+	//check if username already exists on DB
+	$user_exists = $db
+			->query_first(
+					"
         SELECT userid, username, email, languageid
         FROM " . TABLE_PREFIX . "user
         WHERE username = '" . $db->escape_string($vbulletin->GPC['username'])
-                            . "'
+							. "'
     ");
 
-    if (!empty($user_exists['username'])) {
-        $valid_entries = FALSE;
-        $error_type = "username";
-        $messages['fields'][] = $error_type;
-        $messages['errors'][] = "Sorry, this username is already taken.";//fetch_error('usernametaken', $user_exists['username'], '');
-    }
+	if (!empty($user_exists['username'])) {
+		$valid_entries = FALSE;
+		$error_type = "username";
+		$messages['fields'][] = $error_type;
+		$messages['errors'][] = "Sorry, this username is already taken.";//fetch_error('usernametaken', $user_exists['username'], '');
+	}
 
 	if (fetch_require_hvcheck('register')) {
 		//check if CAPTCHA value is correct
@@ -554,7 +554,11 @@ case 'validate_site_account_details':
 
 		$userdata->set('email', $_SESSION['site_registration']['email']);
 		$userdata->set('username', $username);
-		$userdata->set('password', ($vbulletin->GPC['password_md5'] ? $vbulletin->GPC['password_md5'] : $vbulletin->GPC['password']));
+		$userdata
+				->set('password',
+						($vbulletin->GPC['password_md5'] ? $vbulletin
+										->GPC['password_md5']
+								: $vbulletin->GPC['password']));
 
 		//$userdata->set('referrerid', $vbulletin->GPC['referrername']);
 
@@ -564,12 +568,14 @@ case 'validate_site_account_details':
 		// assign user to usergroup 3 if email needs verification
 		if ($vbulletin->options['verifyemail']) {
 			$newusergroupid = 3;
-		} else if ($vbulletin->options['moderatenewmembers']
-				OR $_SESSION['site_registration']['coppauser']) {
+		} else if ($vbulletin->options['moderatenewmembers'] OR $_SESSION['site_registration']['coppauser']) {
 			$newusergroupid = 4;
 		} else {
 			$newusergroupid = 2;
 		}
+
+		// set usergroupid
+		$userdata->set('usergroupid', $newusergroupid);
 
 		if (bitwise($vbulletin->bf_misc_regoptions['adminemail'],
 				$vbulletin->options['defaultregoptions'])) {
@@ -602,22 +608,36 @@ case 'validate_site_account_details':
 			// set birthday
 			$userdata->set('showbirthday', $vbulletin->GPC['showbirthday']);
 
-			//mm/dd/yyyy
-			$date_parts = explode("/",
-					$_SESSION['site_registration']['birthday']);
+			$coppaage = $vbulletin->input
+					->clean_gpc('c',
+							COOKIE_PREFIX . 'coppaage',
+							TYPE_STR);
 
-			$month = $date_parts[0];
-			$year = $date_parts[2];
-			$day = $date_parts[1];
+			if (!empty($coppaage)) {
+				if ($vbulletin->options['usecoppa']
+						AND $vbulletin->options['checkcoppa'] AND $coppaage) {
+					$dob = explode('-', $coppaage);
+					$month = $dob[0];
+					$day = $dob[1];
+					$year = $dob[2];
+				}
+			} else {
+				//mm/dd/yyyy
+				$date_parts = explode("/",
+						$_SESSION['site_registration']['birthday']);
+
+				$month = $date_parts[0];
+				$year = $date_parts[2];
+				$day = $date_parts[1];
+			}
+
+
 
 			$userdata
 					->set('birthday',
 							array('day' => $day, 'month' => $month,
 									'year' => $year));
 		}
-
-		// set usergroupid
-		$userdata->set('usergroupid', $newusergroupid);
 
 		// set time options
 		//$userdata->set_dst($vbulletin->GPC['dst']);
@@ -741,14 +761,21 @@ case 'validate_site_account_details':
 
 				$url = prev_url();
 
+				if(empty($url)){
+					$url = "register.php?step=activate";
+				}
+
 			}
 
 		}
 
 	}
 
-	$arr = array("valid_entries" => $valid_entries, "messages" => $messages,
-			"url" => $url, "username" => $username, "time" => time());
+	$arr = array(	"valid_entries" => $valid_entries,
+					"messages" => $messages,
+					"url" => $url,
+					"username" => $username
+			);
 
 	json_headers($arr);
 
@@ -865,6 +892,8 @@ case 'create_site_account_first_step':
 							AND $vbulletin->options['usecoppa']) {
 						vbsetcookie('coppaage',
 								$month . '-' . $day . '-' . $year, 1);
+						vbsetcookie('site_registration_coppage',
+								$vbulletin->GPC['birthdate'], 1);
 					}
 
 					if ($vbulletin->options['usecoppa'] == 2) {
@@ -1469,7 +1498,7 @@ case 'activate':
 		}
 
 		if (isset($activationid)) {
-			$url = "register.php?a=act&u=". $userid ."&i=". $activationid;
+			$url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
 		} else {
 			$url = prev_url();
 

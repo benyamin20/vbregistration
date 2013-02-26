@@ -506,6 +506,10 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#security-code").enterKey(function () {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
+        
+        jQuery("#parent-guardian-email").enterKey(function () {
+            jQuery("#site-account-deails-create-account").trigger('click');
+        });
 
 
 
@@ -672,6 +676,7 @@ jQuery(document).ready(function (jQuery) {
 
     //resens email functionality 
     if (jQuery("#sr-resend-email").exists()) {
+    	regenerate_token();
         jQuery("#sr-resend-email").bind('click', function () {
 
             var token = escape(jQuery('#token').val());
