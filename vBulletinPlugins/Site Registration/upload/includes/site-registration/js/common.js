@@ -607,15 +607,23 @@ jQuery(document).ready(function (jQuery) {
             var password = md5(jQuery("#password").val());
             var s = '';
             var login = 'do';
+            var target_url = '';
 
             var securitytoken = escape(jQuery('#token').val());
 
             if (securitytoken == '') {
                 securitytoken = 'guest';
             }
+            
+            if(jQuery("#sr-use-form").exists()){ 
+            	target_url = 'login.php?do=login';
+            }else{
+            	target_url = sr_path_php + "/php/index.php?op=validate_login";
+            }
+            
 
             jQuery.ajax({
-                url: sr_path_php + "/php/index.php?op=validate_login",
+                url: target_url,
                 context: document.body,
                 type: 'POST',
                 cache: false,

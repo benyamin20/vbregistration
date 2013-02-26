@@ -634,6 +634,12 @@ $stylevar[htmldoctype]
 		    <div id="login-options" class="container_12">
 		        <!-- left column -->
 		        <div id="left-column" class="pull-left">
+		        <if condition="$show_left_column == FALSE">
+		          <!-- just mark up to know we will replace the destination
+		                  url for ajax action 
+		          -->
+		          <div id="sr-use-form"></div>
+		        </if>
 		        <if condition="$show_left_column != FALSE">
 		            <!-- create site account options -->
 		            <div id="create-site-account-options">
@@ -1984,12 +1990,16 @@ $stylevar[htmldoctype]
                             break;
                         default:
                             $reg_ref = 'no_permissions';
-                            $no_permissons = true;
+                            $no_permissions = true;
                             break;
                     }
                     
+                   
+                    if(!$no_permissions){  
+                        header("Location: register.php?ref=$reg_ref");
+                    }
 
-                    header("Location: register.php?ref=$reg_ref");
+                    
 
  
 			    ]]>
