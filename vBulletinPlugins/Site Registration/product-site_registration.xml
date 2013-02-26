@@ -457,9 +457,8 @@ $stylevar[htmldoctype]
 			<div class="grid_2 alpha">
 				<img src="$vboptions[site_registration_includes_path_img]/img/email-icon.png" id="email-icon" />
 			</div>
-			<div class="grid_8 omega">
-				<h1 class="sr-email-sent">We have dispatched a very special email to
-					$session_email</h1>
+			<div class="grid_10 omega">
+				<h1 class="sr-email-sent">We have dispatched a very special email to $session_email</h1>
 				<div class="clear"></div>
 				<p class="sr-normal">
 				Please click on the link to activate your account.</p>
