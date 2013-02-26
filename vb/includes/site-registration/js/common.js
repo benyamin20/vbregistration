@@ -676,6 +676,7 @@ jQuery(document).ready(function (jQuery) {
 
     //resens email functionality 
     if (jQuery("#sr-resend-email").exists()) {
+    	regenerate_token();
         jQuery("#sr-resend-email").bind('click', function () {
 
             var token = escape(jQuery('#token').val());
