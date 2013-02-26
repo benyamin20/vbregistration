@@ -566,13 +566,13 @@ case 'validate_site_account_details':
 		$userdata->set('languageid', $vbulletin->userinfo['languageid']);
 
 		// assign user to usergroup 3 if email needs verification
-		if ($vbulletin->options['verifyemail']) {
-			$newusergroupid = 3;
-		} else if ($vbulletin->options['moderatenewmembers'] OR $_SESSION['site_registration']['coppauser']) {
+		if ($vbulletin->options['moderatenewmembers'] OR $_SESSION['site_registration']['coppauser']) {
 			$newusergroupid = 4;
+		} elseif ($vbulletin->options['verifyemail']) {
+			$newusergroupid = 3;
 		} else {
 			$newusergroupid = 2;
-		}
+		}		
 
 		// set usergroupid
 		$userdata->set('usergroupid', $newusergroupid);
@@ -1392,11 +1392,10 @@ case 'activate':
 		$birthday = preg_replace("/\//", "-",
 				$vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
 
-		if ($vbulletin->options['verifyemail']) {
-			$newusergroupid = 3;
-		} else if ($vbulletin->options['moderatenewmembers']
-				OR $_SESSION['site_registration']['coppauser']) {
+		if ($vbulletin->options['moderatenewmembers'] OR $_SESSION['site_registration']['coppauser']) {
 			$newusergroupid = 4;
+		} elseif($vbulletin->options['verifyemail']) {
+			$newusergroupid = 3;		
 		} else {
 			$newusergroupid = 2;
 		}
