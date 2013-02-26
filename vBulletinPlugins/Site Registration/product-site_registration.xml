@@ -1539,7 +1539,7 @@ $stylevar[htmldoctype]
                         
                     
                         // delete activationid
-                        /*
+                        
                         $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -1557,7 +1557,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
-                         */
+                         
                         
 
                          $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
@@ -2068,7 +2068,7 @@ $stylevar[htmldoctype]
 	                    //delete pending activation code and show activation
 	                    //home page
                         
-                        /*
+                        
 	                    $vbulletin->db->query_write(
                             "DELETE FROM " . TABLE_PREFIX . "useractivation 
                                 WHERE userid = '". $vbulletin->db->escape_string($vbulletin->GPC['u']) ."' 
@@ -2086,7 +2086,7 @@ $stylevar[htmldoctype]
                          $vbulletin->db->query_write(
                             $sql
                          );
-                        */
+                        
                         
                         //fixes birthday to be able to search it on  table
                         $birthday = preg_replace("/\-/","/", $birthday);
