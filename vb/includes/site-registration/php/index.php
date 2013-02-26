@@ -568,12 +568,14 @@ case 'validate_site_account_details':
 		// assign user to usergroup 3 if email needs verification
 		if ($vbulletin->options['verifyemail']) {
 			$newusergroupid = 3;
-		} else if ($vbulletin->options['moderatenewmembers']
-				OR $_SESSION['site_registration']['coppauser']) {
+		} else if ($vbulletin->options['moderatenewmembers'] OR $_SESSION['site_registration']['coppauser']) {
 			$newusergroupid = 4;
 		} else {
 			$newusergroupid = 2;
 		}
+
+		// set usergroupid
+		$userdata->set('usergroupid', $newusergroupid);
 
 		if (bitwise($vbulletin->bf_misc_regoptions['adminemail'],
 				$vbulletin->options['defaultregoptions'])) {
@@ -636,9 +638,6 @@ case 'validate_site_account_details':
 							array('day' => $day, 'month' => $month,
 									'year' => $year));
 		}
-
-		// set usergroupid
-		$userdata->set('usergroupid', $newusergroupid);
 
 		// set time options
 		//$userdata->set_dst($vbulletin->GPC['dst']);
