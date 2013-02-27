@@ -42,4 +42,6 @@
     *margin-top:10px;
 }
 
- 
+#terms_and_conditions-sr-error-label .sr-error-label{
+	margin-left:0px;
+ }
