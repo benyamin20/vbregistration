@@ -42,6 +42,6 @@
     *margin-top:10px;
 }
 
-.ie9 .sr-error-label{
+#terms_and_conditions-sr-error-label .ie9 .sr-error-label{
     margin-left:0px;
  }
