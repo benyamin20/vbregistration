@@ -43,5 +43,5 @@
 }
 
 .sr-error-label{
-    margin-left:0px;
+    margin-left:0px/IE9;
  }
