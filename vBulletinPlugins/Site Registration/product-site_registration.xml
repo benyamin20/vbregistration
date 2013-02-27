@@ -886,8 +886,8 @@ $header
 		    templatetype="template" date="1352855133" 
 		    username="fromero" version="1.0"><![CDATA[
 $stylevar[htmldoctype]
-<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
- 
+<!--[if IE 9]><html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]" class="ie9"> <![endif]-->
+<!--[if gt IE 9]><!--><html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]"> <!--<![endif]--> 
 <head>
      
  
