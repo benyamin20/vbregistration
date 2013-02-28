@@ -873,6 +873,14 @@ jQuery(document).ready(function (jQuery) {
             e.stopPropagation();
             e.stopImmediatePropagation();
         });
+        
+      //bind enter event to custom fields
+        jQuery('input[name^="userfield"]').enterKey(function () {
+        	 jQuery("#log-in").trigger('click');
+             e.preventDefault();
+             e.stopPropagation();
+             e.stopImmediatePropagation();
+        });
 
         jQuery("#log-in").bind('click', function () {
             var username = escape(convertToEntities(jQuery("#username").val()));
@@ -881,6 +889,34 @@ jQuery(document).ready(function (jQuery) {
             var avatar = escape(jQuery("#avatar").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
             var token = escape(jQuery('#token').val());
+            var extra_fields = '';
+            var elements = [];
+            
+            //serialize custom profile fields name and values
+            jQuery('[name^="userfield"]').each(function( index ) {
+            	
+            	var type = jQuery(this).attr('type');
+            	
+            	//check if we need to extract value from a checked input
+            	if(type  == 'radio' || type == 'checkbox'){
+            		name 	= jQuery(this).attr('name');
+            		
+            		val 	= jQuery('input[name="' + name + '"]:checked').val();
+            		
+            		//avoid duplicates
+            		if(val && jQuery.inArray(name, elements) == -1){
+            			extra_fields += "&" + name + "=" + val;
+            			elements.push(name);
+            		}
+            		
+            	}else if(type == 'input'){
+            		extra_fields += "&" + jQuery(this).attr('name') + "=" + escape(jQuery(this).val());
+            	}else{
+            		extra_fields += "&" + jQuery(this).attr('name') + "=" + jQuery(this).val();
+            	}
+            	
+            	
+            });
 
 
 
@@ -890,7 +926,7 @@ jQuery(document).ready(function (jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'from=facebook&avatar=' + avatar + '&username=' + username + '&email=' + email + '&birthdate=' + birthdate + '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions,
+                data: 'from=facebook&avatar=' + avatar + '&username=' + username + '&email=' + email + '&birthdate=' + birthdate + '&securitytoken=' + token + '&terms_and_conditions=' + terms_and_conditions + extra_fields ,
                 beforeSend: function () {
                     if (jQuery('#ajax-loader').exists()) {
                         jQuery('#ajax-loader').append(spinner);
@@ -907,7 +943,30 @@ jQuery(document).ready(function (jQuery) {
                             if (value == 'terms_and_conditions') {
                                 jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
                             } else {
-                                jQuery('#' + value + '-wrapper').addClass("large-sr-input-error-container");
+                            	//handle custom field errors
+                                if(value.indexOf(pattern) !=-1){
+                                    jQuery('[name="' + value + '"]').addClass("sr-input-error");
+                                    jQuery('[name="' + value + '"]')
+                                        .wrap('<div class="grid_7 sr-no-margin large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
+                                    
+                                    jQuery('span[id="' + value + '-sr-error-label"]').empty();
+                                    jQuery('[id="' + value + '-sr-error-label"]').remove();
+                                    
+                                    if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
+                                        jQuery('[name="' + value + '"]')
+                                            .after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
+                                    }
+                                    
+                                    
+                                    
+                                    jQuery('span[id="' + value + '-sr-error-label"]')   
+                                        .html(error);
+                                    
+                                    
+                                }else{
+                                		//large?
+                                    jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                                }
                             }
 
                             jQuery('#' + value).addClass("sr-input-error");

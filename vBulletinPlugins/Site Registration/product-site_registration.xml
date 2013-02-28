@@ -992,6 +992,10 @@ $stylevar[htmldoctype]
 
                 <div class="clear sr-clear_10"></div>
                 
+                <!-- custom profile fields -->    
+                $profile_variable
+                <!-- /custom profile fiels -->
+                
                 <div class="grid_3 sr-no-margin">
 				    <label for="vbnexus_fb_publish">
                         <p>
@@ -1271,8 +1275,10 @@ $stylevar[htmldoctype]
 				</if>
 				
 				<div class="clear "></div>
-                        
+                    
+                <!-- custom profile fields -->    
                 $profile_variable
+                <!-- /custom profile fiels -->
 				
 				<div class="grid_7 sr-no-margin" id="terms-and-conditions-wrapper">
 				    <label class="checkbox grid_3 sr-no-margin fix-tnc-width">
