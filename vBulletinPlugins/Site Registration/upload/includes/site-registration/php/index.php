@@ -1240,7 +1240,9 @@ case 'activate':
 							'username' => TYPE_NOHTML, 'avatar' => TYPE_STR,
 							'from' => TYPE_STR,
 							'vbnexus_fb_publish' => TYPE_INT,
-							'terms_and_conditions' => TYPE_STR));
+							'terms_and_conditions' => TYPE_STR,
+							'userfield' => TYPE_ARRAY
+							));
 
 	//check if variables are set
 	if (empty($vbulletin->GPC['email'])) {
@@ -1248,6 +1250,20 @@ case 'activate':
 		$userdata->error('fieldmissing');
 		$messages['errors'][] = $message = $userdata->errors[0];
 		$messages['fields'][] = $error_type = "email";
+	}
+
+	//remove entities added by js if any to custom fields
+	if(is_array($_POST['userfield'])){
+		foreach($_POST['userfield'] as $key => $value){
+			$_POST['userfield'][$key] = preg_replace("/%u([A-Fa-f0-9]{4})/",
+					"&#x$1;", $value);
+			$_POST['userfield'][$key] = html_entity_decode(
+					$_POST['userfield'][$key],
+					ENT_COMPAT,
+					'utf-8'
+			);
+
+		}
 	}
 
 	//ACP-494 decode js escaped unicode characters
@@ -1440,6 +1456,42 @@ case 'activate':
 		$vbulletin->GPC['birthdate'] = '';
 	}
 
+
+	$userdata_save = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+
+	// set profile fields
+	$customfields = $userdata_save->set_userfields(
+			$vbulletin->GPC['userfield'], true, 'register'
+	);
+
+	// pre save fields
+	$userdata_save->pre_save();
+
+	// check for errors
+	if (!empty($userdata_save->errors)) {
+		$valid_entries = FALSE;
+
+		foreach ($userdata_save->errors AS $index => $error) {
+			$name = getTextBetweenTags($error, "em");
+			if (!empty($name)) {
+				$field = "userfield[$name]";
+				$messages['fields'][] = $field;
+				$messages['errors'][] = $error;
+			}
+		}
+
+	} else {
+		$valid_entries = TRUE;
+		unset($userdata_save->errors);
+	}
+
+
+
+
+
+
+
+
 	if ($valid_entries) {
 		$fbID = $_SESSION['site_registration']["fbID"];
 
@@ -1587,6 +1639,10 @@ case 'activate':
 			$userdata->set_existing($userinfo);
 			$userdata->send_welcomepm();
 		}
+
+		$vbulletin->userinfo = fetch_userinfo($userid);
+		$userdata_save->set_existing($vbulletin->userinfo);
+		$userdata_save->save();
 	}
 
 	$arr = array("valid_entries" => $valid_entries,
