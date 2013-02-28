@@ -922,162 +922,173 @@ $stylevar[htmldoctype]
 		<div id="login-options" class="grid_12">
 			<div class="clear sr-clear_30"></div>
 
-			<!-- Thumb -->
-			<div class="grid_1 alpha">
-				<div class="sr-centered">
-					<img src="$fbPicture" alt="" />
-				</div>
-			</div>
+            <!-- columns container -->
+            <div id="columns-container">
 
-			<input id="avatar" name="avatar" type="hidden" value="$fbPicture" />
-
-			<!-- Create site Account -->
-			<div class="grid_4" id="create-site-account">
-
-				<h1 class="sr-dark_grey">Welcome $fbName!</h1>
-
-				<div class="clear sr-clear_10"></div>
-
-				<span class="sr-small sr-bold">Please choose your public Username
-					to get started.</span>
-				<p class="sr-small">Your Facebook avatar will not be displayed
-					publicly.</p>
-
-				<div class="clear sr-clear_20"></div>
-                <label for="email"><phrase>$vbphrase[email]</phrase></label>
-				<div class="grid_6 sr-no-margin" id="email-wrapper">
-				    <input class="" id="email" name="email" title="Email"
-					    value="$fbEmail" autocomplete="off" type="text" 
-					     />
-					<span class="sr-error-label sr-small" id="email-sr-error-label"></span>
-                </div>
-
-                $fbEmailParent
-                
-				<span class="help-block sr-tiny sr-dark_grey"></span> 
-				
-				<div class="clear "></div>
-				
-				<label for="username"><phrase>$vbphrase[user_name]</phrase></label>
-				
-				<div class="grid_6 sr-no-margin" id="username-wrapper">
-				    <input
-					    class="" id="username" name="username" title="Username"
-					    value="$fbUsername" autocomplete="off" type="text" 
-					    maxlength="$vboptions[maxuserlength]"  />
-				    <span class="sr-error-label sr-small" id="username-sr-error-label"></span>
-				</div>
-
-                
-                
-				<span class="help-block sr-tiny sr-dark_grey">Maximum $vboptions[maxuserlength] characters.</span>
-
-
-				<div class="clear "></div>
-
-                <label for="birthday">Birth Date</label>
-                <div class="grid_6 sr-no-margin" id="datepicker-wrapper">
-				    <div class="input-prepend grid_3 sr-no-margin">
-                        <span class="add-on"> <i class="icon-calendar"></i>
-                        </span> 
-                        <input 
-                            class="sr-fix_input_width_facebook" id="datepicker" 
-                            type="text"
-                            value="$fbBirthday" autocomplete="off" 
-                            
-                            title="Birthday" />
-                    </div>
-                    <span class="sr-error-label sr-small" id="datepicker-sr-error-label"></span>
-                </div>
-
-                <div class="clear sr-clear_10"></div>
-                
-                <!-- custom profile fields -->    
-                $profile_variable
-                <!-- /custom profile fiels -->
-                
-                <div class="grid_3 sr-no-margin">
-				    <label for="vbnexus_fb_publish">
-                        <p>
-                        	<input type="checkbox" checked="checked" name="vbnexus_fb_publish" value="1" id="vbnexus_fb_publish" tabindex="1">
-                        	<img alt="Publish this to your Facebook Stream" src="http://www.facebook.com/favicon.ico" title="Publish this to your Facebook Stream">
-                        	Publish this to your Facebook Stream
-                        </p>
-                    </label>
-                </div>
-                
-                
-                <div class="clear sr-clear_15"></div>
-
-                <div class="grid_6 sr-no-margin" id="terms_and_conditions-wrapper">
-				    <label class="checkbox"> 
-				        <input type="checkbox" value="" checked="checked"
-					       id="terms-and-conditions" name="terms-and-conditions" 
-					         />
-				        <span class="sr-small sr-light_grey span2 sr-no-margin"> Yes, I agree with the
-						    <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
-				        </span>
-				    </label>
-				    <span class="sr-error-label sr-small " id="terms_and_conditions-sr-error-label"></span>
-                </div>
-                
-				<div class="clear sr-clear_15"></div>
-				<div class="pull-left">
-				    <button class="btn btn-primary grid_3"
-                        type="button" id="log-in">Log In</button>
-                                         
-			     </div><span id="ajax-loader"></span>  
-			</div>
-			
-			<!--  Vertical Separator -->
-            <div class="grid_1 prefix_2 sr-vertical-rule-hidden"></div>
-
-			<!--  Already a member -->
-			<div class="grid_4 omega" id="already-member">
-				<h3 class="sr-dark_grey">Already a member?</h3>
-				
-				<div class="clear sr-clear_15"></div>
-				
-				<p class="sr-small">
-				Link your Facebook account to your forum account.
-				</p>
-                
-                <div class="clear sr-clear_15"></div>
-                <span id="username-member-sr-error-label" class="sr-error-label sr-no-margin  "></span>
-                <div class="clear"></div>
-                <span id="password-member-sr-error-label" class="sr-error-label sr-no-margin  "></span>
-                <div class="clear"></div>
-                <label for="username-member"><phrase>$vbphrase[user_name]</phrase></label>
-                
-                <div class="grid_4 sr-no-margin" id="username-member-wrapper">
-                    <input class="" id="username-member" name="username-member"
-                           title="<phrase>$vbphrase[user_name]</phrase>" value=""
-                           autocomplete="off" type="text"
-                           maxlength="$vboptions[maxuserlength]"  /> 
-                </div>
-                 
-                <label for="password-member"><phrase>$vbphrase[password]</phrase></label>
-                
-                <div class="grid_4 sr-no-margin" id="password-member-wrapper">
-                    <input class=""
-                           id="password-member" name="password-member" 
-                           title="<phrase>$vbphrase[password]</phrase>" 
-                           value="" autocomplete="off"
-                           type="password"  /> 
-                </div> 
-                 <div class="clear sr-clear_15"></div>
-                 
-                 <button class="btn grid_3 sr-no-margin"
-                        type="button" id="link-account">Link Account</button>
-                 <span id="ajax-loader-secondary"></span>
-                        
-				<div class="clear sr-clear_15"></div>
-				
-				<input id="token" name="token" value="$security_token" type="hidden" />
-				
-				<a href="login.php?do=lostpw" class="sr-small sr-link_blue"
-					id="forgot-password">Forgot your password?</a>
-			</div>
+	            <!-- left column -->
+	            <div class="pull-left"> 
+	
+					<!-- Thumb -->
+					<div class="grid_1 alpha">
+						<div class="sr-centered">
+							<img src="$fbPicture" alt="" />
+						</div>
+					</div>
+		
+					<input id="avatar" name="avatar" type="hidden" value="$fbPicture" />
+		
+					<!-- Create site Account -->
+					<div class="grid_4" id="create-site-account">
+		
+						<h1 class="sr-dark_grey">Welcome $fbName!</h1>
+		
+						<div class="clear sr-clear_10"></div>
+		
+						<span class="sr-small sr-bold">Please choose your public Username
+							to get started.</span>
+						<p class="sr-small">Your Facebook avatar will not be displayed
+							publicly.</p>
+		
+						<div class="clear sr-clear_20"></div>
+		                <label for="email"><phrase>$vbphrase[email]</phrase></label>
+						<div class="grid_6 sr-no-margin" id="email-wrapper">
+						    <input class="" id="email" name="email" title="Email"
+							    value="$fbEmail" autocomplete="off" type="text" 
+							     />
+							<span class="sr-error-label sr-small" id="email-sr-error-label"></span>
+		                </div>
+		
+		                $fbEmailParent
+		                
+						<span class="help-block sr-tiny sr-dark_grey"></span> 
+						
+						<div class="clear "></div>
+						
+						<label for="username"><phrase>$vbphrase[user_name]</phrase></label>
+						
+						<div class="grid_6 sr-no-margin" id="username-wrapper">
+						    <input
+							    class="" id="username" name="username" title="Username"
+							    value="$fbUsername" autocomplete="off" type="text" 
+							    maxlength="$vboptions[maxuserlength]"  />
+						    <span class="sr-error-label sr-small" id="username-sr-error-label"></span>
+						</div>
+		
+		                
+		                
+						<span class="help-block sr-tiny sr-dark_grey">Maximum $vboptions[maxuserlength] characters.</span>
+		
+		
+						<div class="clear "></div>
+		
+		                <label for="birthday">Birth Date</label>
+		                <div class="grid_6 sr-no-margin" id="datepicker-wrapper">
+						    <div class="input-prepend grid_3 sr-no-margin">
+		                        <span class="add-on"> <i class="icon-calendar"></i>
+		                        </span> 
+		                        <input 
+		                            class="sr-fix_input_width_facebook" id="datepicker" 
+		                            type="text"
+		                            value="$fbBirthday" autocomplete="off" 
+		                            
+		                            title="Birthday" />
+		                    </div>
+		                    <span class="sr-error-label sr-small" id="datepicker-sr-error-label"></span>
+		                </div>
+		
+		                <div class="clear sr-clear_10"></div>
+		                
+		                <!-- custom profile fields -->    
+		                $profile_variable
+		                <!-- /custom profile fiels -->
+		                
+		                <div class="grid_3 sr-no-margin">
+						    <label for="vbnexus_fb_publish">
+		                        <p>
+		                        	<input type="checkbox" checked="checked" name="vbnexus_fb_publish" value="1" id="vbnexus_fb_publish" tabindex="1">
+		                        	<img alt="Publish this to your Facebook Stream" src="http://www.facebook.com/favicon.ico" title="Publish this to your Facebook Stream">
+		                        	Publish this to your Facebook Stream
+		                        </p>
+		                    </label>
+		                </div>
+		                
+		                
+		                <div class="clear sr-clear_15"></div>
+		
+		                <div class="grid_6 sr-no-margin" id="terms_and_conditions-wrapper">
+						    <label class="checkbox"> 
+						        <input type="checkbox" value="" checked="checked"
+							       id="terms-and-conditions" name="terms-and-conditions" 
+							         />
+						        <span class="sr-small sr-light_grey span2 sr-no-margin"> Yes, I agree with the
+								    <a href="$php_self#info" class="sr-link_blue" rel="facebox"><phrase>$vbphrase[forum_rules]</phrase></a>
+						        </span>
+						    </label>
+						    <span class="sr-error-label sr-small " id="terms_and_conditions-sr-error-label"></span>
+		                </div>
+		                
+						<div class="clear sr-clear_15"></div>
+						<div class="pull-left">
+						    <button class="btn btn-primary grid_3"
+		                        type="button" id="log-in">Log In</button>
+		                                         
+					     </div><span id="ajax-loader"></span>  
+					</div>
+					
+					<!--  Vertical Separator -->
+		            <div class="grid_1 prefix_2 sr-vertical-rule-hidden"></div>
+	            
+	            </div>  <!-- / left column -->
+	            
+	            <div class="pull-right">    <!-- right column -->
+					<!--  Already a member -->
+					<div class="grid_4 omega" id="already-member">
+						<h3 class="sr-dark_grey">Already a member?</h3>
+						
+						<div class="clear sr-clear_15"></div>
+						
+						<p class="sr-small">
+						Link your Facebook account to your forum account.
+						</p>
+		                
+		                <div class="clear sr-clear_15"></div>
+		                <span id="username-member-sr-error-label" class="sr-error-label sr-no-margin  "></span>
+		                <div class="clear"></div>
+		                <span id="password-member-sr-error-label" class="sr-error-label sr-no-margin  "></span>
+		                <div class="clear"></div>
+		                <label for="username-member"><phrase>$vbphrase[user_name]</phrase></label>
+		                
+		                <div class="grid_4 sr-no-margin" id="username-member-wrapper">
+		                    <input class="" id="username-member" name="username-member"
+		                           title="<phrase>$vbphrase[user_name]</phrase>" value=""
+		                           autocomplete="off" type="text"
+		                           maxlength="$vboptions[maxuserlength]"  /> 
+		                </div>
+		                 
+		                <label for="password-member"><phrase>$vbphrase[password]</phrase></label>
+		                
+		                <div class="grid_4 sr-no-margin" id="password-member-wrapper">
+		                    <input class=""
+		                           id="password-member" name="password-member" 
+		                           title="<phrase>$vbphrase[password]</phrase>" 
+		                           value="" autocomplete="off"
+		                           type="password"  /> 
+		                </div> 
+		                 <div class="clear sr-clear_15"></div>
+		                 
+		                 <button class="btn grid_3 sr-no-margin"
+		                        type="button" id="link-account">Link Account</button>
+		                 <span id="ajax-loader-secondary"></span>
+		                        
+						<div class="clear sr-clear_15"></div>
+						
+						<input id="token" name="token" value="$security_token" type="hidden" />
+						
+						<a href="login.php?do=lostpw" class="sr-small sr-link_blue"
+							id="forgot-password">Forgot your password?</a>
+					</div>
+				</div>    <!-- /right column -->
+			</div>   <!-- / columns container -->
 
 		</div>
 

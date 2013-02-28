@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 li {
-	margin-left: 15px ;
+    margin-left: 15px ;
 }
 
 .sr-vertical-rule {
@@ -9,154 +9,154 @@ li {
     background: url("../img/line-separator.png");
    
     background-position: 50%;
-	background-repeat: repeat-y;
-	background-size: 1px auto;
-	height: 250px;
-	  
+    background-repeat: repeat-y;
+    background-size: 1px auto;
+    height: 250px;
+      
 }
 
 .sr-vertical-rule-hidden {
     
-	height: 250px;
+    height: 250px;
 }
 
 .sr-title_red {
-	color: #A40219;
-	font-size: 22px;
+    color: #A40219;
+    font-size: 22px;
 }
 
 .sr-error_red {
-	color: #800000;
+    color: #800000;
 }
 
 
 .sr-dark_grey {
-	color: #666666;
+    color: #666666;
 }
 
 .sr-light_grey {
-	color: #888888;
+    color: #888888;
 }
 
 .sr-lighter_grey {
-	color: #CCCCCC;
+    color: #CCCCCC;
 }
 
 .sr-border_grey {
-	color: #A40219;
+    color: #A40219;
 }
 
 .sr-background_grey {
-	background-color: #EEEEEE;
+    background-color: #EEEEEE;
 }
 
 .sr-background_yellow {
-	background-color: #FFFFCC ;
-	*width: 100% ;
-	*padding-bottom: 20px;
-	*padding-top: 20px;
-	
+    background-color: #FFFFCC ;
+    *width: 100% ;
+    *padding-bottom: 20px;
+    *padding-top: 20px;
+    
 }
 
 .sr-clear_5 {
-	min-height: 5px;
+    min-height: 5px;
 }
 
 .sr-clear_10 {
-	min-height: 10px;
+    min-height: 10px;
 }
 
 .sr-clear_20 {
-	min-height: 20px;
+    min-height: 20px;
 }
 
 .sr-clear_15 {
-	min-height: 15px;
+    min-height: 15px;
 }
 
 .sr-clear_30 {
-	min-height: 30px;
+    min-height: 30px;
 }
 
 .fb {
-	background: -moz-linear-gradient(center top, #3B5998 0%, #3B5998 50%, #325190 50%,
-		#325190 100%) repeat scroll 0 0 transparent;
-	box-shadow: 0 3px 0 #213B6D;
+    background: -moz-linear-gradient(center top, #3B5998 0%, #3B5998 50%, #325190 50%,
+        #325190 100%) repeat scroll 0 0 transparent;
+    box-shadow: 0 3px 0 #213B6D;
 }
 
 .login_button {
-	-khtml-user-select: none;
-	-moz-border-radius: 5px;
-	-moz-user-select: none;
-	-o-user-select: none;
-	-webkit-border-radius: 5px;
-	-webkit-user-select: none;
-	border-radius: 5px;
-	display: inline-block;
-	height: 37px;
-	min-width: 200px;
-	user-select: none;
+    -khtml-user-select: none;
+    -moz-border-radius: 5px;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -webkit-border-radius: 5px;
+    -webkit-user-select: none;
+    border-radius: 5px;
+    display: inline-block;
+    height: 37px;
+    min-width: 200px;
+    user-select: none;
 }
 
 .fb a {
-	color: #221919;
-	font-weight: bold;
-	outline: medium none;
-	text-decoration: none;
+    color: #221919;
+    font-weight: bold;
+    outline: medium none;
+    text-decoration: none;
 }
 
 .fb .logo_wrapper {
-	border-right: 1px solid #2F4F85;
+    border-right: 1px solid #2F4F85;
 }
 
 .fb:hover .logo_wrapper {
-	border-right: 1px solid #284473;
+    border-right: 1px solid #284473;
 }
 
 .login_button .logo_wrapper {
-	float: left;
-	margin-top: 7px;
-	padding: 3px 12px;
+    float: left;
+    margin-top: 7px;
+    padding: 3px 12px;
 }
 
 .fb .logo {
-	background: url("../img/login_icons.png") no-repeat scroll 1px 0
-		transparent;
-	float: left;
-	height: 20px;
-	width: 11px;
+    background: url("../img/login_icons.png") no-repeat scroll 1px 0
+        transparent;
+    float: left;
+    height: 20px;
+    width: 11px;
 }
 
 .fb>span {
-	border-left: 1px solid #627BA8;
-	font-weight: bold;
+    border-left: 1px solid #627BA8;
+    font-weight: bold;
 }
 
 .login_button>span {
-	color: #fff;
-	float: left;
-	font-size: 14px;
-	font-weight: 500;
-	margin-top: 7px;
-	min-height: 20px;
-	padding: 3px 12px;
+    color: #fff;
+    float: left;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 7px;
+    min-height: 20px;
+    padding: 3px 12px;
     line-height: 20px;
 }
 
 .fb:active {
-	-moz-box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
-	-webkit-box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
-	background-color: #243d79;
-	background-image: none;
-	box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
+    -moz-box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
+    -webkit-box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
+    background-color: #243d79;
+    background-image: none;
+    box-shadow: inset 0 1px 0 rgba(50, 50, 50, 0.4);
 }
 
 .fb:active>span {
-	border-left-color: #2c4b94;
+    border-left-color: #2c4b94;
 }
 
 .fb:hover>span {
-	border-left: 1px solid #51668c;
+    border-left: 1px solid #51668c;
 }
 
 .login_button:active {
@@ -165,45 +165,45 @@ li {
 }
 
 .login_button:hover {
-	cursor: pointer;
-	text-decoration: none;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .sr-fix_input_width {
-	width: 60% ;
+    width: 60% ;
 }
 
 .sr-fix_input_width_facebook{
-	width: 82% ;
+    width: 82% ;
 }
 
 .sr-margin_left_10 {
-	margin-left: 10px;
+    margin-left: 10px;
 }
 
 .sr-margin_left_20 {
-	margin-left: 20px;
+    margin-left: 20px;
 }
 
 .sr-centered {
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 #sr-site-heading {
-	border-bottom: 1.5px solid #D6D6D6;
-	padding-bottom: 8px;
-	margin-top:20px;
+    border-bottom: 1.5px solid #D6D6D6;
+    padding-bottom: 8px;
+    margin-top:20px;
 }
 
 #sr-benefits-1,#sr-benefits-2 {
-	margin: 0px ;
+    margin: 0px ;
 }
 
 .sr-already-have-an-account {
-	background-color: #F1F1F1;
-	padding-bottom: 15px;
+    background-color: #F1F1F1;
+    padding-bottom: 15px;
 }
 
 .complete-your-profile {
@@ -212,30 +212,30 @@ li {
 }
 
 .move-to-top {
-	margin-top: 0px;
+    margin-top: 0px;
 }
 
 .move-to-top-inside {
-	margin-top: -30px;
+    margin-top: -30px;
 }
 
 #after-days {
-	margin-left: 0px ;
+    margin-left: 0px ;
 }
 
 .horizontal-wrapper {
-	position: relative;
-	margin-top: 16px;
+    position: relative;
+    margin-top: 16px;
 }
 
 .ui-widget {
-	font-family: Verdana, Arial, sans-serif;
-	font-size: 1.08em;
-	margin-left: -30px;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.08em;
+    margin-left: -30px;
 }
 
 #info {
-	display: none;
+    display: none;
 }
 
 #info h1, #create-site-account h1, #already-member h3{
@@ -244,21 +244,21 @@ li {
 
 
 #login-options {
-	background: url("../img/triangle.png") no-repeat scroll 22px 0
-		transparent;
-	height: 14px;
-	margin-top: -10px;
+    background: url("../img/triangle.png") no-repeat scroll 22px 0
+        transparent;
+    /*height: 14px;*/
+    margin-top: -10px;
 }
 
 #facebox .popup, #facebox .content {
-	min-width: 600px;
-	font-family: Helvetica, Arial, 'sans-serif' ;
-	font-size: 12px  ;
+    min-width: 600px;
+    font-family: Helvetica, Arial, 'sans-serif' ;
+    font-size: 12px  ;
 }
 
  #facebox td, #facebox th, #facebox p, #facebox li{
- 	font-family: Helvetica, Arial, 'sans-serif' ;
-	font-size: 12px  ;
+    font-family: Helvetica, Arial, 'sans-serif' ;
+    font-size: 12px  ;
  }
 
 .popup{
@@ -266,33 +266,33 @@ li {
 }
 
 .terms-and-conditions{
-	font-size: 18px;
+    font-size: 18px;
     font-weight: bold;
     line-height: 0px ;
 }
 
 #action-icons{
-	background-color: #F7F7F7;
+    background-color: #F7F7F7;
 }
 
 .remove-margin-bottom{
-    margin-bottom: 0px ;	
+    margin-bottom: 0px ;    
 }
 
 
 .sr-email-sent{
-	color: #333;
+    color: #333;
 }
 
 
 .sr-input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 28px
-	transparent  ;
+    transparent  ;
 }
 
 .large-sr-input-error-container{
     background: url("../img/redx.png") no-repeat scroll 227px 8px
-	transparent ;
+    transparent ;
 }
 
 .sr-error-label{
@@ -416,7 +416,7 @@ li {
 */
 
 .activate-account-container{
-    padding-bottom: 250px;
+    /*padding-bottom: 250px;*/
 }
 
 #have-account-error{
@@ -545,13 +545,13 @@ div.content table.tborder{
 }
 
 #info td, #info th {
-	font-family: Helvetica, Arial, 'sans-serif' ;
-	font-size: 12px  ;
+    font-family: Helvetica, Arial, 'sans-serif' ;
+    font-size: 12px  ;
 }
 
  #ui-datepicker-div td, #ui-datepicker-div th, #ui-datepicker-div p, #ui-datepicker-div li{
- 	font-family: Helvetica, Arial, 'sans-serif' ;
-	font-size: 12px  ;
+    font-family: Helvetica, Arial, 'sans-serif' ;
+    font-size: 12px  ;
  }
 
 
@@ -561,19 +561,19 @@ div.content table.tborder{
 
 
 a.sr-link_blue, .info a, .popup a,  #info a, #popup a {
-	color: #0066DD;
-	cursor: pointer;
-	text-decoration: none;
+    color: #0066DD;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .sr-link_blue {
-	color: #0066DD;
-	cursor: pointer;
+    color: #0066DD;
+    cursor: pointer;
 }
 
 
 #log-in, .sr-no-margin{
-	margin: 0px ;
+    margin: 0px ;
 }
 
 .sr-input-error{
@@ -590,7 +590,7 @@ a.sr-link_blue, .info a, .popup a,  #info a, #popup a {
 .sr-container-fb{
     font-family: Helvetica,Arial,'sans-serif';
     font-size: 12px;
-    padding-bottom: 500px;
+    /*padding-bottom: 500px;*/
 }
 
 a.move-to-top-avatar-upload {
@@ -598,8 +598,8 @@ a.move-to-top-avatar-upload {
 }
 
 .no-top-text-area{
-	top: -37px;
-	
+    top: -37px;
+    
 }
 
 
