@@ -57,14 +57,26 @@ case 'generate_thumbnail':
 
 	if ($_FILES['upload']['name'] != "") {
 
-		$valid_formats = array("jpg", "png", "gif", "bmp", "jpeg");
+		$valid_formats = array("jpg", "png", "bmp", "jpeg");
+
+
+		//check if animated avatars are allowed, usually gif files.
+		$allowanimation = ($userinfo['permissions']['genericpermissions']
+				& $vbulletin
+				->bf_ugp_genericpermissions['cananimateavatar']) ? true
+				: false;
+
+		if($allowanimation){
+			array_push($valid_formats, "gif");
+		}
+
 
 		if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
 			$name = $_FILES['upload']['name'];
 			$size = $_FILES['upload']['size'];
 
 			if (strlen($name)) {
-				list($txt, $ext) = explode(".", $name);
+				$ext  = strtolower(file_extension($name));
 				if (in_array($ext, $valid_formats)) {
 					if ($size < ($max_upload)) {
 						$actual_image_name = time() . mt_rand() . "." . $ext;
