@@ -1634,7 +1634,7 @@ $stylevar[htmldoctype]
                         session_start();
                     }			        
  
-                    if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	
+                    if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                    	        
 						$fUser = explode("|", $_REQUEST["fuser"]);
 
 						$fbBirthday = $_SESSION['site_registration']["fbBirthday"] = $fUser[3];

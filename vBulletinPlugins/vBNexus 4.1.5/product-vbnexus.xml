@@ -45,9 +45,27 @@ if($vbulletin->db->query_first("SHOW TABLES LIKE '" . TABLE_PREFIX . "vbnexus_no
         $vbphrase[vbnexus_buttons_legend]
     </div>
 
+    <script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]"></script>
+
     <script type="text/javascript">
         function vBNexusLoginRedirect(service) {
-            window.location = "$vboptions[bburl]/login.php?do=login&vbnexus_service=" + service + "&loc=$vboptions[vbnexus_loc]";
+          FB.api('/me', {
+            fields: 'id,name,email,birthday,picture,username'
+          }, function (result) {
+            var fuser = result.id + '|' + result.name + '|' + result.email + '|' + result.birthday + '|' + result.username + '|' + result.picture.data.url;
+
+            jQuery.ajax({
+              type: 'POST',
+              url: 'register.php?step=facebook-details',
+              dataType: 'json',
+              data: 'fuser=' + fuser + '&first=1&securitytoken=guest',
+              success: function (response) {
+                window.location = response.url;
+              }
+            });
+          });
+          
+          //window.location = "$vboptions[bburl]/login.php?do=login&vbnexus_service=" + service + "&loc=$vboptions[vbnexus_loc]";
         }
     </script>
 
@@ -87,16 +105,41 @@ if($vbulletin->db->query_first("SHOW TABLES LIKE '" . TABLE_PREFIX . "vbnexus_no
 
         <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
         <script type="text/javascript">
-            document.getElementById('FB_login_button').onclick = function() {
+            document.getElementById('FB_login_button').onclick = function() { 
                 FB.init({
                     appId : "$vboptions[vbnexusconfig_facebook_appid]",
                     status: true, // check login status
                     cookie: true, // enable cookies to allow the server to access the session
                     oauth : true  // enables OAuth 2.0
                 });
-                FB.login(function(res){
-                    if (res.status == 'connected') vBNexusLoginRedirect('fb');
-                }, {scope: '$vboptions[vbnexus_fb_scope]'});
+
+                FB.login(function(response) { 
+                  if(response.authResponse) {                    
+                    access_token = response.authResponse.accessToken; //get access token
+                    user_id = response.authResponse.userID; 
+
+                    FB.api('/me', {
+                      fields: 'id,name,email,birthday,picture,username'
+                    }, function (result) { 
+                      var fuser = result.id + '|' + result.name + '|' + result.email + '|' + result.birthday + '|' + result.username + '|' + result.picture.data.url;                      
+
+                      jQuery.ajax({
+                        type: 'POST',
+                        url: 'register.php&step=facebook-details',
+                        dataType: 'json',
+                        data: 'fuser=' + fuser + '&first=1&securitytoken=guest&from=vbnexus',
+                        success: function(response) {                           
+                          window.location = response.url;
+                        }
+                      });                      
+                    });
+                  } else {
+                      //user hit cancel button
+                      console.log('User cancelled login or did not fully authorize.');
+                  }
+                }, {
+                    scope: 'email,user_birthday,read_stream'
+                });
             }
         </script>
     </if>
