@@ -938,6 +938,9 @@ jQuery(document).ready(function (jQuery) {
                         //mark elements as invalid
 
                         clear_errors();
+                        
+                        var pattern="userfield";
+                        var error = 'Required field missing or has an invalid value.';
 
                         jQuery.each(response.messages.fields, function (index, value) {
                             if (value == 'terms_and_conditions') {

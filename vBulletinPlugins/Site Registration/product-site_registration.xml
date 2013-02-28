@@ -996,7 +996,7 @@ $stylevar[htmldoctype]
 		                    <span class="sr-error-label sr-small" id="datepicker-sr-error-label"></span>
 		                </div>
 		
-		                <div class="clear sr-clear_10"></div>
+		                <div class="clear sr-clear_20"></div>
 		                
 		                <!-- custom profile fields -->    
 		                $profile_variable
