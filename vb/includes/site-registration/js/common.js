@@ -510,6 +510,11 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#parent-guardian-email").enterKey(function () {
             jQuery("#site-account-deails-create-account").trigger('click');
         });
+        
+        //bind enter event to custom fields
+        jQuery('input[name^="userfield"]').enterKey(function () {
+            jQuery("#site-account-deails-create-account").trigger('click');
+        });
 
 
 
@@ -517,13 +522,40 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#site-account-deails-create-account").bind('click', function () {
             jQuery('#have-account-error').empty();
             var username = escape(convertToEntities(jQuery("#username").val()));
-            console.log(username);
             var password = md5(jQuery("#password").val());
             var confirm_password = md5(jQuery("#confirm-password").val());
             var security_code = escape(jQuery("#security-code").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
             var token = escape(jQuery("#token").val());
             var parent_guardian_email= escape(jQuery("#parent-guardian-email").val());
+            var extra_fields = '';
+            var elements = [];
+            
+            //serialize custom profile fields name and values
+            jQuery('[name^="userfield"]').each(function( index ) {
+            	
+            	var type = jQuery(this).attr('type');
+            	
+            	//check if we need to extract value from a checked input
+            	if(type  == 'radio' || type == 'checkbox'){
+            		name 	= jQuery(this).attr('name');
+            		
+            		val 	= jQuery('input[name="' + name + '"]:checked').val();
+            		
+            		//avoid duplicates
+            		if(val && jQuery.inArray(name, elements) == -1){
+            			extra_fields += "&" + name + "=" + val;
+            			elements.push(name);
+            		}
+            		
+            	}else if(type == 'input'){
+            		extra_fields += "&" + jQuery(this).attr('name') + "=" + escape(jQuery(this).val());
+            	}else{
+            		extra_fields += "&" + jQuery(this).attr('name') + "=" + jQuery(this).val();
+            	}
+            	
+            	
+            });
 
             jQuery.ajax({
                 url: sr_path_php + "/php/index.php?op=validate_site_account_details",
@@ -531,7 +563,7 @@ jQuery(document).ready(function (jQuery) {
                 dataType: 'json',
                 type: 'POST',
                 cache: false,
-                data: 'username=' + username + '&password=' + password + '&confirm_password=' + confirm_password + '&security_code=' + security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken=' + token + '&parent-guardian-email='+parent_guardian_email,
+                data: 'username=' + username + '&password=' + password + '&confirm_password=' + confirm_password + '&security_code=' + security_code + '&terms_and_conditions=' + terms_and_conditions + '&securitytoken=' + token + '&parent-guardian-email='+parent_guardian_email + extra_fields,
                 beforeSend: function () {
                     initialize_spinner();
                     regenerate_token();
@@ -545,13 +577,37 @@ jQuery(document).ready(function (jQuery) {
                     if (response.valid_entries == false) {
 
                         clear_errors();
+                        var pattern="userfield";
+                        var error = 'Required field missing or has an invalid value.';
 
                         jQuery.each(response.messages.fields, function (index, value) {
 
                             if (value == 'terms-and-conditions') {
                                 jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
                             } else {
-                                jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                            	//handle custom field errors
+                                if(value.indexOf(pattern) !=-1){
+                                    jQuery('[name="' + value + '"]').addClass("sr-input-error");
+                                    jQuery('[name="' + value + '"]')
+                                        .wrap('<div class="grid_7 sr-no-margin large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
+                                    
+                                    jQuery('span[id="' + value + '-sr-error-label"]').empty();
+                                    jQuery('[id="' + value + '-sr-error-label"]').remove();
+                                    
+                                    if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
+                                        jQuery('[name="' + value + '"]')
+                                            .after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
+                                    }
+                                    
+                                    
+                                    
+                                    jQuery('span[id="' + value + '-sr-error-label"]')   
+                                        .html(error);
+                                    
+                                    
+                                }else{
+                                    jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                                }
 
                             }
                             jQuery('#' + value).addClass("sr-input-error");

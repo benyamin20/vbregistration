@@ -99,16 +99,17 @@ case 'generate_thumbnail':
 			$message = "Invalid method.";
 		}
 	} else {
-		$error = true;
-		$message = "An error ocurred.";
+		//$error = true;
+		//$message = "An error ocurred.";
 	}
 
 	if ($error) {
 		$arr['id'] = "-1";
 		$arr['msg'] = $message;
-		//$arr['debug'] = var_export($_FILES, true) . var_export($userinfo, true);
+		$_SESSION['site_registration']['valid_entries'] = FALSE;
 	} else {
 		$arr['id'] = $actual_image_name;
+		$_SESSION['site_registration']['valid_entries'] = TRUE;
 	}
 
 	json_headers_ie_support($arr);
@@ -144,6 +145,8 @@ case 'show_thumbnail':
 	}
 
 	// try to generate thumb if gd is available
+	$_SESSION['site_registration']['valid_entries'] = TRUE;
+
 	if ($gd) {
 		$im = thumbnail($sImage, 100);
 		$info = getimagesize($sImage);
@@ -320,6 +323,13 @@ case 'complete_your_profile':
 		$userpic->delete();
 	}
 
+	if($_SESSION['site_registration']['valid_entries'] == FALSE){
+		$valid_entries = FALSE;
+		$error_type = "upload";
+		$messages['fields'][] = $error_type;
+		$messages['errors'][] = "Invalid image file.";
+	}
+
 	$userdata_save = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
 	$vbulletin->userinfo = fetch_userinfo($userid);
 	$userdata_save->set_existing($vbulletin->userinfo);
@@ -332,9 +342,7 @@ case 'complete_your_profile':
 	$userdata_save->set('avatarid', $vbulletin->GPC['avatarid']);
 	$userdata_save->set('timezoneoffset', $vbulletin->GPC['timezone']);
 
-	// set profile fields
-	$customfields = $userdata_save
-			->set_userfields($vbulletin->GPC['userfield'], true, 'register');
+
 
 	// pre save fields
 	$userdata_save->pre_save();
@@ -394,6 +402,22 @@ case 'validate_site_account_details':
 	$userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
 	$valid_entries = TRUE;
 	$messages = "";
+
+	//remove entities added by js if any to custom fields
+	if(is_array($_POST['userfield'])){
+		foreach($_POST['userfield'] as $key => $value){
+			$_POST['userfield'][$key] = preg_replace("/%u([A-Fa-f0-9]{4})/",
+										"&#x$1;", $value);
+			$_POST['userfield'][$key] = html_entity_decode(
+										$_POST['userfield'][$key],
+										ENT_COMPAT,
+										'utf-8'
+			);
+
+		}
+	}
+
+
 	$vbulletin->input
 			->clean_array_gpc('p',
 					array('username' => TYPE_NOCLEAN,
@@ -401,7 +425,8 @@ case 'validate_site_account_details':
 							'password' => TYPE_STR,
 							'confirm_password' => TYPE_STR,
 							'security_code' => TYPE_STR,
-							'terms_and_conditions' => TYPE_INT));
+							'terms_and_conditions' => TYPE_INT,
+							'userfield' => TYPE_ARRAY));
 
 	if (empty($vbulletin->GPC['password'])
 			|| $vbulletin->GPC['password'] == md5("")) {
@@ -512,7 +537,8 @@ case 'validate_site_account_details':
 		$valid_entries = FALSE;
 		$error_type = "username";
 		$messages['fields'][] = $error_type;
-		$messages['errors'][] = "Sorry, this username is already taken.";//fetch_error('usernametaken', $user_exists['username'], '');
+		$messages['errors'][] = "Sorry, this username is already taken.";
+		//fetch_error('usernametaken', $user_exists['username'], '');
 	}
 
 	if (fetch_require_hvcheck('register')) {
@@ -539,7 +565,36 @@ case 'validate_site_account_details':
 		}
 	}
 
+	$userdata_save = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+
+	// set profile fields
+	$customfields = $userdata_save->set_userfields(
+				$vbulletin->GPC['userfield'], true, 'register'
+	);
+
+	// pre save fields
+	$userdata_save->pre_save();
+
+	// check for errors
+	if (!empty($userdata_save->errors)) {
+		$valid_entries = FALSE;
+
+		foreach ($userdata_save->errors AS $index => $error) {
+			$name = getTextBetweenTags($error, "em");
+			if (!empty($name)) {
+				$field = "userfield[$name]";
+				$messages['fields'][] = $field;
+				$messages['errors'][] = $error;
+			}
+		}
+
+	} else {
+		$valid_entries = TRUE;
+		unset($userdata_save->errors);
+	}
+
 	if ($valid_entries) {
+
 		$_SESSION['site_registration']['username'] = $username;
 		$_SESSION['site_registration']['password'] = $password;
 
@@ -560,7 +615,6 @@ case 'validate_site_account_details':
 										->GPC['password_md5']
 								: $vbulletin->GPC['password']));
 
-		//$userdata->set('referrerid', $vbulletin->GPC['referrername']);
 
 		// set languageid
 		$userdata->set('languageid', $vbulletin->userinfo['languageid']);
@@ -572,7 +626,7 @@ case 'validate_site_account_details':
 			$newusergroupid = 3;
 		} else {
 			$newusergroupid = 2;
-		}		
+		}
 
 		// set usergroupid
 		$userdata->set('usergroupid', $newusergroupid);
@@ -599,9 +653,6 @@ case 'validate_site_account_details':
 				->set_usertitle('', false,
 						$vbulletin->usergroupcache["$newusergroupid"], false,
 						false);
-
-		// set profile fields
-		// $customfields = $userdata->set_userfields($vbulletin->GPC['userfield'], true, 'register');
 
 		if ($vbulletin->options['reqbirthday']
 				|| !empty($_SESSION['site_registration']['birthday'])) {
@@ -691,6 +742,10 @@ case 'validate_site_account_details':
 			$_SESSION['site_registration']['userid'] = $vbulletin
 					->userinfo['userid'] = $userid = $userdata->save();
 
+			$vbulletin->userinfo = fetch_userinfo($userid);
+			$userdata_save->set_existing($vbulletin->userinfo);
+			$userdata_save->save();
+
 			$userinfo = fetch_userinfo($userid);
 			$userdata_rank = &datamanager_init('User', $vbulletin,
 					ERRTYPE_SILENT);
@@ -773,8 +828,7 @@ case 'validate_site_account_details':
 
 	$arr = array(	"valid_entries" => $valid_entries,
 					"messages" => $messages,
-					"url" => $url,
-					"username" => $username
+					"url" => $url
 			);
 
 	json_headers($arr);
@@ -1395,7 +1449,7 @@ case 'activate':
 		if ($vbulletin->options['moderatenewmembers'] OR $_SESSION['site_registration']['coppauser']) {
 			$newusergroupid = 4;
 		} elseif($vbulletin->options['verifyemail']) {
-			$newusergroupid = 3;		
+			$newusergroupid = 3;
 		} else {
 			$newusergroupid = 2;
 		}

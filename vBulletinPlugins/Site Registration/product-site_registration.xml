@@ -127,7 +127,7 @@ $stylevar[htmldoctype]
     <!-- site registration includes -->
     $site_reg_includes
     <!-- /site registration includes -->
-    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/css/custom_fields.css?v=$vboptions[simpleversion]">    
+      
     
     <script src="$vboptions[site_registration_includes_path_js]/js/jquery.form.js?v=$vboptions[simpleversion]"></script>
     <script src="$vboptions[site_registration_includes_path_js]/bootstrap/js/bootstrap-fileupload.min.js?v=$vboptions[simpleversion]"></script>
@@ -276,9 +276,7 @@ $stylevar[htmldoctype]
 						<!-- custom inputs  -->
 
 						<div class="clear"></div> 
-						<div class="clear sr-clear_10"></div>
-                        
-                        $profile_variable
+						
                         
                         <!--  Contact check boxes -->
 
@@ -901,6 +899,7 @@ $stylevar[htmldoctype]
     <!-- site registration includes -->
     $site_reg_includes
     <!-- /site registration includes -->
+    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/css/custom_fields.css?v=$vboptions[simpleversion]">  
 
 </head>
 
@@ -1162,6 +1161,7 @@ $stylevar[htmldoctype]
     <!-- site registration includes -->
     $site_reg_includes
     <!-- /site registration includes -->
+    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/css/custom_fields.css?v=$vboptions[simpleversion]">  
 </head>
 
 <body>
@@ -1269,6 +1269,10 @@ $stylevar[htmldoctype]
 				
 				    <div class="clear sr-clear_15"></div>
 				</if>
+				
+				<div class="clear "></div>
+                        
+                $profile_variable
 				
 				<div class="grid_7 sr-no-margin" id="terms-and-conditions-wrapper">
 				    <label class="checkbox grid_3 sr-no-margin fix-tnc-width">
@@ -1581,11 +1585,7 @@ $stylevar[htmldoctype]
 	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
 	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
                         }
-                        
-                        //ACP-503
-                        //show custom profile fields
-                        require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
-  
+ 
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
 
@@ -1817,6 +1817,10 @@ $stylevar[htmldoctype]
                                 
                             } 
                             
+                            //ACP-503
+                            //show custom profile fields
+                            require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
+                            
                             eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
                         }
@@ -1829,6 +1833,10 @@ $stylevar[htmldoctype]
 					    	$fbBirthday = $_SESSION['site_registration']["fbBirthday"];
 					    	$fbPicture = $_SESSION['site_registration']["fbPicture"];
 
+                            //ACP-503
+                            //show custom profile fields
+                            require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
+                            
                             
                             if($vbulletin->options['allowregistration']) {
                                 eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
