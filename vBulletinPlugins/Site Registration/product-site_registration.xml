@@ -127,6 +127,7 @@ $stylevar[htmldoctype]
     <!-- site registration includes -->
     $site_reg_includes
     <!-- /site registration includes -->
+    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/css/custom_fields.css?v=$vboptions[simpleversion]"> 
       
     
     <script src="$vboptions[site_registration_includes_path_js]/js/jquery.form.js?v=$vboptions[simpleversion]"></script>
@@ -273,7 +274,9 @@ $stylevar[htmldoctype]
                             <span class="sr-error-label" id="timezone-sr-error-label"></span>
                         </div><!--  /Timezone -->
  
-						<!-- custom inputs  -->
+						 <!-- custom profile fields -->    
+                        $profile_variable
+                        <!-- /custom profile fiels -->
 
 						<div class="clear"></div> 
 						
@@ -1602,6 +1605,11 @@ $stylevar[htmldoctype]
 	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
 	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
                         }
+                        
+                        //ACP-503
+                        //show custom profile fields
+                        $finish_registration = true;
+                        require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
  
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
@@ -2216,6 +2224,7 @@ $stylevar[htmldoctype]
 			            
 			            //ACP-503
 			            //show custom profile fields
+			            $finish_registration = true;
                         require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
 	 
                  

@@ -354,6 +354,10 @@ case 'complete_your_profile':
 	$userdata_save->set('avatarid', $vbulletin->GPC['avatarid']);
 	$userdata_save->set('timezoneoffset', $vbulletin->GPC['timezone']);
 
+	$customfields = $userdata_save->set_userfields(
+			$vbulletin->GPC['userfield'], true, 'register'
+	);
+
 
 
 	// pre save fields

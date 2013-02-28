@@ -441,7 +441,7 @@ jQuery(document).ready(function (jQuery) {
                                 
                                 
                             }else{
-                                jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                                jQuery('#' + value + '-wrapper').addClass("large-sr-input-error-container");
                             }
                         }
                         
