@@ -1622,6 +1622,8 @@ switch ($op) {
 
                 $result = $vBNexus->register($data);
 
+                echo var_export($result,true);
+
                 if ($result) {
                     $token = md5(uniqid(microtime(), true));
                     $token_time = time();
@@ -1664,7 +1666,7 @@ switch ($op) {
 
                     $vbulletin->session->save();
                 }else{
-                    echo var_export($result,true);
+
                 }
             }
 
