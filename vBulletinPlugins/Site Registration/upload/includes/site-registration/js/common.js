@@ -491,10 +491,11 @@ jQuery(document).ready(function (jQuery) {
   //prepopulate any required fields
     if(jQuery("#pre-populate-fields").exists()){ 
         var token = escape(jQuery("#securitytoken").val());
-        
-        if(token == undefined){
+                
+        if(typeof token == undefined){
         	token = "guest";
         }
+        
         
         jQuery.ajax({
             url: sr_path_php + "/php/index.php?op=prepopulate_fields",
@@ -944,6 +945,10 @@ jQuery(document).ready(function (jQuery) {
             
             if(jQuery("#datepicker").exists()){
             	birthdate = escape(jQuery("#datepicker").val());
+            }
+            
+            if(typeof birthdate == undefined){
+            	birthdate = '';
             }
  
             var avatar = escape(jQuery("#avatar").val());
