@@ -309,7 +309,7 @@ define('VBNEXUS_DIR', 'includes/vbnexus4.1.5');
 require_once(VBNEXUS_DIR . '/vBNexus.php');
 
 // Include vBNexus phrases
-$phrasegroups = array_merge($phrasegroups, array('vbnexus'));
+$phrasegroups = array_merge((array)$phrasegroups, array('vbnexus'));
 
 // Cache connect template
 $globaltemplates[] = 'vbnexus_buttons';
