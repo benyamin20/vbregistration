@@ -1719,12 +1719,7 @@ switch ($op) {
                     $messages['fields'][] = $error_type = "password-member";
                     $valid_entries = false;
                 } else {
-                    $sql = "SELECT nonvbid, userid FROM " . TABLE_PREFIX .
-                             "vbnexus_user WHERE nonvbid = '$fbID' AND userid = '$userid'";
-
-                    $data = $vbulletin->db->query_first($sql);
-
-                    if (! $data and strlen($fbID) > 1) {
+                    if (strlen($fbID) > 1) {
                         $vbulletin->db->query_write(
                                 "INSERT IGNORE INTO " . TABLE_PREFIX .
                                          "vbnexus_user (service, nonvbid, userid, associated) VALUES ('fb', '" .
