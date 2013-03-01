@@ -1655,7 +1655,7 @@ switch ($op) {
                 }
             }
 
-            $userid = $vbulletin->userinfo['userid'];
+            //$userid = $vbulletin->userinfo['userid'];
             $avatar = $vbulletin->GPC['avatar'];
 
             // $rows = $vbulletin->db->affected_rows();
