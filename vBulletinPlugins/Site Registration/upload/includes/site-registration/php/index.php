@@ -1732,20 +1732,16 @@ switch ($op) {
 
                         $userinfo_permissions = $userinfo['permissions']['genericpermissions'];
                         $generic_canuseavatar = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
-                        $avatar_usergroup_enabled = $userinfo_permissions &
-                                 $generic_canuseavatar;
+                        $avatar_usergroup_enabled = $userinfo_permissions & $generic_canuseavatar;
 
                         // update avatar if option enabled
                         if ($avatar_usergroup_enabled) {
-                            // $userinfo = fetch_userinfo($userid);
-
-                            // init user datamanager
-                            $userdata = &datamanager_init('User', $vbulletin,
-                                    ERRTYPE_CP);
+                            $userinfo = fetch_userinfo($userid);
+                            
+                            $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_CP);
                             $userdata->set_existing($userinfo);
 
-                            $vbulletin->input->clean_gpc('f', 'upload',
-                                    TYPE_FILE);
+                            $vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);
 
                             $vbulletin->GPC['avatarurl'] = $avatar;
 
@@ -1754,18 +1750,15 @@ switch ($op) {
 
                             $upload = new vB_Upload_Userpic($vbulletin);
 
-                            $upload->data = &datamanager_init('Userpic_Avatar',
-                                    $vbulletin, ERRTYPE_STANDARD, 'userpic');
-                            $upload->image = &vB_Image::fetch_library(
-                                    $vbulletin);
+                            $upload->data = &datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
+                            $upload->image = &vB_Image::fetch_library($vbulletin);
+
                             $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
                             $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
                             $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
-                            $upload->allowanimation = ($userinfo['permissions']['genericpermissions']
-                                    & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
+                            $upload->allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
 
-                            if (! $upload->process_upload(
-                                    $vbulletin->GPC['avatarurl'])) {
+                            if (! $upload->process_upload($vbulletin->GPC['avatarurl'])) {
                                 $valid_entries = FALSE;
                                 $error_type = "upload";
                                 $messages['fields'][] = $error_type;
@@ -1775,24 +1768,20 @@ switch ($op) {
                             }
                         } else {
                             // predefined avatar
-                            $userpic = &datamanager_init('Userpic_Avatar',
-                                    $vbulletin, ERRTYPE_CP, 'userpic');
-                            $userpic->condition = "userid = " .
-                                     $userid;
+                            $userpic = &datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_CP, 'userpic');
+                            $userpic->condition = "userid = ". $userid;
                             $userpic->delete();
                         }
 
                         $nonvbid = $fbID;
 
-                        $sql = "SELECT activationid FROM useractivation WHERE userid = '" .
-                                 $userid . "'";
+                        $sql = "SELECT activationid FROM useractivation WHERE userid = '" . $userid . "'";
                         $data = $vbulletin->db->query_first($sql);
 
                         $activationid = $data["activationid"];
 
                         if (! empty($activationid)) {
-                            $url = "register.php?a=act&u=" . $userid . "&i=" .
-                                     $activationid;
+                            $url = "register.php?a=act&u=". $userid ."&i=". $activationid;
                         } else {
                             $url = "index.php";
 
