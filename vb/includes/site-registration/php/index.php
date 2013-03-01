@@ -1566,8 +1566,12 @@ switch ($op) {
         if ($valid_entries) {
             $fbID = $_SESSION['site_registration']["fbID"];
 
-            $birthday = preg_replace("/\//", "-",
-                    $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
+
+            if(isset($vbulletin->GPC['birthdate'])){
+                $birthday = preg_replace("/\//", "-",
+                        $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
+            }
+
 
             if ($vbulletin->options['moderatenewmembers'] or
                      $_SESSION['site_registration']['coppauser']) {
@@ -1594,7 +1598,10 @@ switch ($op) {
                 $time = time();
                 $publish = $vbulletin->GPC['vbnexus_fb_publish'];
 
-                $birthday = str_replace("/", "-", $birthday);
+                if(isset($vbulletin->GPC['birthdate'])){
+                    $birthday = str_replace("/", "-", $birthday);
+                }
+
 
                 $data = array(
                         'type' => "new",
@@ -1605,9 +1612,13 @@ switch ($op) {
                         'email' => $email,
                         'coded_email' => $vBNexus->codedEmail($email),
                         'default_email' => $email,
-                        'publish' => $publish,
-                        'birthday' => $birthday
+                        'publish' => $publish
                 );
+
+                if(isset($vbulletin->GPC['birthdate'])){
+                   $data['birthday'] = $birthday;
+                }
+
 
                 $result = $vBNexus->register($data);
 
@@ -1657,7 +1668,7 @@ switch ($op) {
                 }
             }
 
-            //$userid = $vbulletin->userinfo['userid'];
+            $userid = $vbulletin->userinfo['userid'];
             $avatar = $vbulletin->GPC['avatar'];
 
             // $rows = $vbulletin->db->affected_rows();
