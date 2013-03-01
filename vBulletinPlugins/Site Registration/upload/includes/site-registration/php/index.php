@@ -1417,8 +1417,12 @@ case 'activate':
 		}
 	}
 
-if ($vbulletin->options['usecoppa'] > 0 && $vbulletin->options['reqbirthday'] == TRUE) {
+	if ($vbulletin->options['usecoppa'] > 0 && $vbulletin->options['reqbirthday'] == TRUE) {
 		$reqbirthday = true;
+	}
+
+	if ($vbulletin->GPC['birthdate'] == 'undefined') {
+		$vbulletin->GPC['birthdate'] = '';
 	}
 
 	//check if variables are set
