@@ -992,25 +992,26 @@ $stylevar[htmldoctype]
 		
 		
 						<div class="clear "></div>
-		
-		                <label for="birthday">Birth Date</label>
-		                <div class="grid_6 sr-no-margin" id="datepicker-wrapper">
 		                  <if condition="$vboptions[reqbirthday] == TRUE">
-						      <div class="input-prepend grid_3 sr-no-margin">
-			                      <span class="add-on"> <i class="icon-calendar"></i>
-			                      </span> 
-			                      <input 
-			                            class="sr-fix_input_width_facebook" id="datepicker" 
-			                            type="text"
-			                            value="$fbBirthday" autocomplete="off" 
-			                            
-			                            title="Birthday" />
-		                      </div>
-		                      <span class="sr-error-label sr-small" id="datepicker-sr-error-label"></span>
+			                <label for="birthday">Birth Date</label>
+			                <div class="grid_6 sr-no-margin" id="datepicker-wrapper">
+			                  
+							      <div class="input-prepend grid_3 sr-no-margin">
+				                      <span class="add-on"> <i class="icon-calendar"></i>
+				                      </span> 
+				                      <input 
+				                            class="sr-fix_input_width_facebook" id="datepicker" 
+				                            type="text"
+				                            value="$fbBirthday" autocomplete="off" 
+				                            
+				                            title="Birthday" />
+			                      </div>
+			                      <span class="sr-error-label sr-small" id="datepicker-sr-error-label"></span>
+			                  
+			                </div>
+			                <div class="clear sr-clear_20"></div>
 		                  </if>
-		                </div>
-		
-		                <div class="clear sr-clear_20"></div>
+		                
 		                
 		                <!-- custom profile fields -->    
 		                $profile_variable
