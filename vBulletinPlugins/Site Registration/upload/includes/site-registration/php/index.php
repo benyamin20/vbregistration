@@ -1716,12 +1716,9 @@ switch ($op) {
                 }
 
                 $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
-                $userinfo_welcome = fetch_userinfo(
-                        $vbulletin->userinfo['userid']);
-
+                $userinfo_welcome = fetch_userinfo($userid);
 
                 $userdata->set_existing($userinfo_welcome);
-
 
                 $userdata->send_welcomepm();
             }
