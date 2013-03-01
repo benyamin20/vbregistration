@@ -602,9 +602,25 @@ jQuery(document).ready(function (jQuery) {
             		}
             		
             	}else if(type == 'input'){
+            		val = '';
+            		
+            		if(jQuery(this).val() == "null" || jQuery(this).val() == null){
+            			val = '';
+            		}else{
+            			val = jQuery(this).val();
+            		}
+            		
             		extra_fields += "&" + jQuery(this).attr('name') + "=" + escape(jQuery(this).val());
             	}else{
-            		extra_fields += "&" + jQuery(this).attr('name') + "=" + jQuery(this).val();
+            		val = '';
+            		
+            		if(jQuery(this).val() == "null" || jQuery(this).val() == null){
+            			val = '';
+            		}else{
+            			val = jQuery(this).val();
+            		}
+            		
+            		extra_fields += "&" + jQuery(this).attr('name') + "=" + val;
             	}
             	
             	
@@ -649,7 +665,7 @@ jQuery(document).ready(function (jQuery) {
                             		var fieldname4=fieldname3.replace("[]","");
                             		
                             		bootbox.alert("Required field: "+ fieldname4 + " is missing or has invalid value");
-                            		jQuery('[name="' + value + '"]').focus();
+                            		jQuery('[name="' + value + '"]').first().focus();
                             		
                             	}else if(value.indexOf(pattern) !=-1){
                                     jQuery('[name="' + value + '"]').addClass("sr-input-error");
@@ -685,7 +701,9 @@ jQuery(document).ready(function (jQuery) {
                     } else {
                         try {
                             clear_errors();
-                        } catch (e) {}
+                        } catch (e) {
+                        	
+                        }
 
                         //redirect user to proper url
                         var url = response.url;

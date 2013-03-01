@@ -602,9 +602,25 @@ jQuery(document).ready(function (jQuery) {
             		}
             		
             	}else if(type == 'input'){
+            		val = '';
+            		
+            		if(jQuery(this).val() == "null" || jQuery(this).val() == null){
+            			val = '';
+            		}else{
+            			val = jQuery(this).val();
+            		}
+            		
             		extra_fields += "&" + jQuery(this).attr('name') + "=" + escape(jQuery(this).val());
             	}else{
-            		extra_fields += "&" + jQuery(this).attr('name') + "=" + jQuery(this).val();
+            		val = '';
+            		
+            		if(jQuery(this).val() == "null" || jQuery(this).val() == null){
+            			val = '';
+            		}else{
+            			val = jQuery(this).val();
+            		}
+            		
+            		extra_fields += "&" + jQuery(this).attr('name') + "=" + val;
             	}
             	
             	

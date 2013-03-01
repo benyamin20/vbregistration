@@ -494,23 +494,31 @@ switch ($op) {
                  $vbulletin->GPC['password'] == md5("")) {
 
             $valid_entries = FALSE;
+
             // $userdata->error('enter_password_for_account');
             $error_type = "password";
             $messages['fields'][] = $error_type;
             $messages['errors'][] = "Please enter a password for your user account.";
+
             // fetch_phrase('enter_password_for_account', 'global');
+        }else{
+
         }
 
         if (empty($vbulletin->GPC['confirm_password']) ||
-                 $vbulletin->GPC['confirm_password'] == md5("")) {
+                $vbulletin->GPC['confirm_password'] == md5("")) {
             unset($userdata->errors);
             $valid_entries = FALSE;
+
             // $userdata->error('enter_password_for_account');
             $error_type = "confirm-password";
             $messages['fields'][] = $error_type;
             $messages['errors'][] = "Please enter a password for your user account.";
+
             // fetch_phrase('enter_password_for_account', 'global');
         }
+
+
 
         if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
             $valid_entries = FALSE;
@@ -639,9 +647,7 @@ switch ($op) {
         if (! empty($userdata_save->errors)) {
             $valid_entries = FALSE;
 
-
             foreach ($userdata_save->errors as $index => $error) {
-                $name = getTextBetweenTags($error, "em");
 
                 if (! empty($name)) {
                     $id = preg_replace("/field/i", "", $name);
@@ -674,8 +680,8 @@ switch ($op) {
                 }
             }
         } else {
-            $valid_entries = TRUE;
-            unset($userdata_save->errors);
+            //$valid_entries = TRUE;
+            //unset($userdata_save->errors);
         }
 
         if ($valid_entries) {
@@ -1794,7 +1800,7 @@ switch ($op) {
                         // update avatar if option enabled
                         if ($avatar_usergroup_enabled) {
                             $userinfo = fetch_userinfo($userid);
-                            
+
                             $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_CP);
                             $userdata->set_existing($userinfo);
 
