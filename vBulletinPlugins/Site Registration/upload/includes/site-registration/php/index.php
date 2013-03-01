@@ -63,17 +63,21 @@ switch ($op) {
 
 
                     //get type of field from id
-                    $sql = "SELECT type
-				        FROM " . TABLE_PREFIX . "profilefield
-						WHERE profilefieldid = " .
-                             $vbulletin->db->escape_string($id) . "
-					    ";
+                    $sql = "SELECT type, data FROM " . TABLE_PREFIX . "profilefield
+						WHERE profilefieldid = " . $vbulletin->db->escape_string($id) . "";
+
+                    $type = $vbulletin->db->query_first_slave($sql);
+
+                    if(@unserialize($type['data']) != FALSE){
+                        if($type['type'] == 'checkbox'){
+                            $multiple = true;
+                        }else{
+                            $multiple = FALSE;
+                        }
+                    }
 
 
-                    $type = $vbulletin->db->fetch_field($sql);
-
-
-                    if (preg_match("/multiple/i", $type)) {
+                     if (preg_match("/multiple/i", $type['type']) || $multiple){
                         // check if this field is a multiple value field
                         $arr['names'][] = "userfield[$key][]";
                     } else {
@@ -412,13 +416,38 @@ switch ($op) {
             foreach ($userdata_save->errors as $index => $error) {
                 $name = getTextBetweenTags($error, "em");
                 if (! empty($name)) {
-                    $field = "userfield[$name]";
+                    $id = preg_replace("/field/i", "", $name);
+
+                    //get type of field from id
+                    $sql = "SELECT type, data FROM " . TABLE_PREFIX . "profilefield
+						WHERE profilefieldid = " . $vbulletin->db->escape_string($id) . "";
+
+                    $type = $vbulletin->db->query_first_slave($sql);
+
+                    if(@unserialize($type['data']) != FALSE){
+                        if($type['type'] == 'checkbox'){
+                            $multiple = true;
+                        }else{
+                            $multiple = FALSE;
+                        }
+                    }
+
+                    if (preg_match("/multiple/i", $type['type']) || $multiple) {
+                        // check if this field is a multiple value field
+                        $field = "userfield[$name][]";
+                    } else {
+                        // check if this field is a multiple value field
+                        $field = "userfield[$name]";
+                    }
+
+
                     $messages['fields'][] = $field;
                     $messages['errors'][] = $error;
                 }
             }
         } else {
             $valid_entries = TRUE;
+            unset($userdata_save->errors);
         }
 
         if ($valid_entries) {
@@ -648,7 +677,7 @@ switch ($op) {
             $valid_entries = FALSE;
 
             foreach ($userdata_save->errors as $index => $error) {
-
+                $name = getTextBetweenTags($error, "em");
                 if (! empty($name)) {
                     $id = preg_replace("/field/i", "", $name);
 
@@ -681,7 +710,7 @@ switch ($op) {
             }
         } else {
             //$valid_entries = TRUE;
-            //unset($userdata_save->errors);
+            unset($userdata_save->errors);
         }
 
         if ($valid_entries) {
@@ -1530,7 +1559,7 @@ switch ($op) {
                 }
             }
         } else {
-            $valid_entries = TRUE;
+            //$valid_entries = TRUE;
             unset($userdata_save->errors);
         }
 
@@ -1815,7 +1844,7 @@ switch ($op) {
 
                             $upload->data = &datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
                             $upload->data->condition = "userid = ". $userid;
-                            $upload->image = &vB_Image::fetch_library($vbulletin);                            
+                            $upload->image = &vB_Image::fetch_library($vbulletin);
                             $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
                             $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
                             $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];

@@ -524,6 +524,11 @@ jQuery(document).ready(function (jQuery) {
                 		//select proper input according to value from response
             			jQuery("label:contains('"+response.values[index]+"')").children().attr('checked', true);
                 		
+            		}else if(type == 'select'){
+            			jQuery('[name^="'+value+'"]').val(0);
+            			
+            			jQuery("[name^="+value+"] option[text=" + response.values[index] +"]").get(0).selected = true;
+            			
             		}else{
             			jQuery('[name^="'+value+'"]').val(response.values[index]);
             		}
