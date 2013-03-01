@@ -1695,8 +1695,12 @@ case 'activate':
 			$userdata->send_welcomepm();
 		}
 
-		$vbulletin->userinfo = fetch_userinfo($userid);
-		$userdata_save->set_existing($vbulletin->userinfo);
+		$userinfo = fetch_userinfo($vbulletin->userinfo['userid']);
+
+	    if(is_array($userinfo)){
+		    $userdata_save->set_existing($userinfo);
+		}
+
 		$userdata_save->save();
 	}
 
