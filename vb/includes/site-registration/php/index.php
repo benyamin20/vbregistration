@@ -1687,7 +1687,11 @@ case 'activate':
 
 			$userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
 			$userinfo_welcome = fetch_userinfo($vbulletin->userinfo['userid']);
-			$userdata->set_existing($userinfo_welcome);
+
+			if (is_array($userinfo_welcome)) {
+				$userdata->set_existing($userinfo_welcome);
+			}
+
 			$userdata->send_welcomepm();
 		}
 
