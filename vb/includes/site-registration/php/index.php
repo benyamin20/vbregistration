@@ -1814,8 +1814,8 @@ switch ($op) {
                             $upload = new vB_Upload_Userpic($vbulletin);
 
                             $upload->data = &datamanager_init('Userpic_Avatar', $vbulletin, ERRTYPE_STANDARD, 'userpic');
-                            $upload->image = &vB_Image::fetch_library($vbulletin);
-
+                            $upload->data->condition = "userid = ". $userid;
+                            $upload->image = &vB_Image::fetch_library($vbulletin);                            
                             $upload->maxwidth = $userinfo['permissions']['avatarmaxwidth'];
                             $upload->maxheight = $userinfo['permissions']['avatarmaxheight'];
                             $upload->maxuploadsize = $userinfo['permissions']['avatarmaxsize'];
