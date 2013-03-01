@@ -1620,7 +1620,7 @@ switch ($op) {
 
                 if ($vbulletin->options['welcomemail']) {
                     eval(fetch_email_phrases('welcomemail'));
-                    vbmail($email, $subject, $message);
+                    //vbmail($email, $subject, $message);
                 }
 
                 $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
