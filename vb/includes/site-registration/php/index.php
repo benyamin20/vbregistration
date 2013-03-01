@@ -1464,6 +1464,7 @@ switch ($op) {
 
         if (empty($vbulletin->GPC['birthdate'])) {
             $vbulletin->GPC['birthdate'] = $_SESSION['site_registration']["fbBirthday"];
+            $silent_error = true;
         }
 
 
@@ -1671,7 +1672,7 @@ switch ($op) {
 
                     $vbulletin->session->save();
                 }else{
-
+                    //what if we have invalid results here?
                 }
             }
 
