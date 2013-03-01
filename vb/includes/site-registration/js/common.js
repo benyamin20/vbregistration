@@ -371,6 +371,7 @@ jQuery(document).ready(function (jQuery) {
     }
 
 
+    
 
 
 
@@ -484,6 +485,54 @@ jQuery(document).ready(function (jQuery) {
  
     
 
+    }
+    
+    
+  //prepopulate any required fields
+    if(jQuery("#pre-populate-fields").exists()){ 
+        var token = escape(jQuery("#securitytoken").val());
+        
+        if(token == undefined){
+        	token = "guest";
+        }
+        
+        jQuery.ajax({
+            url: sr_path_php + "/php/index.php?op=prepopulate_fields",
+            context: document.body,
+            dataType: 'json',
+            type: 'POST',
+            cache: false,
+            data: 'securitytoken=' + token,
+            beforeSend: function () {
+                jQuery('#ajax-loader-secondary').empty();
+                jQuery('#ajax-loader-secondary').append(spinner_secondary);
+                regenerate_token();
+
+            },
+            success: function (response) {
+            	
+            	jQuery.each(response.names, function (index, value) {
+            		
+            		type = jQuery('[name^="'+value+'"]').attr('type');
+            		
+            		if(type == "radio"){
+                		var $radios = jQuery('input:radio[name="'+value+'"]');
+                		$radios.attr('checked', false);
+                		$radios.filter('[value="'+response.values[index]+'"]').attr('checked', true);
+                		
+            		}else{
+            			jQuery('[name^="'+value+'"]').val(response.values[index]);
+            		}
+            		
+            	});
+
+                if (jQuery('#ajax-spinner-secondary').exists()) {
+                    jQuery('#ajax-spinner-secondary').remove();
+                }
+
+            }
+        });
+ 
     }
 
 

@@ -41,6 +41,34 @@ $op = $vbulletin->GPC['op'];
 
 switch ($op) {
 
+// get values for pre populated fields.
+case 'prepopulate_fields':
+
+	$uid = $_SESSION['site_registration']['userid'];
+	$arr = array();
+
+	$profilefields = $db
+		->query_first(
+						"SELECT *
+				        FROM " . TABLE_PREFIX
+						. "userfield
+						WHERE userid = " .
+							$vbulletin->db->escape_string($uid) . "
+					    ");
+
+	if(is_array($profilefields)){
+		foreach($profilefields as $key => $value ){
+			if(preg_match("/field/i", $key) && !empty($value)){
+				$arr['names'][] = "userfield[$key]";
+				$arr['values'][] = $value;
+			}
+		}
+	}
+
+	json_headers($arr);
+
+break;
+
 // generate thumbnail for IE
 case 'generate_thumbnail':
 	$vbulletin->input->clean_gpc('f', 'upload', TYPE_FILE);

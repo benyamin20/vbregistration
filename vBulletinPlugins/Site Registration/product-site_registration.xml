@@ -213,6 +213,13 @@ $stylevar[htmldoctype]
 		                name="complete_your_profile_form" 
 		                action="$vboptions[site_registration_includes_path_php]/php/index.php?op=complete_your_profile" 
 		                method="post"> 
+		                
+		                
+		                <if condition="$finish_registration == TRUE">
+		                  <!-- may need to change the values of custom profile fields -->
+		                  <div id="pre-populate-fields"></div>  
+		                </if>
+		                
                          
                         <!--  Avatar -->
                         <if condition="$vboptions[avatarenabled]">
