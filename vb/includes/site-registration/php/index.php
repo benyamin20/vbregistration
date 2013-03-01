@@ -1726,7 +1726,7 @@ switch ($op) {
                 $userdata->send_welcomepm();
             }
 
-            $userinfo = fetch_userinfo($vbulletin->userinfo['userid']);
+            $userinfo = fetch_userinfo($userid);
 
             if (is_array($userinfo)) {
                 $userdata_save->set_existing($userinfo);
