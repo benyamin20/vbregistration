@@ -1718,6 +1718,8 @@ switch ($op) {
                 $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
                 $userinfo_welcome = fetch_userinfo($userid);
 
+                echo var_export($userid, true);
+
                 $userdata->set_existing($userinfo_welcome);
 
                 $userdata->send_welcomepm();
