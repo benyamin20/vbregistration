@@ -841,11 +841,17 @@ jQuery(document).ready(function (jQuery) {
 
 
         jQuery("#create-new-account-button").bind('click', function () {
-            var email = escape(jQuery("#email").val());
-            var birthdate = escape(jQuery("#datepicker").val());
-
-
-            var token = escape(jQuery('#token').val());
+            
+        	var email = escape(jQuery("#email").val());
+            
+            if(jQuery("#datepicker").exists()){
+            	birthdate = escape(jQuery("#datepicker").val());
+            }else{
+            	birthdate = '';
+            }
+            	
+            
+        	var token = escape(jQuery('#token').val());
 
             if (token == '') {
                 token = 'guest';

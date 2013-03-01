@@ -931,13 +931,15 @@ case 'create_site_account_first_step':
 
 	}
 
-	if ($vbulletin->options['usecoppa'] > 0) {
-		$vbulletin->options['reqbirthday'] = true;
+	if ($vbulletin->options['usecoppa'] > 0 && $vbulletin->options['reqbirthday'] == TRUE) {
+		$reqbirthday = true;
 	}
+
 
 	//check if variables are set
 	if ($vbulletin->options['reqbirthday']
-			|| !empty($vbulletin->GPC['birthdate'])) {
+			|| !empty($vbulletin->GPC['birthdate'])
+			|| $reqbirthday) {
 
 		if (empty($vbulletin->GPC['birthdate'])) {
 			$valid_entries = FALSE;
@@ -1415,13 +1417,14 @@ case 'activate':
 		}
 	}
 
-	if ($vbulletin->options['usecoppa'] > 0) {
-		$vbulletin->options['reqbirthday'] = true;
+if ($vbulletin->options['usecoppa'] > 0 && $vbulletin->options['reqbirthday'] == TRUE) {
+		$reqbirthday = true;
 	}
 
 	//check if variables are set
 	if ($vbulletin->options['reqbirthday']
-			|| !empty($vbulletin->GPC['birthdate'])) {
+			|| !empty($vbulletin->GPC['birthdate'])
+			|| $reqbirthday ) {
 
 		if (empty($vbulletin->GPC['birthdate'])) {
 			$valid_entries = FALSE;
