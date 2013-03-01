@@ -1461,6 +1461,12 @@ switch ($op) {
             $vbulletin->GPC['birthdate'] = '';
         }
 
+
+        if (empty($vbulletin->GPC['birthdate'])) {
+            $vbulletin->GPC['birthdate'] = $_SESSION['site_registration']["fbBirthday"];
+        }
+
+
         // check if variables are set
         if ($vbulletin->options['reqbirthday'] ||
                  ! empty($vbulletin->GPC['birthdate']) || $reqbirthday) {
@@ -1622,7 +1628,6 @@ switch ($op) {
 
                 $result = $vBNexus->register($data);
 
-                echo var_export($result,true);
 
                 if ($result) {
                     $token = md5(uniqid(microtime(), true));
