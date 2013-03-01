@@ -940,7 +940,12 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#log-in").bind('click', function () {
             var username = escape(convertToEntities(jQuery("#username").val()));
             var email = escape(jQuery("#email").val());
-            var birthdate = escape(jQuery("#datepicker").val());
+            var birthdate = '';
+            
+            if(jQuery("#datepicker").exists()){
+            	birthdate = escape(jQuery("#datepicker").val());
+            }
+ 
             var avatar = escape(jQuery("#avatar").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
             var token = escape(jQuery('#token').val());
