@@ -1778,7 +1778,7 @@ switch ($op) {
                             $userpic = &datamanager_init('Userpic_Avatar',
                                     $vbulletin, ERRTYPE_CP, 'userpic');
                             $userpic->condition = "userid = " .
-                                     $userinfo['userid'];
+                                     $userid;
                             $userpic->delete();
                         }
 

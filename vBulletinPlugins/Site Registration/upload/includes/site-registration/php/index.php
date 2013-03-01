@@ -51,9 +51,9 @@ switch ($op) {
 
         $profilefields = $db->query_first(
                 "SELECT *
-				        FROM " . TABLE_PREFIX . "userfield
-						WHERE userid = " . $vbulletin->db->escape_string($uid) . "
-					    ");
+                        FROM " . TABLE_PREFIX . "userfield
+                        WHERE userid = " . $vbulletin->db->escape_string($uid) . "
+                        ");
 
         if (is_array($profilefields)) {
             foreach ($profilefields as $key => $value) {
@@ -1778,7 +1778,7 @@ switch ($op) {
                             $userpic = &datamanager_init('Userpic_Avatar',
                                     $vbulletin, ERRTYPE_CP, 'userpic');
                             $userpic->condition = "userid = " .
-                                     $userinfo['userid'];
+                                     $userid;
                             $userpic->delete();
                         }
 
