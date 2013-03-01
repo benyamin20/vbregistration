@@ -1631,7 +1631,7 @@ switch ($op) {
                                                         WHERE nonvbid = " .
                                      $fbID);
 
-                    // $userid = $vbulletin->userinfo['userid'];
+                    $userid = $vbulletin->userinfo['userid'];
 
                     /*
                      * $sql = "UPDATE ". TABLE_PREFIX ."user SET birthday =
