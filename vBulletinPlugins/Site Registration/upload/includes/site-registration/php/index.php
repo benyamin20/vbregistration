@@ -1652,6 +1652,8 @@ switch ($op) {
                     cache_permissions($vbulletin->userinfo, true);
 
                     $vbulletin->session->save();
+                }else{
+                    echo var_export($result,true);
                 }
             }
 
