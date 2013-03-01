@@ -1719,18 +1719,16 @@ switch ($op) {
                 $userinfo_welcome = fetch_userinfo(
                         $vbulletin->userinfo['userid']);
 
-                if (is_array($userinfo_welcome)) {
-                    $userdata->set_existing($userinfo_welcome);
-                }
+
+                $userdata->set_existing($userinfo_welcome);
+
 
                 $userdata->send_welcomepm();
             }
 
             $userinfo = fetch_userinfo($userid);
+            $userdata_save->set_existing($userinfo);
 
-            if (is_array($userinfo)) {
-                $userdata_save->set_existing($userinfo);
-            }
 
             $userdata_save->save();
         }
