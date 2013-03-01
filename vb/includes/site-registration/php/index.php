@@ -1737,7 +1737,7 @@ switch ($op) {
                         // update avatar if option enabled
                         if ($avatar_usergroup_enabled) {
                             $userinfo = fetch_userinfo($userid);
-                            
+                            die(var_dump($userinfo));
                             $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_CP);
                             $userdata->set_existing($userinfo);
 
