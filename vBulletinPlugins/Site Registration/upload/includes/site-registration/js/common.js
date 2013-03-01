@@ -517,9 +517,12 @@ jQuery(document).ready(function (jQuery) {
             		type = jQuery('[name^="'+value+'"]').attr('type');
             		
             		if(type == "radio"){
+            			//clear any default value 
                 		var $radios = jQuery('input:radio[name="'+value+'"]');
                 		$radios.attr('checked', false);
-                		$radios.filter('[value="'+response.values[index]+'"]').attr('checked', true);
+                		
+                		//select proper input according to value from response
+            			jQuery("label:contains('"+response.values[index]+"')").children().attr('checked', true);
                 		
             		}else{
             			jQuery('[name^="'+value+'"]').val(response.values[index]);
@@ -629,6 +632,7 @@ jQuery(document).ready(function (jQuery) {
                         clear_errors();
                         var pattern="userfield";
                         var error = 'Required field missing or has an invalid value.';
+                        var multiple = "[]";
 
                         jQuery.each(response.messages.fields, function (index, value) {
 
@@ -636,7 +640,18 @@ jQuery(document).ready(function (jQuery) {
                                 jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
                             } else {
                             	//handle custom field errors
-                                if(value.indexOf(pattern) !=-1){
+                            	if(value.indexOf(multiple) !=-1){
+                            		
+                            		var str = value;
+                            		var fieldname=str.replace("userfield",""); 
+                            		var fieldname2 =fieldname.replace("[","");
+                            		var fieldname3=fieldname2.replace("]","");
+                            		var fieldname4=fieldname3.replace("[]","");
+                            		
+                            		bootbox.alert("Required field: "+ fieldname4 + " is missing or has invalid value");
+                            		jQuery('[name="' + value + '"]').focus();
+                            		
+                            	}else if(value.indexOf(pattern) !=-1){
                                     jQuery('[name="' + value + '"]').addClass("sr-input-error");
                                     jQuery('[name="' + value + '"]')
                                         .wrap('<div class="grid_7 sr-no-margin large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
@@ -657,12 +672,14 @@ jQuery(document).ready(function (jQuery) {
                                     
                                 }else{
                                     jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                                    jQuery('#' + value).addClass("sr-input-error");
+                                    jQuery('#' + value + '-sr-error-label').empty();
+                                    jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
                                 }
 
                             }
-                            jQuery('#' + value).addClass("sr-input-error");
-                            jQuery('#' + value + '-sr-error-label').empty();
-                            jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
+ 
+                            
                         });
 
                     } else {

@@ -58,7 +58,29 @@ switch ($op) {
         if (is_array($profilefields)) {
             foreach ($profilefields as $key => $value) {
                 if (preg_match("/field/i", $key) && ! empty($value)) {
-                    $arr['names'][] = "userfield[$key]";
+
+                    $id = preg_replace("/field/i", "", $key);
+
+
+                    //get type of field from id
+                    $sql = "SELECT type
+				        FROM " . TABLE_PREFIX . "profilefield
+						WHERE profilefieldid = " .
+                             $vbulletin->db->escape_string($id) . "
+					    ";
+
+
+                    $type = $vbulletin->db->fetch_field($sql);
+
+
+                    if (preg_match("/multiple/i", $type)) {
+                        // check if this field is a multiple value field
+                        $arr['names'][] = "userfield[$key][]";
+                    } else {
+                        // check if this field is a multiple value field
+                        $arr['names'][] = "userfield[$key]";
+                    }
+
                     $arr['values'][] = $value;
                 }
             }
@@ -92,7 +114,8 @@ switch ($op) {
             );
 
             // check if animated avatars are allowed, usually gif files.
-            $allowanimation = ($userinfo['permissions']['genericpermissions'] & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
+            $allowanimation = ($userinfo['permissions']['genericpermissions']
+                    & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
 
             if ($allowanimation) {
                 array_push($valid_formats, "gif");
@@ -445,8 +468,14 @@ switch ($op) {
             foreach ($_POST['userfield'] as $key => $value) {
                 $_POST['userfield'][$key] = preg_replace("/%u([A-Fa-f0-9]{4})/",
                         "&#x$1;", $value);
-                $_POST['userfield'][$key] = html_entity_decode(
-                        $_POST['userfield'][$key], ENT_COMPAT, 'utf-8');
+
+                if(is_array($_POST['userfield'][$key])){
+
+                }else{
+                    $_POST['userfield'][$key] = html_entity_decode(
+                            $_POST['userfield'][$key], ENT_COMPAT, 'utf-8');
+                }
+
             }
         }
 
@@ -481,6 +510,18 @@ switch ($op) {
             $messages['fields'][] = $error_type;
             $messages['errors'][] = "Please enter a password for your user account.";
             // fetch_phrase('enter_password_for_account', 'global');
+        }
+
+        if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
+            $valid_entries = FALSE;
+
+            $error_type = "confirm-password";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = "Passwords don't match";
+
+            $error_type = "password";
+            $messages['fields'][] = $error_type;
+            $messages['errors'][] = "Passwords don't match";
         }
 
         if ($_SESSION['site_registration']['coppauser'] === true &&
@@ -525,17 +566,7 @@ switch ($op) {
                      fetch_phrase('forum_rules', 'register');
         }
 
-        if ($vbulletin->GPC['confirm_password'] != $vbulletin->GPC['password']) {
-            $valid_entries = FALSE;
 
-            $error_type = "confirm-password";
-            $messages['fields'][] = $error_type;
-            $messages['errors'][] = "Passwords don't match";
-
-            $error_type = "password";
-            $messages['fields'][] = $error_type;
-            $messages['errors'][] = "Passwords don't match";
-        }
 
         unset($userdata->errors);
 
@@ -608,10 +639,36 @@ switch ($op) {
         if (! empty($userdata_save->errors)) {
             $valid_entries = FALSE;
 
+
             foreach ($userdata_save->errors as $index => $error) {
                 $name = getTextBetweenTags($error, "em");
+
                 if (! empty($name)) {
-                    $field = "userfield[$name]";
+                    $id = preg_replace("/field/i", "", $name);
+
+                    //get type of field from id
+                    $sql = "SELECT type, data FROM " . TABLE_PREFIX . "profilefield
+						WHERE profilefieldid = " . $vbulletin->db->escape_string($id) . "";
+
+                    $type = $vbulletin->db->query_first_slave($sql);
+
+                    if(@unserialize($type['data']) != FALSE){
+                        if($type['type'] == 'checkbox'){
+                            $multiple = true;
+                        }else{
+                            $multiple = FALSE;
+                        }
+                    }
+
+                    if (preg_match("/multiple/i", $type['type']) || $multiple) {
+                        // check if this field is a multiple value field
+                        $field = "userfield[$name][]";
+                    } else {
+                        // check if this field is a multiple value field
+                        $field = "userfield[$name]";
+                    }
+
+
                     $messages['fields'][] = $field;
                     $messages['errors'][] = $error;
                 }
