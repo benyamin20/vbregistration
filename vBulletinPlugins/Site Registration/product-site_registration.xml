@@ -127,6 +127,7 @@ $stylevar[htmldoctype]
     <!-- site registration includes -->
     $site_reg_includes
     <!-- /site registration includes -->
+    <link rel="stylesheet" media="screen" href="$vboptions[site_registration_includes_path_css]/css/custom_fields.css?v=$vboptions[simpleversion]"> 
       
     
     <script src="$vboptions[site_registration_includes_path_js]/js/jquery.form.js?v=$vboptions[simpleversion]"></script>
@@ -212,6 +213,13 @@ $stylevar[htmldoctype]
 		                name="complete_your_profile_form" 
 		                action="$vboptions[site_registration_includes_path_php]/php/index.php?op=complete_your_profile" 
 		                method="post"> 
+		                
+		                
+		                <if condition="$finish_registration == TRUE">
+		                  <!-- may need to change the values of custom profile fields -->
+		                  <div id="pre-populate-fields"></div>  
+		                </if>
+		                
                          
                         <!--  Avatar -->
                         <if condition="$vboptions[avatarenabled]">
@@ -273,7 +281,9 @@ $stylevar[htmldoctype]
                             <span class="sr-error-label" id="timezone-sr-error-label"></span>
                         </div><!--  /Timezone -->
  
-						<!-- custom inputs  -->
+						 <!-- custom profile fields -->    
+                        $profile_variable
+                        <!-- /custom profile fiels -->
 
 						<div class="clear"></div> 
 						
@@ -664,21 +674,23 @@ $stylevar[htmldoctype]
                             </div>
 
                             <div class="grid_4 sr-no-margin" id="datepicker-wrapper">
-                                <label for="birthdate">Birth Date</label>
-				                <div class="input-prepend ">
-					                <span class="add-on"> <i class="icon-calendar"></i>
-					                </span> 
-                                    <input class="sr-fix_input_width ie-align-picker" 
-                                        id="datepicker" type="text"
-						                value="$cookievalue" 
-						                autocomplete="off" 
-						                title="Birth Date"
-						                alt="Birth Date"
-						                rel="tooltip" 
-						                $disabled
-						                $readonly
-						                name="birthdate" />
-				                </div>
+                                <if condition="$vboptions[reqbirthday] == TRUE">
+	                                <label for="birthdate">Birth Date</label>
+					                <div class="input-prepend ">
+						                <span class="add-on"> <i class="icon-calendar"></i>
+						                </span> 
+	                                    <input class="sr-fix_input_width ie-align-picker" 
+	                                        id="datepicker" type="text"
+							                value="$cookievalue" 
+							                autocomplete="off" 
+							                title="Birth Date"
+							                alt="Birth Date"
+							                rel="tooltip" 
+							                $disabled
+							                $readonly
+							                name="birthdate" />
+					                </div>
+				                </if>
 				            </div>
 
 				            <div class="clear sr-clear_20"></div>
@@ -980,23 +992,26 @@ $stylevar[htmldoctype]
 		
 		
 						<div class="clear "></div>
-		
-		                <label for="birthday">Birth Date</label>
-		                <div class="grid_6 sr-no-margin" id="datepicker-wrapper">
-						    <div class="input-prepend grid_3 sr-no-margin">
-		                        <span class="add-on"> <i class="icon-calendar"></i>
-		                        </span> 
-		                        <input 
-		                            class="sr-fix_input_width_facebook" id="datepicker" 
-		                            type="text"
-		                            value="$fbBirthday" autocomplete="off" 
-		                            
-		                            title="Birthday" />
-		                    </div>
-		                    <span class="sr-error-label sr-small" id="datepicker-sr-error-label"></span>
-		                </div>
-		
-		                <div class="clear sr-clear_20"></div>
+		                  <if condition="$vboptions[reqbirthday] == TRUE">
+			                <label for="birthday">Birth Date</label>
+			                <div class="grid_6 sr-no-margin" id="datepicker-wrapper">
+			                  
+							      <div class="input-prepend grid_3 sr-no-margin">
+				                      <span class="add-on"> <i class="icon-calendar"></i>
+				                      </span> 
+				                      <input 
+				                            class="sr-fix_input_width_facebook" id="datepicker" 
+				                            type="text"
+				                            value="$fbBirthday" autocomplete="off" 
+				                            
+				                            title="Birthday" />
+			                      </div>
+			                      <span class="sr-error-label sr-small" id="datepicker-sr-error-label"></span>
+			                  
+			                </div>
+			                <div class="clear sr-clear_20"></div>
+		                  </if>
+		                
 		                
 		                <!-- custom profile fields -->    
 		                $profile_variable
@@ -1602,6 +1617,11 @@ $stylevar[htmldoctype]
 	                        $optionselected = iif($optionvalue == $timezonesel, 'selected="selected"', '');
 	                        eval('$timezoneoptions .= "' . fetch_template('option') . '";');
                         }
+                        
+                        //ACP-503
+                        //show custom profile fields
+                        $finish_registration = true;
+                        require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
  
                         eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                         eval('print_output("' . fetch_template('site_reg_account-activated') . '");');                    
@@ -2216,6 +2236,7 @@ $stylevar[htmldoctype]
 			            
 			            //ACP-503
 			            //show custom profile fields
+			            $finish_registration = true;
                         require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
 	 
                  

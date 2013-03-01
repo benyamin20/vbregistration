@@ -371,6 +371,7 @@ jQuery(document).ready(function (jQuery) {
     }
 
 
+    
 
 
 
@@ -441,7 +442,7 @@ jQuery(document).ready(function (jQuery) {
                                 
                                 
                             }else{
-                                jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                                jQuery('#' + value + '-wrapper').addClass("large-sr-input-error-container");
                             }
                         }
                         
@@ -484,6 +485,55 @@ jQuery(document).ready(function (jQuery) {
  
     
 
+    }
+    
+    
+  //prepopulate any required fields
+    if(jQuery("#pre-populate-fields").exists()){ 
+        var token = escape(jQuery("#securitytoken").val());
+                
+        if(typeof token == undefined){
+        	token = "guest";
+        }
+        
+        
+        jQuery.ajax({
+            url: sr_path_php + "/php/index.php?op=prepopulate_fields",
+            context: document.body,
+            dataType: 'json',
+            type: 'POST',
+            cache: false,
+            data: 'securitytoken=' + token,
+            beforeSend: function () {
+                jQuery('#ajax-loader-secondary').empty();
+                jQuery('#ajax-loader-secondary').append(spinner_secondary);
+                regenerate_token();
+
+            },
+            success: function (response) {
+            	
+            	jQuery.each(response.names, function (index, value) {
+            		
+            		type = jQuery('[name^="'+value+'"]').attr('type');
+            		
+            		if(type == "radio"){
+                		var $radios = jQuery('input:radio[name="'+value+'"]');
+                		$radios.attr('checked', false);
+                		$radios.filter('[value="'+response.values[index]+'"]').attr('checked', true);
+                		
+            		}else{
+            			jQuery('[name^="'+value+'"]').val(response.values[index]);
+            		}
+            		
+            	});
+
+                if (jQuery('#ajax-spinner-secondary').exists()) {
+                    jQuery('#ajax-spinner-secondary').remove();
+                }
+
+            }
+        });
+ 
     }
 
 
@@ -792,11 +842,17 @@ jQuery(document).ready(function (jQuery) {
 
 
         jQuery("#create-new-account-button").bind('click', function () {
-            var email = escape(jQuery("#email").val());
-            var birthdate = escape(jQuery("#datepicker").val());
-
-
-            var token = escape(jQuery('#token').val());
+            
+        	var email = escape(jQuery("#email").val());
+            
+            if(jQuery("#datepicker").exists()){
+            	birthdate = escape(jQuery("#datepicker").val());
+            }else{
+            	birthdate = '';
+            }
+            	
+            
+        	var token = escape(jQuery('#token').val());
 
             if (token == '') {
                 token = 'guest';
@@ -885,7 +941,16 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#log-in").bind('click', function () {
             var username = escape(convertToEntities(jQuery("#username").val()));
             var email = escape(jQuery("#email").val());
-            var birthdate = escape(jQuery("#datepicker").val());
+            var birthdate = '';
+            
+            if(jQuery("#datepicker").exists()){
+            	birthdate = escape(jQuery("#datepicker").val());
+            }
+            
+            if(typeof birthdate == undefined){
+            	birthdate = '';
+            }
+ 
             var avatar = escape(jQuery("#avatar").val());
             var terms_and_conditions = jQuery("#terms-and-conditions").is(':checked') ? 1 : 0;
             var token = escape(jQuery('#token').val());
