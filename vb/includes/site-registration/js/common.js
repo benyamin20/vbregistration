@@ -47,6 +47,11 @@ $.fn.realVal = function() {
     }
 };
 
+//get type of input
+$.fn.getType = function(){ 
+	return this[0].tagName == "INPUT" ? $(this[0]).attr("type").toLowerCase() : this[0].tagName.toLowerCase(); 
+};
+
 // alternative function to close a facebox through a trigger
 function closeTnC() {
     jQuery(document).trigger('close.facebox');
@@ -514,21 +519,31 @@ jQuery(document).ready(function (jQuery) {
             	
             	jQuery.each(response.names, function (index, value) {
             		
-            		type = jQuery('[name^="'+value+'"]').attr('type');
+            		type = jQuery('[name="'+value+'"]').getType();
             		
-            		if(type == "radio"){
+
+            		if(type == "radio" || type == 'checkbox'){
             			//clear any default value 
-                		var $radios = jQuery('input:radio[name="'+value+'"]');
+                		var $radios = jQuery('input:'+type+'[name="'+value+'"]');
                 		$radios.attr('checked', false);
                 		
                 		//select proper input according to value from response
-            			jQuery("label:contains('"+response.values[index]+"')").children().attr('checked', true);
+            			//jQuery("label:contains('"+response.values[index]+"')").children().attr('checked', true);
+                		var str = value;
+                		var fieldname=str.replace("userfield",""); 
+                		var fieldname2 =fieldname.replace("[","");
+                		var fieldname3=fieldname2.replace("]","");
+                		var fieldname4=fieldname3.replace("[]","");
                 		
+                		jQuery('label[for*="' + fieldname4 + '"]:contains("' + response.values[index] + '")').children().attr('checked', true);
+            			
+            			
             		}else if(type == 'select'){
-            			jQuery('[name^="'+value+'"]').val(0);
-            			
-            			jQuery("[name="+value+"] option[text=" + response.values[index] +"]").get(0).selected = true;
-            			
+            			//clear any default selected option
+            			jQuery('[name="'+value+'"]:selected').attr('selected',false);
+            			//set the correct value based on the text
+            			jQuery('[name="'+value+'"] option:contains("' + response.values[index] +'")').attr('selected','selected');
+
             		}else{
             			jQuery('[name^="'+value+'"]').val(response.values[index]);
             		}
