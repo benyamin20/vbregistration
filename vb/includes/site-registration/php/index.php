@@ -923,7 +923,7 @@ switch ($op) {
                     $url = prev_url();
 
                     if (empty($url)) {
-                        $url = "register.php?step=activate";
+                        $url = "index.php";
                     }
                 }
             }
@@ -979,6 +979,7 @@ switch ($op) {
         $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
         $valid_entries = TRUE;
         $message = "";
+        $_SESSION['site_registration']['coppauser'] = '';
 
         // clean variables
         $vbulletin->input->clean_array_gpc('p',
@@ -999,10 +1000,17 @@ switch ($op) {
             $reqbirthday = true;
         }
 
-            // ACP-479
+        // ACP-479
         if ($vbulletin->options['usecoppa'] == 2 ||
                  $vbulletin->options['usecoppa'] == 1) {
             $reqbirthday = true;
+        }
+
+
+        if ($vbulletin->options['usecoppa']) {
+
+        } else {
+            $_SESSION['site_registration']['coppauser'] = false;
         }
 
 
@@ -1072,7 +1080,7 @@ switch ($op) {
                                     'under_thirteen_registration_denied');
                             $messages['fields'][] = $error_type = "datepicker";
                         } else {
-                            $_SESSION['site_registration']['coppauser'] = true;
+                            $_SESSION['site_registration']['coppauser'] = false;
                         }
                     }
                 } else {
