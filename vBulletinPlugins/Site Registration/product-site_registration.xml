@@ -674,7 +674,7 @@ $stylevar[htmldoctype]
                             </div>
 
                             <div class="grid_4 sr-no-margin" id="datepicker-wrapper">
-                                <if condition="$vboptions[reqbirthday] == TRUE">
+                                <if condition="$vboptions[reqbirthday] == TRUE or $vboptions[usecoppa] == 2">
 	                                <label for="birthdate">Birth Date</label>
 					                <div class="input-prepend ">
 						                <span class="add-on"> <i class="icon-calendar"></i>
@@ -992,7 +992,7 @@ $stylevar[htmldoctype]
 		
 		
 						<div class="clear "></div>
-		                  <if condition="$vboptions[reqbirthday] == TRUE">
+		                  <if condition="$vboptions[reqbirthday] == TRUE  or $vboptions[usecoppa] == 2">
 			                <label for="birthday">Birth Date</label>
 			                <div class="grid_6 sr-no-margin" id="datepicker-wrapper">
 			                  

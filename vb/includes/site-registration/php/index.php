@@ -999,6 +999,12 @@ switch ($op) {
             $reqbirthday = true;
         }
 
+        //ACP-479
+        if ($vbulletin->options['usecoppa'] == 2 ) {
+            $reqbirthday = true;
+        }
+
+
         // check if variables are set
         if ($vbulletin->options['reqbirthday'] ||
                  ! empty($vbulletin->GPC['birthdate']) || $reqbirthday) {
@@ -1454,6 +1460,11 @@ switch ($op) {
 
         if ($vbulletin->options['usecoppa'] > 0 &&
                  $vbulletin->options['reqbirthday'] == TRUE) {
+            $reqbirthday = true;
+        }
+
+        //ACP-479
+        if ($vbulletin->options['usecoppa'] == 2 ) {
             $reqbirthday = true;
         }
 
