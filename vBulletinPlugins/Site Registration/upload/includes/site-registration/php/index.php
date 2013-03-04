@@ -999,8 +999,9 @@ switch ($op) {
             $reqbirthday = true;
         }
 
-        //ACP-479
-        if ($vbulletin->options['usecoppa'] == 2 ) {
+            // ACP-479
+        if ($vbulletin->options['usecoppa'] == 2 ||
+                 $vbulletin->options['usecoppa'] == 1) {
             $reqbirthday = true;
         }
 
@@ -1463,8 +1464,9 @@ switch ($op) {
             $reqbirthday = true;
         }
 
-        //ACP-479
-        if ($vbulletin->options['usecoppa'] == 2 ) {
+        // ACP-479
+        if ($vbulletin->options['usecoppa'] == 2 ||
+                 $vbulletin->options['usecoppa'] == 1) {
             $reqbirthday = true;
         }
 
