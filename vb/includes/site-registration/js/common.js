@@ -1,11 +1,20 @@
+//for vb compatibility
 AJAX_Compatible = true;
+
+//is md5 script loaded?
 var md5_loaded = false;
 
+/**
+ * 	Spinners
+ * */
 var spinner = '<img id="ajax-spinner" src="' + sr_path_img
         + '/img/ajax-loader.gif" />';
 var spinner_secondary = '<img id="ajax-spinner-secondary" src="' + sr_path_img
         + '/img/ajax-loader.gif" />';
 
+/**
+ * 	Bootstraped alerts
+ **/
 jQuery.getScript(sr_path_js + "/js/bootbox.min.js", function() {
 });
 
@@ -137,6 +146,46 @@ function initialize_spinner() {
 }
 
 /**
+ * 
+ * 	A JavaScript equivalent of PHPs decbin
+ * 
+ **/
+function decbin (number) {
+	  // http://kevin.vanzonneveld.net
+	  // +   original by: Enrique Gonzalez
+	  // +   bugfixed by: Onno Marsman
+	  // +   improved by: http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
+	  // +   input by: pilus
+	  // +   input by: nord_ua
+	  // *     example 1: decbin(12);
+	  // *     returns 1: '1100'
+	  // *     example 2: decbin(26);
+	  // *     returns 2: '11010'
+	  // *     example 3: decbin('26');
+	  // *     returns 3: '11010'
+	  if (number < 0) {
+	    number = 0xFFFFFFFF + number + 1;
+	  }
+	  return parseInt(number, 10).toString(2);
+	}
+
+
+function convertToEntities(tstr) {     
+    var bstr = '';  
+
+    for (i = 0; i < tstr.length; i++) {  
+        if (tstr.charCodeAt(i) > 127) { 
+            bstr += '\&#' + tstr.charCodeAt(i) + ';'; 
+        } else { 
+            bstr += tstr.charAt(i);
+        }
+    } 
+
+    return bstr;
+}
+
+
+/**
  * AJAX error handling ACP-455
  */
 jQuery
@@ -188,23 +237,7 @@ jQuery
             }
         });
 
-
-function convertToEntities(tstr) {     
-    var bstr = '';  
-
-    for (i = 0; i < tstr.length; i++) {  
-        if (tstr.charCodeAt(i) > 127) { 
-            bstr += '\&#' + tstr.charCodeAt(i) + ';'; 
-        } else { 
-            bstr += tstr.charAt(i);
-        }
-    } 
-
-    return bstr;
-}
-
-
-
+ 
 /**
  * lazy load and bootstrap all elements
  */
@@ -541,8 +574,31 @@ jQuery(document).ready(function (jQuery) {
             		}else if(type == 'select'){
             			//clear any default selected option
             			jQuery('[name="'+value+'"]:selected').attr('selected',false);
-            			//set the correct value based on the text
-            			jQuery('[name="'+value+'"] option:contains("' + response.values[index] +'")').attr('selected','selected');
+            			
+            			
+            			//is it a multiselect?
+            			if( jQuery('[name="'+value+'"]').attr('multiple') == 'multiple'){
+            				
+            				//convert binary value to on/off array
+            				var bin = decbin(response.values[index]);
+            				//char to array
+            				var bin_values = bin.split('');
+            				
+            				//reverse values
+            				bin_values.reverse(); 
+            				
+            				//set values
+            				jQuery.each(bin_values, function(i, v) {
+            					if(v > 0){
+            						jQuery('select[name="'+value+'"] option:eq('+i+')').attr('selected', 'selected');
+            					}
+            				});
+   
+            			}else{
+                			//set the correct value based on the text
+                			jQuery('[name="'+value+'"] option:contains("' + response.values[index] +'")').attr('selected','selected');
+            			}
+            			
 
             		}else{
             			jQuery('[name^="'+value+'"]').val(response.values[index]);
