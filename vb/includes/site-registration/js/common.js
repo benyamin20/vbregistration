@@ -1015,11 +1015,8 @@ jQuery(document).ready(function (jQuery) {
         jQuery("#create-new-account-button").bind('click', function () {
             
         	var email = escape(jQuery("#email").val());
-        	var birthdate = '';
+        	var birthdate = '' || jQuery("#datepicker").val();
             
-            if(jQuery("#datepicker").exists()){
-            	birthdate = jQuery("#datepicker").val();
-            }
             	
             
         	var token = escape(jQuery('#token').val());
