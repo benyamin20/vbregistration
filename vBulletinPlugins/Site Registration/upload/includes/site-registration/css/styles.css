@@ -608,3 +608,9 @@ a.move-to-top-avatar-upload {
     margin-left: -230px; 
     float: left;
 }
+
+
+input[type="radio"], input[type="checkbox"] {
+  vertical-align: text-bottom;
+}
+}

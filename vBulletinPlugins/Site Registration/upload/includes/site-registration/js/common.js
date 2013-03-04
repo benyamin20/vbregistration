@@ -184,6 +184,23 @@ function convertToEntities(tstr) {
     return bstr;
 }
 
+/**
+ * 	indexOf implementation for IE < 9
+ **/
+if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function (elt /*, from*/) {
+        var len = this.length >>> 0;
+        var from = Number(arguments[1]) || 0;
+        from = (from < 0) ? Math.ceil(from) : Math.floor(from);
+        if (from < 0) from += len;
+
+        for (; from < len; from++) {
+            if (from in this && this[from] === elt) return from;
+        }
+        return -1;
+    };
+}
+
 
 /**
  * AJAX error handling ACP-455
@@ -436,8 +453,14 @@ jQuery(document).ready(function (jQuery) {
                 initialize_spinner();
                 regenerate_token();
                 
-                //remove wrapper for custom fields
-                jQuery('[name^="userfield"]').unwrap();
+                if (jQuery.browser.version <= 8.0) {
+                	
+                }else{
+                	//remove wrapper for custom fields
+                    //jQuery('[name^="userfield"]').unwrap();
+                }
+                
+                
             },
             success: function (response) {
                 if (jQuery('#ajax-spinner').exists()) {
@@ -452,6 +475,7 @@ jQuery(document).ready(function (jQuery) {
                     
                     var pattern="userfield";
                     var error = 'Required field missing or has an invalid value.';
+                    var multiple = "[]";
 
                     jQuery.each(response.messages.fields, function (index, value) {
                         
@@ -459,34 +483,53 @@ jQuery(document).ready(function (jQuery) {
                         if (value == 'upload') {
                             jQuery('#' + value + '-wrapper').addClass("terms-and-conditions-sr-input-error-container");
                         } else {
-                            //handle custom field errors
-                            if(value.indexOf(pattern) !=-1){
+                           	//handle custom field errors
+                        	if(value.indexOf(multiple) !=-1){
+                        		
+                        		var str = value;
+                        		var fieldname=str.replace("userfield",""); 
+                        		var fieldname2 =fieldname.replace("[","");
+                        		var fieldname3=fieldname2.replace("]","");
+                        		var fieldname4=fieldname3.replace("[]","");
+                        		
+                        		bootbox.alert("Required field: "+ fieldname4 + " is missing or has invalid value");
+                        		jQuery('[name="' + value + '"]').first().focus();
+                        		
+                        	}else if(value.indexOf(pattern) !=-1){
                                 jQuery('[name="' + value + '"]').addClass("sr-input-error");
                                 jQuery('[name="' + value + '"]')
-                                    .wrap('<div class="large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
+                                    .wrap('<div class="grid_7 sr-no-margin large-sr-input-error-container" id="' + value + '-sr-error-label-container" />');
                                 
                                 jQuery('span[id="' + value + '-sr-error-label"]').empty();
                                 jQuery('[id="' + value + '-sr-error-label"]').remove();
                                 
-                                if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
-                                    jQuery('[name="' + value + '"]')
-                                        .after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
+                                if (true /*jQuery.browser.version <= 8.0*/) {
+                                	if(!jQuery('[id="' + value + '-sr-error-label"]').exists()){
+                                        jQuery('[name="' + value + '"]')
+                                            .after('<span id="'+value+'-sr-error-label" class="sr-error-label"></span>');
+                                    }
+            
+                                    jQuery('span[id="' + value + '-sr-error-label"]')   
+                                        .html(error);
+                                }else{
+                                	var str = value;
+                            		var fieldname=str.replace("userfield",""); 
+                            		var fieldname2 =fieldname.replace("[","");
+                            		var fieldname3=fieldname2.replace("]","");
+                            		var fieldname4=fieldname3.replace("[]","");
+                            		
+                                	bootbox.alert("Required field: "+ fieldname4 + " is missing or has invalid value");
+                            		jQuery('[name="' + value + '"]').first().focus();
                                 }
-                                
-                                
-                                
-                                jQuery('span[id="' + value + '-sr-error-label"]')   
-                                    .html(error);
-                                
-                                
+         
                             }else{
-                                jQuery('#' + value + '-wrapper').addClass("large-sr-input-error-container");
+                                jQuery('#' + value + '-wrapper').addClass("sr-input-error-container");
+                                jQuery('#' + value).addClass("sr-input-error");
+                                jQuery('#' + value + '-sr-error-label').empty();
+                                jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);
                             }
                         }
                         
-                        jQuery('#' + value).addClass("sr-input-error");
-                        jQuery('#' + value + '-sr-error-label').empty();
-                        jQuery('#' + value + '-sr-error-label').append(response.messages.errors[index]);    
 
                     });
 
@@ -569,7 +612,29 @@ jQuery(document).ready(function (jQuery) {
                 		var fieldname4=fieldname3.replace("[]","");
                 		
                 		jQuery('label[for*="' + fieldname4 + '"]:contains("' + response.values[index] + '")').children().attr('checked', true);
-            			
+ 
+                		
+                		if(type == 'checkbox'){
+                			
+            				//convert binary value to on/off array
+            				var bin = decbin(response.values[index]);
+            				//char to array
+            				var bin_values = bin.split('');
+            				
+            				//reverse values
+            				bin_values.reverse(); 
+            				
+            				//set values
+            				jQuery.each(bin_values, function(i, v) {
+            					if(v > 0){
+            						//positions start at 1
+            						pos = i + 1;
+            						jQuery('#cb_cpf_' + fieldname4 + '_' + pos + '').attr('checked', 'checked');
+            					}
+            				});
+   
+                			
+                		}
             			
             		}else if(type == 'select'){
             			//clear any default selected option
@@ -775,12 +840,7 @@ jQuery(document).ready(function (jQuery) {
                         });
 
                     } else {
-                        try {
-                            clear_errors();
-                        } catch (e) {
-                        	
-                        }
-
+   
                         //redirect user to proper url
                         var url = response.url;
                         jQuery(location).attr('href', url);
