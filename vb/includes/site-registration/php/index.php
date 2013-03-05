@@ -942,7 +942,7 @@ switch ($op) {
                 } else {
                     // take user back to where he started
 
-                    if($vbulletin->options['usecoppa'] > 0){
+                    if($vbulletin->options['usecoppa'] > 0 && $_SESSION['site_registration']['coppauser']){
                         $url = "register.php?do=coppaform";
                     }else{
                         $url = prev_url();
@@ -1091,6 +1091,7 @@ switch ($op) {
                             $current['year'] - 13))) {
                         $_SESSION['site_registration']['coppauser'] = false;
                     } else {
+                        $_SESSION['site_registration']['coppauser'] = true;
 
                         if ($vbulletin->options['checkcoppa'] and
                                  $vbulletin->options['usecoppa']) {
@@ -1107,9 +1108,8 @@ switch ($op) {
                             $messages['errors'][] = $message = fetch_error(
                                     'under_thirteen_registration_denied');
                             $messages['fields'][] = $error_type = "datepicker";
-                        } else {
-                            $_SESSION['site_registration']['coppauser'] = false;
                         }
+
                     }
                 } else {
                     $valid_entries = FALSE;

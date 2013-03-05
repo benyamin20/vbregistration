@@ -1252,21 +1252,22 @@ $stylevar[htmldoctype]
 				
 					
 				<div class="clear sr-clear_10"></div>
-				
-				<if condition="$vboptions[usecoppa] > 0 && $_SESSION['site_registration']['coppauser']">
-				    <!-- parent - guardian email -->
-				    <div class="grid_7 sr-no-margin" id="parent-guardian-email-wrapper">
-				        <label for="parent-guardian-email"><phrase>$vbphrase[parent_guardian_email]</phrase></label>
-				        <input class="" id="parent-guardian-email" name="parent-guardian-email"
-					           title="<phrase>$vbphrase[if_under_13_provide_parent]</phrase>" 
-					           value="" 
-					           autocomplete="off"
-					           type="text"  /> 
-				        <span class="sr-error-label" id="parent-guardian-email-sr-error-label"></span>    
-				    </div>
-					
-				    <div class="clear sr-clear_10"></div>
-				    <!-- /parent - guardian email -->   
+				<if condition="$guardian_field == TRUE">
+					<if condition="$vboptions[usecoppa] > 0">
+					    <!-- parent - guardian email -->
+					    <div class="grid_7 sr-no-margin" id="parent-guardian-email-wrapper">
+					        <label for="parent-guardian-email"><phrase>$vbphrase[parent_guardian_email]</phrase></label>
+					        <input class="" id="parent-guardian-email" name="parent-guardian-email"
+						           title="<phrase>$vbphrase[if_under_13_provide_parent]</phrase>" 
+						           value="" 
+						           autocomplete="off"
+						           type="text"  /> 
+					        <span class="sr-error-label" id="parent-guardian-email-sr-error-label"></span>    
+					    </div>
+						
+					    <div class="clear sr-clear_10"></div>
+					    <!-- /parent - guardian email -->   
+					</if>
 				</if>
 				
 				<if condition="$hvcheck"> <!-- require captcha -->
@@ -1589,10 +1590,20 @@ $stylevar[htmldoctype]
                         );
                         
                         
+                        
+                        if ($vbulletin->options['moderatenewmembers']
+			                        OR $_SESSION['site_registration']['coppauser']){
+			                $newusergroupid = 4;
+			            }
+			            else{
+			                $newusergroupid = 2;
+			            }
+                        
+                        
                         // change user to be already registered
                    
                         $sql = "UPDATE " . TABLE_PREFIX . "user SET usergroupid = '"
-                                . $vbulletin->db->escape_string('2')
+                                . $vbulletin->db->escape_string($newusergroupid)
                                 . "' WHERE userid = '" . $vbulletin->db->escape_string($vbulletin->GPC['u'])
                                 . "' ";
                                 
@@ -1857,6 +1868,8 @@ $stylevar[htmldoctype]
                             //ACP-503
                             //show custom profile fields
                             require_once($vbulletin->options['site_registration_includes_path_php'] . '/php/custom_fields.php');
+                            
+                            $guardian_field = $_SESSION['site_registration']['coppauser'];
                             
                             eval('$site_reg_includes = "' . fetch_template('site_reg_includes') . '";');
                             eval('print_output("' . fetch_template('site_reg_sign-in-step-2-site-account') . '");');
