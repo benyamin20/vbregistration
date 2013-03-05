@@ -1589,10 +1589,12 @@ $stylevar[htmldoctype]
                                 AND type = 0"
                         );
                         
-                        
-                        
+ 
+                        $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
+                        cache_permissions($userinfo, false); 
+ 
                         if ($vbulletin->options['moderatenewmembers']
-			                        OR $_SESSION['site_registration']['coppauser']){
+			                        OR $userinfo['coppauser']){
 			                $newusergroupid = 4;
 			            }
 			            else{
@@ -1613,8 +1615,8 @@ $stylevar[htmldoctype]
                          
                         
 
-                         $userinfo                  = fetch_userinfo($vbulletin->GPC['u'], FETCH_USERINFO_PROFILEPIC);
-                         cache_permissions($userinfo, false); 
+                         
+                         
                          $userinfo_permissions      = $userinfo['permissions']['genericpermissions'];
                          $generic_canuseavatar      = $vbulletin->bf_ugp_genericpermissions['canuseavatar'];
                          $avatar_usergroup_enabled  = $userinfo_permissions & $generic_canuseavatar;
