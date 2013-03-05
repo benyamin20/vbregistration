@@ -1773,19 +1773,19 @@ switch ($op) {
 
                 $vbulletin->session->save();
 
-                if ($vbulletin->options['welcomemail']) {
-                    eval(fetch_email_phrases('welcomemail'));
+                //if ($vbulletin->options['welcomemail']) {
+                    //eval(fetch_email_phrases('welcomemail'));
                     //vbmail($email, $subject, $message);
-                }
+                //}
 
-                $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
-                $userinfo_welcome = fetch_userinfo($userid);
+                //$userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
+                //$userinfo_welcome = fetch_userinfo($userid);
 
-                echo var_export($userid, true);
+                //echo var_export($userid, true);
 
-                $userdata->set_existing($userinfo_welcome);
+                //$userdata->set_existing($userinfo_welcome);
 
-                $userdata->send_welcomepm();
+                //$userdata->send_welcomepm();
             }
 
             $userinfo = fetch_userinfo($userid);

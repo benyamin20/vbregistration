@@ -213,11 +213,11 @@ class vBNexus_user {
         if ($require_activation) {
             // Email phrase 'activateaccount' expects vars called $userid, $username
             // and $activateid to be defined and meaningfull
-            $username = $data['username'];
-            $activateid = build_user_activation_id($userid, $moderated ? 4 : 2, 0);
-            eval(fetch_email_phrases('activateaccount', $languageid));
+            //$username = $data['username'];
+            //$activateid = build_user_activation_id($userid, $moderated ? 4 : 2, 0);
+            //eval(fetch_email_phrases('activateaccount', $languageid));
             // After eval'ing activateaccount we have vars $subject and $message set
-            vbmail($data['email'], $subject, $message, true);
+            //vbmail($data['email'], $subject, $message, true);
         }
 
         // Force a new session to prevent potential issues with guests from the same IP, see bug #2459
