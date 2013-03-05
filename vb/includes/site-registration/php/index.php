@@ -736,15 +736,19 @@ switch ($op) {
             // set languageid
             $userdata->set('languageid', $vbulletin->userinfo['languageid']);
 
+
             // assign user to usergroup 3 if email needs verification
-            if ($vbulletin->options['moderatenewmembers'] or
-                     $_SESSION['site_registration']['coppauser']) {
-                $newusergroupid = 4;
-            } elseif ($vbulletin->options['verifyemail']) {
+            if ($vbulletin->options['verifyemail']){
                 $newusergroupid = 3;
-            } else {
+            }
+            else if ($vbulletin->options['moderatenewmembers']
+                        OR $_SESSION['site_registration']['coppauser']){
+                $newusergroupid = 4;
+            }
+            else{
                 $newusergroupid = 2;
             }
+
 
             // set usergroupid
             $userdata->set('usergroupid', $newusergroupid);
@@ -1612,14 +1616,16 @@ switch ($op) {
             }
 
 
-            if ($vbulletin->options['moderatenewmembers'] or
-                     $_SESSION['site_registration']['coppauser']) {
-                $newusergroupid = 4;
-            } elseif ($vbulletin->options['verifyemail']) {
-                $newusergroupid = 3;
-            } else {
-                $newusergroupid = 2;
-            }
+        	// assign user to usergroup 3 if email needs verification
+        	if ($vbulletin->options['verifyemail']){
+        		$newusergroupid = 3;
+        	}
+        	else if ($vbulletin->options['moderatenewmembers']
+        	            OR $vbulletin->GPC['coppauser']){
+        		$newusergroupid = 4;
+        	}else{
+        		$newusergroupid = 2;
+        	}
 
             if ($fbID) {
 
