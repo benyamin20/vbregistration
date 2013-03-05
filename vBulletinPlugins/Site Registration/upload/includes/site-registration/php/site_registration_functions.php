@@ -203,6 +203,7 @@ function thumbnail($inputFileName, $maxSize = 100) {
 	// Copy resampled makes a smooth thumbnail
 	imagecopyresampled($thumb, $sourceImage, 0, 0, 0, 0, $tWidth, $tHeight,
 			$width, $height);
+	imagecolortransparent($thumb, imagecolorallocate($thumb, 0, 0, 0));
 	imagedestroy($sourceImage);
 
 	return $thumb;
@@ -245,10 +246,38 @@ function imageToFile($im, $fileName, $quality = 75) {
 
 
 
-
+/**
+ *     Get a text between tags
+ **/
 function getTextBetweenTags($string, $tagname) {
 	$pattern = "/<$tagname ?.*>(.*)<\/$tagname>/";
 	preg_match($pattern, $string, $matches);
 	return $matches[1];
+}
+
+
+/**
+ *    Check if a file is animated or not.
+ **/
+function is_ani ($filename){
+    if (! ($fh = @fopen($filename, 'rb')))
+        return false;
+    $count = 0;
+    // an animated gif contains multiple "frames", with each frame having a
+    // header made up of:
+    // * a static 4-byte sequence (\x00\x21\xF9\x04)
+    // * 4 variable bytes
+    // * a static 2-byte sequence (\x00\x2C)
+
+    // We read through the file til we reach the end of the file, or we've found
+    // at least 2 frame headers
+    while (! feof($fh) && $count < 2) {
+        $chunk = fread($fh, 1024 * 100); // read 100kb at a time
+        $count += preg_match_all('#\x00\x21\xF9\x04.{4}\x00\x2C#s', $chunk,
+                $matches);
+    }
+
+    fclose($fh);
+    return $count > 1;
 }
 

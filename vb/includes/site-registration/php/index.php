@@ -121,9 +121,10 @@ switch ($op) {
             $allowanimation = ($userinfo['permissions']['genericpermissions']
                     & $vbulletin->bf_ugp_genericpermissions['cananimateavatar']) ? true : false;
 
-            if ($allowanimation) {
+            // ACP-511
+            //if ($allowanimation) {
                 array_push($valid_formats, "gif");
-            }
+            //}
 
             if (isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST") {
                 $name = $_FILES['upload']['name'];
@@ -146,6 +147,22 @@ switch ($op) {
 
                             move_uploaded_file($_FILES["upload"]["tmp_name"],
                                     $uploaded);
+
+                            //is this an animated gif?
+                            if(is_ani($uploaded)){
+                                if($allowanimation){
+                                    // animated image and animation allowed
+                                }else{
+                                    //animated image and animation disallowed
+                                    @unlink($upload);
+                                    $error = true;
+                                    $message = "You may not upload animated images";
+                                }
+                            }else{
+                                //we're OK it's not animated
+                            }
+
+
                         } else {
                             $error = true;
                             $message = "Image size too large";
