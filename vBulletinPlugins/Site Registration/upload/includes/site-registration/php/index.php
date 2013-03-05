@@ -1656,7 +1656,8 @@ switch ($op) {
                         'username' => $username,
                         'password' => md5(time()),
                         'email' => $email,
-                        'coded_email' => $vBNexus->codedEmail($email),
+                        //'coded_email' => $vBNexus->codedEmail($email),
+                        'coded_email' => $email,        //fix for disabling activation id
                         'default_email' => $email,
                         'publish' => $publish
                 );
@@ -1747,7 +1748,7 @@ switch ($op) {
             }
             */
 
-            if (isset($activationid)) {
+            if (!empty($activationid)) {
                 $url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
             } else {
                 $url = prev_url();
