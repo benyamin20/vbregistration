@@ -148,6 +148,7 @@ switch ($op) {
                             move_uploaded_file($_FILES["upload"]["tmp_name"],
                                     $uploaded);
 
+                            // ACP-511
                             //is this an animated gif?
                             if(is_ani($uploaded)){
                                 if($allowanimation){
@@ -180,6 +181,7 @@ switch ($op) {
                 $message = "Invalid method.";
             }
         } else {
+            // handled on the form submit
             // $error = true;
             // $message = "An error ocurred.";
         }
