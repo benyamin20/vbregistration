@@ -1615,12 +1615,13 @@ switch ($op) {
                         $vbulletin->db->escape_string($vbulletin->GPC['birthdate']));
             }
 
-
+            // removed as of ACP-399
         	// assign user to usergroup 3 if email needs verification
-        	if ($vbulletin->options['verifyemail']){
-        		$newusergroupid = 3;
-        	}
-        	else if ($vbulletin->options['moderatenewmembers']
+        	//if ($vbulletin->options['verifyemail']){
+        	//	$newusergroupid = 3;
+        	//}
+        	//else
+            if ($vbulletin->options['moderatenewmembers']
         	            OR $vbulletin->GPC['coppauser']){
         		$newusergroupid = 4;
         	}else{
@@ -1724,6 +1725,7 @@ switch ($op) {
             $token = md5(uniqid(microtime(), true));
             $token_time = time();
             $form = "site-account-details";
+
             $_SESSION['site_registration'][$form . '_token'] = array(
                     'token' => $token,
                     'time' => $token_time
@@ -1733,7 +1735,8 @@ switch ($op) {
             // send new user email
 
             $nonvbid = $fbID;
-
+            //ACP-399
+            /*
             if ($vbulletin->options['verifyemail']) {
                 $sql = "SELECT activationid FROM useractivation WHERE userid = '" .
                          $userid . "'";
@@ -1742,6 +1745,7 @@ switch ($op) {
 
                 $activationid = $data["activationid"];
             }
+            */
 
             if (isset($activationid)) {
                 $url = "register.php?a=act&u=" . $userid . "&i=" . $activationid;
