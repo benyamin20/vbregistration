@@ -1253,7 +1253,7 @@ $stylevar[htmldoctype]
 					
 				<div class="clear sr-clear_10"></div>
 				
-				<if condition="$_SESSION[site_registration][coppauser] === true && $vboptions[usecoppa] > 0">
+				<if condition="$vboptions[usecoppa] > 0">
 				    <!-- parent - guardian email -->
 				    <div class="grid_7 sr-no-margin" id="parent-guardian-email-wrapper">
 				        <label for="parent-guardian-email"><phrase>$vbphrase[parent_guardian_email]</phrase></label>
@@ -2039,9 +2039,20 @@ $stylevar[htmldoctype]
                             break;
                     }
                     
+                    
+                    if((int)$vbulletin->userinfo['userid']){
+                        $session_active = true;
+                    }else{
+                        $session_active = false;
+                    }
                    
-                    if(!$no_permissions){  
-                        header("Location: register.php?ref=$reg_ref");
+                    if(!$no_permissions){ 
+                        if($session_active){
+                        
+                        }else{
+                            header("Location: register.php?ref=$reg_ref");
+                        } 
+                        
                     }
 
                     

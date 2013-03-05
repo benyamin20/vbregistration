@@ -561,8 +561,7 @@ switch ($op) {
             $messages['errors'][] = "Passwords don't match";
         }
 
-        if ($_SESSION['site_registration']['coppauser'] === true &&
-                 $vbulletin->options['usecoppa'] > 0) {
+        if ($vbulletin->options['usecoppa'] > 0) {
             if (empty($vbulletin->GPC['parent-guardian-email'])) {
                 $valid_entries = FALSE;
                 $error_type = "parent-guardian-email";
@@ -920,11 +919,17 @@ switch ($op) {
                 } else {
                     // take user back to where he started
 
-                    $url = prev_url();
+                    if($vbulletin->options['usecoppa'] > 0){
+                        $url = "register.php?do=coppaform";
+                    }else{
+                        $url = prev_url();
 
-                    if (empty($url)) {
-                        $url = "index.php";
+                        if (empty($url)) {
+                            $url = "index.php";
+                        }
                     }
+
+
                 }
             }
         }
