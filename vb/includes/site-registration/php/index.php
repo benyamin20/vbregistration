@@ -580,7 +580,7 @@ switch ($op) {
             $messages['errors'][] = "Passwords don't match";
         }
 
-        if ($vbulletin->options['usecoppa'] > 0) {
+        if ($vbulletin->options['usecoppa'] > 0 && $_SESSION['site_registration']['coppauser']) {
             if (empty($vbulletin->GPC['parent-guardian-email'])) {
                 $valid_entries = FALSE;
                 $error_type = "parent-guardian-email";
