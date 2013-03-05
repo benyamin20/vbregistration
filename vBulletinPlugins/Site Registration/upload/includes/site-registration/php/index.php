@@ -1373,8 +1373,14 @@ switch ($op) {
             foreach ($_POST['userfield'] as $key => $value) {
                 $_POST['userfield'][$key] = preg_replace("/%u([A-Fa-f0-9]{4})/",
                         "&#x$1;", $value);
-                $_POST['userfield'][$key] = html_entity_decode(
-                        $_POST['userfield'][$key], ENT_COMPAT, 'utf-8');
+
+                if(is_array($_POST['userfield'][$key])){
+
+                }else{
+                    $_POST['userfield'][$key] = html_entity_decode(
+                            $_POST['userfield'][$key], ENT_COMPAT, 'utf-8');
+                }
+
             }
         }
 
