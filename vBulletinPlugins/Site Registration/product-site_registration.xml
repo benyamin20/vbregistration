@@ -875,7 +875,7 @@ $header
  
         <!-- Site heading -->
         <div id="sr-site-heading" class="grid_12">
-            <span class="sr-title_red"><phrase>$vbphrase[noregister]</phrase></span>
+            <span class="sr-title_red">Sorry, registration has been disabled by the administrator.</span>
         </div>
         <div class="clear sr-clear_10"></div>
         
