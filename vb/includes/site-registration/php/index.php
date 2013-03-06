@@ -761,7 +761,7 @@ switch ($op) {
                 $newusergroupid = 3;
             }
             else if ($vbulletin->options['moderatenewmembers']
-                        OR $_SESSION['site_registration']['coppauser']){
+                        OR ( $_SESSION['site_registration']['coppauser'] && $vbulletin->options['usecoppa'] )){
                 $newusergroupid = 4;
             }
             else{
@@ -1007,7 +1007,7 @@ switch ($op) {
         $userdata = &datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
         $valid_entries = TRUE;
         $message = "";
-        $_SESSION['site_registration']['coppauser'] = '';
+        unset($_SESSION['site_registration']['coppauser']);
 
         // clean variables
         $vbulletin->input->clean_array_gpc('p',
@@ -1240,7 +1240,8 @@ switch ($op) {
         $arr = array(
                 "valid_entries" => $valid_entries,
                 "messages" => $messages,
-                "url" => $url
+                "url" => $url,
+                "coppa" =>  $_SESSION['site_registration']['coppauser']
         );
 
         json_headers($arr);

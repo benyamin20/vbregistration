@@ -593,83 +593,87 @@ jQuery(document).ready(function (jQuery) {
             },
             success: function (response) {
             	
-            	jQuery.each(response.names, function (index, value) {
-            		
-            		type = jQuery('[name="'+value+'"]').getType();
-            		
+            	if(response.names){
+					jQuery.each(response.names, function (index, value) {
+					
+						type = jQuery('[name="'+value+'"]').getType();
+					
 
-            		if(type == "radio" || type == 'checkbox'){
-            			//clear any default value 
-                		var $radios = jQuery('input:'+type+'[name="'+value+'"]');
-                		$radios.attr('checked', false);
-                		
-                		//select proper input according to value from response
-            			//jQuery("label:contains('"+response.values[index]+"')").children().attr('checked', true);
-                		var str = value;
-                		var fieldname=str.replace("userfield",""); 
-                		var fieldname2 =fieldname.replace("[","");
-                		var fieldname3=fieldname2.replace("]","");
-                		var fieldname4=fieldname3.replace("[]","");
-                		
-                		jQuery('label[for*="' + fieldname4 + '"]:contains("' + response.values[index] + '")').children().attr('checked', true);
+						if(type == "radio" || type == 'checkbox'){
+							//clear any default value 
+							var $radios = jQuery('input:'+type+'[name="'+value+'"]');
+							$radios.attr('checked', false);
+						
+							//select proper input according to value from response
+							//jQuery("label:contains('"+response.values[index]+"')").children().attr('checked', true);
+							var str = value;
+							var fieldname=str.replace("userfield",""); 
+							var fieldname2 =fieldname.replace("[","");
+							var fieldname3=fieldname2.replace("]","");
+							var fieldname4=fieldname3.replace("[]","");
+						
+							jQuery('label[for*="' + fieldname4 + '"]:contains("' + response.values[index] + '")').children().attr('checked', true);
  
-                		
-                		if(type == 'checkbox'){
-                			
-            				//convert binary value to on/off array
-            				var bin = decbin(response.values[index]);
-            				//char to array
-            				var bin_values = bin.split('');
-            				
-            				//reverse values
-            				bin_values.reverse(); 
-            				
-            				//set values
-            				jQuery.each(bin_values, function(i, v) {
-            					if(v > 0){
-            						//positions start at 1
-            						pos = i + 1;
-            						jQuery('#cb_cpf_' + fieldname4 + '_' + pos + '').attr('checked', 'checked');
-            					}
-            				});
+						
+							if(type == 'checkbox'){
+							
+								//convert binary value to on/off array
+								var bin = decbin(response.values[index]);
+								//char to array
+								var bin_values = bin.split('');
+							
+								//reverse values
+								bin_values.reverse(); 
+							
+								//set values
+								jQuery.each(bin_values, function(i, v) {
+									if(v > 0){
+										//positions start at 1
+										pos = i + 1;
+										jQuery('#cb_cpf_' + fieldname4 + '_' + pos + '').attr('checked', 'checked');
+									}
+								});
    
-                			
-                		}
-            			
-            		}else if(type == 'select'){
-            			//clear any default selected option
-            			jQuery('[name="'+value+'"]:selected').attr('selected',false);
-            			
-            			
-            			//is it a multiselect?
-            			if( jQuery('[name="'+value+'"]').attr('multiple') == 'multiple'){
-            				
-            				//convert binary value to on/off array
-            				var bin = decbin(response.values[index]);
-            				//char to array
-            				var bin_values = bin.split('');
-            				
-            				//reverse values
-            				bin_values.reverse(); 
-            				
-            				//set values
-            				jQuery.each(bin_values, function(i, v) {
-            					if(v > 0){
-            						jQuery('select[name="'+value+'"] option:eq('+i+')').attr('selected', 'selected');
-            					}
-            				});
+							
+							}
+						
+						}else if(type == 'select'){
+							//clear any default selected option
+							jQuery('[name="'+value+'"]:selected').attr('selected',false);
+						
+						
+							//is it a multiselect?
+							if( jQuery('[name="'+value+'"]').attr('multiple') == 'multiple'){
+							
+								//convert binary value to on/off array
+								var bin = decbin(response.values[index]);
+								//char to array
+								var bin_values = bin.split('');
+							
+								//reverse values
+								bin_values.reverse(); 
+							
+								//set values
+								jQuery.each(bin_values, function(i, v) {
+									if(v > 0){
+										jQuery('select[name="'+value+'"] option:eq('+i+')').attr('selected', 'selected');
+									}
+								});
    
-            			}else{
-                			//set the correct value based on the text
-                			jQuery('[name="'+value+'"] option:contains("' + response.values[index] +'")').attr('selected','selected');
-            			}
-            			
+							}else{
+								//set the correct value based on the text
+								jQuery('[name="'+value+'"] option:contains("' + response.values[index] +'")').attr('selected','selected');
+							}
+						
 
-            		}else{
-            			jQuery('[name^="'+value+'"]').val(response.values[index]);
-            		}
-            		
-            	});
+						}else{
+							jQuery('[name^="'+value+'"]').val(response.values[index]);
+						}
+					
+					});
+            	}
+            	
+            	
 
                 if (jQuery('#ajax-spinner-secondary').exists()) {
                     jQuery('#ajax-spinner-secondary').remove();
