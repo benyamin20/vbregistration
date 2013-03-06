@@ -323,7 +323,7 @@ jQuery(document).ready(function (jQuery) {
                         changeMonth: true,
                         constrainInput: true,
                         hideIfNoPrevNext: false,
-                        yearRange: '1900:2100',
+                        yearRange: '1902:2100',
                         onSelect: function (date) {
                             if (jQuery("#placeholder-datepicker").exists()) {
                                 jQuery("#placeholder-datepicker").remove();
