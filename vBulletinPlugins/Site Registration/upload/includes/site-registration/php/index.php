@@ -945,7 +945,14 @@ switch ($op) {
                                 vbmail($email, $subject, $message);
                             }
 
-                            $userdata->send_welcomepm();
+
+                            //->save() already does this.
+                            //if (bitwise($vbulletin->bf_misc_regoptions['receivepm'],
+                            //        $vbulletin->options['defaultregoptions'])) {
+                            //    $userdata->send_welcomepm();
+                            //}
+
+
                         }
 
                         $url = prev_url();
@@ -1807,11 +1814,12 @@ switch ($op) {
 
                 $userdata->set_existing($userinfo_welcome);
 
-
                 if ($newusergroupid == 2) {
-                    $userdata->send_welcomepm();
+                    if (bitwise($vbulletin->bf_misc_regoptions['receivepm'],
+                            $vbulletin->options['defaultregoptions'])) {
+                        $userdata->send_welcomepm();
+                    }
                 }
-
             }
 
             $userinfo = fetch_userinfo($userid);

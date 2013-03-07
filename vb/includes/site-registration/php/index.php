@@ -946,10 +946,11 @@ switch ($op) {
                             }
 
 
-                            if (bitwise($vbulletin->bf_misc_regoptions['receivepm'],
-                                    $vbulletin->options['defaultregoptions'])) {
-                                $userdata->send_welcomepm();
-                            }
+                            //->save() already does this.
+                            //if (bitwise($vbulletin->bf_misc_regoptions['receivepm'],
+                            //        $vbulletin->options['defaultregoptions'])) {
+                            //    $userdata->send_welcomepm();
+                            //}
 
 
                         }
