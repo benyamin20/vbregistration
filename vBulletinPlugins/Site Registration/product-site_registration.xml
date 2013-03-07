@@ -1656,7 +1656,14 @@ $stylevar[htmldoctype]
                     
                     if (!session_id()) {
                         session_start();
-                    }                   
+                    }               
+                    
+                    //ACP-543
+                    if($vbulletin->options['allowmultiregs']){
+	                    unset($_SESSION['site_registration']['initial_page']);
+	                        
+	                    $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
+                    }    
  
                     if(isset($_REQUEST["first"]) and $_REQUEST["step"] === "facebook-details") {                                
                         $fUser = explode("|", $_REQUEST["fuser"]);
@@ -1977,6 +1984,7 @@ $stylevar[htmldoctype]
                         session_start();
                     }
  
+                    unset($_SESSION['site_registration']['initial_page']);
                         
                     $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
 

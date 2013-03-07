@@ -245,7 +245,7 @@ jQuery
                             + jqXHR.responseText;
                 }
  
-                if (msg && bootbox) {
+                if (msg !== undefined && bootbox !== undefined) {
                     bootbox.alert(msg);
                 }else{
                     alert(msg);
@@ -1020,12 +1020,12 @@ jQuery(document).ready(function (jQuery) {
             
         	var email = escape(jQuery("#email").val());
         	var birthdate = jQuery("#datepicker").val() || '' ;
-        	var token = escape(jQuery('#token').val());
+        	var token = SECURITYTOKEN || escape(jQuery('#token').val());
 
             if (token == '') {
                 token = 'guest';
             }
-
+ 
             jQuery.ajax({
                 url: sr_path_php + "/php/index.php?op=create_site_account_first_step",
                 context: document.body,

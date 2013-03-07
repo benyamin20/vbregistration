@@ -90,20 +90,37 @@ if (!function_exists('sys_get_temp_dir')) {
 /**
  * get previous URL visited
  **/
-function prev_url() {
-	global $vbulletin;
+function prev_url ()
+{
+    global $vbulletin;
 
-	$string = $_SESSION['site_registration']['initial_page'];
-	$search_str = $vbulletin->options['bburl'];
+    $string = $_SESSION['site_registration']['initial_page'];
+    $search_str = $vbulletin->options['bburl'];
 
-	if (empty($_SESSION['site_registration']['initial_page'])
-			|| stristr($string, $search_str) === FALSE) {
-		$url = "index.php";
-	} else {
-		$url = $_SESSION['site_registration']['initial_page'];
-	}
+    if (empty($_SESSION['site_registration']['initial_page']) ||
+             stristr($string, $search_str) === FALSE) {
+        $url = "index.php";
+    } else {
+        $url = $_SESSION['site_registration']['initial_page'];
+    }
 
-	return $url;
+    $sql = "SELECT initialpage FROM " . TABLE_PREFIX .
+             "siteregistration_temp
+                            WHERE email = '" .
+             $vbulletin->db->escape_string(
+                    $_SESSION['site_registration']['email']) .
+             "'
+                            AND   birthday = '" .
+             $vbulletin->db->escape_string(
+                    $_SESSION['site_registration']['birthday']) . "' ";
+
+    $rs = $vbulletin->db->query_first($sql);
+
+    if (is_array($rs)) {
+        $url = $rs['initialpage'];
+    }
+
+    return $url;
 }
 
 /**

@@ -136,7 +136,7 @@ if($vbulletin->db->query_first("SHOW TABLES LIKE '" . TABLE_PREFIX . "vbnexus_no
                     });
                   } else {
                       //user hit cancel button
-                      console.log('User cancelled login or did not fully authorize.');
+                      //console.log('User cancelled login or did not fully authorize.');
                   }
                 }, {
                     scope: 'email,user_birthday,read_stream'
