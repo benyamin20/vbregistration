@@ -45,31 +45,8 @@ if($vbulletin->db->query_first("SHOW TABLES LIKE '" . TABLE_PREFIX . "vbnexus_no
         $vbphrase[vbnexus_buttons_legend]
     </div>
 
-    <script>window.jQuery || document.write('<script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]">\x3C/script>')</script>
-
-
-    <script type="text/javascript">
-        function vBNexusLoginRedirect(service) {
-          FB.api('/me', {
-            fields: 'id,name,email,birthday,picture,username'
-          }, function (result) {
-            var fuser = result.id + '|' + result.name + '|' + result.email + '|' + result.birthday + '|' + result.username + '|' + result.picture.data.url;
-
-            jQuery.ajax({
-              type: 'POST',
-              url: 'register.php?step=facebook-details',
-              dataType: 'json',
-              data: 'fuser=' + fuser + '&first=1&securitytoken=guest',
-              success: function (response) {
-                window.location = response.url;
-              }
-            });
-          });
-          
-          //window.location = "$vboptions[bburl]/login.php?do=login&vbnexus_service=" + service + "&loc=$vboptions[vbnexus_loc]";
-        }
-    </script>
-
+    <script src="$vboptions[site_registration_includes_path_js]/jquery-ui/js/jquery-1.8.3.js?v=$vboptions[simpleversion]"></script>
+ 
     <!-- Google Friend Connect -->
     <if condition="$show['vbnexus_button_gfc']">
         <div id="vbnexus_gfc_button" title="$vbphrase[vbnexus_google_login_title]" style="float:left;"></div>
