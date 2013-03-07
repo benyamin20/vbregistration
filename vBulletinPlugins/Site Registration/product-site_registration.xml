@@ -1659,7 +1659,7 @@ $stylevar[htmldoctype]
                     }               
                     
                     //ACP-543
-                    if($vbulletin->options['allowmultiregs']){
+                    if($vbulletin->options['allowmultiregs'] && $vbulletin->userinfo['userid']){
 	                    unset($_SESSION['site_registration']['initial_page']);
 	                        
 	                    $_SESSION['site_registration']['initial_page'] = $_SERVER['HTTP_REFERER'];
@@ -2275,7 +2275,11 @@ $stylevar[htmldoctype]
                         $userdata =& datamanager_init('User', $vbulletin, ERRTYPE_ARRAY);
                         $userinfo = fetch_userinfo($vbulletin->userinfo['userid']);
                         $userdata->set_existing($userinfo);
-                        $userdata->send_welcomepm();
+                        
+                        if (bitwise($vbulletin->bf_misc_regoptions['receivepm'],
+                                    $vbulletin->options['defaultregoptions'])) {
+                                $userdata->send_welcomepm();
+                        }
                         
                         //ACP-503
                         //show custom profile fields

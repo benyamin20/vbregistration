@@ -90,14 +90,18 @@ function regenerate_token() {
     // regenerate token to avoid getting security errors
     if (jQuery('#token').exists() || jQuery('#securitytoken').exists()) {
 
-        jQuery.getJSON(sr_path_php
-                + "/php/index.php?op=regenerate_security_token",
+    	try{
+    		jQuery.getJSON(sr_path_php
+                    + "/php/index.php?op=regenerate_security_token",
 
-        function(json) {
-            jQuery('#token').val(json.token)
-                    || jQuery('#securitytoken').val(json.token);
-        });
-
+            function(json) {
+                jQuery('#token').val(json.token)
+                        || jQuery('#securitytoken').val(json.token);
+            });	
+    	}catch(e){
+    		
+    	}
+ 
     }
 }
 

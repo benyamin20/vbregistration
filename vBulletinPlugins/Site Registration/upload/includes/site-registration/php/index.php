@@ -925,16 +925,7 @@ switch ($op) {
                     vbmail($email, $subject, $message, false);
                 }
 
-                if ($newusergroupid == 2) {
-                    if ($vbulletin->options['welcomemail']) {
-                        $username = $vbulletin->GPC['username'];
 
-                        eval(fetch_email_phrases('welcomemail'));
-                        vbmail($email, $subject, $message);
-                    }
-
-                    $userdata->send_welcomepm();
-                }
 
                 if ($vbulletin->options['verifyemail']) {
                     // Redirect user to Activation Screen
@@ -945,6 +936,18 @@ switch ($op) {
                     if($vbulletin->options['usecoppa'] > 0 && $_SESSION['site_registration']['coppauser']){
                         $url = "register.php?do=coppaform";
                     }else{
+
+                        if ($newusergroupid == 2) {
+                            if ($vbulletin->options['welcomemail']) {
+                                $username = $vbulletin->GPC['username'];
+
+                                eval(fetch_email_phrases('welcomemail'));
+                                vbmail($email, $subject, $message);
+                            }
+
+                            $userdata->send_welcomepm();
+                        }
+
                         $url = prev_url();
 
                         if (empty($url)) {
@@ -1804,7 +1807,11 @@ switch ($op) {
 
                 $userdata->set_existing($userinfo_welcome);
 
-                $userdata->send_welcomepm();
+
+                if ($newusergroupid == 2) {
+                    $userdata->send_welcomepm();
+                }
+
             }
 
             $userinfo = fetch_userinfo($userid);
